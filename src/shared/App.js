@@ -3,9 +3,10 @@ import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Login from "../page/Login";
 import Main from "../page/Main";
 
-
 // social login
 import { KakaoLogin, GoogleLogin, NaverLogin } from '../components/component';
+
+import Mypage from "../page/Mypage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/user/kakao/callback" element={<KakaoLogin />} />
         <Route path="/user/google/callback" element={<GoogleLogin />} />
         <Route path="/user/naver/callback" element={<NaverLogin />} />
+        <Route path="/mypage" element={<Mypage />} />
       </Routes>
     </BrowserRouter>
   );

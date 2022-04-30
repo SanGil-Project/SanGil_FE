@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from "./Grid";
 import Icon from "./Icon";
-import Progress from "./Progress";
+// import Progress from "./Progress";
 
 const Profile = (props) => {
   return (
@@ -15,9 +15,9 @@ const Profile = (props) => {
     >
       <Grid width="214px" height="45px" isFlex margin="7.5px auto">
         <Grid width="40px" height="40px">
-          <Progress width="40px" height="40px">
+          {/* <Progress width="40px" height="40px"> */}
             <Icon width="34px" height="34px" margin="0 auto" />
-          </Progress>
+          {/* </Progress> */}
         </Grid>
         <Grid width="198px" height="45px" margin="0 0 0 10px">
           <div>
