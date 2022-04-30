@@ -1,8 +1,63 @@
 import styled from "styled-components";
 
 const Icon = (props) => {
-  const { type, width, height, maxWidth, maxHeight } = props;
-  const styles = { width, height, maxWidth, maxHeight };
+  const { type, width, height, maxWidth, maxHeight, margin } = props;
+  const styles = { width, height, maxWidth, maxHeight, margin };
+
+  if (type === "like") {
+    return (
+      <Like {...styles} viewBox="0 0 24 24" fill="#B3B3B3" role="img">
+        <path d="M 16.792 3.904 A 4.989 4.989 0 0 1 21.5 9.122 c 0 3.072 -2.652 4.959 -5.197 7.222 c -2.512 2.243 -3.865 3.469 -4.303 3.752 c -0.477 -0.309 -2.143 -1.823 -4.303 -3.752 C 5.141 14.072 2.5 12.167 2.5 9.122 a 4.989 4.989 0 0 1 4.708 -5.218 a 4.21 4.21 0 0 1 3.675 1.941 c 0.84 1.175 0.98 1.763 1.12 1.763 s 0.278 -0.588 1.11 -1.766 a 4.17 4.17 0 0 1 3.679 -1.938 m 0 -2 a 6.04 6.04 0 0 0 -4.797 2.127 a 6.052 6.052 0 0 0 -4.787 -2.127 A 6.985 6.985 0 0 0 0.5 9.122 c 0 3.61 2.55 5.827 5.015 7.97 c 0.283 0.246 0.569 0.494 0.853 0.747 l 1.027 0.918 a 44.998 44.998 0 0 0 3.518 3.018 a 2 2 0 0 0 2.174 0 a 45.263 45.263 0 0 0 3.626 -3.115 l 0.922 -0.824 c 0.293 -0.26 0.59 -0.519 0.885 -0.774 c 2.334 -2.025 4.98 -4.32 4.98 -7.94 a 6.985 6.985 0 0 0 -6.708 -7.218 Z" />
+      </Like>
+    );
+  }
+
+  if (type === "rank") {
+    return (
+      <Rank
+        {...styles}
+        viewBox="0 0 31 29"
+        fill="none"
+        xlink="http://www.w3.org/1999/xlink"
+      >
+        <rect
+          y="-2"
+          width="31"
+          height="31"
+          fill="url(#pattern0)"
+          fillOpacity="0.3"
+        />
+        <defs>
+          <pattern
+            id="pattern0"
+            patternContentUnits="objectBoundingBox"
+            width="1"
+            height="1"
+          >
+            <use href="#image0_92_3722" transform="scale(0.00195312)" />
+          </pattern>
+          <image
+            id="image0_92_3722"
+            width="512"
+            height="512"
+            href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAA8CSURBVHic7dzLq65lHcbx32MOGnRAMDQtCxIkaBCK1CACNXQiCBLhX1DQLJpXNG7gRKh/oElNgiY7SEkaFCE0CDpgYGZFqUQORDp4N1jr0a37tNZ6zvf1+cCabFjvew9e7uvLs/d+h9ZasbxhGD5eVY9V1UNV9dGquqOqPlRVw3anAthUq6qXq+qvVfXnqvppVf2otfbClodKMQiAZQ3D8HBVfbuqPrP1WQAO4pdV9Y3W2k+2PkjPBMBChmG4u6q+V1UPbn0WgIN6uqq+0lp7fuuD9EgALGAYhger6odVdcvWZwE4uH9W1Rdba09vfZDe3LT1AXozDMMTVXWpjD/AHG6pqkundysz8gRgRsMw3F9Vz1bVe7c+C0Bn3qiqz7fWfrX1QXohAGYyDMOtVfXrqrpz67MAdOovVfXp1torWx+kB/4KYD7fKuMPsKQ76+SuZQaeAMxgGIZ7quo3VXXz1mcB6Nx/q+pTrbXfb32Qo/MEYB5fL+MPsIab6+TOZSJPACYahuGmOvkWq9u2PgtAiL9X1R2ttTe3PsiReQIw3WfL+AOs6bY6uXuZQABMd+/WBwAI5O6dSABMd/vWBwAI5O6dSABM50MIsD5370QCYLr3bX0AgEDu3okEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBIAABAIAEAAIEEAAAEEgAAEEgAAEAgAQAAgQQAAAQSAAAQSAAAQCABAACBBAAABBIAABBI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"
+          />
+        </defs>
+      </Rank>
+    );
+  }
+
+  if (type === "arrow") {
+    return (
+      <Arrow {...styles} viewBox="0 0 5 8" fill="none">
+        <path
+          d="M0.614035 9.34039e-08L5 4L0.614035 8L-4.14667e-07 7.43L3.76097 4L1.85053e-07 0.57L0.614035 9.34039e-08Z"
+          fill="black"
+        />
+      </Arrow>
+    );
+  }
+
   return (
     <Vector {...styles} viewBox="0 0 40 40" fill="none">
       <rect width="40" height="40" rx="20" fill="white" />
@@ -14,6 +69,27 @@ const Icon = (props) => {
   );
 };
 
+const Like = styled.svg`
+  color: black;
+  width: ${(props) => `${props.width}`};
+  max-width: ${(props) => `${props.maxWidth}`};
+  height: ${(props) => `${props.height}`};
+  max-height: ${(props) => `${props.maxHeight}`};
+  ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
+  &:hover {
+    cursor: pointer;
+    fill: #8e8e8e;
+  }
+`;
+
+const Rank = styled.svg`
+  width: ${(props) => `${props.width}`};
+  max-width: ${(props) => `${props.maxWidth}`};
+  height: ${(props) => `${props.height}`};
+  max-height: ${(props) => `${props.maxHeight}`};
+  ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
+`;
+
 const Vector = styled.svg`
   width: ${(props) => `${props.width}`};
   max-width: ${(props) => `${props.maxWidth}`};
@@ -21,6 +97,14 @@ const Vector = styled.svg`
   max-height:${(props) => `${props.maxHeight}`}
   ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
   border-radius: 100%;
+`;
+
+const Arrow = styled.svg`
+  width: ${(props) => `${props.width}`};
+  max-width: ${(props) => `${props.maxWidth}`};
+  height: ${(props) => `${props.height}`};
+  max-height: ${(props) => `${props.maxHeight}`}
+    ${(props) => (props.margin ? `margin: ${props.margin};` : null)};
 `;
 
 export default Icon;

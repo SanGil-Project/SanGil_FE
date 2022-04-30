@@ -1,70 +1,41 @@
-# Getting Started with Create React App
+# # 설치한 라이브러리
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- yarn add axios
+- yarn add react-google-login
+- yarn add react-kakao-maps-sdk
+- yarn add react-responsive
 
-## Available Scripts
+# 04 25 작업
 
-In the project directory, you can run:
+- elements 요소들 props 추가, 스타일 약간 변경
+- login 페이지 반응형 테스트
+- 카카오 소셜 로그인 구현
+- Header의 Profile : react-circular-progressbar 라이브러리를 활용한 원형 프로그레스바 제작
 
-### `yarn start`
+# 04 26 작업
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- elements 요소들 props 추가
+- 구글, 네이버 소셜 로그인 1차 작업
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# 04 28 작업
 
-### `yarn test`
+- 소셜 로그인 서버와 연결까지 완료 (카카오, 네이버, 구글)
+- 소셜 로그인 api 코드 api.js 파일에 통합
+- components 폴더의 파일들 한번에 import 가능하게 component.js 생성
+- 카카오 지도 띄우기, 검색 1차 작업
+- 카카오 지도 드래그 할 때, 중심좌표의 위도, 경도 받아오기
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# 04 29 작업
 
-### `yarn build`
+- 카카오 지도에서 내가 가는 경로 그리기
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# 04 30 작업
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- pc 메인페이지 1차 완료
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# trouble shooting
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- 0428
+  - 카카오지도 검색 기능에서 검색어 state 초기 값을 null로 두면 400 에러 발생
+  - 지도 검색 시, 초기 설정 지도가 겹쳐보이는 현상
+    - 해결 방법: 지도 생성 함수와 키워드 검색 함수를 하나의 useEffect에서 관리하면서 나온 문제, 두개로 나누어 관리하면 해결된다

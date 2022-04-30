@@ -19,6 +19,10 @@ const Grid = (props) => {
     fontWeight,
     fontSize,
     id,
+    shadow,
+    position,
+    overflowY,
+    hover,
   } = props;
   const styles = {
     bg,
@@ -35,6 +39,10 @@ const Grid = (props) => {
     maxHeight,
     fontWeight,
     fontSize,
+    shadow,
+    position,
+    overflowY,
+    hover,
   };
 
   return (
@@ -59,14 +67,26 @@ const Box = styled.div`
   ${(props) => (props.radius ? `border-radius: ${props.radius};` : null)}
   ${(props) => (props.padding ? `padding: ${props.padding};` : null)}
   ${(props) => (props.border ? `border: ${props.border};` : null)}
-  ${(props) =>
-    props.isFlex
-      ? `display:flex; align-items:center; justify-content: space-between`
-      : null}
   ${(props) => (props.textAlign ? `text-align: center;` : null)}
   ${(props) => (props.lineHeight ? `line-height: ${props.lineHeight};` : null)}
   ${(props) => (props.fontSize ? `font-size: ${props.fontSize};` : null)}
   ${(props) => (props.fontWeight ? `font-weight: ${props.fontWeight};` : null)}
+  ${(props) => (props.shadow ? `box-shadow: ${props.shadow};` : null)}
+  ${(props) => (props.position ? `position: ${props.position};` : null)}
+  ${(props) => (props.overflowY ? `overflow-y: ${props.overflowY};` : null)}
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  ${(props) =>
+    props.hover
+      ? `&:hover {
+    cursor: pointer;
+  };`
+      : null}
+  ${(props) =>
+    props.isFlex
+      ? `display:flex; align-items:center; justify-content: space-between`
+      : null}
 `;
 
 export default Grid;

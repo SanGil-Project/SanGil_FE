@@ -25,7 +25,6 @@ export const KakaoMap = (props) => {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           });
-          // dispatch(pathActions.setPath(location));
         },
         (err) => {
           console.log("에러남: ", err);
