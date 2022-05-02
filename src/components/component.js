@@ -6,6 +6,7 @@ import Card from "./Card";
 import Header from "./Header";
 import Menubar from './Menubar';
 import Section from './Section';
+import MyMap from './MyMap';
 
-export { GoogleLogin, KakaoLogin, NaverLogin, HorizontalScroll, Card, Header, Menubar, Section };
+export { GoogleLogin, KakaoLogin, NaverLogin, HorizontalScroll, Card, Header, Menubar, Section, MyMap };
 
