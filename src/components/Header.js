@@ -1,8 +1,5 @@
 import React from "react";
-import Grid from "../elements/Grid";
-import Button from "./../elements/Button";
-import Icon from "./../elements/Icon";
-import Image from "../elements/Image";
+import {Grid,Button,Icon,Image} from'../elements/element'
 import { Desktop, Mobile } from "../shared/responsive";
 
 import { useNavigate } from "react-router";
