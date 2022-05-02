@@ -6,8 +6,8 @@ import { actionCreators as pathActions } from "../redux/modules/geolocation";
 
 const { kakao } = window;
 
-export const KakaoMap = (props) => {
-  const { width, height, margin } = props;
+const KakaoMap = (props) => {
+  const { width, height, margin, maxWidth, level, type } = props;
   const [map, setMap] = useState();
   const [location, setLocation] = useState({
     lat: 37.5666805,
@@ -54,10 +54,20 @@ export const KakaoMap = (props) => {
   }, [location]);
 
   return (
-    <Grid width={width} height={height} margin={margin}>
-      <Map
+    <Grid width={width} height={height} maxWidth={maxWidth}>
+      {type ? <Map
+        center={{
+          lat: 36.5,
+          lng: 127.8,
+        }}
+        level={level}
+        style={{ width: "100%", height: "100%", borderRadius: "12px" }}
+        onCreate={setMap}
+      >
+        <ZoomControl position={kakao.maps.ControlPosition.TOPLEFT} /></Map> : 
+        <Map
         center={location}
-        level={3}
+        level={level}
         style={{ width: "100%", height: "100%" }}
         onCreate={setMap}
       >
@@ -73,6 +83,9 @@ export const KakaoMap = (props) => {
           <div style={{ color: "#000" }}>이게 나라고?</div>
         </MapMarker>
       </Map>
+      }
     </Grid>
   );
 };
+
+export default KakaoMap;
