@@ -42,7 +42,8 @@ Text.defaultProps = {
 };
 
 const P = styled.p`
-  word-break: keep-all;
+  // word-break: keep-all;
+  white-space: normal;
   color: ${(props) => props.color};
   font-size: ${(props) => props.size};
   font-weight: ${(props) => props.bold};

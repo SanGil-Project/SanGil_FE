@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
-import Grid from "../elements/Grid";
-import { Map, MapMarker, Polyline, ZoomControl, useMap } from "react-kakao-maps-sdk";
+import styled from "styled-components";
+
+import { Grid, Text, Icon, Image } from '../elements/element';
+import { Map, MapMarker, Polyline, ZoomControl, useMap, CustomOverlayMap } from "react-kakao-maps-sdk";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as pathActions } from "../redux/modules/geolocation";
 
@@ -48,7 +50,7 @@ const KakaoMap = (props) => {
   ];
 
   const EventMarkerContainer = ({ content }) => {
-    const map = useMap()
+    // const map = useMap()
     const [isVisible, setIsVisible] = useState(false)
     return (
       <MapMarker
@@ -60,16 +62,18 @@ const KakaoMap = (props) => {
         // onMouseOut={() => setIsVisible(false)}
       >
         {isVisible && 
-          <div style={{ color: "#000" }} className="wrap">
-            <div className="title">
-              {content.title}
-              <div className="close" onClick={()=> setIsVisible(!isVisible)}>X</div>
-            </div>
-            <div>{content.addr}</div>
-            <div className="img">
-              <img src={content.img} style={{ width: "100px", height: "100px"}}/>
-            </div>
-          </div>}
+        <CustomOverlayMap position={{...content.latlng}} yAnchor={1.22} zIndex={1}>
+          <MarkerInfo>
+            <Image src={content.img} type="rectangle"/>
+            <Grid padding="5px 10px 10px">
+              <Text margin="5px 0" bold="600" size="16px">{content.title}</Text>
+              <Text margin="0" size="13px">{content.addr}</Text>
+            </Grid>
+              
+              {/* <div className="close" onClick={()=> setIsVisible(!isVisible)}>X</div> */}
+            
+          </MarkerInfo>
+        </CustomOverlayMap>}
       </MapMarker>
     );
   };
@@ -101,25 +105,25 @@ const KakaoMap = (props) => {
     }
   }, []);
 
-  useEffect(() => {
-    path.current = setTimeout(() => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            setLocation({
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            });
-            dispatch(pathActions.setPath(location));
-          },
-          (err) => {
-            console.log("에러남: ", err);
-          }
-        );
-      }
-    }, 5000);
-    return () => clearTimeout(path.current);
-  }, [location]);
+  // useEffect(() => {
+  //   path.current = setTimeout(() => {
+  //     if (navigator.geolocation) {
+  //       navigator.geolocation.getCurrentPosition(
+  //         (position) => {
+  //           setLocation({
+  //             lat: position.coords.latitude,
+  //             lng: position.coords.longitude,
+  //           });
+  //           dispatch(pathActions.setPath(location));
+  //         },
+  //         (err) => {
+  //           console.log("에러남: ", err);
+  //         }
+  //       );
+  //     }
+  //   }, 5000);
+  //   return () => clearTimeout(path.current);
+  // }, [location]);
 
   return (
     <Grid width={width} height={height} maxWidth={maxWidth}>
@@ -163,6 +167,19 @@ const KakaoMap = (props) => {
     </Grid>
   );
 };
+
+const MarkerInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 160px;
+  // height: auto;
+  // overflow: hidden;
+  border: none;
+  outline: none;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px 0 rgba(0,0,0,0.1);
+`;
 
 export default KakaoMap;
 
