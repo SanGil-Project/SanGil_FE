@@ -2,7 +2,6 @@ import React from "react";
 import { Grid, Icon, Text } from "../elements/element";
 import { HorizontalScroll, Card, Header } from "../components/component";
 import { Desktop, Mobile } from "../shared/responsive";
-import KakaoMap from "../components/KakaoMap";
 
 const Main = () => {
   const num = [2, 3, 4, 5];
@@ -209,7 +208,6 @@ const Main = () => {
       </Mobile>
       {/* 데스크탑 */}
       <Desktop>
-        <KakaoMap width="600px" height="600px"></KakaoMap>
         <Grid border="1px solid black" width="414px" margin="0 auto">
           <Header />
           <Grid padding="7px" overflowY="scroll" height="844px">
