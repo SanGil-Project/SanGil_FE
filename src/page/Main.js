@@ -1,7 +1,5 @@
 import React from "react";
-import Grid from "../elements/Grid";
-import Icon from "../elements/Icon";
-import Text from "../elements/Text";
+import {Grid,Icon,Text} from "../elements/element"
 import { HorizontalScroll, Card, Header } from "../components/component";
 import { Desktop } from "../shared/responsive";
 
