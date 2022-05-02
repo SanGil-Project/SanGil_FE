@@ -8,6 +8,7 @@ import { actionCreators as pathActions } from "../redux/modules/geolocation";
 
 const { kakao } = window;
 
+
 const KakaoMap = (props) => {
   // 테스트용 산 정보
   const positions = [
@@ -79,31 +80,31 @@ const KakaoMap = (props) => {
   };
 
   const [markinfo, setMarkinfo] = useState(false);
-  const { width, height, margin, maxWidth, level, type } = props;
+  const { width, height, margin, maxWidth, level, type, children, zoomable } = props;
   const [map, setMap] = useState();
   const [location, setLocation] = useState({
     lat: 37.5666805,
     lng: 126.9784147,
   });
-  const path = useRef();
-  const polylinePath = useSelector((state) => state.polyline.polylinePath);
-  const dispatch = useDispatch();
+  // const path = useRef();
+  // const polylinePath = useSelector((state) => state.polyline.polylinePath);
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
-        },
-        (err) => {
-          console.log("에러남: ", err);
-        }
-      );
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position) => {
+  //         setLocation({
+  //           lat: position.coords.latitude,
+  //           lng: position.coords.longitude,
+  //         });
+  //       },
+  //       (err) => {
+  //         console.log("에러남: ", err);
+  //       }
+  //     );
+  //   }
+  // }, []);
 
   // useEffect(() => {
   //   path.current = setTimeout(() => {
@@ -159,13 +160,19 @@ const KakaoMap = (props) => {
             strokeOpacity={0.7} // 선의 불투명도 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
             strokeStyle={"solid"} // 선의 스타일
           />
-          <MapMarker position={{ ...location }}>
-            <div style={{ color: "#000" }}>이게 나라고?</div>
+          <MapMarker position={location}>
+            <div style={{ color: "#000" }}>{children}</div>
           </MapMarker>
         </Map>
       }
     </Grid>
   );
+};
+
+KakaoMap.defaultProps = {
+  level: 3,
+  children: "이게 나라고?",
+  zoomable: true,
 };
 
 const MarkerInfo = styled.div`
@@ -182,4 +189,3 @@ const MarkerInfo = styled.div`
 `;
 
 export default KakaoMap;
-
