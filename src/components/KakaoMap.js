@@ -153,13 +153,13 @@ const KakaoMap = (props) => {
           onCreate={setMap}
         >
           <ZoomControl position={kakao.maps.ControlPosition.TOPLEFT} />
-          <Polyline
+          {/* <Polyline
             path={[[...polylinePath]]}
             strokeWeight={5} // 선의 두께
             strokeColor={"#ff0000"} // 선의 색깔
             strokeOpacity={0.7} // 선의 불투명도 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
             strokeStyle={"solid"} // 선의 스타일
-          />
+          /> */}
           <MapMarker position={location}>
             <div style={{ color: "#000" }}>{children}</div>
           </MapMarker>
