@@ -53,6 +53,7 @@
 - 전체 페이지 컴포넌트 기본 골격 생성
 - 메뉴바의 버튼 각각의 컴포넌트로 연결 : useNavigate 
 - mypage 수정 모달 뷰 완성
+- map 컴포넌트 재사용을 위해 분리
 
 # trouble shooting
 

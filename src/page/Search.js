@@ -4,25 +4,63 @@ import styled from "styled-components";
 import { Section, Menubar, FullMap, HorizontalScroll, Card, Header } from '../components/component';
 import { Grid, Text, Icon, Button } from '../elements/element';
 
-const Search = () => {
+const Search = (props) => {
+
+  const searchDB = [
+    {
+      id: "A",
+      title: "금강산",
+      addr: "충남 서산시 팔봉면",
+      img: "https://i.esdrop.com/d/f/Z1TUf3lv5V/7seNDu2F2V.jpg",
+      info: "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내...",
+      latlng: {
+        lat: 36.79559607432852,
+        lng: 126.3947104288396,
+      },
+    },
+    {
+      id: "B",
+      title: "금강산",
+      addr: "경기 안성시 금광면",
+      img: "https://i.esdrop.com/d/f/bww1Enn4jz/6UAk4bqrIR.jpg",
+      info: "어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구어쩌구...",
+      latlng: {
+        lat: 36.98868150008423,
+        lng: 127.32093234618237 ,
+      },
+    },
+    {
+      id: "C",
+      title: "금강산",
+      addr: "강원도 금강군",
+      img: "https://i.esdrop.com/d/f/wiwzTggJsl/m3FC1MhwFX.jpg",
+      info: "저쩌구저쩌구저쩌구저쩌구저쩌구저쩌구저쩌구저쩌구저쩌구저쩌구저쩌구저쩌구저쩌구저쩌구저쩌구저쩌구...",
+      latlng: {
+        lat: 38.65712661712974,
+        lng: 128.09230261163586,
+      },
+    },
+  ];
+
   return (
     <React.Fragment>
       <SearchContainer>
         <Header />
         <SearchWrap>
           <Grid padding="96px 14px 0px" height="auto">
-            <FullMap/>
+            <FullMap data={searchDB} />
             <hr/>
           </Grid>
-          {/* 28px */}
           <Grid padding="25px 14px 100px" height="auto">
-            <Grid padding="17px 16px 22px" height="132px" bg="#efefef">
-              <Button bgColor="#fff" border="none" radius="12px" padding="6px 11px" width="auto" height="auto">
-                <Text margin="0" size="18px">A 관악산</Text>
-              </Button>
-              <Text size="16px" bold="400">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내...</Text>
-            </Grid>
-
+            {searchDB.map((d, idx) => {
+              return (
+              <Grid key={idx} padding="17px 16px 22px" margin="0 0 26px" height="132px" bg="#efefef">
+                <Button bgColor="#fff" border="none" radius="12px" padding="6px 11px" width="auto" height="auto">
+                  <Text margin="0" size="18px">{d.id} {d.title}</Text>
+                </Button>
+                <Text size="16px" bold="400">{d.info}</Text>
+              </Grid>);
+            })}
           </Grid>
         </SearchWrap>
         
