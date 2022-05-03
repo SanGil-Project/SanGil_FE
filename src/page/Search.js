@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Section, Menubar, MyMap, HorizontalScroll, Card, Header } from '../components/component';
+import { Section, Menubar, FullMap, HorizontalScroll, Card, Header } from '../components/component';
 import { Grid, Text, Icon, Button } from '../elements/element';
 
 const Search = () => {
@@ -11,7 +11,7 @@ const Search = () => {
         <Header />
         <SearchWrap>
           <Grid padding="96px 14px 0px" height="auto">
-            <MyMap/>
+            <FullMap/>
             <hr/>
           </Grid>
           {/* 28px */}

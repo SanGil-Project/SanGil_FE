@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 
 
 import { Desktop, Mobile } from "../shared/responsive";
-import { Section, Menubar, MyMap, HorizontalScroll, Card, Header, MypageModal } from '../components/component';
+import { Section, Menubar, FullMap, HorizontalScroll, Card, Header, MypageModal } from '../components/component';
 import { Grid, Text, Icon } from '../elements/element';
 
 
@@ -24,7 +24,8 @@ const Mypage = () => {
               <Section/>
             </Grid>
             <Grid padding="36px 14px 25px" height="auto">
-              <MyMap/>
+              <Text bold="600" size="20px" margin="0 0 24px" align="left">🚩 정복한 산길</Text>
+              <FullMap/>
             </Grid>
             <Grid padding="35px 14px 70px" height="auto">
             <Grid
