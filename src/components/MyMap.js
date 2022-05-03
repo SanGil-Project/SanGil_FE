@@ -17,7 +17,7 @@ const MyMap = (props) => {
             height="1000px"
             maxWidth="772px"
             level="12"
-            type="all"
+            type
           />
         </MapBox>
       </MapContainer>
