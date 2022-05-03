@@ -12,7 +12,7 @@ const logIn = createAction(LOGIN, (userInfo) => ({ userInfo }));
 const logOut = createAction(LOGOUT, (userInfo) => ({ userInfo }));
 const isLogin = createAction(ISLOGIN, (token) => ({ token }));
 
-const initialState = {};
+const initialState = { userInfo: {} };
 
 export const signUpDB = (userInfo) => {
   return function (dispatch, getState) {};

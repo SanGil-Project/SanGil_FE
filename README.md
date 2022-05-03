@@ -37,6 +37,8 @@
 - 헤더 분기
 - elements 요소들 props 추가
 - element/profile.js 삭제
+- 카카오맵 컴포넌트화
+- 모바일 메인페이지 1차
 
 # trouble shooting
 

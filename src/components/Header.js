@@ -38,7 +38,7 @@ const Header = () => {
                   src="https://www.theguru.co.kr/data/photos/20210937/art_16316071303022_bf8378.jpg"
                 />
               ) : (
-                <Icon width="16.8%" height="16.8%" />
+                <Icon width="40px" height="40px" />
               )}
             </Grid>
           </Grid>
