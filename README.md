@@ -54,6 +54,7 @@
 - 메뉴바의 버튼 각각의 컴포넌트로 연결 : useNavigate 
 - mypage 수정 모달 뷰 완성
 - map 컴포넌트 재사용을 위해 분리
+- 검색후 페이지 뷰 초안 완료
 
 # trouble shooting
 
