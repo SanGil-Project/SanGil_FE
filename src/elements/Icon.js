@@ -63,12 +63,12 @@ const Icon = (props) => {
           height="24"
           rx="1"
           stroke="#6F6F6F"
-          stroke-width="2"
+          strokeWidth="2"
         />
         <path
           d="M11 30L21.5057 13.1158C21.8549 12.5547 22.6426 12.4806 23.0903 12.9667L32 22.6404"
           stroke="#6F6F6F"
-          stroke-width="2"
+          strokeWidth="2"
         />
         <rect
           x="9.35986"
@@ -77,7 +77,7 @@ const Icon = (props) => {
           height="4.23529"
           rx="2.11765"
           stroke="#6F6F6F"
-          stroke-width="2"
+          strokeWidth="2"
         />
       </MenuIcon>
     );
@@ -108,9 +108,9 @@ const Icon = (props) => {
         <path
           d="M22.7998 22.8L31.1998 31.2"
           stroke="#6F6F6F"
-          stroke-width="2.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <ellipse
           cx="15.8001"
@@ -119,7 +119,7 @@ const Icon = (props) => {
           ry="9.8"
           transform="rotate(90 15.8001 15.8)"
           stroke="#6F6F6F"
-          stroke-width="2.5"
+          strokeWidth="2.5"
         />
       </MenuIcon>
     );
@@ -133,7 +133,7 @@ const Icon = (props) => {
           r="13.5"
           transform="rotate(90 18.2998 18.3)"
           stroke="#6F6F6F"
-          stroke-width="2"
+          strokeWidth="2"
         />
         <path
           d="M18.2998 21.3C12.8033 21.3 8.56568 24.447 7.89311 26.7049C7.7804 27.0833 7.91454 27.4743 8.17472 27.7713C9.18581 28.9255 12.3056 31.8 18.2998 31.8C24.294 31.8 27.4138 28.9255 28.4249 27.7713C28.6851 27.4743 28.8192 27.0833 28.7065 26.7049C28.0339 24.447 23.7963 21.3 18.2998 21.3Z"
