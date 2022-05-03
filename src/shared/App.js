@@ -5,7 +5,7 @@ import styled from "styled-components";
 // social login
 import { KakaoLogin, GoogleLogin, NaverLogin } from '../components/component';
 
-import { Login, Main, Mypage, Feed, Party } from "../page/page";
+import { Login, Main, Mypage, Feed, Party, Search } from "../page/page";
 
 function App() {
   return (
@@ -20,6 +20,7 @@ function App() {
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/feed" element={<Feed />} />
         <Route path="/party" element={<Party />} />
+        <Route path="/search" element={<Search />} />
       </Routes>
       </Container>
     </BrowserRouter>

@@ -7,6 +7,7 @@ import Header from "./Header";
 import Menubar from './Menubar';
 import Section from './Section';
 import MyMap from './MyMap';
+import MypageModal from './MypageModal';
 
-export { GoogleLogin, KakaoLogin, NaverLogin, HorizontalScroll, Card, Header, Menubar, Section, MyMap };
+export { GoogleLogin, KakaoLogin, NaverLogin, HorizontalScroll, Card, Header, Menubar, Section, MyMap, MypageModal };
 

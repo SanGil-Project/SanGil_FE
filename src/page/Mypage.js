@@ -4,9 +4,8 @@ import Modal from 'react-modal';
 
 
 import { Desktop, Mobile } from "../shared/responsive";
-import { Section, Menubar, MyMap, HorizontalScroll, Card, Header } from '../components/component';
+import { Section, Menubar, MyMap, HorizontalScroll, Card, Header, MypageModal } from '../components/component';
 import { Grid, Text, Icon } from '../elements/element';
-import MypageModal from '../components/MypageModal';
 
 
 const Mypage = () => {

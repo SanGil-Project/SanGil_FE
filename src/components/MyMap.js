@@ -18,6 +18,8 @@ const MyMap = (props) => {
             maxWidth="772px"
             level="12"
             type
+            radius
+            
           />
         </MapBox>
       </MapContainer>
