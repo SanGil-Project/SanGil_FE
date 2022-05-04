@@ -4,10 +4,9 @@
 - yarn add react-google-login
 - yarn add react-kakao-maps-sdk
 - yarn add react-responsive
-  <<<<<<< HEAD
-- # yarn add react-icons
+- yarn add react-icons
 - yarn add react-modal
-  > > > > > > > 7e74b2d9cba322fcff316cfed97aa1946b58cfda
+
 
 # 04 25 작업
 

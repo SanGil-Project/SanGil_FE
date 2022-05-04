@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import styled from "styled-components";
 import Modal from 'react-modal';
 import { Desktop, Mobile } from "../shared/responsive";
-import { Section, Menubar, FullMap, HorizontalScroll, Card, Header, MypageModal } from '../components/component';
-import { Grid, Text, Icon } from '../elements/element';
+import { PlanList, Menubar, FullMap, HorizontalScroll, Card, Header, MypageModal } from '../components/component';
+import { Grid, Text, Icon, Image } from '../elements/element';
 
 const Mypage = (props) => {
 
@@ -51,13 +51,15 @@ const Mypage = (props) => {
 
   return (
     <React.Fragment>
-      {/* <Mobile> */}
+      <Grid height="1000px">
         <MypageContainer>
           <Header />
           <MypageWrap>
-            <Grid bg="#ededed" padding="96px 14px 28px" height="auto">
+            <Grid bg="#979797" padding="96px 14px 35px" height="auto">
               <MypageModal/>
-              <Section/>
+            </Grid>
+            <Grid bg="#D2D2D2" padding="27px 14px 28px" height="312px" overflowY="scroll">
+              <PlanList/>
             </Grid>
             <Grid padding="36px 14px 25px" height="auto">
               <Text bold="600" size="20px" margin="0 0 24px" align="left">🚩 정복한 산길</Text>
@@ -121,7 +123,9 @@ const Mypage = (props) => {
           </MenubarContainer>
 
         </MypageContainer>
-      {/* </Mobile> */}
+
+      </Grid>
+        
       
     </React.Fragment> 
   );
@@ -134,15 +138,13 @@ const MypageContainer = styled.div`
   min-width: 414px;
   max-width: 800px;
   margin: auto;
-  overflow: hidden;
-  
 `;
 
 const MypageWrap = styled.div`
   // position: absolute;
   top: 64px;
   height:100%
-  overflow-y: auto;
+  // overflow-y: auto;
 `;
 
 const MenubarContainer = styled.div`

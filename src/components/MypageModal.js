@@ -25,8 +25,24 @@ const MypageModal = (props) => {
 
   return (
     <React.Fragment>
-      <Grid margin="0 0 20px">
-        <button onClick={()=> setModalIsOpen(true)}>프로필 수정</button>
+      <Grid>
+        <Grid flexRow>
+          <Mainprofile>
+            <Image
+              type="circle"
+              width="80px"
+              margin="0 10px 0 11px"
+              src="https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png"/>
+            <Editbtn>
+              <Icon type="profileEdit" width="21px" height="21px" margin="0 auto" _onClick={()=> {setModalIsOpen(true)}}/>
+            </Editbtn>
+          </Mainprofile>
+          <Grid>
+            <Text margin="0" size="14px">칭호칭호칭호치치</Text>
+            <Text margin="8px 0 13px" size="20px" bold="600">가나다라마바사아자차</Text>
+          </Grid>
+        </Grid>
+        {/* <button onClick={()=> setModalIsOpen(true)}>프로필 수정</button> */}
         <Modal isOpen={modalIsOpen} 
           ariaHideApp={false}
           style={{
@@ -87,6 +103,17 @@ const MypageModal = (props) => {
     </React.Fragment>
   );
 }
+
+const Mainprofile = styled.div`
+  position: relative;
+`;
+
+const Editbtn = styled.div`
+  position: absolute;
+  top: 0;
+  left: 10px;
+  cursor: pointer;
+`;
 
 const UserName = styled.div`
   display: flex;  

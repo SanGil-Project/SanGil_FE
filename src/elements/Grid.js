@@ -8,6 +8,7 @@ const Grid = (props) => {
     margin,
     border,
     radius,
+    flexRow,
     flexColumn,
     isFlex,
     padding,
@@ -34,6 +35,7 @@ const Grid = (props) => {
     margin,
     border,
     radius,
+    flexRow,
     flexColumn,
     isFlex,
     padding,
@@ -77,6 +79,10 @@ const Box = styled.div`
   ${(props) =>
     props.flexColumn
       ? `display:flex; flex-direction: column; align-items:center; justify-content: center;`
+      : null}
+  ${(props) =>
+    props.flexRow
+      ? `display:flex; flex-direction: row; align-items:center; justify-content: center;`
       : null}
   ${(props) => (props.textAlign ? `text-align: center;` : null)}
   ${(props) => (props.lineHeight ? `line-height: ${props.lineHeight};` : null)}

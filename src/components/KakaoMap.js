@@ -17,6 +17,7 @@ import { actionCreators as pathActions } from "../redux/modules/geolocation";
 const { kakao } = window;
 
 export const KakaoMap = (props) => {
+
   const {
     width,
     height,
@@ -32,6 +33,8 @@ export const KakaoMap = (props) => {
     polylinePath,
     data,
   } = props;
+
+  console.log(data);
 
   const [location, setLocation] = useState({
     lat: 36.5,
@@ -52,7 +55,7 @@ export const KakaoMap = (props) => {
         draggable={draggable}
       >
         {zoomable ? (
-          <ZoomControl position={kakao.maps.ControlPosition.TOPLEFT} />
+          <ZoomControl position={kakao?.maps.ControlPosition.TOPLEFT} />
         ) : (
           ""
         )}
