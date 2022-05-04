@@ -17,7 +17,6 @@ import { actionCreators as pathActions } from "../redux/modules/geolocation";
 const { kakao } = window;
 
 export const KakaoMap = (props) => {
-  
   const {
     width,
     height,
@@ -30,6 +29,7 @@ export const KakaoMap = (props) => {
     radius,
     full,
     myLoca,
+    polylinePath,
     data,
   } = props;
 
@@ -37,50 +37,11 @@ export const KakaoMap = (props) => {
     lat: 36.5,
     lng: 127.8,
   });
-  // const path = useRef();
-  // const polylinePath = useSelector((state) => state.polyline.polylinePath);
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition(
-  //       (position) => {
-  //         setLocation({
-  //           lat: position.coords.latitude,
-  //           lng: position.coords.longitude,
-  //         });
-  //       },
-  //       (err) => {
-  //         console.log("에러남: ", err);
-  //       }
-  //     );
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   path.current = setTimeout(() => {
-  //     if (navigator.geolocation) {
-  //       navigator.geolocation.getCurrentPosition(
-  //         (position) => {
-  //           setLocation({
-  //             lat: position.coords.latitude,
-  //             lng: position.coords.longitude,
-  //           });
-  //           dispatch(pathActions.setPath(location));
-  //         },
-  //         (err) => {
-  //           console.log("에러남: ", err);
-  //         }
-  //       );
-  //     }
-  //   }, 5000);
-  //   return () => clearTimeout(path.current);
-  // }, [location]);
 
   return (
     <Grid width={width} height={height} margin={margin} maxWidth={maxWidth}>
       <Map
-        center={location}
+        center={myLoca ? myLoca : location}
         level={level}
         style={{
           width: "100%",
@@ -95,19 +56,21 @@ export const KakaoMap = (props) => {
         ) : (
           ""
         )}
-        {/* <Polyline
-          path={[[...polylinePath]]}
-          strokeWeight={5} // 선의 두께
-          strokeColor={"#ff0000"} // 선의 색깔
-          strokeOpacity={0.7} // 선의 불투명도 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-          strokeStyle={"solid"} // 선의 스타일
-        /> */}
+        {polylinePath ? (
+          <Polyline
+            path={[[...polylinePath]]}
+            strokeWeight={5} // 선의 두께
+            strokeColor={"#ff0000"} // 선의 색깔
+            strokeOpacity={0.7} // 선의 불투명도 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+            strokeStyle={"solid"} // 선의 스타일
+          />
+        ) : null}
         {full ? (
-          data.map((d, idx) => {
-            return <EventMarkerContainer key={idx} content={d} />;
+          data.map((p, idx) => {
+            return <EventMarkerContainer key={idx} content={p} />;
           })
         ) : myLoca ? (
-          <MapMarker position={location} />
+          <MapMarker position={myLoca ? myLoca : location} />
         ) : null}
       </Map>
     </Grid>

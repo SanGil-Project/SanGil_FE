@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 const Image = (props) => {
-  const { src, border, borderRadius, width, height, margin, type, onChange } = props;
+  const { src, border, borderRadius, width, height, margin, type, onChange } =
+    props;
   const styles = { src, width, height, margin, border, borderRadius };
 
   if (type === "circle") {
@@ -29,9 +30,11 @@ Image.defaultProps = {
 const Img = styled.img`
   ${(props) => (props.width ? `width: ${props.width};` : null)}
   ${(props) => (props.height ? `height: ${props.height};` : null)}
+   
   ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
-  ${(props) => (props.borderRadius ? `border-radius: ${props.borderRadius};` : null)}
-  
+  ${(props) =>
+    props.borderRadius ? `border-radius: ${props.borderRadius};` : null}
+  //  object-fit: scale-down;
   object-fit: cover;
 `;
 
@@ -46,7 +49,7 @@ const AspectInner = styled.div`
   overflow: hidden;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
-  background-image: url('${(props) => props.src}');
+  background-image: url("${(props) => props.src}");
   background-size: cover;
   background-position: center;
 `;

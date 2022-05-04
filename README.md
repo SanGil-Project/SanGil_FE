@@ -4,7 +4,10 @@
 - yarn add react-google-login
 - yarn add react-kakao-maps-sdk
 - yarn add react-responsive
+  <<<<<<< HEAD
+- # yarn add react-icons
 - yarn add react-modal
+  > > > > > > > 7e74b2d9cba322fcff316cfed97aa1946b58cfda
 
 # 04 25 작업
 
@@ -51,10 +54,12 @@
 # 05 03 작업
 
 - 전체 페이지 컴포넌트 기본 골격 생성
-- 메뉴바의 버튼 각각의 컴포넌트로 연결 : useNavigate 
+- 메뉴바의 버튼 각각의 컴포넌트로 연결 : useNavigate
 - mypage 수정 모달 뷰 완성
 - map 컴포넌트 재사용을 위해 분리
 - 검색후 페이지 뷰 초안 완료
+- Comment, CourseCard, Star 컴포넌트 생성
+- SearchDetail 페이지 생성
 
 # trouble shooting
 

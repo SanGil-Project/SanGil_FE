@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
 import Modal from 'react-modal';
-
-
 import { Desktop, Mobile } from "../shared/responsive";
 import { Section, Menubar, FullMap, HorizontalScroll, Card, Header, MypageModal } from '../components/component';
 import { Grid, Text, Icon } from '../elements/element';
-
 
 const Mypage = (props) => {
 
@@ -128,7 +125,7 @@ const Mypage = (props) => {
       
     </React.Fragment> 
   );
-}
+};
 
 const MypageContainer = styled.div`
   // position: relative;
@@ -153,9 +150,8 @@ const MenubarContainer = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  z-index : 10;
+  z-index: 10;
 `;
 
 
 export default Mypage;
-
