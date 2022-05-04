@@ -4,20 +4,22 @@ import styled from "styled-components";
 import { Grid, Icon, Text } from "../elements/element"
 import KakaoMap from "./KakaoMap";
 
-const MyMap = (props) => {
-  // const {width, height, margin, maxWidth} = props;
+const FullMap = (props) => {
+  const { data } = props;
 
   return (
     <>
       <MapContainer>
-        <Text bold="600" size="20px" margin="0 0 24px" align="left">🚩 정복한 산길</Text>
         <MapBox>
           <KakaoMap 
             width="100%"
-            height="1000px"
+            height="665px"
             maxWidth="772px"
-            level="12"
-            type
+            level="13"
+            full
+            radius
+            data={data} // 지도에 마커 찍어야하는 정보 객체 전달
+            
           />
         </MapBox>
       </MapContainer>
@@ -26,18 +28,11 @@ const MyMap = (props) => {
 };
 
 const MapContainer = styled.div`
-  display: flex;
-  flex-direction: column;
   position: relative;
   width: 100%;
   height: 0;
   overflow: hidden;
-  padding-bottom: 150%;
-  
-  // border-radius: 10px;
-  // box-shadow: 0 4px 12px 0 rgba(0,0,0,0.1); 
-  // padding: 14px 15px;
-  // margin-top: 10px; 
+  padding-bottom: 150%;  
 `;
 
 const MapBox = styled.div`
@@ -46,6 +41,5 @@ const MapBox = styled.div`
   left: 0,
   width: 100%,
   height: 100%,
-  // border-radius: 10px;
 `;
-export default MyMap;
+export default FullMap;

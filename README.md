@@ -4,6 +4,7 @@
 - yarn add react-google-login
 - yarn add react-kakao-maps-sdk
 - yarn add react-responsive
+- yarn add react-modal
 
 # 04 25 작업
 
@@ -33,12 +34,6 @@
 - pc 메인페이지 1차 완료
 - 메인바 생성
 
-# 05 02 작업
-
-- 마이페이지 초안 완료(반응형작업필요)
-- 전체지도 마커 표시하기
-- 커스텀 오버레이작업
-
 # 05 01 작업
 
 - 헤더 분기
@@ -46,6 +41,20 @@
 - element/profile.js 삭제
 - 카카오맵 컴포넌트화
 - 모바일 메인페이지 1차
+
+# 05 02 작업
+
+- 마이페이지 초안 완료(반응형작업필요)
+- 전체지도 마커 표시하기
+- 커스텀 오버레이작업
+
+# 05 03 작업
+
+- 전체 페이지 컴포넌트 기본 골격 생성
+- 메뉴바의 버튼 각각의 컴포넌트로 연결 : useNavigate 
+- mypage 수정 모달 뷰 완성
+- map 컴포넌트 재사용을 위해 분리
+- 검색후 페이지 뷰 초안 완료
 
 # trouble shooting
 

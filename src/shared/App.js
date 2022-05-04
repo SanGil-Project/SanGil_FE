@@ -1,13 +1,11 @@
 import "./App.css";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import styled from "styled-components";
-import Login from "../page/Login";
-import Main from "../page/Main";
 
 // social login
 import { KakaoLogin, GoogleLogin, NaverLogin } from '../components/component';
 
-import Mypage from "../page/Mypage";
+import { Login, Main, Mypage, Feed, Party, Search } from "../page/page";
 
 function App() {
   return (
@@ -20,6 +18,9 @@ function App() {
         <Route path="/user/google/callback" element={<GoogleLogin />} />
         <Route path="/user/naver/callback" element={<NaverLogin />} />
         <Route path="/mypage" element={<Mypage />} />
+        <Route path="/feed" element={<Feed />} />
+        <Route path="/party" element={<Party />} />
+        <Route path="/search" element={<Search />} />
       </Routes>
       </Container>
     </BrowserRouter>
