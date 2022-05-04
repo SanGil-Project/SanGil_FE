@@ -24,6 +24,7 @@ const Grid = (props) => {
     position,
     overflowY,
     hover,
+    minWidth,
   } = props;
   const styles = {
     bg,
@@ -45,6 +46,7 @@ const Grid = (props) => {
     position,
     overflowY,
     hover,
+    minWidth,
   };
 
   return (
@@ -64,6 +66,7 @@ const Box = styled.div`
   width: ${(props) => `${props.width}`};
   height: ${(props) => `${props.height}`};
   ${(props) => (props.maxWidth ? `max-width: ${props.maxWidth};` : null)}
+  ${(props) => (props.minWidth ? `min-width: ${props.minWidth};` : null)}
   ${(props) => (props.bg ? `background-color: ${props.bg};` : null)}
   ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
   ${(props) => (props.radius ? `border-radius: ${props.radius};` : null)}

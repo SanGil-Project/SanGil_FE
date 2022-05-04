@@ -1,9 +1,15 @@
-import React from 'react';
+import React from "react";
 import styled from "styled-components";
 
-import { Section, Menubar, MyMap, HorizontalScroll, Card, Header } from '../components/component';
-import { Grid, Text, Icon } from '../elements/element';
-
+import {
+  Section,
+  Menubar,
+  MyMap,
+  HorizontalScroll,
+  Card,
+  Header,
+} from "../components/component";
+import { Grid, Text, Icon } from "../elements/element";
 
 const Mypage = () => {
 
@@ -13,13 +19,13 @@ const Mypage = () => {
     <React.Fragment>
       <MypageContainer>
         <Grid bg="#ededed" padding="70px 14px 28px" height="auto">
-          <Section/>
+          <Section />
         </Grid>
         <Grid padding="36px 14px 25px" height="auto">
-          <MyMap/>
+          <MyMap />
         </Grid>
         <Grid padding="35px 14px 70px" height="auto">
-        <Grid
+          <Grid
             // border="1px solid green"
             margin="0 auto 60px auto"
             height="238px"
@@ -45,11 +51,7 @@ const Mypage = () => {
                       margin="0 0 -103px 163px"
                     />
                   </Card>
-                  <Text
-                    margin="8px 0 0 7px"
-                    bold='600'
-                    size="1.4rem"
-                  >
+                  <Text margin="8px 0 0 7px" bold="600" size="1.4rem">
                     어디어디 산의 어디 코스
                   </Text>
 
@@ -59,8 +61,12 @@ const Mypage = () => {
                     width="194px"
                     margin="8px 7px 0 7px"
                   >
-                    <Text bold="300" size="1.2rem">매우 좋음 5.0</Text>
-                    <Text bold="400" size="1.2px">100.800km</Text>
+                    <Text bold="300" size="1.2rem">
+                      매우 좋음 5.0
+                    </Text>
+                    <Text bold="400" size="1.2px">
+                      100.800km
+                    </Text>
                   </Grid>
                 </div>
               ))}
@@ -69,14 +75,13 @@ const Mypage = () => {
         </Grid>
         <MenubarContainer>
           <Grid height="88px" minWidth="414px" maxWidth="800px" margin="auto">
-            <Menubar/>
+            <Menubar />
           </Grid>
         </MenubarContainer>
-
       </MypageContainer>
-    </React.Fragment> 
+    </React.Fragment>
   );
-}
+};
 
 const MypageContainer = styled.div`
   // background-color: orange;
@@ -91,8 +96,7 @@ const MenubarContainer = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  z-index : 10;
+  z-index: 10;
 `;
 
 export default Mypage;
-

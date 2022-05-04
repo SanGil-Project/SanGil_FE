@@ -1,6 +1,11 @@
 import React from "react";
 import { Grid, Icon, Text } from "../elements/element";
-import { HorizontalScroll, Card, Header } from "../components/component";
+import {
+  HorizontalScroll,
+  Card,
+  Header,
+  Menubar,
+} from "../components/component";
 import { Desktop, Mobile } from "../shared/responsive";
 import { useSelector } from "react-redux";
 
@@ -10,56 +15,21 @@ const Main = () => {
 
   const num = [2, 3, 4, 5];
   const arr = [0, 1];
+
+  // React.useEffect(() => {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition((position) => {
+  //       console.log(position.coords.latitude, position.coords.longitude);
+  //     });
+  //   }
+  // }, []);
+
   return (
     <>
       <Mobile>
         <Grid width="100vw" margin="0 auto">
           <Header />
           <Grid padding="7px" overflowY="scroll" height="844px">
-            {token && userInfo ? (
-              <Grid height="238px" margin="85px 0 -45px 0">
-                <Grid
-                  maxWidth="93.23%"
-                  margin="0 7px 14px 7px"
-                  height="25px"
-                  isFlex
-                >
-                  <Text
-                    width="350px"
-                    height="24px"
-                    bold="600"
-                    size="2rem"
-                    lineHeight="24px"
-                  >
-                    산길러 모여라~
-                  </Text>
-                  <Grid
-                    margin="0 18px 0 0"
-                    fontSize="12px"
-                    fontWeight="300"
-                    width="48px"
-                    textAlign
-                    lineHeight="24px"
-                    hover
-                    isFlex
-                  >
-                    <span>더보기</span>
-                    <Icon type="arrow" width="5px" height="8px" />
-                  </Grid>
-                </Grid>
-                {arr.map((cur, idx) => {
-                  return (
-                    <Card
-                      key={idx}
-                      border="1px solid green"
-                      width="386px"
-                      height="85px"
-                      margin="0 auto 14px auto"
-                    ></Card>
-                  );
-                })}
-              </Grid>
-            ) : null}
             <Grid height="453px" margin="86px 0 25px 0">
               <Text
                 width="350px"
@@ -160,7 +130,6 @@ const Main = () => {
                 ))}
               </HorizontalScroll>
             </Grid>
-
             <Grid
               // border="1px solid green"
               margin="0 auto 50px auto"
@@ -212,7 +181,6 @@ const Main = () => {
                 ))}
               </HorizontalScroll>
             </Grid>
-
             <Grid height="220px">
               <Grid
                 maxWidth="93.23%"
@@ -255,7 +223,51 @@ const Main = () => {
                 ))}
               </HorizontalScroll>
             </Grid>
+            <Grid height="238px" margin="36px 0 0 0">
+              <Grid
+                maxWidth="93.23%"
+                margin="0 7px 34px 7px"
+                height="25px"
+                isFlex
+              >
+                <Text
+                  width="350px"
+                  height="24px"
+                  bold="600"
+                  size="2rem"
+                  lineHeight="24px"
+                >
+                  산길러 모여라~
+                </Text>
+                <Grid
+                  margin="0 18px 0 0"
+                  fontSize="12px"
+                  fontWeight="300"
+                  width="48px"
+                  textAlign
+                  lineHeight="24px"
+                  hover
+                  isFlex
+                >
+                  <span>더보기</span>
+                  <Icon type="arrow" width="5px" height="8px" />
+                </Grid>
+              </Grid>
+              {arr.map((cur, idx) => {
+                return (
+                  <Card
+                    key={idx}
+                    border="1px solid green"
+                    width="386px"
+                    height="85px"
+                    margin="0 auto 14px auto"
+                  ></Card>
+                );
+              })}
+            </Grid>
+            ;
           </Grid>
+          <Menubar />
         </Grid>
       </Mobile>
 
@@ -264,51 +276,6 @@ const Main = () => {
         <Grid border="1px solid black" width="414px" margin="0 auto">
           <Header />
           <Grid padding="7px" overflowY="scroll" height="844px">
-            {token && userInfo ? (
-              <Grid height="238px" margin="0 0 56px 0">
-                <Grid
-                  maxWidth="386px"
-                  margin="0 0 14px 7px"
-                  height="25px"
-                  isFlex
-                >
-                  <Text
-                    width="350px"
-                    height="24px"
-                    bold="600"
-                    size="2rem"
-                    lineHeight="24px"
-                  >
-                    산길러 모여라~
-                  </Text>
-                  <Grid
-                    margin="0 18px 0 0"
-                    fontSize="12px"
-                    fontWeight="300"
-                    width="48px"
-                    textAlign
-                    lineHeight="24px"
-                    hover
-                    isFlex
-                  >
-                    <span>더보기</span>
-                    <Icon type="arrow" width="5px" height="8px" />
-                  </Grid>
-                </Grid>
-                {arr.map((cur, idx) => {
-                  return (
-                    <Card
-                      key={idx}
-                      border="1px solid green"
-                      width="386px"
-                      height="85px"
-                      margin="0 auto 14px auto"
-                    ></Card>
-                  );
-                })}
-              </Grid>
-            ) : null}
-
             <Grid height="453px" margin="-10px auto 25px auto">
               <Text
                 width="350px"
@@ -495,7 +462,45 @@ const Main = () => {
                 ))}
               </HorizontalScroll>
             </Grid>
+            <Grid width="400px" height="238px" margin="40px auto 20px auto">
+              <Grid maxWidth="386px" margin="0 0 34px 7px" height="25px" isFlex>
+                <Text
+                  width="350px"
+                  height="24px"
+                  bold="600"
+                  size="2rem"
+                  lineHeight="24px"
+                >
+                  산길러 모여라~
+                </Text>
+                <Grid
+                  margin="0 18px 0 0"
+                  fontSize="12px"
+                  fontWeight="300"
+                  width="48px"
+                  textAlign
+                  lineHeight="24px"
+                  hover
+                  isFlex
+                >
+                  <span>더보기</span>
+                  <Icon type="arrow" width="5px" height="8px" />
+                </Grid>
+              </Grid>
+              {arr.map((cur, idx) => {
+                return (
+                  <Card
+                    key={idx}
+                    border="1px solid green"
+                    width="386px"
+                    height="85px"
+                    margin="0 auto 14px auto"
+                  ></Card>
+                );
+              })}
+            </Grid>
           </Grid>
+          <Menubar />
         </Grid>
       </Desktop>
     </>

@@ -4,6 +4,7 @@
 - yarn add react-google-login
 - yarn add react-kakao-maps-sdk
 - yarn add react-responsive
+- yarn add react-icons
 
 # 04 25 작업
 
@@ -46,6 +47,10 @@
 - element/profile.js 삭제
 - 카카오맵 컴포넌트화
 - 모바일 메인페이지 1차
+
+# 05 03 작업
+- Comment, CourseCard, Star 컴포넌트 생성
+- SearchDetail 페이지 생성
 
 # trouble shooting
 

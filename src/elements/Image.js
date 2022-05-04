@@ -29,7 +29,8 @@ const Img = styled.img`
   ${(props) => (props.width ? `width: ${props.width};` : null)}
   ${(props) => (props.height ? `height: ${props.height};` : null)}
     ${(props) =>
-    props.margin ? `margin: ${props.margin};` : null} // object-fit: scale-down;
+  props.margin ? `margin: ${props.margin};` : null}
+    object-fit: scale-down;
 `;
 
 const AspectOutter = styled.div`
