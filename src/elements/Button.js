@@ -14,6 +14,7 @@ const Button = (props) => {
     fontSize,
     _onClick,
     children,
+    padding,
   } = props;
   const styles = {
     width,
@@ -25,6 +26,7 @@ const Button = (props) => {
     margin,
     radius,
     fontSize,
+    padding,
   };
 
   return (
@@ -42,6 +44,7 @@ Button.defaultProps = {
   color: "#212121",
   border: "1px solid #212121",
   margin: false,
+  padding: false,
   fontSize: "16px",
 };
 
@@ -55,6 +58,7 @@ const Btn = styled.button`
   font-size: ${(props) => `${props.fontSize}`};
   color: ${(props) => props.color};
   ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
+  ${(props) => (props.padding ? `padding: ${props.padding};` : null)}
   ${(props) => (props.radius ? `border-radius: ${props.radius};` : null)}
   ${(props) => (props.bgColor ? `background-color: ${props.bgColor};` : null)}
   &:hover {

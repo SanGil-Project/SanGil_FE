@@ -1,14 +1,18 @@
 import "./App.css";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import styled from "styled-components";
-import Login from "../page/Login";
-import Main from "../page/Main";
-import SearchDetail from "../page/SearchDetail";
-import Mypage from "../page/Mypage";
-import Tracker from "./../page/Tracker";
-
 // social login
 import { KakaoLogin, GoogleLogin, NaverLogin } from "../components/component";
+import {
+  Login,
+  Main,
+  Mypage,
+  Feed,
+  Party,
+  Search,
+  SearchDetail,
+  Tracker,
+} from "../page/page";
 
 function App() {
   return (
@@ -21,6 +25,9 @@ function App() {
           <Route path="/user/google/callback" element={<GoogleLogin />} />
           <Route path="/user/naver/callback" element={<NaverLogin />} />
           <Route path="/mypage" element={<Mypage />} />
+          <Route path="/feed" element={<Feed />} />
+          <Route path="/party" element={<Party />} />
+          <Route path="/search" element={<Search />} />
           <Route path="/searchdetail" element={<SearchDetail />} />
           <Route path="/tracker" element={<Tracker />} />
         </Routes>

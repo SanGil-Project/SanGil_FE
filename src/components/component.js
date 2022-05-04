@@ -6,10 +6,12 @@ import Card from "./Card";
 import Header from "./Header";
 import Menubar from "./Menubar";
 import Section from "./Section";
-import MyMap from "./MyMap";
 import Star from "./Star";
 import Comment from "./Comment";
 import CourseCard from "./CourseCard";
+import FullMap from './FullMap';
+import MypageModal from './MypageModal';
+
 
 export {
   GoogleLogin,
@@ -20,8 +22,9 @@ export {
   Header,
   Menubar,
   Section,
-  MyMap,
   Star,
   Comment,
   CourseCard,
+  FullMap,
+  MypageModal
 };

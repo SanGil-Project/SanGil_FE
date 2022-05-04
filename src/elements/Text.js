@@ -44,7 +44,6 @@ Text.defaultProps = {
 };
 
 const P = styled.p`
-  border: 1px solid black;
   ${(props) =>
     props.wordBreak ? `word-break: ${props.wordBreak};` : `keep-all;`}
   white-space: normal;

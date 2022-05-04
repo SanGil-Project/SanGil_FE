@@ -18,7 +18,7 @@ const Header = () => {
     return (
       <>
         <Mobile>
-          <Grid maxWidth="100vw" height="64px" bg="#C4C4C4" position="fixed">
+          <Grid maxWidth="100vw" height="64px" bg="#C4C4C4" position="fixed" zindex="15">
             <Grid margin="0 0 0 39.25%" maxWidth="55%" isFlex>
               <Grid
                 maxWidth="38.7%"
@@ -45,7 +45,7 @@ const Header = () => {
         </Mobile>
 
         <Desktop>
-          <Grid maxWidth="414px" height="64px" bg="#C4C4C4">
+          <Grid maxWidth="414px" height="64px" bg="#C4C4C4" position="fixed" zindex="15">
             <Grid margin="0 0 0 39.25%" maxWidth="238px" isFlex>
               <Grid
                 maxWidth="89px"
@@ -77,7 +77,7 @@ const Header = () => {
   return (
     <>
       <Mobile>
-        <Grid maxWidth="100vw" height="64px" bg="#C4C4C4" position="fixed">
+        <Grid maxWidth="100vw" height="64px" bg="#C4C4C4" position="fixed" zindex="15">
           <Grid margin="0 0 0 39.25%" maxWidth="55%" isFlex>
             <Grid
               maxWidth="38.7%"
@@ -102,7 +102,7 @@ const Header = () => {
       </Mobile>
 
       <Desktop>
-        <Grid maxWidth="414px" height="64px" bg="#C4C4C4">
+        <Grid maxWidth="414px" height="64px" bg="#C4C4C4" position="fixed" zindex="15">
           <Grid margin="0 0 0 39.25%" maxWidth="230px" isFlex>
             <Grid
               maxWidth="89px"
