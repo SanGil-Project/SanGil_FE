@@ -24,8 +24,8 @@ const Menubar = () => {
           <Text width="auto" size="10px" align="center" bold="600" margin="5.6px auto 0">홈버튼</Text>
         </Grid>
         <Grid flexColumn hover _onClick={()=>{navigate("/search");}}>
-          <Icon type="searchIcon" width="36px" height="36px" margin="0 auto" />
-          <Text width="auto" size="10px" align="center" bold="600" margin="5.6px auto 0">검색</Text>
+          <Icon type="mountain" width="41px" height="36px" margin="0 auto" />
+          <Text width="auto" size="10px" align="center" bold="600" margin="5.6px auto 0">산코스</Text>
         </Grid>
         <Grid flexColumn hover _onClick={()=>{navigate("/mypage");}}>
           <Icon type="mypageIcon" width="36px" height="36px" margin="0 auto" />

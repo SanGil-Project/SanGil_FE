@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { Section, Menubar, FullMap, HorizontalScroll, Card, Header } from '../components/component';
-import { Grid, Text, Icon, Button } from '../elements/element';
+import { Grid, Text, Icon, Button, Input } from '../elements/element';
 
 const Search = (props) => {
 
@@ -47,11 +47,17 @@ const Search = (props) => {
       <SearchContainer>
         <Header />
         <SearchWrap>
-          <Grid padding="96px 14px 0px" height="auto">
-            <FullMap data={searchDB} />
-            <hr/>
+          <Grid padding="96px 14px 33px">
+            <Grid bg="#fff" height="67px" border="1px solid #636363" radius="40px" padding="15px 13px" flexRow>
+              <Icon type="searchIcon" width="37px" height="37px" margin="0 auto" />
+              <Input width="100%" placeholder="어떤 산을 찾고 계신가요?" border="none" padding="0" margin="0 5.5px"/>
+            </Grid>
           </Grid>
-          <Grid padding="25px 14px 100px" height="auto">
+          <Grid padding="0 14px" height="auto">
+            <FullMap data={searchDB} />
+            {/* <hr/> */}
+          </Grid>
+          <Grid padding="15px 14px 100px" height="auto">
             {searchDB.map((d, idx) => {
               return (
               <Grid key={idx} padding="17px 16px 22px" margin="0 0 26px" height="132px" bg="#efefef">
@@ -83,7 +89,6 @@ const SearchContainer = styled.div`
   max-width: 800px;
   margin: auto;
   overflow: hidden;
-  
 `;
 
 const SearchWrap = styled.div`

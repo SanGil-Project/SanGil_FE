@@ -21,7 +21,7 @@ const Input = (props) => {
   const styles = { width, height, border, margin, maxWidth, padding, bg };
 
   return (
-    <Grid>
+    <Grid justify>
       {label && <div>{label}</div>}
       {defaultValue ? 
         <InfoInput
@@ -33,8 +33,8 @@ const Input = (props) => {
         <InfoInput
           {...styles}
           type={type}
-          placeholder={placeholder}
           onChange={_onChange}
+          placeholder={placeholder}
         />}
       
     </Grid>
@@ -43,8 +43,7 @@ const Input = (props) => {
 
 Input.defaultProps = {
   label: false,
-  placeholder: "입력해주세요.",
-  defaultValue: "닉네임이 없습니다.",
+  placeholder: "텍스트를 입력해주세요.",
   _onChange: () => {},
   type: "text",
   border: "1px solid #212121",
@@ -57,6 +56,7 @@ const InfoInput = styled.input`
   box-sizing: border-box;
   font-size: 16px;
   outline: none;
+
   width: ${(props) => `${props.width}`};
   max-width: ${(props) => `${props.maxWidth}`};
   height: ${(props) => `${props.height}`};

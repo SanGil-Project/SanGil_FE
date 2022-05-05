@@ -10,6 +10,7 @@ const Grid = (props) => {
     radius,
     flexRow,
     flexColumn,
+    justify,
     isFlex,
     padding,
     textAlign,
@@ -51,6 +52,7 @@ const Grid = (props) => {
     hover,
     minWidth,
     zindex,
+    justify,
   };
 
   return (
@@ -82,7 +84,11 @@ const Box = styled.div`
       : null}
   ${(props) =>
     props.flexRow
-      ? `display:flex; flex-direction: row; align-items:center; justify-content: center;`
+      ? `display:flex; flex-direction: row; align-items: center; justify-content: center;`
+      : null}
+  ${(props) =>
+    props.justify
+      ? `display:flex; align-items: center;`
       : null}
   ${(props) => (props.textAlign ? `text-align: center;` : null)}
   ${(props) => (props.lineHeight ? `line-height: ${props.lineHeight};` : null)}
