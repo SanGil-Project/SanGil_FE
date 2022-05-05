@@ -1,8 +1,16 @@
 import styled from "styled-components";
 
 const Icon = (props) => {
-  const { type, width, height, maxWidth, maxHeight, margin, _onClick } = props;
+  const { type, width, height, maxWidth, maxHeight, margin, _onClick, color } = props;
   const styles = { width, height, maxWidth, maxHeight, margin };
+
+  if (type === "back") {
+    return (
+      <MenuIcon onClick={_onClick} {...styles} viewBox="0 0 24 25" fill="none">
+        <path d="M10 22.5L0 12.5L10 2.5L11.4 3.925L2.825 12.5L11.4 21.075L10 22.5Z" fill={color}/>
+      </MenuIcon>
+    );
+  }
 
   if (type === "profileEdit") {
     return (

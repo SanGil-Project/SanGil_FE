@@ -141,7 +141,7 @@ const MypageContainer = styled.div`
 `;
 
 const MypageWrap = styled.div`
-  // position: absolute;
+  // position: relative;
   top: 64px;
   height:100%
   // overflow-y: auto;

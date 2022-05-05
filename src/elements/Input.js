@@ -14,26 +14,37 @@ const Input = (props) => {
     padding,
     _onChange,
     placeholder,
+    defaultValue,
     label,
+    bg,
   } = props;
-  const styles = { width, height, border, margin, maxWidth, padding };
+  const styles = { width, height, border, margin, maxWidth, padding, bg };
 
   return (
     <Grid>
       {label && <div>{label}</div>}
-      <InfoInput
-        {...styles}
-        type={type}
-        placeholder={placeholder}
-        onChange={_onChange}
-      />
+      {defaultValue ? 
+        <InfoInput
+          {...styles}
+          type={type}
+          onChange={_onChange}
+          defaultValue={defaultValue}
+        /> : 
+        <InfoInput
+          {...styles}
+          type={type}
+          placeholder={placeholder}
+          onChange={_onChange}
+        />}
+      
     </Grid>
   );
 };
 
 Input.defaultProps = {
   label: false,
-  placeholder: "텍스트를 입력해주세요.",
+  placeholder: "입력해주세요.",
+  defaultValue: "닉네임이 없습니다.",
   _onChange: () => {},
   type: "text",
   border: "1px solid #212121",
@@ -50,6 +61,7 @@ const InfoInput = styled.input`
   max-width: ${(props) => `${props.maxWidth}`};
   height: ${(props) => `${props.height}`};
   ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
+  ${(props) => (props.bg ? `background-color: ${props.bg};` : null)}
 `;
 
 export default Input;

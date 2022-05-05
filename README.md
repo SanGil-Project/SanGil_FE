@@ -60,6 +60,10 @@
 - Comment, CourseCard, Star 컴포넌트 생성
 - SearchDetail 페이지 생성
 
+# 05 04 작업
+
+- 마이페이지 변경 모달 뷰 완성(와이어프레임 베이스)
+
 # trouble shooting
 
 - 0428

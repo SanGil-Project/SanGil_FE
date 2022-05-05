@@ -2,26 +2,59 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import styled from "styled-components";
 
-import { Grid, Text, Icon, Image } from '../elements/element';
+import { Grid, Text, Icon, Image, Button, Input } from '../elements/element';
 
 const MypageModal = (props) => {
 
-  const titleDB = [
-    { title: "등린이", pick: false,}, 
-    { title: "등산의신", pick: false,},
-    { title: "산신령", pick: false,},
-    { title: "100대명산정복자", pick: false,},
-    { title: "1000km달성", pick: false,}, 
-    { title: "산길러", pick: true,},
-    { title: "연예인", pick: false,},
-    { title: "인싸중에인싸", pick: false,},
-    { title: "아싸중에아싸", pick: false,}, 
-    { title: "무쇠다리", pick: false,},
-    { title: "따라올테면따라와바", pick: false,},
-    { title: "욜로", pick: false,},
+  // 입력 테스트 정보
+  const titleList = [
+    { userTitle: "등린이", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",}, 
+    { userTitle: "등산의신", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",},
+    { userTitle: "산신령", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",},
+    { userTitle: "100대명산정복자", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",},
+    { userTitle: "1000km달성", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",}, 
+    { userTitle: "산길러", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",},
+    { userTitle: "내가바로박예슬", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",},
+    { userTitle: "연예인", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",},
+    { userTitle: "인싸중에인싸", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",},
+    { userTitle: "아싸중에아싸", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",}, 
+    { userTitle: "무쇠다리", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",},
+    { userTitle: "따라올테면따라와바", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",},
   ];
 
+  const userInfo = {
+    userId: 1,
+    username: "박에스리",
+    userImageUrl: "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
+    userTitle: "내가바로박예슬"
+  }
+
+  const userTitleList = [
+    { userTitle: "등린이", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", pick: false}, 
+    { userTitle: "산길러", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", pick: false},
+    { userTitle: "내가바로박예슬", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", pick: true},
+    { userTitle: "따라올테면따라와바", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", pick: false},
+  ];
+
+  const noTitleList = titleList.filter((t) => {
+    // 유저가 가지고 있지 않은 타이틀만 필터링
+    return !userTitleList.some(usert => usert.userTitle === t.userTitle)
+  });
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [nameCount, setNameCount] = useState(userInfo.username.length);
+
+
+  const changeNickname = (e) => {
+    // 현 글자수 보여주기
+    setNameCount(e.target.value.length);
+    //  글자수 10자로 제한
+    if (e.target.value.length > 10) {
+      e.target.value = e.target.value.substr(0, 10);
+      // 10이상은 10으로 고정 (11 안나오게)
+      setNameCount(10);
+    }
+  }
 
   return (
     <React.Fragment>
@@ -34,7 +67,7 @@ const MypageModal = (props) => {
               margin="0 10px 0 11px"
               src="https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png"/>
             <Editbtn>
-              <Icon type="profileEdit" width="21px" height="21px" margin="0 auto" _onClick={()=> {setModalIsOpen(true)}}/>
+              <Icon type="profileEdit" width="21px" height="21px" margin="0 auto" _onClick={()=> {setModalIsOpen(true); setNameCount(userInfo.username.length);}}/>
             </Editbtn>
           </Mainprofile>
           <Grid>
@@ -52,20 +85,24 @@ const MypageModal = (props) => {
               left: 0,
               right: 0,
               bottom: 0,
-              backgroundColor: "rgba(15, 15, 15, 0.3)",
+              // backgroundColor: "rgba(15, 15, 15, 0.3)",
+              backgroundColor: "transparent",
+              backdropFilter: "blur(5px)",
               zIndex: "100",
             },
             content: {
               position: "absolute",
               top: "60px",
               bottom: "80px",
-              width: "75%",
+              inset: "60px 20px 80px",
+              // width: "80vw",
               margin: "auto",
-              maxWidth: "700px",
-              height: "70%",
+              maxWidth: "725px",
+              // height: "70%",
               border: "none",
-              background: "#fff",
-              boxShadow: "0 4px 12px 0 rgba(0,0,0,0.1)",
+              background: "rgba(0, 0, 0, 0.4)",
+              // background: "#fff",
+              // boxShadow: "0 4px 12px 0 rgba(0,0,0,0.5)",
               overflow: "auto",
               WebkitOverflowScrolling: "touch",
               borderRadius: "0",
@@ -75,25 +112,30 @@ const MypageModal = (props) => {
           }}
           onRequestClose={() => setModalIsOpen(false)}>
             <Grid>
-              <button onClick={()=> setModalIsOpen(false)}>&lt;</button>
-              <Grid flexColumn height="auto" padding="10px 15px 18px">
+              <Grid isFlex height="auto">
+                <Icon type="back" width="24px" height="25px" margin="0 auto" color="white" _onClick={()=> {setModalIsOpen(false); setNameCount(userInfo.username.length);}}/>
+                <Button height="auto" width="auto" color="#fff" border="none" _onClick={()=> {setModalIsOpen(false); setNameCount(userInfo.username.length);}}>확인</Button>
+              </Grid>
+              <Grid flexColumn height="auto" padding="10px 15px 0">
                 <UserProfile>
                   <Image
                     type="circle"
                     width="100px"
-                    margin="0 0 10px 20px"
                     src="https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png"/>
-                  <Icon type="profileEdit" width="21px" height="21px" margin="0 auto" />
+                  {/* <Icon type="profileEdit" width="21px" height="21px" margin="0 auto" /> */}
                 </UserProfile>
                 <UserName>
-                  <Text bold="500" size="20px" margin="0 10px 0 25px">유저이름</Text>
-                  <Icon type="nameEdit" width="17px" height="16px" margin="0 auto" />
+                  <Input width="140px" padding="0" border="none" bg="transparent" defaultValue={userInfo.username} _onChange={changeNickname}/>
+                  <Text margin="0 10px 0 0" bold="500" size="10px" color="#c4c4c4"> {nameCount}/10</Text>
                 </UserName>
               </Grid>
               <Grid height="auto" padding="0 0 20px 0">
                 <TitleList>
-                  {titleDB.map((t, idx) => {
-                    return <TitleItem key={idx} title={t.title} pick={t.pick}/>
+                  {userTitleList.map((t, idx) => {
+                    return <TitleItem key={idx} title={t.userTitle} img={t.userTitleImgUrl} pick={t.pick} done/>
+                  })}
+                  {noTitleList.map((t, idx) => {
+                    return <TitleItem key={idx} title={t.userTitle} img={t.userTitleImgUrl}/>
                   })}
                 </TitleList>
               </Grid>
@@ -117,7 +159,13 @@ const Editbtn = styled.div`
 
 const UserName = styled.div`
   display: flex;  
-  align-items:center; 
+  align-items:center;
+  border: 1px solid #C4C4C4;
+  background: #FFFFFF;
+  padding: 3px 0 3px 12px;
+  margin: 10px 0 45px;
+  width: 195px;
+  box-sizing: border-box;
 `;
 
 const UserProfile = styled.div`
@@ -135,27 +183,47 @@ export default MypageModal;
 
 const TitleItem = (props) => {
 
-  const { title, pick } = props
+  const { title, img , pick, done} = props
+
+  if(done) {
+    return (
+      <React.Fragment>
+        <Grid padding="2px" flexColumn width="82px" margin="0 12px 12px 0" radius="4px" hover>
+        {pick ? 
+          <Image
+            width="70px"
+            height="70px"
+            bg="#fff"
+            border="2px solid #000000"
+            borderRadius="12px"
+            src={img}/> : 
+          <Image
+            width="70px"
+            height="70px" 
+            bg="#fff"
+            borderRadius="12px"
+            src={img}/>}
+          <Text margin="5px 0 0 0" size="10px" bold="500">{title}</Text>
+        </Grid>
+      </React.Fragment>
+    );
+  }
 
   return (
     <React.Fragment>
-      {pick ? 
-        (<Grid padding="2px" bg="#ccc" flexColumn width="82px" margin="0 12px 12px 0" radius="4px">
-          <Image
-            width="70px"
-            height="70px"
-            borderRadius="12px"
-            src="https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png"/>
-          <Text margin="5px 0 0 0" size="10px" bold="500">{title}</Text>
-        </Grid>) : 
-        (<Grid padding="2px" flexColumn width="82px" margin="0 12px 12px 0" radius="4px">
-          <Image
-            width="70px"
-            height="70px"
-            borderRadius="12px"
-            src="https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png"/>
-          <Text margin="5px 0 0 0" size="10px" bold="500">{title}</Text>
-        </Grid>)}
+      <Grid padding="2px" flexColumn width="82px" margin="0 12px 12px 0" radius="4px">
+        {/* <Image
+          width="70px"
+          height="70px" 
+          bg="#C4C4C4"
+          borderRadius="12px"
+          src={img}/> */}
+        <Grid width="70px"
+          height="70px" 
+          bg="#C4C4C4"
+          radius="12px"></Grid>
+        <Text margin="5px 0 0 0" size="10px" bold="500" color="#D2D2D2">{title}</Text>
+      </Grid>
     </React.Fragment>
   );
 }
