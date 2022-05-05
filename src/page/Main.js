@@ -15,6 +15,8 @@ const Main = () => {
 
   const num = [2, 3, 4, 5];
   const arr = [0, 1];
+  const menuColor = [false, false, true, false, false]; // 메뉴바 색
+  console.log(menuColor);
 
   // React.useEffect(() => {
   //   if (navigator.geolocation) {
@@ -267,7 +269,7 @@ const Main = () => {
             </Grid>
             ;
           </Grid>
-          <Menubar />
+          <Menubar menuColor={menuColor}/>
         </Grid>
       </Mobile>
 
@@ -500,7 +502,7 @@ const Main = () => {
               })}
             </Grid>
           </Grid>
-          <Menubar />
+          <Menubar menuColor={menuColor}/>
         </Grid>
       </Desktop>
     </>

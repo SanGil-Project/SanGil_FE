@@ -7,6 +7,8 @@ import { Grid, Text, Icon, Image } from '../elements/element';
 
 const Mypage = (props) => {
 
+  const menuColor = [false, false, false, false, true]; // 메뉴바 색
+
   const num = [2, 3, 4, 5];
   const positions = [
     {
@@ -118,7 +120,7 @@ const Mypage = (props) => {
           
           <MenubarContainer>
             <Grid height="88px" minWidth="414px" maxWidth="800px" margin="auto">
-              <Menubar/>
+              <Menubar menuColor={menuColor}/>
             </Grid>
           </MenubarContainer>
 

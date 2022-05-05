@@ -6,6 +6,8 @@ import { Grid, Text, Icon, Button, Input } from '../elements/element';
 
 const Search = (props) => {
 
+  const menuColor = [false, false, false, true, false]; // 메뉴바 색
+
   const searchDB = [
     {
       id: "A",
@@ -72,7 +74,7 @@ const Search = (props) => {
         
         <MenubarContainer>
           <Grid height="88px" minWidth="414px" maxWidth="800px" margin="auto">
-            <Menubar/>
+            <Menubar menuColor={menuColor}/>
           </Grid>
         </MenubarContainer>
 
