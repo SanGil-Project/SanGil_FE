@@ -15,6 +15,7 @@ const Button = (props) => {
     _onClick,
     children,
     padding,
+    shadow,
   } = props;
   const styles = {
     width,
@@ -27,6 +28,7 @@ const Button = (props) => {
     radius,
     fontSize,
     padding,
+    shadow,
   };
 
   return (
@@ -61,6 +63,7 @@ const Btn = styled.button`
   ${(props) => (props.padding ? `padding: ${props.padding};` : null)}
   ${(props) => (props.radius ? `border-radius: ${props.radius};` : null)}
   ${(props) => (props.bgColor ? `background-color: ${props.bgColor};` : null)}
+  ${(props) => (props.shadow ? `box-shadow: ${props.shadow};` : null)}
   &:hover {
     cursor: pointer;
   }

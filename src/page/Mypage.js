@@ -53,7 +53,6 @@ const Mypage = (props) => {
 
   return (
     <React.Fragment>
-      <Grid height="1000px">
         <MypageContainer>
           <Header />
           <MypageWrap>
@@ -126,9 +125,6 @@ const Mypage = (props) => {
 
         </MypageContainer>
 
-      </Grid>
-        
-      
     </React.Fragment> 
   );
 };

@@ -21,7 +21,7 @@ const Input = (props) => {
   const styles = { width, height, border, margin, maxWidth, padding, bg };
 
   return (
-    <Grid justify>
+    <Grid alignItems="center" flexRow>
       {label && <div>{label}</div>}
       {defaultValue ? 
         <InfoInput
