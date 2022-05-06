@@ -13,8 +13,6 @@ const Menubar = (props) => {
     return m ? "#fff" : "#6F6F6F"
   })
 
-  console.log(menuColor, textColor);
-
 
   return (
     <React.Fragment>

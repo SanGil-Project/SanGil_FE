@@ -6,7 +6,6 @@ const Icon = (props) => {
 
   // console.log(page)
   const menuColor = page ? "#fff" : "#6F6F6F"
-  console.log(menuColor)
 
   if (type === "back") {
     return (

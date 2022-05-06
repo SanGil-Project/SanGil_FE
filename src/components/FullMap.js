@@ -5,7 +5,12 @@ import { Grid, Icon, Text } from "../elements/element"
 import KakaoMap from "./KakaoMap";
 
 const FullMap = (props) => {
-  const { data } = props;
+  const { data, getIndex } = props;
+
+  // const tempIndex = (index) => {
+  //   props.getIndex(index);
+  //   console.log("중간 전달 index ::", index);
+  // }
 
   return (
     <>
@@ -19,6 +24,7 @@ const FullMap = (props) => {
             full
             radius
             data={data} // 지도에 마커 찍어야하는 정보 객체 전달
+            getIndex={getIndex}
             
           />
         </MapBox>
