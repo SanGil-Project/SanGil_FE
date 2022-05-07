@@ -207,7 +207,7 @@ const Search = (props) => {
               <Grid 
                 key={idx} 
                 // ref={listRef.current[idx]}
-                ref={el => (listRef.current[idx] = el)}
+                // ref={el => (listRef.current[idx] = el)}
                 // ref={el => (listRef.current.push(el))}
                 padding="10px 16px" margin="0 0 15px" height="auto" bg="#efefef" isFlex hover>
                 <Grid isFlex width="auto">

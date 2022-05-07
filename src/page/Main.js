@@ -544,7 +544,6 @@ const Main = () => {
           >
             +
           </Button>
-          <Menubar />
           <Menubar menuColor={menuColor}/>
         </Grid>
       </Desktop>
