@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 
-import { Grid, Icon, Text } from "../elements/element"
+import { Grid, Icon, Text } from "../elements/element";
 import KakaoMap from "./KakaoMap";
 
 const FullMap = (props) => {
@@ -16,7 +16,7 @@ const FullMap = (props) => {
     <>
       <MapContainer>
         <MapBox>
-          <KakaoMap 
+          <KakaoMap
             width="100%"
             height="665px"
             maxWidth="772px"
@@ -24,8 +24,7 @@ const FullMap = (props) => {
             full
             radius
             data={data} // 지도에 마커 찍어야하는 정보 객체 전달
-            getIndex={getIndex}
-            
+            // getIndex={getIndex}
           />
         </MapBox>
       </MapContainer>
@@ -38,7 +37,7 @@ const MapContainer = styled.div`
   width: 100%;
   height: 0;
   overflow: hidden;
-  padding-bottom: 150%;  
+  padding-bottom: 150%;
 `;
 
 const MapBox = styled.div`
