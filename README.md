@@ -6,6 +6,8 @@
 - yarn add react-responsive
 - yarn add react-icons
 - yarn add react-modal
+- connected-react-router
+- history
 
 
 # 04 25 작업

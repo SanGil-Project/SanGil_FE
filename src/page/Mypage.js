@@ -125,6 +125,9 @@ const Mypage = (props) => {
 
         </MypageContainer>
 
+      
+        
+      
     </React.Fragment> 
   );
 };

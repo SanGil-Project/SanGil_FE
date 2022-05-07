@@ -7,6 +7,17 @@ const Icon = (props) => {
   // console.log(page)
   const menuColor = page ? "#fff" : "#6F6F6F"
 
+  if (type === "detailBtn") {
+    return (
+      <MenuIcon {...styles} viewBox="0 0 8 13" fill="none" onClick={_onClick}>
+        <path 
+          d="M1.19191 12.1361L0.375244 11.3049L5.37733 6.30281L0.375244 1.30073L1.19191 0.469482L7.02524 6.30281L1.19191 12.1361Z" 
+          fill="#6F6F6F"/>
+
+
+      </MenuIcon>
+    );
+  }
   
   if (type === "partyPeople") {
     return (
