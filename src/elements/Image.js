@@ -2,9 +2,26 @@ import React from "react";
 import styled from "styled-components";
 
 const Image = (props) => {
-  const { src, border, borderRadius, width, height, margin, type, onChange } =
-    props;
-  const styles = { src, width, height, margin, border, borderRadius };
+  const {
+    src,
+    border,
+    borderRadius,
+    width,
+    height,
+    margin,
+    type,
+    onChange,
+    objectFit,
+  } = props;
+  const styles = {
+    src,
+    width,
+    height,
+    margin,
+    border,
+    borderRadius,
+    objectFit,
+  };
 
   if (type === "circle") {
     return <CircleImg src={src} {...styles}></CircleImg>;
@@ -12,7 +29,7 @@ const Image = (props) => {
   if (type === "rectangle") {
     return (
       <React.Fragment>
-        <AspectOutter>
+        <AspectOutter >
           <AspectInner {...styles}></AspectInner>
         </AspectOutter>
       </React.Fragment>
@@ -25,17 +42,17 @@ Image.defaultProps = {
   border: "none",
   margin: false,
   borderRadius: false,
+  objectFit: "cover",
 };
 
 const Img = styled.img`
+border:1px solid red;
   ${(props) => (props.width ? `width: ${props.width};` : null)}
   ${(props) => (props.height ? `height: ${props.height};` : null)}
-   
-  ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
   ${(props) =>
     props.borderRadius ? `border-radius: ${props.borderRadius};` : null}
-  //  object-fit: scale-down;
-  object-fit: cover;
+  ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
+  object-fit:${(props) => `${props.objectFit}`};
 `;
 
 const AspectOutter = styled.div`

@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Icon, Text } from "../elements/element";
+import { Grid, Icon, Text, Button } from "../elements/element";
 import {
   HorizontalScroll,
   Card,
@@ -8,10 +8,12 @@ import {
 } from "../components/component";
 import { Desktop, Mobile } from "../shared/responsive";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 const Main = () => {
   const userInfo = useSelector((state) => state.user.userInfo);
   const token = sessionStorage.getItem("token");
+  const navigate = useNavigate();
 
   const num = [2, 3, 4, 5];
   const arr = [0, 1];
@@ -46,6 +48,7 @@ const Main = () => {
                 maxWidth="386px"
                 height="120px"
                 margin="34px auto 0 auto"
+                // _onClick={() => navigate(`/searchdetail/관악산`)}
               >
                 <Icon width="34px" height="29px" type="rank" />
                 <Text
@@ -96,6 +99,7 @@ const Main = () => {
                       width="194px"
                       height="120px"
                       margin="34px 7px 8px 7px"
+                      // _onClick={() => navigate(`/searchdetail/관악산`)}
                     >
                       <Icon width="34px" height="29px" type="rank" />
                       <Text
@@ -206,6 +210,9 @@ const Main = () => {
                   lineHeight="24px"
                   hover
                   isFlex
+                  _onClick={() => {
+                    navigate("/feed");
+                  }}
                 >
                   <span>더보기</span>
                   <Icon type="arrow" width="5px" height="8px" />
@@ -223,7 +230,7 @@ const Main = () => {
                 ))}
               </HorizontalScroll>
             </Grid>
-            <Grid height="238px" margin="36px 0 0 0">
+            <Grid height="238px" margin="36px 0 20px 0">
               <Grid
                 maxWidth="93.23%"
                 margin="0 7px 34px 7px"
@@ -248,6 +255,9 @@ const Main = () => {
                   lineHeight="24px"
                   hover
                   isFlex
+                  _onClick={() => {
+                    navigate("/party");
+                  }}
                 >
                   <span>더보기</span>
                   <Icon type="arrow" width="5px" height="8px" />
@@ -265,9 +275,19 @@ const Main = () => {
                 );
               })}
             </Grid>
-            ;
           </Grid>
-          <Menubar />
+          <Button
+            width="50px"
+            height="50px"
+            bgColor="black"
+            color="#fff"
+            radius="100%"
+            position="absolute"
+            margin="-80px 0 0 84.54%"
+            _onClick={() => navigate("/tracker")}
+          >
+            +
+          </Button>
         </Grid>
       </Mobile>
 
@@ -275,23 +295,25 @@ const Main = () => {
       <Desktop>
         <Grid border="1px solid black" width="414px" margin="0 auto">
           <Header />
-          <Grid padding="7px" overflowY="scroll" height="844px">
-            <Grid height="453px" margin="-10px auto 25px auto">
+          <Grid padding="7px" overflowY="scroll" height="1080px">
+            <Grid height="453px" margin="90px auto 25px auto">
               <Text
                 width="350px"
                 height="24px"
-                margin="30px 0 0 7px"
+                margin="0 0 0 7px"
                 bold="600"
                 size="2rem"
                 lineHeight="24px"
               >
-                지금 산길러 들이 오르고있는 산 TOP 5
+                지금 산길러 들이 오르고있는 산 TOP 10
               </Text>
               <Card
                 border="2px solid #B3B3B3"
                 width="386px"
                 height="120px"
                 margin="34px auto 0 auto"
+                // _onClick={() => navigate(`/searchdetail/관악산`)}
+                hover
               >
                 <Icon width="34px" height="29px" type="rank" />
                 <Text
@@ -338,6 +360,8 @@ const Main = () => {
                       width="194px"
                       height="120px"
                       margin="34px 7px 8px 7px"
+                      // _onClick={() => navigate(`/searchdetail/관악산`)}
+                      hover
                     >
                       <Icon width="34px" height="29px" type="rank" />
                       <Text
@@ -445,6 +469,9 @@ const Main = () => {
                   lineHeight="24px"
                   hover
                   isFlex
+                  _onClick={() => {
+                    navigate("/feed");
+                  }}
                 >
                   <span>더보기</span>
                   <Icon type="arrow" width="5px" height="8px" />
@@ -482,6 +509,9 @@ const Main = () => {
                   lineHeight="24px"
                   hover
                   isFlex
+                  _onClick={() => {
+                    navigate("/party");
+                  }}
                 >
                   <span>더보기</span>
                   <Icon type="arrow" width="5px" height="8px" />
@@ -500,6 +530,18 @@ const Main = () => {
               })}
             </Grid>
           </Grid>
+          <Button
+            width="50px"
+            height="50px"
+            bgColor="black"
+            color="#fff"
+            radius="100%"
+            position="fixed"
+            margin="-80px 0 0 350px"
+            _onClick={() => navigate("/tracker")}
+          >
+            +
+          </Button>
           <Menubar />
         </Grid>
       </Desktop>

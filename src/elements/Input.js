@@ -15,8 +15,19 @@ const Input = (props) => {
     _onChange,
     placeholder,
     label,
+    size,
+    radius,
   } = props;
-  const styles = { width, height, border, margin, maxWidth, padding };
+  const styles = {
+    width,
+    size,
+    height,
+    border,
+    margin,
+    maxWidth,
+    padding,
+    radius,
+  };
 
   return (
     <Grid>
@@ -44,12 +55,13 @@ const InfoInput = styled.input`
   border: ${(props) => props.border};
   padding: ${(props) => props.padding};
   box-sizing: border-box;
-  font-size: 16px;
+  font-size: ${(props) => (props.size ? `${props.size}` : `16px`)};
   outline: none;
   width: ${(props) => `${props.width}`};
   max-width: ${(props) => `${props.maxWidth}`};
   height: ${(props) => `${props.height}`};
   ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
+  ${(props) => (props.radius ? `border-radius: ${props.radius};` : null)}
 `;
 
 export default Input;

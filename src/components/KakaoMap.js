@@ -11,8 +11,6 @@ import {
   useMap,
   CustomOverlayMap,
 } from "react-kakao-maps-sdk";
-import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as pathActions } from "../redux/modules/geolocation";
 
 const { kakao } = window;
 
@@ -50,6 +48,7 @@ export const KakaoMap = (props) => {
         }}
         zoomable={zoomable}
         draggable={draggable}
+        isPanto={true}
       >
         {zoomable ? (
           <ZoomControl position={kakao.maps.ControlPosition.TOPLEFT} />
@@ -60,9 +59,9 @@ export const KakaoMap = (props) => {
           <Polyline
             path={[[...polylinePath]]}
             strokeWeight={5} // 선의 두께
-            strokeColor={"#ff0000"} // 선의 색깔
+            strokeColor="#FF8310" // 선의 색깔
             strokeOpacity={0.7} // 선의 불투명도 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-            strokeStyle={"solid"} // 선의 스타일
+            strokeStyle="solid" // 선의 스타일
           />
         ) : null}
         {full ? (

@@ -15,6 +15,9 @@ const Button = (props) => {
     _onClick,
     children,
     padding,
+    position,
+    zIndex,
+    type,
   } = props;
   const styles = {
     width,
@@ -27,7 +30,18 @@ const Button = (props) => {
     radius,
     fontSize,
     padding,
+    position,
+    zIndex,
+    type,
   };
+
+  if (type === "div") {
+    return (
+      <DivBtn onClick={_onClick} {...styles}>
+        {children}
+      </DivBtn>
+    );
+  }
 
   return (
     <Btn onClick={_onClick} {...styles}>
@@ -52,7 +66,7 @@ const Btn = styled.button`
   width: ${(props) => `${props.width}`};
   ${(props) => (props.maxWidth ? `max-width: ${props.maxWidth};` : null)}
   height: ${(props) => `${props.height}`};
-  border: ${(props) => props.border};
+  border: ${(props) => `${props.border}`};
   outline: none;
   box-sizing: border-box;
   font-size: ${(props) => `${props.fontSize}`};
@@ -61,6 +75,25 @@ const Btn = styled.button`
   ${(props) => (props.padding ? `padding: ${props.padding};` : null)}
   ${(props) => (props.radius ? `border-radius: ${props.radius};` : null)}
   ${(props) => (props.bgColor ? `background-color: ${props.bgColor};` : null)}
+  ${(props) => (props.position ? `position: ${props.position};` : null)}
+  ${(props) => (props.zIndex ? `z-index: ${props.zIndex};` : null)}
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const DivBtn = styled.div`
+  width: ${(props) => `${props.width}`};
+  height: ${(props) => `${props.height}`};
+  border: ${(props) => `${props.border}`};
+  box-sizing: border-box;
+  font-size: ${(props) => `${props.fontSize}`};
+  color: ${(props) => props.color};
+  ${(props) => (props.radius ? `border-radius: ${props.radius};` : null)};
+  ${(props) => (props.bgColor ? `background-color: ${props.bgColor};` : null)}
+  ${(props) => (props.radius ? `border-radius: ${props.radius};` : null)}
+  text-align: center;
+  line-height: ${(props) => `${props.height}`};
   &:hover {
     cursor: pointer;
   }
