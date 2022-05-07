@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
 import Modal from 'react-modal';
-import { Desktop, Mobile } from "../shared/responsive";
+import { useSelector } from "react-redux";
+
 import { PlanList, Menubar, FullMap, HorizontalScroll, Card, Header, MypageModal } from '../components/component';
 import { Grid, Text, Icon, Image } from '../elements/element';
 
 const Mypage = (props) => {
 
+  const userInfo = useSelector((state) => state.user.userInfo);
   const menuColor = [false, false, false, false, true]; // 메뉴바 색
 
+  console.log(userInfo)
   const num = [2, 3, 4, 5];
   // 테스트용 DB
   const myMountList = [
