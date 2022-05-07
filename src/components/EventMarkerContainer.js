@@ -13,6 +13,35 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
     setIsVisible(!isVisible);
     // map.panTo(marker.getPosition());
   }
+
+  if (content.time) {
+    return (
+      <React.Fragment>
+        <MapMarker
+          position={{lat: content.lat, lng: content.lng}} // 마커를 표시할 위치
+          onClick={(marker) => {markerClick(marker)}} // 해당 좌표로 지동 이동시키기
+        >
+          {isClicked && isVisible &&
+          <CustomOverlayMap index={index} position={{lat: content.lat, lng: content.lng}} yAnchor={1.45} zIndex={1}>
+            <MymarkerInfo>
+              <Grid padding="9px 13px">
+                <Text margin="5px 0" bold="600" size="14px">{content.mountainName}</Text>
+                <Grid flexRow justify="left" margin="8px 0 4px">
+                  <Text margin="0 18px 0 0" size="12px" bold="500" color="#C4C4C4">총 거리</Text>
+                  <Text margin="0" size="12px" bold="500" color="#C4C4C4">소요 시간</Text>
+                </Grid>
+                <Grid flexRow justify="left">
+                  <Text margin="0 18px 0 0" size="12px" bold="500">{content.distance}</Text>
+                  <Text margin="0" size="12px" bold="500">{content.time}</Text>
+                </Grid>
+              </Grid>
+            </MymarkerInfo>
+          </CustomOverlayMap>} 
+        </MapMarker>
+  
+      </React.Fragment>
+      );
+  }
   return (
     <React.Fragment>
       <MapMarker
@@ -26,10 +55,6 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
         // onMouseOver={(marker) => map.panTo(marker.getPosition())}
         // onMouseOut={() => setIsVisible(false)}
       >
-        {/* <ClickMarker 
-          index={index}
-          isClicked={selectedMarker === index}
-          content={content}/> */}
         {isClicked && isVisible &&
         <CustomOverlayMap index={index} position={{lat: content.lat, lng: content.lng}} yAnchor={1.18} zIndex={1}>
           <MarkerInfo>
@@ -39,31 +64,28 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
               <Text margin="0" size="13px">{content.mountainAddress}</Text>
             </Grid>
             {/* <div className="close" onClick={()=> setIsVisible(!isVisible)}>X</div> */}
-            <div className="close" onClick={()=> setIsVisible(!isVisible)}>자세히</div>
+            {/* <div className="close" onClick={()=> setIsVisible(!isVisible)}>자세히</div> */}
             
           </MarkerInfo>
         </CustomOverlayMap>} 
       </MapMarker>
 
-      {/* <Grid padding="15px 14px 100px" height="auto">
-      {data.map((d, idx) => {
-        return (
-        <Grid key={idx} padding="10px 16px" margin="0 0 15px" height="auto" bg="#efefef" isFlex hover>
-          <Grid isFlex width="auto">
-            <Grid bg="#fff" border="none" radius="12px" padding="6px 11px" width="auto" height="auto">
-              <Text margin="0" size="18px" nowrap>{d.mountainId}. {d.mountainName}</Text>
-            </Grid>
-            <Text size="16px" bold="400" margin="0 20px">{d.mountainAddress}</Text>
-          </Grid>
-          <Text size="16px" bold="400" margin="0" nowrap>평균 ⭐ {d.starAvr}</Text>
-        </Grid>);
-      })}
-      </Grid> */}
-
     </React.Fragment>
   );
 };
 
+const MymarkerInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 180px;
+  // height: auto;
+  // overflow: hidden;
+  border: none;
+  outline: none;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px 0 rgba(0,0,0,0.1);
+`;
 const MarkerInfo = styled.div`
   display: flex;
   flex-direction: column;
