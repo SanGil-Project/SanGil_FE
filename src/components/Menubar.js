@@ -5,8 +5,13 @@ import { useNavigate } from "react-router";
 import { Grid, Icon, Text } from "../elements/element";
 // import { Desktop, Mobile } from "../shared/MediaQuery";
 
-const Menubar = () => {
+const Menubar = (props) => {
+  const { menuColor } = props;
   const navigate = useNavigate();
+
+  const textColor = menuColor.map((m) => {
+    return m ? "#fff" : "#6F6F6F";
+  });
 
   return (
     <React.Fragment>
@@ -18,13 +23,20 @@ const Menubar = () => {
             navigate("/feed");
           }}
         >
-          <Icon type="feedIcon" width="36px" height="36px" margin="0 auto" />
+          <Icon
+            type="feedIcon"
+            width="36px"
+            height="36px"
+            margin="0 auto"
+            page={menuColor[0]}
+          />
           <Text
             width="auto"
             size="10px"
             align="center"
             bold="600"
             margin="5.6px auto 0"
+            color={textColor[0]}
           >
             Feed
           </Text>
@@ -36,13 +48,20 @@ const Menubar = () => {
             navigate("/party");
           }}
         >
-          <Icon type="partyIcon" width="36px" height="36px" margin="0 auto" />
+          <Icon
+            type="partyIcon"
+            width="36px"
+            height="36px"
+            margin="0 auto"
+            page={menuColor[1]}
+          />
           <Text
             width="auto"
             size="10px"
             align="center"
             bold="600"
             margin="5.6px auto 0"
+            color={textColor[1]}
           >
             동호회
           </Text>
@@ -54,13 +73,20 @@ const Menubar = () => {
             navigate("/");
           }}
         >
-          <Icon type="homeIcon" width="36px" height="36px" margin="0 auto" />
+          <Icon
+            type="homeIcon"
+            width="36px"
+            height="36px"
+            margin="0 auto"
+            page={menuColor[2]}
+          />
           <Text
             width="auto"
             size="10px"
             align="center"
             bold="600"
             margin="5.6px auto 0"
+            color={textColor[2]}
           >
             홈버튼
           </Text>
@@ -72,15 +98,22 @@ const Menubar = () => {
             navigate("/search");
           }}
         >
-          <Icon type="searchIcon" width="36px" height="36px" margin="0 auto" />
+          <Icon
+            type="mountain"
+            width="41px"
+            height="36px"
+            margin="0 auto"
+            page={menuColor[3]}
+          />
           <Text
             width="auto"
             size="10px"
             align="center"
             bold="600"
             margin="5.6px auto 0"
+            color={textColor[3]}
           >
-            검색
+            산코스
           </Text>
         </Grid>
         <Grid
@@ -90,13 +123,20 @@ const Menubar = () => {
             navigate("/mypage");
           }}
         >
-          <Icon type="mypageIcon" width="36px" height="36px" margin="0 auto" />
+          <Icon
+            type="mypageIcon"
+            width="36px"
+            height="36px"
+            margin="0 auto"
+            page={menuColor[4]}
+          />
           <Text
             width="auto"
             size="10px"
             align="center"
             bold="600"
             margin="5.6px auto 0"
+            color={textColor[4]}
           >
             마이페이지
           </Text>

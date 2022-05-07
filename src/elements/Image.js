@@ -4,6 +4,7 @@ import styled from "styled-components";
 const Image = (props) => {
   const {
     src,
+    bg,
     border,
     borderRadius,
     width,
@@ -15,6 +16,7 @@ const Image = (props) => {
   } = props;
   const styles = {
     src,
+    bg,
     width,
     height,
     margin,
@@ -46,13 +48,15 @@ Image.defaultProps = {
 };
 
 const Img = styled.img`
-border:1px solid red;
+  ${(props) => (props.bg ? `background-color: ${props.bg};` : null)}   
   ${(props) => (props.width ? `width: ${props.width};` : null)}
   ${(props) => (props.height ? `height: ${props.height};` : null)}
+  ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
+  ${(props) => (props.border ? `border: ${props.border};` : null)}
   ${(props) =>
     props.borderRadius ? `border-radius: ${props.borderRadius};` : null}
-  ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
   object-fit:${(props) => `${props.objectFit}`};
+  box-sizing: border-box;
 `;
 
 const AspectOutter = styled.div`

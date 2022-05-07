@@ -15,6 +15,8 @@ const Text = (props) => {
     maxWidth,
     wordBreak,
     textOverflow,
+    nowrap,
+
   } = props;
   const styles = {
     bold: bold,
@@ -28,6 +30,8 @@ const Text = (props) => {
     maxWidth,
     wordBreak,
     textOverflow,
+    nowrap,
+
   };
   return (
     <React.Fragment>
@@ -47,8 +51,9 @@ Text.defaultProps = {
 
 const P = styled.p`
   ${(props) =>
-    props.wordBreak ? `word-break: ${props.wordBreak};` : `keep-all;`}
-  white-space: normal;
+    props.wordBreak ? `word-break: ${props.wordBreak};` : `word-break: keep-all;`}
+  ${(props) =>
+    props.nowrap ? `white-space: nowrap;` : `white-space: normal;`}
   color: ${(props) => props.color};
   font-size: ${(props) => props.size};
   font-weight: ${(props) => props.bold};

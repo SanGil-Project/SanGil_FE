@@ -18,6 +18,7 @@ const Button = (props) => {
     position,
     zIndex,
     type,
+    shadow,
   } = props;
   const styles = {
     width,
@@ -33,6 +34,7 @@ const Button = (props) => {
     position,
     zIndex,
     type,
+    shadow,
   };
 
   if (type === "div") {
@@ -77,6 +79,7 @@ const Btn = styled.button`
   ${(props) => (props.bgColor ? `background-color: ${props.bgColor};` : null)}
   ${(props) => (props.position ? `position: ${props.position};` : null)}
   ${(props) => (props.zIndex ? `z-index: ${props.zIndex};` : null)}
+  ${(props) => (props.shadow ? `box-shadow: ${props.shadow};` : null)}
   &:hover {
     cursor: pointer;
   }
@@ -93,7 +96,6 @@ const DivBtn = styled.div`
   ${(props) => (props.bgColor ? `background-color: ${props.bgColor};` : null)}
   ${(props) => (props.radius ? `border-radius: ${props.radius};` : null)}
   text-align: center;
-  line-height: ${(props) => `${props.height}`};
   &:hover {
     cursor: pointer;
   }

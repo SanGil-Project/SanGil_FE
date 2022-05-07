@@ -6,6 +6,10 @@
 - yarn add react-responsive
 - yarn add react-icons
 - yarn add react-modal
+- connected-react-router
+- history
+
+
 
 # 04 25 작업
 
@@ -59,6 +63,11 @@
 - Comment, CourseCard, Star 컴포넌트 생성
 - SearchDetail 페이지 생성
 
+# 05 04 작업
+
+- 마이페이지 변경 모달 뷰 완성(와이어프레임 베이스)
+- 페이지마다 메뉴바 색 변경 적용
+
 # trouble shooting
 
 - 0428
@@ -69,3 +78,4 @@
 
 - 0504
   - 트래킹 중 맵을 다시 그려줘야 하는 문제 발생 : 현재 위치가 일정 시간마다 위도, 경도를 받아서 변하는데, 움직인 부분만큼 맵이 다시 로드 되지 않는다
+git 

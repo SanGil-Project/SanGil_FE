@@ -1,14 +1,19 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
+import { createBrowserHistory } from "history";
+import { connectRouter } from "connected-react-router";
 import user from "./modules/user";
 import polyline from "./modules/geolocation";
+
+export const history =  createBrowserHistory();
 
 const rootReducer = combineReducers({
   user: user,
   polyline: polyline,
+  router: connectRouter(history),
 });
 
-const middlewares = [thunk];
+const middlewares = [thunk.withExtraArgument({history:history})];
 
 const env = process.env.NODE_ENV;
 
