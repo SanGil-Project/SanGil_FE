@@ -7,7 +7,6 @@ const TextCard = (props) => {
 
   const { data } = props;
 
-  console.log(data)
   return (
     <React.Fragment>
       <CardContainer>

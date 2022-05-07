@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
 import { history } from "../redux/configureStore";
+import { useParams } from "react-router-dom";
 
 import { Section, Menubar, FullMap, HorizontalScroll, Card, Header } from '../components/component';
 
 import { Grid, Text, Icon, Button, Input } from '../elements/element';
 
-const Party = (props) => {
+const PartyDetail = (props) => {
   const menuColor = [false, true, false, false, false]; // 메뉴바 색
+  const partyid = useParams().partyid;
 
   const partyList = [
     {
@@ -60,51 +62,42 @@ const Party = (props) => {
     },
   ];
 
+  const partyIdx = partyList.findIndex(p => p.partyId == partyid);
+
   return (
     <React.Fragment>
       <PartyContainer>
         <Header />
         <PartyWrap>
           <Grid padding="96px 14px 100px">
-            {partyList?.map((p, idx)=>{ 
-              const bg = p.completed ? "#C4C4C4" : "#E6E6E6";
-              const btnText = p.completed ? "마감 되었어요😢" : "참가하기";
-              return (
-                <Grid key={idx} bg={bg} radius="16px" padding="17px 16px" margin="0 0 24px" flexColumn>
-                  <Grid alignItems="left">
-                    <Text margin="0 0 18px" bold="500">{p.title}</Text>
-                    <Grid flexRow justify="left" padding="0 0 10px">
-                      <Grid width="18px">
-                        <Icon type="partyMountain" width="18px" height="17px" margin="0 auto"/>
-                      </Grid>
-                      <Text margin="0 12px" bold="500" size="14px">{p.mountain} ({p.address})</Text>
-                    </Grid>
-                    <Grid flexRow justify="left" padding="0 0 10px">
-                      <Grid width="18px">
-                        <Icon type="partyDate" width="15px" height="17px" margin="0 auto"/>
-                      </Grid>
-                      <Text margin="0 12px" bold="500" size="14px">{p.partyDate} (시간 {p.partyTime})</Text>
-                    </Grid>
-                    <Grid flexRow justify="left" padding="0 0 10px">
-                      <Grid width="18px">
-                        <Icon type="partyPeople" width="16px" height="16px" margin="0 auto"/>
-                      </Grid>
-                      <Text margin="0 12px" bold="500" size="14px">{p.curPeople}/{p.maxPeople}명 | 모두 참여 가능 </Text>
-                    </Grid>
+            <Grid radius="16px" padding="17px 16px" margin="0 0 24px" flexColumn>
+              <Grid alignItems="left">
+                <Text margin="0 0 18px" bold="500">{partyList[partyIdx].title}</Text>
+                <Grid flexRow justify="left" padding="0 0 10px">
+                  <Grid width="18px">
+                    <Icon type="partyMountain" width="18px" height="17px" margin="0 auto"/>
                   </Grid>
-                  <Button bgColor="#fff" border="none" width="170px" height="48px" margin="20px 0 0" _onClick={()=>{history.push(`/partydetail/${p.partyId}`);}}>
-                    <Text margin="0" align>{btnText}</Text>
-                  </Button>
+                  <Text margin="0 12px" bold="500" size="14px">{partyList[partyIdx].mountain} ({partyList[partyIdx].address})</Text>
                 </Grid>
-              );
-            })}
+                <Grid flexRow justify="left" padding="0 0 10px">
+                  <Grid width="18px">
+                    <Icon type="partyDate" width="15px" height="17px" margin="0 auto"/>
+                  </Grid>
+                  <Text margin="0 12px" bold="500" size="14px">{partyList[partyIdx].partyDate} (시간 {partyList[partyIdx].partyTime})</Text>
+                </Grid>
+                <Grid flexRow justify="left" padding="0 0 10px">
+                  <Grid width="18px">
+                    <Icon type="partyPeople" width="16px" height="16px" margin="0 auto"/>
+                  </Grid>
+                  <Text margin="0 12px" bold="500" size="14px">{partyList[partyIdx].curPeople}/{partyList[partyIdx].maxPeople}명 | 모두 참여 가능 </Text>
+                </Grid>
+              </Grid>
+              <Button bgColor="#fff" border="none" width="170px" height="48px" margin="20px 0 0" _onClick={()=>{alert(partyList[partyIdx].partyId, '번방 참가하기')}}>
+                <Text margin="0" align>참가하기</Text>
+              </Button>
+            </Grid>
           </Grid>
         </PartyWrap>
-        <CreatPartyBtn>
-          <Button bgColor="#48E988" border="none" width="105px" height="45px" radius="16px" shadow="0px 4px 4px rgba(0, 0, 0, 0.25)">
-            <Text margin="0" align size="14px">모임 만들기</Text>
-          </Button>
-        </CreatPartyBtn>
         
         <MenubarContainer>
           <Grid height="88px" minWidth="414px" maxWidth="800px" margin="auto">
@@ -142,11 +135,5 @@ const MenubarContainer = styled.div`
   z-index : 10;
 `;
 
-const CreatPartyBtn = styled.div`
-  position: fixed;
-  bottom: 110px;
-  right: 15px;
-  z-index : 9;
-`;
 
-export default Party;
+export default PartyDetail;

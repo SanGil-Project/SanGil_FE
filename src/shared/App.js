@@ -1,5 +1,7 @@
 import "./App.css";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { history } from "../redux/configureStore";
+import { ConnectedRouter } from "connected-react-router";
 import styled from "styled-components";
 // social login
 import { KakaoLogin, GoogleLogin, NaverLogin } from "../components/component";
@@ -12,6 +14,7 @@ import {
   Search,
   SearchDetail,
   Tracker,
+  PartyDetail,
 } from "../page/page";
 
 function App() {
@@ -26,7 +29,8 @@ function App() {
           <Route path="/user/naver/callback" element={<NaverLogin />} />
           <Route path="/mypage" element={<Mypage />} />
           <Route path="/feed" element={<Feed />} />
-          <Route path="/party" element={<Party />} />
+          <Route path="/party" exact element={<Party />} />
+          <Route path="/partydetail/:partyid" element={<PartyDetail />} />
           <Route path="/search" element={<Search />} />
           <Route path="/searchdetail" element={<SearchDetail />} />
           <Route path="/tracker" element={<Tracker />} />
