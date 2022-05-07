@@ -14,7 +14,9 @@ const Text = (props) => {
     lineHeight,
     maxWidth,
     wordBreak,
+    textOverflow,
     nowrap,
+
   } = props;
   const styles = {
     bold: bold,
@@ -27,7 +29,9 @@ const Text = (props) => {
     lineHeight,
     maxWidth,
     wordBreak,
+    textOverflow,
     nowrap,
+
   };
   return (
     <React.Fragment>
@@ -59,6 +63,10 @@ const P = styled.p`
   ${(props) => (props.height ? `height: ${props.height};` : null)}
   ${(props) => (props.lineHeight ? `line-height: ${props.lineHeight};` : null)}
   ${(props) => (props.maxWidth ? `max-width: ${props.maxWidth};` : null)}
+  ${(props) =>
+    props.textOverflow
+      ? `text-overflow: ${props.textOverflow}; overflow:hidden; white-space:nowrap;`
+      : null}
 `;
 
 export default Text;

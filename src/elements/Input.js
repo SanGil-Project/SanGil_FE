@@ -17,11 +17,27 @@ const Input = (props) => {
     value,
     defaultValue,
     label,
-    bg,
+    size,
+    radius,
+        bg,
     onSubmit,
     is_submit,
   } = props;
-  const styles = { width, height, border, margin, maxWidth, padding, bg };
+
+  const styles = {
+    width,
+    size,
+    height,
+    border,
+    margin,
+    maxWidth,
+    padding,
+    radius,
+    bg
+  }
+
+
+
 
   if(defaultValue) {
     return (
@@ -78,14 +94,16 @@ const InfoInput = styled.input`
   border: ${(props) => props.border};
   padding: ${(props) => props.padding};
   box-sizing: border-box;
-  font-size: 16px;
+  font-size: ${(props) => (props.size ? `${props.size}` : `16px`)};
   outline: none;
 
   width: ${(props) => `${props.width}`};
   max-width: ${(props) => `${props.maxWidth}`};
   height: ${(props) => `${props.height}`};
   ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
+  ${(props) => (props.radius ? `border-radius: ${props.radius};` : null)}
   ${(props) => (props.bg ? `background-color: ${props.bg};` : null)}
+
 `;
 
 export default Input;

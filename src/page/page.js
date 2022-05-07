@@ -7,5 +7,19 @@ import Mypage from "./Mypage";
 import Search from "./Search";
 import SearchDetail from "./SearchDetail";
 import Tracker from "./Tracker";
+import FeedDetail from "./FeedDetail";
 
-export { Login, Main, Feed, Party, Mypage, Search, SearchDetail, Tracker, PartyDetail };
+
+export {
+  Login,
+  Main,
+  Feed,
+  Party,
+  Mypage,
+  Search,
+  SearchDetail,
+  Tracker,
+  FeedDetail,
+  PartyDetail
+};
+

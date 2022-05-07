@@ -12,6 +12,7 @@ const Star = (props) => {
     margin,
     type,
     showIndex,
+    minWidth,
   } = props;
 
   const starArr = [0, 1, 2, 3, 4];
@@ -67,6 +68,7 @@ const Star = (props) => {
     <Grid
       border={border}
       width={width}
+      minWidth={minWidth}
       height={height}
       lineHeight={lineHeight}
       margin={margin}

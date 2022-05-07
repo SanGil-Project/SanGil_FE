@@ -9,9 +9,10 @@ import PlanList from "./PlanList";
 import Star from "./Star";
 import Comment from "./Comment";
 import CourseCard from "./CourseCard";
-import FullMap from './FullMap';
-import MypageModal from './MypageModal';
-
+import FullMap from "./FullMap";
+import MypageModal from "./MypageModal";
+import SearchName from "./SearchName";
+import EndModal from "./EndModal";
 
 export {
   GoogleLogin,
@@ -26,5 +27,7 @@ export {
   Comment,
   CourseCard,
   FullMap,
-  MypageModal
+  MypageModal,
+  SearchName,
+  EndModal,
 };

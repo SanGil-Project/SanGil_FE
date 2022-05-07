@@ -2,9 +2,28 @@ import React from "react";
 import styled from "styled-components";
 
 const Image = (props) => {
-  const { src, bg, border, borderRadius, width, height, margin, type, onChange } =
-    props;
-  const styles = { src, bg, width, height, margin, border, borderRadius };
+  const {
+    src,
+    bg,
+    border,
+    borderRadius,
+    width,
+    height,
+    margin,
+    type,
+    onChange,
+    objectFit,
+  } = props;
+  const styles = {
+    src,
+    bg,
+    width,
+    height,
+    margin,
+    border,
+    borderRadius,
+    objectFit,
+  };
 
   if (type === "circle") {
     return <CircleImg src={src} {...styles}></CircleImg>;
@@ -12,7 +31,7 @@ const Image = (props) => {
   if (type === "rectangle") {
     return (
       <React.Fragment>
-        <AspectOutter>
+        <AspectOutter >
           <AspectInner {...styles}></AspectInner>
         </AspectOutter>
       </React.Fragment>
@@ -25,6 +44,7 @@ Image.defaultProps = {
   border: "none",
   margin: false,
   borderRadius: false,
+  objectFit: "cover",
 };
 
 const Img = styled.img`
@@ -35,8 +55,7 @@ const Img = styled.img`
   ${(props) => (props.border ? `border: ${props.border};` : null)}
   ${(props) =>
     props.borderRadius ? `border-radius: ${props.borderRadius};` : null}
-  //  object-fit: scale-down;
-  object-fit: cover;
+  object-fit:${(props) => `${props.objectFit}`};
   box-sizing: border-box;
 `;
 
