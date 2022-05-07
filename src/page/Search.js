@@ -165,6 +165,18 @@ const Search = (props) => {
   // }, [listIndex]);
   // const listFocus = useRef([]);
 
+  const [searchKeyword, setSearchKeyword] = React.useState("");
+  const onChange = (e) => {
+    setSearchKeyword(e.target.value);
+  }
+  const search = () => {
+    if(searchKeyword==="") {
+      window.alert("검색어를 입력해주세요!");
+      return;
+    }
+    setSearchKeyword("");
+  }
+
   return (
     <React.Fragment>
       <SearchContainer>
@@ -173,7 +185,15 @@ const Search = (props) => {
           <Grid padding="96px 14px 33px">
             <Grid bg="#fff" height="67px" border="1px solid #636363" radius="40px" padding="15px 13px" flexRow>
               <Icon type="searchIcon" width="37px" height="37px" margin="0 auto" />
-              <Input width="100%" placeholder="어떤 산을 찾고 계신가요?" border="none" padding="0" margin="0 5.5px"/>
+              <Input 
+                width="100%" border="none" padding="0" margin="0 5.5px"
+                placeholder="어떤 산을 찾고 계신가요?" 
+                _onChange={onChange}
+                value={searchKeyword}
+                onSubmit={search}
+                is_submit
+                />
+              <Button border="none" width="50px" _onClick={search}>검색</Button>
             </Grid>
           </Grid>
           <Grid padding="0 14px" height="auto">
