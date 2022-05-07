@@ -4,10 +4,11 @@
 - yarn add react-google-login
 - yarn add react-kakao-maps-sdk
 - yarn add react-responsive
-  <<<<<<< HEAD
-- # yarn add react-icons
+- yarn add react-icons
 - yarn add react-modal
-  > > > > > > > 7e74b2d9cba322fcff316cfed97aa1946b58cfda
+- connected-react-router
+- history
+
 
 # 04 25 작업
 
@@ -60,6 +61,11 @@
 - 검색후 페이지 뷰 초안 완료
 - Comment, CourseCard, Star 컴포넌트 생성
 - SearchDetail 페이지 생성
+
+# 05 04 작업
+
+- 마이페이지 변경 모달 뷰 완성(와이어프레임 베이스)
+- 페이지마다 메뉴바 색 변경 적용
 
 # trouble shooting
 

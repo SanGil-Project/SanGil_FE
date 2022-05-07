@@ -5,7 +5,7 @@ import HorizontalScroll from "./HorizontalScroll";
 import Card from "./Card";
 import Header from "./Header";
 import Menubar from "./Menubar";
-import Section from "./Section";
+import PlanList from "./PlanList";
 import Star from "./Star";
 import Comment from "./Comment";
 import CourseCard from "./CourseCard";
@@ -21,7 +21,7 @@ export {
   Card,
   Header,
   Menubar,
-  Section,
+  PlanList,
   Star,
   Comment,
   CourseCard,

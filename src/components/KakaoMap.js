@@ -17,6 +17,7 @@ import { actionCreators as pathActions } from "../redux/modules/geolocation";
 const { kakao } = window;
 
 export const KakaoMap = (props) => {
+
   const {
     width,
     height,
@@ -31,12 +32,18 @@ export const KakaoMap = (props) => {
     myLoca,
     polylinePath,
     data,
+    getIndex,
   } = props;
 
   const [location, setLocation] = useState({
     lat: 36.5,
     lng: 127.8,
   });
+  const [selectedMarker, setSeleteMarker] = useState()
+  console.log("여기서 선택된 값 :: ", selectedMarker);
+  if(getIndex) {
+    props.getIndex(selectedMarker); // 검색 페이지로 선택된 marker index 보내기
+  }  
 
   return (
     <Grid width={width} height={height} margin={margin} maxWidth={maxWidth}>
@@ -52,7 +59,7 @@ export const KakaoMap = (props) => {
         draggable={draggable}
       >
         {zoomable ? (
-          <ZoomControl position={kakao.maps.ControlPosition.TOPLEFT} />
+          <ZoomControl position={kakao?.maps.ControlPosition.TOPLEFT} />
         ) : (
           ""
         )}
@@ -67,7 +74,14 @@ export const KakaoMap = (props) => {
         ) : null}
         {full ? (
           data.map((p, idx) => {
-            return <EventMarkerContainer key={idx} content={p} />;
+            return <EventMarkerContainer
+                      key={idx} 
+                      index={idx} 
+                      content={p}
+                      data={data}
+                      onClick={() => setSeleteMarker(idx)}
+                      isClicked={selectedMarker === idx}
+                    />;
           })
         ) : myLoca ? (
           <MapMarker position={myLoca ? myLoca : location} />
