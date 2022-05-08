@@ -19,10 +19,10 @@ const Icon = (props) => {
 
   if (type === "detailBtn") {
     return (
-      <MenuIcon {...styles} viewBox="0 0 8 13" fill="none" onClick={_onClick}>
+      <MenuIcon {...styles} viewBox="0 0 7 13" fill="none" onClick={_onClick}>
         <path
-          d="M1.19191 12.1361L0.375244 11.3049L5.37733 6.30281L0.375244 1.30073L1.19191 0.469482L7.02524 6.30281L1.19191 12.1361Z"
-          fill="#6F6F6F"
+          d="M0.898454 12.1222L0.0817871 11.291L5.08387 6.2889L0.0817871 1.28682L0.898454 0.455566L6.73179 6.2889L0.898454 12.1222Z"
+          fill="#989898"
         />
       </MenuIcon>
     );
