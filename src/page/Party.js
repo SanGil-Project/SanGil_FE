@@ -75,7 +75,7 @@ const Party = (props) => {
           <Grid padding="96px 14px 100px">
             {partyList?.map((p, idx) => {
               const bg = p.completed ? "#C4C4C4" : "#E6E6E6";
-              const btnText = p.completed ? "마감 되었어요😢" : "참가하기";
+              const btnText = p.completed ? "마감 되었어요😢" : "모집내용확인";
               return (
                 <Grid
                   key={idx}
@@ -125,7 +125,7 @@ const Party = (props) => {
                         />
                       </Grid>
                       <Text margin="0 12px" bold="500" size="14px">
-                        {p.curPeople}/{p.maxPeople}명 | 모두 참여 가능{" "}
+                        {p.curPeople}/{p.maxPeople}명
                       </Text>
                     </Grid>
                   </Grid>
