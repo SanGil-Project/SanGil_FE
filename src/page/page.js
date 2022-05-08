@@ -9,6 +9,7 @@ import Search from "./Search";
 import SearchDetail from "./SearchDetail";
 import Tracker from "./Tracker";
 import FeedDetail from "./FeedDetail";
+import ChatRoom from "./ChatRoom";
 
 
 export {
@@ -23,5 +24,6 @@ export {
   FeedDetail,
   PartyDetail,
   PartyWrite,
+  ChatRoom,
 };
 

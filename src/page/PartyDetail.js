@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from "styled-components";
 import { history } from "../redux/configureStore";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 import { Menubar, Header } from '../components/component';
 
@@ -10,6 +11,7 @@ import { Grid, Text, Icon, Button, Image } from '../elements/element';
 const PartyDetail = (props) => {
   const menuColor = [false, true, false, false, false]; // 메뉴바 색
   const partyid = useParams().partyid;
+  const navigate = useNavigate();
 
   const partyItem = {
       partyId : 1,
@@ -115,10 +117,18 @@ const PartyDetail = (props) => {
               </Grid>
               <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
               <Grid isFlex>
-                <Button bgColor="#C4C4C4" border="none" height="48px" margin="20px 0 20px 13px" radius="12px" _onClick={()=>{alert(`${partyItem.partyId} 번째 모임 참가완료!`)}}>
+                <Button 
+                  bgColor="#C4C4C4" border="none" height="48px" margin="20px 0 20px 13px" radius="12px" 
+                  _onClick={()=>{
+                    alert(`${partyItem.partyId} 번째 모임 참가완료!`)
+                  }}>
                   <Text margin="0" size="18px" bold="600" align>참가하기</Text>
                 </Button>
-                <Button bgColor="#C4C4C4" border="none" height="48px" margin="20px 0 20px 13px" radius="12px" _onClick={()=>{alert(`${partyItem.partyId} 번 채팅방 입장!`)}}>
+                <Button 
+                  bgColor="#C4C4C4" border="none" height="48px" margin="20px 0 20px 13px" radius="12px" 
+                  _onClick={()=>{
+                    navigate(`/chatroom/${partyItem.partyId}`);
+                  }}>
                   <Text margin="0" size="18px" bold="600" align>채팅방들어가기</Text>
                 </Button>
               </Grid>

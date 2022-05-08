@@ -18,6 +18,7 @@ import {
   FeedDetail,
   PartyDetail,
   PartyWrite,
+  ChatRoom,
 } from "../page/page";
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
           <Route path="/searchdetail/:name" element={<SearchDetail />} />
           <Route path="/tracker" element={<Tracker />} />
           <Route path="/feeddetail" element={<FeedDetail />} />
+          <Route path="/chatroom/:partyid" element={<ChatRoom />} />
         </Routes>
       </Container>
     </BrowserRouter>
