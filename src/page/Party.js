@@ -156,6 +156,9 @@ const Party = (props) => {
             height="45px"
             radius="16px"
             shadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+            _onClick={() => {
+              navigate(`/partywrite`);
+            }}
           >
             <Text margin="0" align size="14px">
               모임 만들기

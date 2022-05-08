@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { history } from "../redux/configureStore";
 import { useParams } from "react-router-dom";
 
-import { Section, Menubar, FullMap, HorizontalScroll, Card, Header } from '../components/component';
+import { Menubar, Header } from '../components/component';
 
-import { Grid, Text, Icon, Button, Input, Image } from '../elements/element';
+import { Grid, Text, Icon, Button, Image } from '../elements/element';
 
 const PartyDetail = (props) => {
   const menuColor = [false, true, false, false, false]; // 메뉴바 색

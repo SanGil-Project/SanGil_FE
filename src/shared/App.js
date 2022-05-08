@@ -17,6 +17,7 @@ import {
   Tracker,
   FeedDetail,
   PartyDetail,
+  PartyWrite,
 } from "../page/page";
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
           <Route path="/mypage" element={<Mypage />} />
           <Route path="/feed" element={<Feed />} />
           <Route path="/party" exact element={<Party />} />
+          <Route path="/partywrite" exact element={<PartyWrite />} />
           <Route path="/partydetail/:partyid" element={<PartyDetail />} />
           <Route path="/search" element={<Search />} />
           <Route path="/searchdetail/:name" element={<SearchDetail />} />
