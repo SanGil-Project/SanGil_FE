@@ -17,12 +17,23 @@ const PartyDetail = (props) => {
 
   const partyList = useSelector((state) => state.party.partyList[0]);
   const partymember = partyList.partymember;
+  const [partyNumber, setPartyNumber] = React.useState(partyList.curtPeople);
 
-  const token = sessionStorage.getItem('token');
+  // const token = sessionStorage.getItem('token');
 
   React.useEffect(() => {
     dispatch(partyActions.getOnePartyDB(partyId));
   }, []);
+
+  const attendParty = (partyId) => {
+    if(partymember.length === partyList.maxPeople){
+      window.alert("모집이 완료되었습니다!");
+      return;
+    }
+    const token = "dkdkdk"
+    dispatch(partyActions.attendPartyDB(token, partyId));
+    setPartyNumber(partymember.length);
+  }
 
   return (
     <React.Fragment>
@@ -62,7 +73,7 @@ const PartyDetail = (props) => {
                   <Grid width="18px">
                     <Icon type="partyPeople" width="16px" height="16px" margin="0 auto"/>
                   </Grid>
-                  <Text margin="0 8px 0 12px" bold="500" size="14px">{partyList.curtPeople}/{partyList.maxPeople}명</Text>
+                  <Text margin="0 8px 0 12px" bold="500" size="14px">{partyNumber}/{partyList.maxPeople}명</Text>
                   {/* <Icon type="detailBtn" width="8px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} /> */}
                 </Grid>
                 <Grid margin="45px 0">
@@ -99,7 +110,7 @@ const PartyDetail = (props) => {
                 <Button 
                   bgColor="#C4C4C4" border="none" height="48px" margin="20px 0 20px 13px" radius="12px" 
                   _onClick={()=>{
-                    alert(`${partyList.partyId} 번째 모임 참가완료!`)
+                    attendParty(partyList.partyId);
                   }}>
                   <Text margin="0" size="18px" bold="600" align>참가하기</Text>
                 </Button>

@@ -192,11 +192,25 @@ const editPartyDB = (partyId = null, party = {}) => {
 const attendPartyDB = (token, partyId = null) => {
   return function (dispatch, getState) {
 
+    // const _user = getState().user;
+    const _user = {
+      username: "테스트용",
+      userTitle: "테스트한다",
+      userImageUrl: "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
+    }
+    const user_info = {
+      username: _user.username,
+      userTitle: _user.userTitle,
+      userImageUrl: _user.userImageUrl,
+    };
+
+    dispatch(attendParty(partyId, user_info));
+    return;
     api
       .attendParty(token, partyId)
       .then((res) => {
         console.log("(editParty) 성공 데이터 확인 ::", res);
-        dispatch(attendParty(partyId, token));
+        dispatch(attendParty(partyId, user_info));
         // dispatch(editParty(partyId, { ...party }));
       })
       .catch((err) => {
@@ -228,12 +242,14 @@ export default handleActions(
     }),
     [ADD_PARTY]: (state, action) => produce(state, (draft) => {
       draft.partyList.unshift(action.payload.party);
-      // console.log(action.payload)
-      // console.log(draft)
     }),
     [EDIT_PARTY]: (state, action) => produce(state, (draft) => {}),
-    [ATTEND_PARTY]: (state, action) => produce(state, (draft) => {}),
-    [DELETE_PARTY]: (state, action) => produce(state, (draft) => {}),
+    [ATTEND_PARTY]: (state, action) => produce(state, (draft) => {
+      draft.partyList[0].partymember.push(action.payload.user);
+    }),
+    [DELETE_PARTY]: (state, action) => produce(state, (draft) => {
+      draft.partyList = draft.partyList.filter((p) => p.partyId !== action.payload.partyList.partyId);
+    }),
   },
   initialState
 );
