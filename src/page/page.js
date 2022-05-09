@@ -9,8 +9,10 @@ import Search from "./Search";
 import SearchDetail from "./SearchDetail";
 import Tracker from "./Tracker";
 import FeedDetail from "./FeedDetail";
+import FeedWrite from "./FeedWrite";
+import BeforeTracking from "./BeforeTracking";
+import EndTracking from "./EndTracking";
 import ChatRoom from "./ChatRoom";
-
 
 export {
   Login,
@@ -23,7 +25,9 @@ export {
   Tracker,
   FeedDetail,
   PartyDetail,
+  FeedWrite,
+  BeforeTracking,
+  EndTracking,
   PartyWrite,
   ChatRoom,
 };
-

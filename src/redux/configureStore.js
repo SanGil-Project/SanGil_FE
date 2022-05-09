@@ -3,19 +3,24 @@ import thunk from "redux-thunk";
 import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 import user from "./modules/user";
+import main from "./modules/main";
 import polyline from "./modules/geolocation";
+import feed from "./modules/feed";
 import party from "./modules/party";
 
-export const history =  createBrowserHistory();
+
+export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
   user: user,
   polyline: polyline,
+  main: main,
+  feed: feed,
   party: party,
   router: connectRouter(history),
 });
 
-const middlewares = [thunk.withExtraArgument({history:history})];
+const middlewares = [thunk.withExtraArgument({ history: history })];
 
 const env = process.env.NODE_ENV;
 

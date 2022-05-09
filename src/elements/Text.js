@@ -16,7 +16,9 @@ const Text = (props) => {
     wordBreak,
     textOverflow,
     nowrap,
-
+    hover,
+    _onClick,
+    whiteSpace,
   } = props;
   const styles = {
     bold: bold,
@@ -31,11 +33,14 @@ const Text = (props) => {
     wordBreak,
     textOverflow,
     nowrap,
-
+    hover,
+    whiteSpace,
   };
   return (
     <React.Fragment>
-      <P {...styles}>{children}</P>
+      <P {...styles} onClick={_onClick}>
+        {children}
+      </P>
     </React.Fragment>
   );
 };
@@ -51,9 +56,10 @@ Text.defaultProps = {
 
 const P = styled.p`
   ${(props) =>
-    props.wordBreak ? `word-break: ${props.wordBreak};` : `word-break: keep-all;`}
-  ${(props) =>
-    props.nowrap ? `white-space: nowrap;` : `white-space: normal;`}
+    props.wordBreak
+      ? `word-break: ${props.wordBreak};`
+      : `word-break: keep-all;`}
+  ${(props) => (props.nowrap ? `white-space: nowrap;` : `white-space: normal;`)}
   color: ${(props) => props.color};
   font-size: ${(props) => props.size};
   font-weight: ${(props) => props.bold};
@@ -67,6 +73,7 @@ const P = styled.p`
     props.textOverflow
       ? `text-overflow: ${props.textOverflow}; overflow:hidden; white-space:nowrap;`
       : null}
+  ${(props) => (props.hover ? `&:hover {cursor: pointer;};` : null)}
 `;
 
 export default Text;

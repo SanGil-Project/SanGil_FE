@@ -23,6 +23,7 @@ const Input = (props) => {
     bg,
     onSubmit,
     is_submit,
+    display,
   } = props;
 
   const styles = {
@@ -34,8 +35,10 @@ const Input = (props) => {
     maxWidth,
     padding,
     radius,
-    bg
-  }
+    bg,
+    display,
+  };
+
 
 
   if(multiLine) {
@@ -53,20 +56,19 @@ const Input = (props) => {
     return (
       <Grid alignItems="center" flexRow>
         {label && <div>{label}</div>}
-          <InfoInput
-            {...styles}
-            type={type}
-            onChange={_onChange}
-            defaultValue={defaultValue}
-          />        
+        <InfoInput
+          {...styles}
+          type={type}
+          onChange={_onChange}
+          defaultValue={defaultValue}
+        />
       </Grid>
     );
-
   }
   return (
     <Grid alignItems="center" flexRow>
       {label && <div>{label}</div>}
-      {is_submit ? 
+      {is_submit ? (
         <InfoInput
           {...styles}
           type={type}
@@ -74,16 +76,19 @@ const Input = (props) => {
           placeholder={placeholder}
           value={value}
           onKeyPress={(e) => {
-            if (e.key === 'Enter') {
+            if (e.key === "Enter") {
               onSubmit(e);
             }
-          }}/> : 
+          }}
+        />
+      ) : (
         <InfoInput
           {...styles}
           type={type}
           onChange={_onChange}
           placeholder={placeholder}
-        />}
+        />
+      )}
     </Grid>
   );
 };
@@ -93,7 +98,7 @@ Input.defaultProps = {
   placeholder: "텍스트를 입력해주세요.",
   _onChange: () => {},
   onSubmit: () => {},
-  value: '',
+  value: "",
   is_submit: false,
   type: "text",
   border: "1px solid #212121",
@@ -114,7 +119,7 @@ const InfoInput = styled.input`
   ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
   ${(props) => (props.radius ? `border-radius: ${props.radius};` : null)}
   ${(props) => (props.bg ? `background-color: ${props.bg};` : null)}
-
+  ${(props) => (props.display ? `display: ${props.display};` : null)}
 `;
 
 const ElTextarea = styled.textarea`

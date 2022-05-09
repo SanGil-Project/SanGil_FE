@@ -29,6 +29,7 @@ const Grid = (props) => {
     hover,
     minWidth,
     zindex,
+    flex,
   } = props;
   const styles = {
     bg,
@@ -55,6 +56,7 @@ const Grid = (props) => {
     zindex,
     justify,
     alignItems,
+    flex,
   };
 
   return (
@@ -80,13 +82,18 @@ const Box = styled.div`
   ${(props) => (props.radius ? `border-radius: ${props.radius};` : null)}
   ${(props) => (props.padding ? `padding: ${props.padding};` : null)}
   ${(props) => (props.border ? `border: ${props.border};` : null)}
-
-  ${(props) => (props.flexColumn ? `display:flex; flex-direction: column;` : null)}
+  ${(props) =>
+    props.flexColumn ? `display:flex; flex-direction: column;` : null}
   ${(props) => (props.flexRow ? `display:flex; flex-direction: row;` : null)}
-  ${(props) => (props.justify ? `justify-content: ${props.justify};` : `justify-content: center;`)}
-  ${(props) => (props.alignItems ? `align-items: ${props.alignItems};` : `align-items: center;`)}
+  ${(props) =>
+    props.justify
+      ? `justify-content: ${props.justify};`
+      : `justify-content: center;`}
+  ${(props) =>
+    props.alignItems
+      ? `align-items: ${props.alignItems};`
+      : `align-items: center;`}
   ${(props) => (props.textAlign ? `text-align: center;` : null)}
-  
   ${(props) => (props.lineHeight ? `line-height: ${props.lineHeight};` : null)}
   ${(props) => (props.fontSize ? `font-size: ${props.fontSize};` : null)}
   ${(props) => (props.fontWeight ? `font-weight: ${props.fontWeight};` : null)}
@@ -98,11 +105,14 @@ const Box = styled.div`
     display: none;
   }
   ${(props) =>
+    props.flex ? `display:${props.flex}; justify-content:start;` : null}
+  ${(props) =>
     props.hover
       ? `&:hover {
     cursor: pointer;
   };`
       : null}
+
   ${(props) =>
     props.isFlex
       ? `display:flex; align-items:center; justify-content: space-between`

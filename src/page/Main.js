@@ -6,43 +6,49 @@ import {
   Header,
   Menubar,
 } from "../components/component";
+import { partyDB, mountainsDB, feedDB } from "../redux/modules/main";
 import { Desktop, Mobile } from "../shared/responsive";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
-const Main = () => {
+const Main = (props) => {
   const userInfo = useSelector((state) => state.user.userInfo);
   const token = sessionStorage.getItem("token");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const parties = useSelector((state) => state.main?.parties);
 
   const num = [2, 3, 4, 5];
   const arr = [0, 1];
   const menuColor = [false, false, true, false, false]; // 메뉴바 색
 
-  // React.useEffect(() => {
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition((position) => {
-  //       console.log(position.coords.latitude, position.coords.longitude);
-  //     });
-  //   }
-  // }, []);
+  React.useEffect(() => {
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition((position) => {
+    //     console.log(position.coords.latitude, position.coords.longitude);
+    //   });
+    // }
+    // dispatch(feedDB());
+    // dispatch(mountainsDB())
+    dispatch(partyDB());
+  }, []);
 
   return (
     <>
       <Mobile>
         <Grid width="100vw" margin="0 auto">
           <Header />
-          <Grid padding="7px" overflowY="scroll" height="844px">
+          <Grid padding="7px" overflowY="scroll">
             <Grid height="453px" margin="86px 0 25px 0">
               <Text
-                width="350px"
+                width="91.78%"
                 height="24px"
                 margin="0 0 0 7px"
                 bold="600"
                 size="2rem"
                 lineHeight="24px"
               >
-                지금 산길러 들이 오르고있는 산 TOP 5
+                🌲 지금 산길러 들이 오르고있는 산 TOP 10
               </Text>
               <Card
                 border="2px solid #B3B3B3"
@@ -278,18 +284,18 @@ const Main = () => {
             </Grid>
           </Grid>
           <Button
+            border="none"
             width="50px"
             height="50px"
-            bgColor="black"
-            color="#fff"
+            bgColor="#5CB16E"
             radius="100%"
             position="absolute"
             margin="-80px 0 0 84.54%"
-            _onClick={() => navigate("/tracker")}
+            _onClick={() => navigate("/searchmountain")}
           >
-            +
+            <Icon type="climber" width="20px" height="32px" />
           </Button>
-          <Menubar menuColor={menuColor}/>
+          <Menubar menuColor={menuColor} />
         </Grid>
       </Mobile>
 
@@ -300,14 +306,14 @@ const Main = () => {
           <Grid padding="7px" overflowY="scroll" height="1080px">
             <Grid height="453px" margin="90px auto 25px auto">
               <Text
-                width="350px"
+                width="380px"
                 height="24px"
                 margin="0 0 0 7px"
                 bold="600"
                 size="2rem"
                 lineHeight="24px"
               >
-                지금 산길러 들이 오르고있는 산 TOP 10
+                🌲 지금 산길러 들이 오르고있는 산 TOP 10
               </Text>
               <Card
                 border="2px solid #B3B3B3"
@@ -460,7 +466,7 @@ const Main = () => {
                   size="2rem"
                   lineHeight="24px"
                 >
-                  👀 실시간 정복한 산길 인증샷
+                  📷 실시간 정복한 산길 인증샷
                 </Text>
                 <Grid
                   margin="0 18px 0 0"
@@ -500,7 +506,7 @@ const Main = () => {
                   size="2rem"
                   lineHeight="24px"
                 >
-                  산길러 모여라~
+                  📣 산길러 모여라~
                 </Text>
                 <Grid
                   margin="0 18px 0 0"
@@ -535,16 +541,17 @@ const Main = () => {
           <Button
             width="50px"
             height="50px"
-            bgColor="black"
+            bgColor="#5CB16E"
+            border="none"
             color="#fff"
             radius="100%"
             position="fixed"
             margin="-80px 0 0 350px"
-            _onClick={() => navigate("/tracker")}
+            _onClick={() => navigate("/searchmountain")}
           >
-            +
+            <Icon type="climber" width="20px" height="32px" />
           </Button>
-          <Menubar menuColor={menuColor}/>
+          <Menubar menuColor={menuColor} />
         </Grid>
       </Desktop>
     </>

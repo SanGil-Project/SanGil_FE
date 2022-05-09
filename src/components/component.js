@@ -11,8 +11,6 @@ import Comment from "./Comment";
 import CourseCard from "./CourseCard";
 import FullMap from "./FullMap";
 import MypageModal from "./MypageModal";
-import SearchName from "./SearchName";
-import EndModal from "./EndModal";
 
 export {
   GoogleLogin,
@@ -28,6 +26,4 @@ export {
   CourseCard,
   FullMap,
   MypageModal,
-  SearchName,
-  EndModal,
 };
