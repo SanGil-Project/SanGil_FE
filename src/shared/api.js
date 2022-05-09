@@ -40,6 +40,9 @@ export const api = {
     instance.get(`/user/naver/callback?code=${code}&state=${state}`),
   googleLogin: (code) => instance.get(`/user/google/callback?code=${code}`),
 
+
+  myTracking: () => instance.get("/api/mypages/tracking"),
+
   // party.js
   getPartyList: (pageNum) => instance.get(`/api/parties/${pageNum}`),
   getOneParty: (partyId) => instance.get(`/api/party/${partyId}`),

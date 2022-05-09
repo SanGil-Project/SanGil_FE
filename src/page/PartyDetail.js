@@ -15,15 +15,18 @@ const PartyDetail = (props) => {
   const partyId = useLocation().state.partyId;
   const dispatch = useDispatch();
 
-  const partyList = useSelector((state) => state.party.partyList[0]);
+
+  React.useEffect(() => {
+    console.log(partyId)
+    dispatch(partyActions.getOnePartyDB(partyId));
+  }, []);
+
+  const partyList = useSelector((state) => state?.party?.partyList[0]);
   const partymember = partyList.partymember;
   const [partyNumber, setPartyNumber] = React.useState(partyList.curtPeople);
 
   // const token = sessionStorage.getItem('token');
 
-  React.useEffect(() => {
-    dispatch(partyActions.getOnePartyDB(partyId));
-  }, []);
 
   const attendParty = (partyId) => {
     if(partymember.length === partyList.maxPeople){

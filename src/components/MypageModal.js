@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { Grid, Text, Icon, Image, Button, Input } from '../elements/element';
 
 const MypageModal = (props) => {
+  // const userInfo = useSelector((state) => state.user.userInfo);
 
   // 입력 테스트 정보
   const titleList = [
@@ -24,9 +25,9 @@ const MypageModal = (props) => {
 
   const userInfo = {
     userId: 1,
-    username: "박에스리",
+    username: "박예슬",
     userImageUrl: "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
-    userTitle: "내가바로박예슬"
+    userTitle: "등린이"
   }
 
   const userTitleList = [
@@ -65,14 +66,14 @@ const MypageModal = (props) => {
               type="circle"
               width="80px"
               margin="0 10px 0 11px"
-              src="https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png"/>
+              src={userInfo.userImageUrl}/>
             <Editbtn>
               <Icon type="profileEdit" width="21px" height="21px" margin="0 auto" _onClick={()=> {setModalIsOpen(true); setNameCount(userInfo.username.length);}}/>
             </Editbtn>
           </Mainprofile>
           <Grid>
-            <Text margin="0" size="14px">칭호칭호칭호치치</Text>
-            <Text margin="8px 0 13px" size="20px" bold="600">가나다라마바사아자차</Text>
+            <Text margin="0" size="14px">{userInfo.userTitle}</Text>
+            <Text margin="8px 0 13px" size="20px" bold="600">{userInfo.username}</Text>
           </Grid>
         </Grid>
         {/* <button onClick={()=> setModalIsOpen(true)}>프로필 수정</button> */}

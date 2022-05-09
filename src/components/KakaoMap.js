@@ -72,7 +72,7 @@ export const KakaoMap = (props) => {
           />
         ) : null}
         {full ? (
-          data.map((p, idx) => {
+          data?.map((p, idx) => {
             return <EventMarkerContainer
                       key={idx} 
                       index={idx} 
