@@ -7,6 +7,7 @@ const Input = (props) => {
     width,
     height,
     name,
+    multiLine,
     type,
     border,
     margin,
@@ -38,7 +39,20 @@ const Input = (props) => {
     display,
   };
 
-  if (defaultValue) {
+
+
+  if(multiLine) {
+    return (
+      <React.Fragment>
+        <Grid>
+          {label && <div>{label}</div>}
+          <ElTextarea {...styles} rows={7} placeholder={placeholder} onChange={_onChange}></ElTextarea>
+        </Grid>
+      </React.Fragment>
+    );
+  }
+
+  if(defaultValue) {
     return (
       <Grid alignItems="center" flexRow>
         {label && <div>{label}</div>}
@@ -89,6 +103,7 @@ Input.defaultProps = {
   type: "text",
   border: "1px solid #212121",
   padding: "12px 4px",
+  multiLine: false,
 };
 
 const InfoInput = styled.input`
@@ -105,6 +120,20 @@ const InfoInput = styled.input`
   ${(props) => (props.radius ? `border-radius: ${props.radius};` : null)}
   ${(props) => (props.bg ? `background-color: ${props.bg};` : null)}
   ${(props) => (props.display ? `display: ${props.display};` : null)}
+`;
+
+const ElTextarea = styled.textarea`
+  width: ${(props) => props.width};
+  width-width: ${(props) => props.maxWidth};
+  height: ${(props) => props.height};
+  ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
+  padding: ${(props) => props.padding};
+  box-sizing: border-box;
+  border: ${(props) => props.border};
+  ${(props) => (props.radius ? `border-radius: ${props.radius};` : null)}
+  outline: none;
+  font-size: ${(props) => (props.size ? `${props.size}` : `16px`)};
+  ${(props) => (props.bg ? `background-color: ${props.bg};` : null)}
 `;
 
 export default Input;

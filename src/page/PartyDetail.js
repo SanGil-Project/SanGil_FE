@@ -1,29 +1,42 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
-import { history } from "../redux/configureStore";
-import { useParams } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router";
 
-import { Section, Menubar, FullMap, HorizontalScroll, Card, Header } from '../components/component';
+import { useSelector, useDispatch } from 'react-redux';
+import { actionCreators as partyActions } from '../redux/modules/party';
 
-import { Grid, Text, Icon, Button, Input, Image } from '../elements/element';
+import { Menubar, Header } from '../components/component';
+
+import { Grid, Text, Icon, Button, Image } from '../elements/element';
 
 const PartyDetail = (props) => {
   const menuColor = [false, true, false, false, false]; // 메뉴바 색
-  const partyid = useParams().partyid;
+  const navigate = useNavigate();
+  const partyId = useLocation().state.partyId;
+  const dispatch = useDispatch();
 
-  const partyItem = {
-      partyId : 1,
-      username: "이재진",
-      title : '관악산 같이 갈래?',
-      mountain : '관악산',
-      address : '서울 관악구',
-      partyDate : '2022-04-23',
-      partyTime: '11:00',
-      maxPeople : 8,
-      curPeople : 4,
-      partyContent: "내용내요내애내내내ㅐ내요용내요ㅐ뇨애",
-      createdAt : '09:00'
-  };
+
+  React.useEffect(() => {
+    console.log(partyId)
+    dispatch(partyActions.getOnePartyDB(partyId));
+  }, []);
+
+  const partyList = useSelector((state) => state?.party?.partyList[0]);
+  const partymember = partyList.partymember;
+  const [partyNumber, setPartyNumber] = React.useState(partyList.curtPeople);
+
+  // const token = sessionStorage.getItem('token');
+
+
+  const attendParty = (partyId) => {
+    if(partymember.length === partyList.maxPeople){
+      window.alert("모집이 완료되었습니다!");
+      return;
+    }
+    const token = "dkdkdk"
+    dispatch(partyActions.attendPartyDB(token, partyId));
+    setPartyNumber(partymember.length);
+  }
 
   return (
     <React.Fragment>
@@ -37,43 +50,71 @@ const PartyDetail = (props) => {
                 type="circle"
                 width="32px"
                 margin="0 14px 0 0"
-                src="https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png"/>
+                src={partyList.userImageUrl}/>
               {/* </Mainprofile> */}
               <Grid>
-                <Text margin="0" size="12px" bold="500">[유저타이틀필요] {partyItem.username}</Text>
+                <Text margin="0" size="12px" bold="500">[{partyList.userTitle}] {partyList.username}</Text>
               </Grid>
             </Grid>
             <hr style={{border: "1px solid #DEDEDE"}}/>
             <Grid padding="20px 0" margin="0 0 24px" flexColumn>
               <Grid alignItems="left">
-                <Text margin="0 0 33.5px" size="18px" bold="600">{partyItem.title}</Text>
+                <Text margin="0 0 33.5px" size="18px" bold="600">{partyList.title}</Text>
                 <Grid flexRow justify="left" padding="0 0 10px">
                   <Grid width="18px">
                     <Icon type="partyMountain" width="18px" height="17px" margin="0 auto"/>
                   </Grid>
-                  <Text margin="0 12px" bold="500" size="14px">{partyItem.mountain} ({partyItem.address})</Text>
+                  <Text margin="0 12px" bold="500" size="14px">{partyList.mountain} ({partyList.address})</Text>
                 </Grid>
                 <Grid flexRow justify="left" padding="0 0 10px">
                   <Grid width="18px">
                     <Icon type="partyDate" width="15px" height="17px" margin="0 auto"/>
                   </Grid>
-                  <Text margin="0 12px" bold="500" size="14px">{partyItem.partyDate} (시간 {partyItem.partyTime})</Text>
+                  <Text margin="0 12px" bold="500" size="14px">{partyList.partyDate} (시간 {partyList.partyTime})</Text>
                 </Grid>
                 <Grid flexRow justify="left" padding="0 0 10px">
                   <Grid width="18px">
                     <Icon type="partyPeople" width="16px" height="16px" margin="0 auto"/>
                   </Grid>
-                  <Text margin="0 8px 0 12px" bold="500" size="14px">{partyItem.curPeople}/{partyItem.maxPeople}명 | 모두 참여 가능 </Text>
-                  <Icon type="detailBtn" width="8px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} />
+                  <Text margin="0 8px 0 12px" bold="500" size="14px">{partyNumber}/{partyList.maxPeople}명</Text>
+                  {/* <Icon type="detailBtn" width="8px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} /> */}
                 </Grid>
                 <Grid margin="45px 0">
-                  <Text margin="0 0 33.5px" size="16px" bold="500">{partyItem.partyContent}</Text>
+                  <Text margin="0 0 33.5px" size="16px" bold="500">{partyList.partyContent}</Text>
                 </Grid>
               </Grid>
               <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
+              <Grid padding="20px 0">
+                <Text margin="0 0 20px" size="18px" bold="600">참여인원</Text>
+                {partymember?.map((p, idx)=>{
+                  return (
+                    <Grid key={idx} flexRow margin="0 0 20px">
+                      <Image
+                        type="circle"
+                        width="32px"
+                        margin="0 14px 0 0"
+                        src={p.userImageUrl}/>
+                      <Grid>
+                        <Text margin="0" size="12px" bold="500">[{p.userTitle}] {p.username}</Text>
+                      </Grid>
+                    </Grid>
+                  );
+                })}
+              </Grid>
+              <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
               <Grid isFlex>
-                <Icon type="like" width="18px" margin="auto" />
-                <Button bgColor="#C4C4C4" border="none" height="48px" margin="20px 0 20px 13px" radius="12px" _onClick={()=>{alert(`${partyItem.partyId} 번방 참가하기`)}}>
+                <Button 
+                  bgColor="#C4C4C4" border="none" height="48px" margin="20px 0 20px 13px" radius="12px" 
+                  _onClick={()=>{
+                    navigate(`/chatroom/${partyList.partyId}`);
+                  }}>
+                  <Text margin="0" size="18px" bold="600" align>대화하기</Text>
+                </Button>
+                <Button 
+                  bgColor="#C4C4C4" border="none" height="48px" margin="20px 0 20px 13px" radius="12px" 
+                  _onClick={()=>{
+                    attendParty(partyList.partyId);
+                  }}>
                   <Text margin="0" size="18px" bold="600" align>참가하기</Text>
                 </Button>
               </Grid>

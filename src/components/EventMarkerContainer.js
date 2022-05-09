@@ -14,7 +14,7 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
     // map.panTo(marker.getPosition());
   }
 
-  if (content.time) {
+  if (content.totalTime) {
     return (
       <React.Fragment>
         <MapMarker
@@ -24,15 +24,15 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
           {isClicked && isVisible &&
           <CustomOverlayMap index={index} position={{lat: content.lat, lng: content.lng}} yAnchor={1.45} zIndex={1}>
             <MymarkerInfo>
-              <Grid padding="9px 13px">
-                <Text margin="5px 0" bold="600" size="14px">{content.mountainName}</Text>
+              <Grid padding="9px 13px" _onClick={()=>{window.alert(`아이디값 :: ${content.completedId}`)}} hover>
+                <Text margin="5px 0" bold="600" size="14px">{content.mountainId}</Text>
                 <Grid flexRow justify="left" margin="8px 0 4px">
                   <Text margin="0 18px 0 0" size="12px" bold="500" color="#C4C4C4">총 거리</Text>
                   <Text margin="0" size="12px" bold="500" color="#C4C4C4">소요 시간</Text>
                 </Grid>
                 <Grid flexRow justify="left">
-                  <Text margin="0 18px 0 0" size="12px" bold="500">{content.distance}</Text>
-                  <Text margin="0" size="12px" bold="500">{content.time}</Text>
+                  <Text margin="0 18px 0 0" size="12px" bold="500">{content.totalDistance}</Text>
+                  <Text margin="0" size="12px" bold="500">{content.totalTime}</Text>
                 </Grid>
               </Grid>
             </MymarkerInfo>
