@@ -92,6 +92,50 @@ const getPartyDB = () => {
 const getOnePartyDB = (partyId = null) => {
   return function(dispatch, getState){
 
+    const temp = {
+
+      partyId : 1,
+      username: "이재진",
+      userTitle: "테스트용",
+      userImageUrl: "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
+      title : '관악산 같이 갈래?',
+      mountain : '관악산',
+      address : '서울 관악구',
+      partyDate : '2022-04-23',
+      partyTime: '11:00',
+      maxPeople : 8,
+      curtPeople : 4,
+      partyContent: "내용내요내애내내내ㅐ내요용내요ㅐ뇨애",
+      createdAt : '09:00',
+      partymember: [
+      {
+        username: "정상준",
+        userTitle: "홍길동",
+        userImageUrl: "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
+      },
+      {
+        username: "박예슬",
+        userTitle: "등린이",
+        userImageUrl: "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
+      },
+      {
+        username: "정의현",
+        userTitle: "산길인맥왕",
+        userImageUrl: "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
+      },
+      {
+        username: "천누리",
+        userTitle: "아직 여기라고?",
+        userImageUrl: "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
+      },
+     ]
+    }
+    const fakeDB = {
+      partyList: [temp],
+    }
+    console.log(fakeDB)
+    dispatch(setParty(fakeDB));
+    return;
     api
       .getOneParty(partyId)
       .then((res) => {
@@ -178,7 +222,9 @@ const deletePartyDB = (partyId = null) => {
 export default handleActions(
   {
     [SET_PARTY]: (state, action) => produce(state, (draft) => {
-      draft.partyList.push(...action.payload.partyList.partyList);
+      // console.log(action.payload.partyList)
+      // draft.partyList.push(...action.payload.partyList.partyList);
+      draft.partyList = action.payload.partyList.partyList;
     }),
     [ADD_PARTY]: (state, action) => produce(state, (draft) => {
       draft.partyList.unshift(action.payload.party);
