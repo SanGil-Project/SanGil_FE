@@ -2,26 +2,20 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import styled from "styled-components";
 
+import { useSelector, useDispatch } from 'react-redux';
+import { actionCreators as userActions } from '../redux/modules/user';
+
 import { Grid, Text, Icon, Image, Button, Input } from '../elements/element';
 
 const MypageModal = (props) => {
+  const dispatch = useDispatch();
   // const userInfo = useSelector((state) => state.user.userInfo);
+  const titleList = useSelector((state) => state?.user?.titleList);
 
-  // 입력 테스트 정보
-  const titleList = [
-    { userTitle: "등린이", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: false}, 
-    { userTitle: "등산의신", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",},
-    { userTitle: "산신령", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",},
-    { userTitle: "100대명산정복자", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",},
-    { userTitle: "1000km달성", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",}, 
-    { userTitle: "산길러", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",},
-    { userTitle: "내가바로박예슬", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",},
-    { userTitle: "연예인", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",},
-    { userTitle: "인싸중에인싸", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",},
-    { userTitle: "아싸중에아싸", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",}, 
-    { userTitle: "무쇠다리", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",},
-    { userTitle: "따라올테면따라와바", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png",},
-  ];
+  React.useEffect(() => {
+    const token = "kdkdkdk"
+    dispatch(userActions.myTitleDB(token));
+  }, []);
 
   const userInfo = {
     userId: 1,
@@ -29,18 +23,19 @@ const MypageModal = (props) => {
     userImageUrl: "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
     userTitle: "등린이"
   }
+  const planList = titleList.filter((p) => p.have === true);
 
-  const userTitleList = [
-    { userTitle: "등린이", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: false}, 
-    { userTitle: "산길러", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", pick: false},
-    { userTitle: "내가바로박예슬", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", pick: true},
-    { userTitle: "따라올테면따라와바", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", pick: false},
-  ];
+  // const userTitleList = [
+  //   { userTitle: "등린이", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: false}, 
+  //   { userTitle: "산길러", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", pick: false},
+  //   { userTitle: "내가바로박예슬", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", pick: true},
+  //   { userTitle: "따라올테면따라와바", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", pick: false},
+  // ];
 
-  const noTitleList = titleList.filter((t) => {
-    // 유저가 가지고 있지 않은 타이틀만 필터링
-    return !userTitleList.some(usert => usert.userTitle === t.userTitle)
-  });
+  // const noTitleList = titleList.filter((t) => {
+  //   // 유저가 가지고 있지 않은 타이틀만 필터링
+  //   return !userTitleList.some(usert => usert.userTitle === t.userTitle)
+  // });
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [nameCount, setNameCount] = useState(userInfo.username.length);
@@ -86,7 +81,6 @@ const MypageModal = (props) => {
               left: 0,
               right: 0,
               bottom: 0,
-              // backgroundColor: "rgba(15, 15, 15, 0.3)",
               backgroundColor: "transparent",
               backdropFilter: "blur(5px)",
               zIndex: "100",
@@ -97,13 +91,11 @@ const MypageModal = (props) => {
               bottom: "80px",
               inset: "60px 20px 80px",
               // width: "80vw",
+              // height: "70%",
               margin: "auto",
               maxWidth: "725px",
-              // height: "70%",
               border: "none",
               background: "rgba(0, 0, 0, 0.4)",
-              // background: "#fff",
-              // boxShadow: "0 4px 12px 0 rgba(0,0,0,0.5)",
               overflow: "auto",
               WebkitOverflowScrolling: "touch",
               borderRadius: "0",
@@ -132,11 +124,11 @@ const MypageModal = (props) => {
               </Grid>
               <Grid height="auto" padding="0 0 20px 0">
                 <TitleList>
-                  {userTitleList.map((t, idx) => {
+                  {/* {userTitleList.map((t, idx) => {
                     return <TitleItem key={idx} title={t.userTitle} img={t.userTitleImgUrl} pick={t.pick} done/>
-                  })}
-                  {noTitleList.map((t, idx) => {
-                    return <TitleItem key={idx} title={t.userTitle} img={t.userTitleImgUrl}/>
+                  })} */}
+                  {titleList.map((t, idx) => {
+                    return <TitleItem key={idx} title={t.userTitle} img={t.userTitleImgUrl} done={t.have}/>
                   })}
                 </TitleList>
               </Grid>

@@ -41,7 +41,10 @@ export const api = {
   googleLogin: (code) => instance.get(`/user/google/callback?code=${code}`),
 
 
-  myTracking: () => instance.get("/api/mypages/tracking"),
+  myTracking: (token) => instance.get("/api/mypages/tracking", {
+    headers: { Authorization: token, }}),
+  myTitle: (token) => instance.get("/api/mypages/userTitle", {
+    headers: { Authorization: token, }}),
 
   // party.js
   getPartyList: (pageNum) => instance.get(`/api/parties/${pageNum}`),
