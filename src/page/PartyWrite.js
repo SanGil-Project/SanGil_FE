@@ -1,5 +1,17 @@
 import React from 'react';
 import styled from "styled-components";
+import { useNavigate } from "react-router";
+
+import 'date-fns';
+import DatePicker from 'react-mobile-datepicker';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+// import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+
+
+import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
 
 import { Menubar, Header } from '../components/component';
 
@@ -7,15 +19,58 @@ import { Grid, Text, Icon, Button, Input, Image } from '../elements/element';
 
 const PartyWrite = (props) => {
   const menuColor = [false, true, false, false, false]; // 메뉴바 색
+  const navigate = useNavigate();
 
   const [partyName, setPartyName] = React.useState("");
   const [partyContent, setPartyContent] = React.useState("");
+
+  const [time, setTime] = React.useState(new Date());
+  const [isOpen, setIsOpen] = React.useState(false);
+  
+  const handleClick = () => {
+    console.log("선택")
+		setIsOpen(true);
+	}
+  const handleCancel = () => {
+		setIsOpen(false);
+	}
+  const handleSelect = (time) => {
+		setTime(time);
+		setIsOpen(false);
+	}
+
+  const [dateValue, setDateValue] = React.useState(new Date('2014-08-18'));
+  const [timeValue, setTimeValue] = React.useState("");
+  const [numberValue, setNumberValue] = React.useState("");
+  const [mountValue, setMountValue] = React.useState("");
+  // const [timeValue, setTimeValue] = React.useState("");
+  // const [dateValue, setDateValue] = React.useState(new Date('2014-08-18T21:11:54'));
+  // const handleChange = (newValue) => {
+  //   setValue(newValue);
+  // };
+
   
   const inputName = (e) => {
     setPartyName(e.target.value);
   }
   const inputContent = (e) => {
     setPartyContent(e.target.value);
+  }
+  const inputDate = (e) => {
+    setDateValue(e.target.value);
+    console.log(e.target.value);
+  }
+  const inputTime = (e) => {
+    setTimeValue(e.target.value);
+    console.log(e.target.value);
+  }
+  const inputNumber = (e) => {
+    setNumberValue(e.target.value);
+    console.log(e.target.value);
+  }
+  const inputMount = (e) => {
+    setMountValue(e.target.value);
+    console.log(e.target.value);
   }
   return (
     <React.Fragment>
@@ -40,9 +95,31 @@ const PartyWrite = (props) => {
               <Grid isFlex margin="10px 0">
                 <Text margin="0" size="16px" bold="600">날짜</Text>
                 <Button width="auto" border="none">
+                  {/* <Grid flexRow _onClick={handleClick}> */}
                   <Grid flexRow>
-                    <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text>
-                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} />
+
+                    <LocalizationProvider dateAdapter={AdapterDateFns} >
+                      <Stack component="form" noValidate spacing={1} sx={{ border: "none" }}>
+                        <TextField
+                          id="date"
+                          // label="Birthday"
+                          // variant="standard"
+                          type="date"
+                          // style={{ fontSize: 1 }}
+                          // size="medium"
+                          onChange={inputDate}
+                          defaultValue="2017-05-24"
+                          value={dateValue}
+                          sx={{ width: 150, border: "none", fontSize: 15 }}
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                        />
+                      </Stack>
+                    </LocalizationProvider>
+
+                    {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text>
+                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} /> */}
                   </Grid>
                 </Button>
               </Grid>
@@ -50,9 +127,29 @@ const PartyWrite = (props) => {
               <Grid isFlex margin="10px 0">
                 <Text margin="0" size="16px" bold="600">시간</Text>
                 <Button width="auto" border="none">
-                  <Grid flexRow>
-                    <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text>
-                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} />
+                  <Grid flexRow _onClick={handleClick}>
+
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                      <Stack component="form" noValidate spacing={1}>
+                        <TextField
+                        id="time"
+                        type="time"
+                        defaultValue="07:30"
+
+                        onChange={inputTime}
+                        value={timeValue}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        inputProps={{
+                          step: 600, // 5 min
+                        }}
+                        sx={{ width: 150 }}
+                      />
+                      </Stack>
+                    </LocalizationProvider>
+                    {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text>
+                    <Icon type="detailBtn" width="7px" height="13" margin="auto"/> */}
                   </Grid>
                 </Button>
               </Grid>
@@ -61,8 +158,13 @@ const PartyWrite = (props) => {
                 <Text margin="0" size="16px" bold="600">인원</Text>
                 <Button width="auto" border="none">
                   <Grid flexRow>
-                    <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text>
-                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} />
+
+                    <Input 
+                      width="150px" border="1px solid #BBBBBB" radius="8px" padding="16px 12px"
+                      placeholder="인원수 입력"
+                      _onChange={inputNumber}/>
+                    {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text>
+                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} /> */}
                   </Grid>
                 </Button>
               </Grid>
@@ -71,14 +173,72 @@ const PartyWrite = (props) => {
                 <Text margin="0" size="16px" bold="600">위치</Text>
                 <Button width="auto" border="none">
                   <Grid flexRow>
-                    <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text>
-                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} />
+                    <Input 
+                      width="150px" border="1px solid #BBBBBB" radius="8px" padding="16px 12px"
+                      placeholder="산이름 입력"
+                      _onChange={inputMount}/>
+                    {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text>
+                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} /> */}
                   </Grid>
                 </Button>
               </Grid>
+              <ModalContainer>
+                <Modal>
+                {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <Stack component="form" noValidate spacing={3}>
+                    <TextField
+                      id="date"
+                      label="Birthday"
+                      type="date"
+                      defaultValue="2017-05-24"
+                      sx={{ width: 220 }}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                    <TextField
+                      id="time"
+                      label="Alarm clock"
+                      type="time"
+                      defaultValue="07:30"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      inputProps={{
+                        step: 300, // 5 min
+                      }}
+                      sx={{ width: 150 }}
+                    />
+                    <TextField
+                      id="datetime-local"
+                      label="Next appointment"
+                      type="datetime-local"
+                      defaultValue="2017-05-24T10:30"
+                      sx={{ width: 250 }}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </Stack>
+
+                </LocalizationProvider> */}
+                </Modal>
+              </ModalContainer>
               
             </Grid>
+            <Grid>
+            <Button 
+              bgColor="#C4C4C4" border="none" height="48px" margin="20px 0" radius="12px" 
+              _onClick={()=>{
+                // navigate(`/partydetail/${partyItem.partyId}`);
+                navigate(`/party`);
+              }}>
+              <Text margin="0" size="18px" bold="600" align>작성하기</Text>
+            </Button>
+
+            </Grid>
           </Grid>
+
         </PartyWrap>
         
         <MenubarContainer>
@@ -115,5 +275,13 @@ const MenubarContainer = styled.div`
   z-index : 10;
 `;
 
+const ModalContainer = styled.div`
+  position: relative;
+  padding: 
+`;
+
+const Modal = styled.div`
+  position: absolute;
+`;
 
 export default PartyWrite;

@@ -120,16 +120,16 @@ const PartyDetail = (props) => {
                 <Button 
                   bgColor="#C4C4C4" border="none" height="48px" margin="20px 0 20px 13px" radius="12px" 
                   _onClick={()=>{
-                    alert(`${partyItem.partyId} 번째 모임 참가완료!`)
+                    navigate(`/chatroom/${partyItem.partyId}`);
                   }}>
-                  <Text margin="0" size="18px" bold="600" align>참가하기</Text>
+                  <Text margin="0" size="18px" bold="600" align>대화하기</Text>
                 </Button>
                 <Button 
                   bgColor="#C4C4C4" border="none" height="48px" margin="20px 0 20px 13px" radius="12px" 
                   _onClick={()=>{
-                    navigate(`/chatroom/${partyItem.partyId}`);
+                    alert(`${partyItem.partyId} 번째 모임 참가완료!`)
                   }}>
-                  <Text margin="0" size="18px" bold="600" align>채팅방들어가기</Text>
+                  <Text margin="0" size="18px" bold="600" align>참가하기</Text>
                 </Button>
               </Grid>
             </Grid>
