@@ -3,11 +3,13 @@ import Main from "./Main";
 import Feed from "./Feed";
 import Party from "./Party";
 import PartyDetail from "./PartyDetail";
+import PartyWrite from "./PartyWrite";
 import Mypage from "./Mypage";
 import Search from "./Search";
 import SearchDetail from "./SearchDetail";
 import Tracker from "./Tracker";
 import FeedDetail from "./FeedDetail";
+import ChatRoom from "./ChatRoom";
 
 
 export {
@@ -20,6 +22,8 @@ export {
   SearchDetail,
   Tracker,
   FeedDetail,
-  PartyDetail
+  PartyDetail,
+  PartyWrite,
+  ChatRoom,
 };
 

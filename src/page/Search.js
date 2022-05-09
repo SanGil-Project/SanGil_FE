@@ -166,6 +166,7 @@ const Search = (props) => {
   // const listFocus = useRef([]);
 
   const [searchKeyword, setSearchKeyword] = React.useState("");
+  
   const onChange = (e) => {
     setSearchKeyword(e.target.value);
   }
