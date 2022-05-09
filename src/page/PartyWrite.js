@@ -2,54 +2,48 @@ import React from 'react';
 import styled from "styled-components";
 import { useNavigate } from "react-router";
 
+import { useSelector, useDispatch } from 'react-redux';
+import { actionCreators as partyActions } from '../redux/modules/party';
+
 import 'date-fns';
 import DatePicker from 'react-mobile-datepicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 // import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-
-
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 
 import { Menubar, Header } from '../components/component';
-
 import { Grid, Text, Icon, Button, Input, Image } from '../elements/element';
 
 const PartyWrite = (props) => {
   const menuColor = [false, true, false, false, false]; // 메뉴바 색
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const token = sessionStorage.getItem('token');
+
+  // const [time, setTime] = React.useState(new Date());
+  // const [isOpen, setIsOpen] = React.useState(false);
+  // const handleClick = () => {
+  //   console.log("선택")
+	// 	setIsOpen(true);
+	// }
+  // const handleCancel = () => {
+	// 	setIsOpen(false);
+	// }
+  // const handleSelect = (time) => {
+	// 	setTime(time);
+	// 	setIsOpen(false);
+	// }
 
   const [partyName, setPartyName] = React.useState("");
   const [partyContent, setPartyContent] = React.useState("");
-
-  const [time, setTime] = React.useState(new Date());
-  const [isOpen, setIsOpen] = React.useState(false);
-  
-  const handleClick = () => {
-    console.log("선택")
-		setIsOpen(true);
-	}
-  const handleCancel = () => {
-		setIsOpen(false);
-	}
-  const handleSelect = (time) => {
-		setTime(time);
-		setIsOpen(false);
-	}
-
-  const [dateValue, setDateValue] = React.useState(new Date('2014-08-18'));
+  const [dateValue, setDateValue] = React.useState(new Date('2014-08-18T21:11:54'));
   const [timeValue, setTimeValue] = React.useState("");
   const [numberValue, setNumberValue] = React.useState("");
   const [mountValue, setMountValue] = React.useState("");
-  // const [timeValue, setTimeValue] = React.useState("");
-  // const [dateValue, setDateValue] = React.useState(new Date('2014-08-18T21:11:54'));
-  // const handleChange = (newValue) => {
-  //   setValue(newValue);
-  // };
 
-  
   const inputName = (e) => {
     setPartyName(e.target.value);
   }
@@ -58,20 +52,37 @@ const PartyWrite = (props) => {
   }
   const inputDate = (e) => {
     setDateValue(e.target.value);
-    console.log(e.target.value);
   }
   const inputTime = (e) => {
     setTimeValue(e.target.value);
-    console.log(e.target.value);
   }
   const inputNumber = (e) => {
     setNumberValue(e.target.value);
-    console.log(e.target.value);
   }
   const inputMount = (e) => {
     setMountValue(e.target.value);
-    console.log(e.target.value);
   }
+
+  const addParty = () => {
+    const testToken = "testToken";
+    if (partyName === "" || mountValue==="" || dateValue==="" || timeValue==="" || numberValue==="" || partyContent==="") {
+      window.alert("입력되지 않은 부분이 있습니다!");
+      return;
+    }
+    const partyData = {
+      title : partyName,
+      mountain : mountValue,
+      address : "서울시 관악구",
+      partyDate : dateValue,
+      partyTime: timeValue,
+      maxPeople : numberValue,
+      partyContent : partyContent,
+    }
+    dispatch(partyActions.addPartyDB(testToken, partyData));
+    window.alert("작성 완료!");
+    navigate(`/party`);
+  }
+
   return (
     <React.Fragment>
       <PartyContainer>
@@ -108,7 +119,7 @@ const PartyWrite = (props) => {
                           // style={{ fontSize: 1 }}
                           // size="medium"
                           onChange={inputDate}
-                          defaultValue="2017-05-24"
+                          // defaultValue="2017-05-24"
                           value={dateValue}
                           sx={{ width: 150, border: "none", fontSize: 15 }}
                           InputLabelProps={{
@@ -127,14 +138,14 @@ const PartyWrite = (props) => {
               <Grid isFlex margin="10px 0">
                 <Text margin="0" size="16px" bold="600">시간</Text>
                 <Button width="auto" border="none">
-                  <Grid flexRow _onClick={handleClick}>
+                  <Grid flexRow>
 
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                       <Stack component="form" noValidate spacing={1}>
                         <TextField
                         id="time"
                         type="time"
-                        defaultValue="07:30"
+                        // defaultValue="07:30"
 
                         onChange={inputTime}
                         value={timeValue}
@@ -229,10 +240,7 @@ const PartyWrite = (props) => {
             <Grid>
             <Button 
               bgColor="#C4C4C4" border="none" height="48px" margin="20px 0" radius="12px" 
-              _onClick={()=>{
-                // navigate(`/partydetail/${partyItem.partyId}`);
-                navigate(`/party`);
-              }}>
+              _onClick={addParty}>
               <Text margin="0" size="18px" bold="600" align>작성하기</Text>
             </Button>
 

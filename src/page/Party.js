@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+
+import { useSelector, useDispatch } from 'react-redux';
+import { actionCreators as partyActions } from '../redux/modules/party';
+
 import { history } from "../redux/configureStore";
 import {
-  Section,
   Menubar,
-  FullMap,
-  HorizontalScroll,
-  Card,
   Header,
 } from "../components/component";
 
@@ -16,57 +16,15 @@ import { useNavigate } from "react-router";
 const Party = (props) => {
   const menuColor = [false, true, false, false, false]; // 메뉴바 색
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const partyList = [
-    {
-      partyId: 1,
-      title: "관악산 같이 갈래?",
-      mountain: "관악산",
-      address: "서울 관악구",
-      partyDate: "22-04-23",
-      partyTime: "11:00",
-      maxPeople: 8,
-      curPeople: 4,
-      completed: false,
-      createdAt: "09:00",
-    },
-    {
-      partyId: 2,
-      title: "아침등산 같이 하실 여자분 계시나요?",
-      mountain: "팔공산",
-      address: "서울 팔공마을",
-      partyDate: "22-05-10",
-      partyTime: "09:00",
-      maxPeople: 6,
-      curPeople: 6,
-      completed: true,
-      createdAt: "07:30",
-    },
-    {
-      partyId: 3,
-      title: "주말마다 같이 등산 가실분?",
-      mountain: "북한산",
-      address: "서울 불광",
-      partyDate: "22-05-16",
-      partyTime: "08:30",
-      maxPeople: 3,
-      curPeople: 6,
-      completed: false,
-      createdAt: "18:00",
-    },
-    {
-      partyId: 4,
-      title: "이번주말 모임 급구!!!",
-      mountain: "아차산",
-      address: "서울 광진구",
-      partyDate: "22-05-8",
-      partyTime: "10:30",
-      maxPeople: 4,
-      curPeople: 4,
-      completed: true,
-      createdAt: "16:30",
-    },
-  ];
+  const partyList = useSelector((state) => state.party.partyList);
+
+  React.useEffect(() => {
+    if (partyList.length < 2) {
+      dispatch(partyActions.getPartyDB());
+    }
+  }, []);
 
   const moveDetail = (partyId, completed) => {
     if (completed) {
@@ -85,6 +43,7 @@ const Party = (props) => {
             {partyList?.map((p, idx) => {
               const bg = p.completed ? "#C4C4C4" : "#E6E6E6";
               const btnText = p.completed ? "마감 되었어요😢" : "모집내용확인";
+              const curPeople = p.curPeople ? p.curPeople : 0;
               return (
                 <Grid
                   key={idx}
@@ -134,7 +93,7 @@ const Party = (props) => {
                         />
                       </Grid>
                       <Text margin="0 12px" bold="500" size="14px">
-                        {p.curPeople}/{p.maxPeople}명
+                        {curPeople}/{p.maxPeople}명
                       </Text>
                     </Grid>
                   </Grid>
