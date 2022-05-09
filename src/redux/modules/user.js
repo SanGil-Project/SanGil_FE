@@ -14,14 +14,6 @@ const isLogin = createAction(ISLOGIN, (token) => ({ token }));
 
 const initialState = {};
 
-export const signUpDB = (userInfo) => {
-  return function (dispatch, getState) {};
-};
-
-export const logInDB = () => {
-  return function (dispatch, getState) {};
-};
-
 // 카카오 로그인
 const kakaoLoginDB = (code) => {
   return function (dispatch, getState) {
@@ -33,7 +25,7 @@ const kakaoLoginDB = (code) => {
         const ACCESS_TOKEN = res.headers.authorization;
         sessionStorage.setItem("token", ACCESS_TOKEN); //세션에 저장
         dispatch(isLogInDB(ACCESS_TOKEN));
-        // history.replace("/") // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+        // history.replace("/"); // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
       })
       .catch((err) => {
         console.log("카카오로그인 에러", err);
@@ -53,6 +45,7 @@ const naverLoginDB = (code, state) => {
         console.log(res); // 토큰이 넘어올 것임
         const ACCESS_TOKEN = res.headers.authorization;
         sessionStorage.setItem("token", ACCESS_TOKEN); //세션에 저장
+        dispatch(isLogInDB(ACCESS_TOKEN));
         // history.replace("/") // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
       })
       .catch((err) => {
@@ -73,6 +66,7 @@ const googleLoginDB = (code) => {
         console.log(res); // 토큰이 넘어올 것임
         const ACCESS_TOKEN = res.headers.authorization;
         sessionStorage.setItem("token", ACCESS_TOKEN); //세션에 저장
+        dispatch(isLogInDB(ACCESS_TOKEN));
         // history.replace("/") // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
       })
       .catch((err) => {
@@ -83,12 +77,12 @@ const googleLoginDB = (code) => {
   };
 };
 
-const isLogInDB = (token) => {
+export const isLogInDB = (token) => {
   return function (dispatch, getState) {
     api
       .isLogin(token)
       .then((res) => {
-        console.log(res);
+        dispatch(isLogin(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -98,7 +92,10 @@ const isLogInDB = (token) => {
 
 export default handleActions(
   {
-    [ISLOGIN]: (state, action) => produce(state, (draft) => {}),
+    [ISLOGIN]: (state, action) =>
+      produce(state, (draft) => {
+        draft.userInfo = action.payload.token;
+      }),
     [LOGOUT]: (state, action) => produce(state, (draft) => {}),
   },
   initialState

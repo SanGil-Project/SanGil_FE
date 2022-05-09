@@ -6,7 +6,7 @@ const SET_PATH = "SET_PATH";
 
 const setPath = createAction(SET_PATH, (path) => ({ path }));
 
-export const signUpDB = () => {
+export const setPathDB = () => {
   return function (dispatch, getState) {
     axios
       .get("url")

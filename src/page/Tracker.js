@@ -1,20 +1,22 @@
 import React, { useEffect, useRef } from "react";
 import KakaoMap from "../components/KakaoMap";
 import { Grid, Button, Text, Icon, Input } from "../elements/element";
-import { Header, SearchName, EndModal } from "../components/component";
+import { Header } from "../components/component";
 import { Desktop, Mobile } from "../shared/responsive";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as pathActions } from "../redux/modules/geolocation";
 import StopWatch from "../components/StopWatch";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 const Tracker = (props) => {
+  const { name } = useParams();
   const navigate = useNavigate();
   const [myLoca, setMyLoca] = React.useState();
   const [time, setTime] = React.useState({
     s: 0,
     m: 0,
     h: 0,
+    distance: 0,
     isStart: false,
   });
 
@@ -83,14 +85,14 @@ const Tracker = (props) => {
     setTime({ ...time, isStart: false });
   };
 
-  const stop = () => {
-    setEndOpen(true);
+  const stop = (distance, endTime) => {
     releaseWakeLock();
-    setTime({ ...time, s: 0, m: 0, h: 0, isStart: false });
-    // navigate("/", { replace: true });
+    navigate(`/endtracking/${name}`, {
+      state: { distance: distance, time: endTime },
+    });
+    setTime({ ...time, s: 0, m: 0, h: 0, distance: 0, isStart: false });
   };
-  const [getName, setGetName] = React.useState({ name: "", isOpen: true });
-  const [endOpen, setEndOpen] = React.useState(false);
+
   return (
     <>
       <Mobile>
@@ -108,37 +110,36 @@ const Tracker = (props) => {
             />
             <Grid width="99.5%" bg="#fff" height="30%" padding="16px 0 0 0">
               <Text align="center" size="2rem" bold="600" margin="0 0 19px 0">
-                {getName.name}
+                {name}
               </Text>
               <Grid
-                width="82.52%"
+                width="60.67%"
                 height="19px"
                 isFlex
                 margin="20px auto 0 auto"
               >
-                <Grid width="42.7%" isFlex></Grid>
-                <Text width="22.27%" align="center" color="#C4C4C4">
+                <Text width="40%" align="center" color="#C4C4C4">
+                  이동한 거리
+                </Text>
+                <Text width="30.27%" align="center" color="#C4C4C4">
                   소요 시간
                 </Text>
               </Grid>
               <Grid
-                width="82.52%"
+                width="40.52%"
                 height="30px"
                 isFlex
                 margin="5px auto 0 auto"
               >
-                <Grid width="176px" isFlex></Grid>
-                <Grid width="23.27%" textAlign lineHeight="25px">
+                <Text>
+                  <span style={{ fontSize: "2.5rem" }}>{time.distance}</span>km
+                </Text>
+                <Grid width="14.27%" textAlign lineHeight="25px">
                   <StopWatch time={time} setTime={setTime} size="2.5rem" />
                 </Grid>
               </Grid>
 
-              <Grid
-                border="1px solid red"
-                width="82.76%"
-                height="48px"
-                margin="20px auto"
-              >
+              <Grid width="82.76%" height="48px" margin="20px auto">
                 {time.isStart ? (
                   <>
                     <Button
@@ -179,16 +180,6 @@ const Tracker = (props) => {
               </Grid>
             </Grid>
           </Grid>
-          <SearchName
-            width="100vw"
-            contentWidth="91%"
-            contentHeight="447px"
-            isOpen={getName.isOpen}
-            getName={getName}
-            setGetName={setGetName}
-            mobile
-            margin="25% auto"
-          />
         </Grid>
       </Mobile>
 
@@ -208,21 +199,25 @@ const Tracker = (props) => {
             />
             <Grid width="412px" bg="#fff" height="30%" padding="16px 0 0 0">
               <Text align="center" size="2rem" bold="600" margin="0 0 19px 0">
-                {getName.name}
+                {name}
               </Text>
               <Grid
-                width="340px"
+                width="250px"
                 height="19px"
                 isFlex
                 margin="20px auto 0 auto"
               >
-                <Grid width="176px" isFlex></Grid>
+                <Text width="100px" align="center" color="#C4C4C4">
+                  이동한 거리
+                </Text>
                 <Text width="100px" align="center" color="#C4C4C4">
                   소요 시간
                 </Text>
               </Grid>
-              <Grid width="340px" height="30px" isFlex margin="5px auto 0 auto">
-                <Grid width="176px" isFlex></Grid>
+              <Grid width="250px" height="30px" isFlex margin="5px auto 0 auto">
+                <Text margin="0 0 0 40px">
+                  <span style={{ fontSize: "2.5rem" }}>{time.distance}</span>km
+                </Text>
                 <Grid width="100px" textAlign lineHeight="25px">
                   <StopWatch time={time} setTime={setTime} size="2.5rem" />
                 </Grid>
@@ -249,7 +244,9 @@ const Tracker = (props) => {
                       width="166px"
                       height="48px"
                       radius="12px"
-                      _onClick={stop}
+                      _onClick={() =>
+                        stop(time.distance, { s: time.s, m: time.m, h: time.h })
+                      }
                     >
                       등산 완료
                     </Button>
@@ -269,29 +266,6 @@ const Tracker = (props) => {
               </Grid>
             </Grid>
           </Grid>
-          {getName.isOpen ? (
-            <SearchName
-              width="414px"
-              contentWidth="375px"
-              contentHeight="447px"
-              height="1080px"
-              isOpen={getName.isOpen}
-              getName={getName}
-              setGetName={setGetName}
-              margin="198.5px auto"
-            ></SearchName>
-          ) : null}
-          {endOpen ? (
-            <EndModal
-              width="414px"
-              contentWidth="375px"
-              contentHeight="447px"
-              height="1080px"
-              isOpen={endOpen}
-              margin="198.5px auto"
-              name="관악산"
-            ></EndModal>
-          ) : null}
         </Grid>
       </Desktop>
     </>

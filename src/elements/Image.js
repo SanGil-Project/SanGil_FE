@@ -13,6 +13,7 @@ const Image = (props) => {
     type,
     onChange,
     objectFit,
+    children,
   } = props;
   const styles = {
     src,
@@ -31,13 +32,16 @@ const Image = (props) => {
   if (type === "rectangle") {
     return (
       <React.Fragment>
-        <AspectOutter >
+        <AspectOutter>
           <AspectInner {...styles}></AspectInner>
         </AspectOutter>
       </React.Fragment>
     );
   }
-  return <Img onChange={onChange} src={src} {...styles}></Img>;
+  return (
+    <Img onChange={onChange} src={src} {...styles}>
+    </Img>
+  );
 };
 
 Image.defaultProps = {
@@ -48,7 +52,7 @@ Image.defaultProps = {
 };
 
 const Img = styled.img`
-  ${(props) => (props.bg ? `background-color: ${props.bg};` : null)}   
+  ${(props) => (props.bg ? `background-color: ${props.bg};` : null)}
   ${(props) => (props.width ? `width: ${props.width};` : null)}
   ${(props) => (props.height ? `height: ${props.height};` : null)}
   ${(props) => (props.margin ? `margin: ${props.margin};` : null)}

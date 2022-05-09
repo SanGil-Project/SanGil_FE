@@ -8,7 +8,9 @@ import Search from "./Search";
 import SearchDetail from "./SearchDetail";
 import Tracker from "./Tracker";
 import FeedDetail from "./FeedDetail";
-
+import FeedWrite from "./FeedWrite";
+import BeforeTracking from "./BeforeTracking";
+import EndTracking from "./EndTracking";
 
 export {
   Login,
@@ -20,6 +22,8 @@ export {
   SearchDetail,
   Tracker,
   FeedDetail,
-  PartyDetail
+  PartyDetail,
+  FeedWrite,
+  BeforeTracking,
+  EndTracking,
 };
-

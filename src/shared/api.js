@@ -4,7 +4,7 @@ import axios from "axios";
 
 const instance = axios.create({
   // baseURL: "http://3.35.52.88",
-  baseURL: "http://15.164.96.141",
+  baseURL: "http://52.78.68.95",
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
