@@ -16,6 +16,7 @@ import { useNavigate } from "react-router";
 const Party = (props) => {
   const menuColor = [false, true, false, false, false]; // 메뉴바 색
   const navigate = useNavigate();
+
   const partyList = [
     {
       partyId: 1,
@@ -66,6 +67,14 @@ const Party = (props) => {
       createdAt: "16:30",
     },
   ];
+
+  const moveDetail = (partyId, completed) => {
+    if (completed) {
+      window.alert("마감된 모임입니다!");
+    } else {
+      navigate(`/partydetail/${partyId}`);
+    }
+  }
 
   return (
     <React.Fragment>
@@ -136,7 +145,7 @@ const Party = (props) => {
                     height="48px"
                     margin="20px 0 0"
                     _onClick={() => {
-                      navigate(`/partydetail/${p.partyId}`);
+                      moveDetail(p.partyId, p.completed);
                     }}
                   >
                     <Text margin="0" align>
@@ -203,8 +212,9 @@ const MenubarContainer = styled.div`
 
 const CreatPartyBtn = styled.div`
   position: fixed;
+  // position: absolute;
   bottom: 110px;
-  right: 15px;
+  right: 5%;
   z-index: 9;
 `;
 
