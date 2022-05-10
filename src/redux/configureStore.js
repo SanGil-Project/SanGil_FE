@@ -7,6 +7,7 @@ import main from "./modules/main";
 import polyline from "./modules/geolocation";
 import feed from "./modules/feed";
 import party from "./modules/party";
+import mountain from "./modules/mountain";
 
 
 export const history = createBrowserHistory();
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   main: main,
   feed: feed,
   party: party,
+  mountain: mountain,
   router: connectRouter(history),
 });
 

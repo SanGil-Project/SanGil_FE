@@ -2,6 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 
 import { Menubar, Header } from '../components/component';
+import { Desktop, Mobile } from "../shared/responsive";
 
 import { Grid, Text, Icon, Button, Input, Image } from '../elements/element';
 
@@ -40,6 +41,7 @@ const ChatRoom = (props) => {
 
   return (
     <React.Fragment>
+      <Mobile>
       <ChatContainer>
         <Header />
         <ChatWrap>
@@ -90,12 +92,72 @@ const ChatRoom = (props) => {
         
 
         <MenubarContainer>
-          <Grid height="88px" minWidth="414px" maxWidth="800px" margin="auto">
+          <Grid height="88px" maxWidth="500px" margin="auto">
             <Menubar menuColor={menuColor}/>
           </Grid>
         </MenubarContainer>
 
       </ChatContainer>
+      </Mobile>
+      <Desktop>
+      <ChatContainer>
+        <Header />
+        <ChatWrap>
+          <Grid padding="96px 14px 100px">
+            <Grid flexRow margin="10px 0 0">
+              <Image
+                type="circle"
+                width="32px"
+                margin="0 14px 0 0"
+                src={participants[2].userImageUrl}/>
+              <Grid>
+                <Text margin="0" size="12px" bold="500">[{participants[2].userTitle}] {participants[2].username}</Text>
+              </Grid>
+            </Grid>
+            <Grid padding="5px 0 5px 46px" flexRow justify>
+              <Grid padding="16px" bg="#EBEBEB" radius="30px" width="auto">
+                <Text margin="0">등산에 필요한 물품은 각자 알아서 </Text>
+              </Grid>
+              {/* <Text margin="35px 0 0" size="12px" bold="500" color="#A4A4A4">오전 8:20</Text> */}
+            </Grid>
+            <Grid padding="5px 0 5px 46px" flexRow justify>
+              <Grid padding="16px" bg="#EBEBEB" radius="30px" width="auto">
+                <Text margin="0">가져오는 걸로 해요 !!! </Text>
+              </Grid>
+              <Text margin="35px 0 0" size="12px" bold="500" color="#A4A4A4">오전 8:20</Text>
+            </Grid>
+
+
+            <Grid flexRow margin="10px 0 0">
+              <Image
+                type="circle"
+                width="32px"
+                margin="0 14px 0 0"
+                src={userInfo.userImageUrl}/>
+              <Grid>
+                <Text margin="0" size="12px" bold="500">[{userInfo.userTitle}] {userInfo.username}</Text>
+              </Grid>
+            </Grid>
+            <Grid padding="5px 0 5px 46px" flexRow justify>
+              <Grid padding="16px" bg="#68DC68" radius="30px" width="auto">
+                <Text margin="0">등산에 필요한 물품은 각자 알아서 </Text>
+              </Grid>
+              <Text margin="35px 0 0" size="12px" bold="500" color="#A4A4A4">오전 8:20</Text>
+            </Grid>
+          </Grid>
+        </ChatWrap>
+        
+        
+
+        <MenubarContainer>
+          <Grid height="88px" maxWidth="500px" margin="auto">
+            <Menubar menuColor={menuColor}/>
+          </Grid>
+        </MenubarContainer>
+
+      </ChatContainer>
+
+      </Desktop>
     </React.Fragment>
   );
 }
@@ -103,8 +165,7 @@ const ChatRoom = (props) => {
 const ChatContainer = styled.div`
   width: 100%;
   height: 100%;
-  min-width: 414px;
-  max-width: 800px;
+  max-width: 500px;
   margin: auto;
   overflow: hidden;
 `;

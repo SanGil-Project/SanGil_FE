@@ -11,11 +11,38 @@ const Icon = (props) => {
     _onClick,
     color,
     page,
+    check,
   } = props;
   const styles = { width, height, maxWidth, maxHeight, margin };
 
   // console.log(page)
   const menuColor = page ? "#fff" : "#6F6F6F";
+
+
+{/* <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z" fill="white"/>
+<path d="M18 8L9.99999 16L6 12" stroke="#61D161" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg> */}
+
+// #FF1C1C
+
+  // if (type === "errorBtn") {
+  //   return (
+  //     <MenuIcon {...styles} viewBox="0 0 24 24" fill="none" onClick={_onClick}>
+  //       <path d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z" fill="white"/>
+  //     </MenuIcon>
+  //   );
+  // }
+
+  if (type === "checkBtn") {
+    return (
+      <MenuIcon {...styles} viewBox="0 0 24 24" fill="none" onClick={_onClick}>
+        <path d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z" fill="white"/>
+        <path d="M18 8L9.99999 16L6 12" stroke={check} strokeWidth="2" strokeLinecap="round" linejoin="round"/>
+
+      </MenuIcon>
+    );
+  }
 
   if (type === "detailBtn") {
     return (
