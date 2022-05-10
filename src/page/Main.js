@@ -329,7 +329,7 @@ const Main = (props) => {
         <Grid border="1px solid black" width="414px" margin="0 auto">
           <Header />
           <Grid padding="7px" overflowY="scroll" height="1080px">
-            <Grid height="453px" margin="90px auto 25px auto">
+            <Grid height="453px" margin="90px auto 75px auto">
               <Text
                 width="380px"
                 height="24px"

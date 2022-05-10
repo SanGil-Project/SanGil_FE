@@ -3,7 +3,7 @@ import KakaoMap from "../components/KakaoMap";
 import { Grid, Button, Text, Icon, Input } from "../elements/element";
 import { Header } from "../components/component";
 import { Desktop, Mobile } from "../shared/responsive";
-import { startDB } from "../redux/modules/tracker";
+import { startDB, endClimbDB } from "../redux/modules/tracker";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as pathActions } from "../redux/modules/tracker";
 import StopWatch from "../components/StopWatch";
@@ -14,14 +14,12 @@ const Tracker = (props) => {
   const { name, mountainId } = useParams();
   const navigate = useNavigate();
   const distance = useSelector((state) => state.tracker.distance);
-
   const [completedId, setCompletedId] = React.useState();
   const [myLoca, setMyLoca] = React.useState();
   const [time, setTime] = React.useState({
     s: 0,
     m: 0,
     h: 0,
-    distance: 0,
     isStart: false,
   });
 
@@ -49,17 +47,17 @@ const Tracker = (props) => {
   const polylinePath = useSelector((state) => state.polyline?.polylinePath);
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
-    if (navigator.geolocation) {
-      // console.log("이게1");
-      navigator.geolocation.getCurrentPosition((position) => {
-        setMyLoca({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-      });
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   if (navigator.geolocation) {
+  //     // console.log("이게1");
+  //     navigator.geolocation.getCurrentPosition((position) => {
+  //       setMyLoca({
+  //         lat: position.coords.latitude,
+  //         lng: position.coords.longitude,
+  //       });
+  //     });
+  //   }
+  // }, []);
 
   useEffect(() => {
     path.current = setTimeout(() => {
@@ -97,7 +95,13 @@ const Tracker = (props) => {
 
   const stop = (distance, endTime) => {
     releaseWakeLock();
-    // dispatch()
+    console.log(distance?.distanceK);
+    dispatch(
+      endClimbDB(completedId, {
+        totalDistance: distance?.distanceK,
+        totalTime: `${time.h}시간 ${time.m}분 ${time.s}초`,
+      })
+    );
     navigate(`/endtracking/${name}`, {
       state: { distance: distance, time: endTime },
     });

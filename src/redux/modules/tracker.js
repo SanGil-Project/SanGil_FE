@@ -73,12 +73,28 @@ export const setPathDB = (completedId, loca) => {
   };
 };
 
-export const endClimb = (completedId, data) => {
+export const endClimbDB = (completedId, data) => {
+  console.log(data)
   return function (dispatch, getState) {
-    axios.put(`http://3.35.49.228/api/mountain/tracking/${completedId}`, {
-      totalDistance: "",
-      totalTime: "",
-    });
+    // axios
+    //   .put(
+    //     `http://3.35.49.228/api/mountain/tracking/${completedId}`,
+    //     {
+    //       totalDistance: data.totalDistance,
+    //       totalTime: data.totalTime,
+    //     },
+    //     {
+    //       headers: {
+    //         Authorization: sessionStorage.getItem("token"),
+    //       },
+    //     }
+    //   )
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 };
 
