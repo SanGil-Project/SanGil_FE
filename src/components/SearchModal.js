@@ -9,11 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import _ from "lodash";
 
 const SearchModal = (props) => {
-  // selectMnt={selectMnt}/>
   const { onClose, selectMnt } = props;
   const dispatch = useDispatch();
   const searchData = useSelector((state) => state.tracker?.searchList);
-  console.log(searchData);
   const [name, setName] = React.useState();
 
   const getName = _.debounce((e) => {
