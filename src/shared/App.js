@@ -23,7 +23,6 @@ import {
   EndTracking,
   PartyWrite,
   ChatRoom,
-
 } from "../page/page";
 
 function App() {
@@ -42,9 +41,8 @@ function App() {
           <Route path="/partydetail/:partyid" element={<PartyDetail />} />
           <Route path="/search" element={<Search />} />
           <Route path="/searchdetail/:name" element={<SearchDetail />} />
-
           <Route path="/searchmountain" element={<BeforeTracking />} />
-          <Route path="/tracker/:name" element={<Tracker />} />
+          <Route path="/tracker/:name/:mountainId" element={<Tracker />} />
           <Route path="/endtracking/:name" element={<EndTracking />} />
           <Route path="/feed" element={<FeedDetail />} />
           <Route path="/feedwrite" element={<FeedWrite />} />

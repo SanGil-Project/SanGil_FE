@@ -418,7 +418,7 @@ const Find = styled.svg`
 `;
 
 const Like = styled.svg`
-  fill: #6f6f6f;
+  fill: #fff;
   width: ${(props) => `${props.width}`};
   max-width: ${(props) => `${props.maxWidth}`};
   height: ${(props) => `${props.height}`};

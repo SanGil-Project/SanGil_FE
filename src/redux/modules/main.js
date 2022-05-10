@@ -13,12 +13,13 @@ const getFeed = createAction(GETFEED, (feeds) => ({ feeds }));
 const getAround = createAction(GETAROUND, (course) => ({ course }));
 const initialState = {};
 
-export const aroundDB = () => {
+export const aroundDB = (lat, lng) => {
   return function (dispatch, getState) {
+    console.log(lat, lng);
     axios
-      .get("url")
+      .get(`http://52.78.68.95/api/main/nearby/1?lat=37.45988&lng=126.9519`)
       .then((res) => {
-        console.log(res);
+        dispatch(getAround(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -26,12 +27,12 @@ export const aroundDB = () => {
   };
 };
 
-export const feedDB = () => {
+export const feedDB = (token) => {
   return function (dispatch, getState) {
     axios
       .get("http://52.78.68.95/api/main/feeds/1")
       .then((res) => {
-        console.log(res);
+        dispatch(getFeed(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -44,7 +45,7 @@ export const mountainsDB = () => {
     axios
       .get("http://52.78.68.95/api/main/mountains")
       .then((res) => {
-        console.log(res);
+        dispatch(getBest(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -71,9 +72,18 @@ export default handleActions(
       produce(state, (draft) => {
         draft.parties = action.payload.parties;
       }),
-    [GETBEST]: (state, action) => produce(state, (draft) => {}),
-    [GETFEED]: (state, action) => produce(state, (draft) => {}),
-    [GETAROUND]: (state, action) => produce(state, (draft) => {}),
+    [GETBEST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.mountains = action.payload.mountains;
+      }),
+    [GETFEED]: (state, action) =>
+      produce(state, (draft) => {
+        draft.feedList = action.payload.feeds;
+      }),
+    [GETAROUND]: (state, action) =>
+      produce(state, (draft) => {
+        draft.around = action.payload.course;
+      }),
   },
   initialState
 );

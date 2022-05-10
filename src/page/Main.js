@@ -1,12 +1,12 @@
 import React from "react";
-import { Grid, Icon, Text, Button } from "../elements/element";
+import { Grid, Icon, Text, Button, Image } from "../elements/element";
 import {
   HorizontalScroll,
   Card,
   Header,
   Menubar,
 } from "../components/component";
-import { partyDB, mountainsDB, feedDB } from "../redux/modules/main";
+import { partyDB, mountainsDB, feedDB, aroundDB } from "../redux/modules/main";
 import { Desktop, Mobile } from "../shared/responsive";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -16,20 +16,20 @@ const Main = (props) => {
   const token = sessionStorage.getItem("token");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const parties = useSelector((state) => state.main?.parties);
+  const mainState = useSelector((state) => state.main);
 
+  const mountain = mainState.mountains?.filter((el) => el.mountainId !== 1);
   const num = [2, 3, 4, 5];
-  const arr = [0, 1];
   const menuColor = [false, false, true, false, false]; // 메뉴바 색
-
   React.useEffect(() => {
-    // if (navigator.geolocation) {
-    //   navigator.geolocation.getCurrentPosition((position) => {
-    //     console.log(position.coords.latitude, position.coords.longitude);
-    //   });
-    // }
-    // dispatch(feedDB());
-    // dispatch(mountainsDB())
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        dispatch(aroundDB(position.coords.latitude, position.coords.longitude));
+      });
+    }
+
+    dispatch(mountainsDB());
+    dispatch(feedDB());
     dispatch(partyDB());
   }, []);
 
@@ -226,13 +226,17 @@ const Main = (props) => {
                 </Grid>
               </Grid>
               <HorizontalScroll>
-                {num.map((cur, idx) => (
+                {mainState.feedList?.feedList.map((cur, idx) => (
                   <div key={idx} style={{ margin: "10px 0 10px 0" }}>
-                    <Card
-                      width="150px"
-                      height="150px"
-                      margin="0 7px 0 7px"
-                    ></Card>
+                    <Card width="150px" height="150px" margin="0 7px 0 7px">
+                      <Image
+                        width="150px"
+                        height="150px"
+                        borderRadius="10px"
+                        border="none"
+                        src={mainState.feedList?.feedList[idx].feedImgUrl}
+                      />
+                    </Card>
                   </div>
                 ))}
               </HorizontalScroll>
@@ -270,7 +274,7 @@ const Main = (props) => {
                   <Icon type="arrow" width="5px" height="8px" />
                 </Grid>
               </Grid>
-              {arr.map((cur, idx) => {
+              {mainState.parties?.parties.map((cur, idx) => {
                 return (
                   <Card
                     key={idx}
@@ -278,7 +282,28 @@ const Main = (props) => {
                     width="386px"
                     height="85px"
                     margin="0 auto 14px auto"
-                  ></Card>
+                    padding="10px"
+                  >
+                    <Grid height="20px" margin="0" flex="flex">
+                      <Icon type="partyMountain" width="14px" />
+                      <Text size="14px" margin="0 0 0 10px">
+                        {mainState.parties?.parties[idx].title}
+                      </Text>
+                    </Grid>
+                    <Grid height="20px" margin="0" flex="flex">
+                      <Icon type="partyDate" width="14px" />
+                      <Text size="14px" margin="0 0 0 10px">
+                        {mainState.parties?.parties[idx].partyDate}
+                      </Text>
+                    </Grid>
+                    <Grid height="20px" margin="0" flex="flex">
+                      <Icon type="partyPeople" width="14px" />
+                      <Text size="14px" margin="0 0 0 10px">
+                        {mainState.parties?.parties[idx].curPeople}/
+                        {mainState.parties?.parties[idx].maxPeople}
+                      </Text>
+                    </Grid>
+                  </Card>
                 );
               })}
             </Grid>
@@ -313,15 +338,17 @@ const Main = (props) => {
                 size="2rem"
                 lineHeight="24px"
               >
-                🌲 지금 산길러 들이 오르고있는 산 TOP 10
+                🌲 북마크 순 10
               </Text>
               <Card
                 border="2px solid #B3B3B3"
                 width="386px"
-                height="120px"
+                height="200px"
                 margin="34px auto 0 auto"
                 // _onClick={() => navigate(`/searchdetail/관악산`)}
+                bgImg="https://i.esdrop.com/d/f/bww1Enn4jz/5RrOZgFwvp.jpg"
                 hover
+                bgSize="cover"
               >
                 <Icon width="34px" height="29px" type="rank" />
                 <Text
@@ -334,7 +361,7 @@ const Main = (props) => {
                 >
                   1
                 </Text>
-                <Icon type="like" width="18px" margin="0 0 -113px 355px" />
+                <Icon type="like" width="18px" margin="0 0 -190px 355px" />
               </Card>
               <Grid height="30px">
                 <div
@@ -343,12 +370,12 @@ const Main = (props) => {
                   }}
                 >
                   <Text
-                    maxWidth="130px"
-                    margin="10px 8px 0 7px"
+                    maxWidth="170px"
+                    margin="10px 8px 0 10px"
                     bold="600"
                     size="1.4rem"
                   >
-                    충청남도 서산시
+                    강원도 홍천군 두촌면
                   </Text>
                   <Text
                     margin="10px 0 0 0"
@@ -356,20 +383,24 @@ const Main = (props) => {
                     bold="200"
                     size="1.4rem"
                   >
-                    산이름졸라길다아아아아아아앙?
+                    가리산
                   </Text>
                 </div>
               </Grid>
 
               <HorizontalScroll>
-                {num.map((cur, idx) => (
+                {mountain?.map((cur, idx) => (
                   <div key={idx}>
                     <Card
                       width="194px"
                       height="120px"
                       margin="34px 7px 8px 7px"
-                      // _onClick={() => navigate(`/searchdetail/관악산`)}
+                      _onClick={() =>
+                        navigate(`/searchdetail/${mountain[idx].mountainName}`)
+                      }
                       hover
+                      bgImg={mountain[idx].mountainImgUrl}
+                      bgSize="cover"
                     >
                       <Icon width="34px" height="29px" type="rank" />
                       <Text
@@ -377,28 +408,29 @@ const Main = (props) => {
                         height="17px"
                         size="1.4rem"
                         bold="300"
-                        margin="-32px 14px"
+                        margin="-32px 0 0 12px"
                         color="#fff"
+                        align="center"
                       >
-                        {cur}
+                        {mountain[idx].mountainId}
                       </Text>
                       <Icon
                         type="like"
                         width="18px"
                         height="18px"
-                        margin="0 0 -117px 163px"
+                        margin="0 0 -87px 163px"
                       />
                     </Card>
                     <Text
-                      maxWidth="130px"
+                      maxWidth="160px"
                       margin="10px 8px 0 7px"
                       bold="600"
                       size="1.4rem"
                     >
-                      충청남도 서산시
+                      {mountain[idx].mountainAddress}
                     </Text>
-                    <Text margin="10px 0 0 7px" bold="200" size="1.4rem">
-                      산이름졸라길다아아아아아아앙
+                    <Text margin="0 0 0 7px" bold="200" size="1.4rem">
+                      {mountain[idx].mountainName}
                     </Text>
                   </div>
                 ))}
@@ -421,12 +453,16 @@ const Main = (props) => {
                 👀 주변 산길
               </Text>
               <HorizontalScroll>
-                {num.map((cur, idx) => (
+                {mainState.around?.nearbyMountainDtos.map((cur, idx) => (
                   <div key={idx}>
                     <Card
                       width="194px"
                       height="120px"
                       margin="10px 7px 8px 7px"
+                      bgImg={
+                        mainState.around?.nearbyMountainDtos[idx].mountainImgUrl
+                      }
+                      bgSize="cover"
                     >
                       <Icon
                         type="like"
@@ -436,7 +472,7 @@ const Main = (props) => {
                       />
                     </Card>
                     <Text margin="8px 0 0 7px" bold="600" size="1.4rem">
-                      어디어디 산의 어디 코스
+                      {mainState.around?.nearbyMountainDtos[idx].mountainName}
                     </Text>
 
                     <Grid
@@ -446,10 +482,11 @@ const Main = (props) => {
                       margin="8px 7px 0 7px"
                     >
                       <Text bold="300" size="1.2rem">
-                        매우 좋음 5.0
+                        평가 없음{" "}
+                        {mainState.around?.nearbyMountainDtos[idx].starAvr}
                       </Text>
                       <Text bold="400" size="1.2px">
-                        100.800km
+                        {mainState.around?.nearbyMountainDtos[idx].distance}km
                       </Text>
                     </Grid>
                   </div>
@@ -458,7 +495,7 @@ const Main = (props) => {
             </Grid>
 
             <Grid height="220px">
-              <Grid maxWidth="386px" margin="0 0 24px 7px" height="25px" isFlex>
+              <Grid maxWidth="472px" margin="0 0 24px 7px" height="25px" isFlex>
                 <Text
                   width="350px"
                   height="24px"
@@ -486,19 +523,23 @@ const Main = (props) => {
                 </Grid>
               </Grid>
               <HorizontalScroll>
-                {num.map((cur, idx) => (
+                {mainState.feedList?.feedList.map((cur, idx) => (
                   <div key={idx} style={{ margin: "10px 0 10px 0" }}>
-                    <Card
-                      width="150px"
-                      height="150px"
-                      margin="0 7px 0 7px"
-                    ></Card>
+                    <Card width="150px" height="150px" margin="0 7px 0 7px">
+                      <Image
+                        width="150px"
+                        height="150px"
+                        borderRadius="10px"
+                        border="none"
+                        src={mainState.feedList?.feedList[idx].feedImgUrl}
+                      />
+                    </Card>
                   </div>
                 ))}
               </HorizontalScroll>
             </Grid>
             <Grid width="400px" height="238px" margin="40px auto 20px auto">
-              <Grid maxWidth="386px" margin="0 0 34px 7px" height="25px" isFlex>
+              <Grid maxWidth="472px" margin="0 0 34px 7px" height="25px" isFlex>
                 <Text
                   width="350px"
                   height="24px"
@@ -525,15 +566,36 @@ const Main = (props) => {
                   <Icon type="arrow" width="5px" height="8px" />
                 </Grid>
               </Grid>
-              {arr.map((cur, idx) => {
+              {mainState.parties?.parties.map((cur, idx) => {
                 return (
                   <Card
                     key={idx}
                     border="1px solid green"
                     width="386px"
                     height="85px"
+                    padding="10px"
                     margin="0 auto 14px auto"
-                  ></Card>
+                  >
+                    <Grid height="20px" margin="0" flex="flex">
+                      <Icon type="partyMountain" width="14px" />
+                      <Text size="14px" margin="0 0 0 10px">
+                        {mainState.parties?.parties[idx].title}
+                      </Text>
+                    </Grid>
+                    <Grid height="20px" margin="0" flex="flex">
+                      <Icon type="partyDate" width="14px" />
+                      <Text size="14px" margin="0 0 0 10px">
+                        {mainState.parties?.parties[idx].partyDate}
+                      </Text>
+                    </Grid>
+                    <Grid height="20px" margin="0" flex="flex">
+                      <Icon type="partyPeople" width="14px" />
+                      <Text size="14px" margin="0 0 0 10px">
+                        {mainState.parties?.parties[idx].curPeople}/
+                        {mainState.parties?.parties[idx].maxPeople}
+                      </Text>
+                    </Grid>
+                  </Card>
                 );
               })}
             </Grid>

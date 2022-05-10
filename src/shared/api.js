@@ -4,7 +4,7 @@ const token = sessionStorage.getItem("token");
 
 const instance = axios.create({
   // baseURL: "http://3.35.52.88",
-  baseURL: "http://52.78.68.95",
+  baseURL: "http://3.35.49.228",
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
@@ -85,5 +85,4 @@ export const api = {
   attendParty: (token, partyId) => instance.post(`/api/party/attend/${partyId}`, {
     headers: { Authorization: token, }}),
   delParty: (partyId) => instance.delete(`/api/party/join/${partyId}`),
-
 };

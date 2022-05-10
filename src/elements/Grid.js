@@ -30,6 +30,8 @@ const Grid = (props) => {
     minWidth,
     zindex,
     flex,
+    bgImg,
+    bgSize,
   } = props;
   const styles = {
     bg,
@@ -57,6 +59,8 @@ const Grid = (props) => {
     justify,
     alignItems,
     flex,
+    bgImg,
+    bgSize,
   };
 
   return (
@@ -112,7 +116,10 @@ const Box = styled.div`
     cursor: pointer;
   };`
       : null}
-
+  ${(props) => (props.bgImg ? `background-image: url(${props.bgImg});` : null)}
+  ${(props) => (props.bgSize ? `background-size: ${props.bgSize};` : null)}
+  background-repeat: no-repeat;
+  background-position: center;
   ${(props) =>
     props.isFlex
       ? `display:flex; align-items:center; justify-content: space-between`
