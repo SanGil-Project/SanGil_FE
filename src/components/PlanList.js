@@ -61,7 +61,7 @@ const PlanList = (props) => {
 
   return (
     <React.Fragment>
-      <Text bold="600" size="20px" margin="0 0 24px" align="left">🗓 {userInfo.username}님의 산길 일정</Text>
+      <Text bold="600" size="20px" margin="0 0 24px" align="left">🗓 {userInfo?.username}님의 산길 일정</Text>
       <Grid margin="0 0 30px">
         {planList?.map((p, idx)=>{
           return <TextCard key={idx} data={p}/>

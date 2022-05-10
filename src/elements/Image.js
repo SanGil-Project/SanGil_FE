@@ -13,6 +13,8 @@ const Image = (props) => {
     type,
     onChange,
     objectFit,
+    children,
+    hover,
     shadow,
   } = props;
   const styles = {
@@ -24,6 +26,7 @@ const Image = (props) => {
     border,
     borderRadius,
     objectFit,
+    hover,
     shadow,
   };
 
@@ -85,6 +88,7 @@ const CircleImg = styled.img`
   ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
   border-radius: 100%;
   object-fit: cover;
+  ${(props) => props.hover ? `&:hover { cursor: pointer; };` : null}
 `;
 
 export default Image;
