@@ -13,9 +13,9 @@ const Image = (props) => {
     type,
     onChange,
     objectFit,
-    children,
-    hover,
     shadow,
+    hover,
+    children,
   } = props;
   const styles = {
     src,
@@ -26,8 +26,8 @@ const Image = (props) => {
     border,
     borderRadius,
     objectFit,
-    hover,
     shadow,
+    hover,
   };
 
   if (type === "circle") {
