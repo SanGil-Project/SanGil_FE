@@ -4,7 +4,7 @@ import axios from "axios";
 
 const instance = axios.create({
   // baseURL: "http://3.35.52.88",
-  baseURL: "http://52.78.68.95",
+  baseURL: "http://3.35.49.228",
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
@@ -40,34 +40,43 @@ export const api = {
     instance.get(`/user/naver/callback?code=${code}&state=${state}`),
   googleLogin: (code) => instance.get(`/user/google/callback?code=${code}`),
 
-
-  myTracking: (token) => instance.get("/api/mypages/tracking", {
-    headers: { Authorization: token, }}),
-  myTitle: (token) => instance.get("/api/mypages/userTitle", {
-    headers: { Authorization: token, }}),
+  myTracking: (token) =>
+    instance.get("/api/mypages/tracking", {
+      headers: { Authorization: token },
+    }),
+  myTitle: (token) =>
+    instance.get("/api/mypages/userTitle", {
+      headers: { Authorization: token },
+    }),
 
   // party.js
   getPartyList: (pageNum) => instance.get(`/api/parties/${pageNum}`),
   getOneParty: (partyId) => instance.get(`/api/party/${partyId}`),
-  addParty: (token, party) => instance.post("/api/party/write", {
-    title : party.title,
-    mountain : party.mountain,
-    address : party.address,
-    partyDate : party.partyDate,
-    partyTime: party.partyTime,
-    maxPeople : party.maxPeople,
-    partyContent : party.content,
-  }, { headers: { Authorization: token, },
-  }),
-  editParty: (partyId, party) => instance.put(`/api/party/${partyId}`, {
-    partyId : partyId,
-    partyDate : party.partyDate,
-    partyTime: party.partyTime,
-    maxPeople : party.maxPeople,
-    partyContent : party.content,
-  }),
-  attendParty: (token, partyId) => instance.post(`/api/party/attend/${partyId}`, {
-    headers: { Authorization: token, }}),
+  addParty: (token, party) =>
+    instance.post(
+      "/api/party/write",
+      {
+        title: party.title,
+        mountain: party.mountain,
+        address: party.address,
+        partyDate: party.partyDate,
+        partyTime: party.partyTime,
+        maxPeople: party.maxPeople,
+        partyContent: party.content,
+      },
+      { headers: { Authorization: token } }
+    ),
+  editParty: (partyId, party) =>
+    instance.put(`/api/party/${partyId}`, {
+      partyId: partyId,
+      partyDate: party.partyDate,
+      partyTime: party.partyTime,
+      maxPeople: party.maxPeople,
+      partyContent: party.content,
+    }),
+  attendParty: (token, partyId) =>
+    instance.post(`/api/party/attend/${partyId}`, {
+      headers: { Authorization: token },
+    }),
   delParty: (partyId) => instance.delete(`/api/party/join/${partyId}`),
-
 };

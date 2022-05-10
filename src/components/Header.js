@@ -59,7 +59,7 @@ const Header = () => {
 
         <Desktop>
           <Grid
-            maxWidth="412px"
+            maxWidth="414px"
             height="64px"
             bg="#C4C4C4"
             position="fixed"
@@ -130,7 +130,7 @@ const Header = () => {
 
       <Desktop>
         <Grid
-          maxWidth="412px"
+          maxWidth="414px"
           height="64px"
           bg="#C4C4C4"
           position="fixed"
