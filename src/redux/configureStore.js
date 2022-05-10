@@ -4,16 +4,15 @@ import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 import user from "./modules/user";
 import main from "./modules/main";
-import polyline from "./modules/geolocation";
+import tracker from "./modules/tracker";
 import feed from "./modules/feed";
 import party from "./modules/party";
-
 
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
   user: user,
-  polyline: polyline,
+  tracker: tracker,
   main: main,
   feed: feed,
   party: party,

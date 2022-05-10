@@ -13,7 +13,7 @@ const Image = (props) => {
     type,
     onChange,
     objectFit,
-    children,
+    shadow,
   } = props;
   const styles = {
     src,
@@ -24,6 +24,7 @@ const Image = (props) => {
     border,
     borderRadius,
     objectFit,
+    shadow,
   };
 
   if (type === "circle") {
@@ -38,10 +39,7 @@ const Image = (props) => {
       </React.Fragment>
     );
   }
-  return (
-    <Img onChange={onChange} src={src} {...styles}>
-    </Img>
-  );
+  return <Img onChange={onChange} src={src} {...styles}></Img>;
 };
 
 Image.defaultProps = {
@@ -59,8 +57,10 @@ const Img = styled.img`
   ${(props) => (props.border ? `border: ${props.border};` : null)}
   ${(props) =>
     props.borderRadius ? `border-radius: ${props.borderRadius};` : null}
+ ${(props) => (props.shadow ? `shadow : 0 4px 12px rgba(0, 0, 0, 0.1);` : null)}
   object-fit:${(props) => `${props.objectFit}`};
   box-sizing: border-box;
+  ${(props) => (props.zindex ? `z-index: ${props.zindex};` : null)}
 `;
 
 const AspectOutter = styled.div`

@@ -38,7 +38,7 @@ export const KakaoMap = (props) => {
     lng: 127.8,
   });
   const [selectedMarker, setSeleteMarker] = useState()
-  console.log("여기서 선택된 값 :: ", selectedMarker);
+  // console.log("여기서 선택된 값 :: ", selectedMarker);
   if(getIndex) {
     props.getIndex(selectedMarker); // 검색 페이지로 선택된 marker index 보내기
   }  
