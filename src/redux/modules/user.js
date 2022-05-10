@@ -168,59 +168,6 @@ const changeTitleDB = (userTitle) => {
 
 const myTrackingDB = () => {
   return function (dispatch, getState) {
-    // 데이터 테스트용
-    // const completedList = [
-    //   {
-    //     completedId: 1,
-    //     mountainId: "관악산",
-    //     totalDistance: "2.5km",
-    //     totalTime: "2시간 20분 20초",
-    //     lat: 37.44446410184117,
-    //     lng: 126.96388893953335,
-    //   },
-    //   {
-    //     completedId: 2,
-    //     mountainId: "대둔산",
-    //     totalDistance: "1.5km",
-    //     totalTime: "1시간 45분 45초",
-    //     lat: 36.1245832757118,
-    //     lng: 127.32048346523955,
-    //   },
-    //   {
-    //     completedId: 3,
-    //     mountainId: "도봉산",
-    //     totalDistance: "4.5km",
-    //     totalTime: "4시간 13분 45초",
-    //     lat: 37.69877448301772,
-    //     lng: 127.01551754244439,
-    //   },
-    //   {
-    //     completedId: 4,
-    //     mountainId: "무등산",
-    //     totalDistance: "4km",
-    //     totalTime: "3시간 13분 45초",
-    //     lat: 35.12435880520678,
-    //     lng: 127.0091717110001,
-    //   },
-    //   {
-    //     completedId: 5,
-    //     mountainId: "북한산",
-    //     totalDistance: "3.4km",
-    //     totalTime: "3시간 05분 20초",
-    //     lat: 37.65865511792133,
-    //     lng: 126.97798851202528,
-    //   },
-    //   {
-    //     completedId: 6,
-    //     mountainId: "한라산",
-    //     totalDistance: "15km",
-    //     totalTime: "10시간 13분 45초",
-    //     lat: 33.36123811263156,
-    //     lng: 126.52944767809313,
-    //   },
-    // ];
-    // dispatch(myTracking(completedList));
-    // return;
 
     api
       .myTracking()

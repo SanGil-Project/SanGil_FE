@@ -59,9 +59,10 @@ export const api = {
   changeTitle: () => instance.put("/api/mypages/userTitle", {
   }),
 
-  // 
+  // mountain.js
   searchMount: (keyword, pageNum) => instance.get(`/api/mountain/search/${keyword}/${pageNum}`),
-
+  getTopList: () => instance.get("/api/mountain/search/before"),
+  
 
   // party.js
   getPartyList: (pageNum) => instance.get(`/api/parties/${pageNum}`),
