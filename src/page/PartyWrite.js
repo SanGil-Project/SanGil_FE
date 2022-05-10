@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 
 import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as partyActions } from '../redux/modules/party';
+import { actionCreators as mountActions } from '../redux/modules/mountain';
 
 import 'date-fns';
 import DatePicker from 'react-mobile-datepicker';
@@ -14,6 +15,8 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 
 import { Menubar, Header } from '../components/component';
+import { Desktop, Mobile } from "../shared/responsive";
+
 import { Grid, Text, Icon, Button, Input, Image } from '../elements/element';
 
 const PartyWrite = (props) => {
@@ -63,6 +66,12 @@ const PartyWrite = (props) => {
     setMountValue(e.target.value);
   }
 
+  const searchMt = () => {
+    const pagenum = 1;
+    // console.log(mountValue);
+    dispatch(mountActions.searchMntDB(mountValue, pagenum));
+  }
+
   const addParty = () => {
     const testToken = "testToken";
     if (partyName === "" || mountValue==="" || dateValue==="" || timeValue==="" || numberValue==="" || partyContent==="") {
@@ -83,8 +92,11 @@ const PartyWrite = (props) => {
     navigate(`/party`);
   }
 
+
+
   return (
     <React.Fragment>
+      <Mobile>
       <PartyContainer>
         <Header />
         <PartyWrap>
@@ -185,11 +197,11 @@ const PartyWrite = (props) => {
                 <Button width="auto" border="none">
                   <Grid flexRow>
                     <Input 
-                      width="150px" border="1px solid #BBBBBB" radius="8px" padding="16px 12px"
+                      width="150px" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 10px"
                       placeholder="산이름 입력"
                       _onChange={inputMount}/>
-                    {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text>
-                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} /> */}
+                    {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text> */}
+                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={searchMt} />
                   </Grid>
                 </Button>
               </Grid>
@@ -250,12 +262,188 @@ const PartyWrite = (props) => {
         </PartyWrap>
         
         <MenubarContainer>
-          <Grid height="88px" minWidth="414px" maxWidth="800px" margin="auto">
+          <Grid height="88px" maxWidth="500px" margin="auto">
             <Menubar menuColor={menuColor}/>
           </Grid>
         </MenubarContainer>
 
       </PartyContainer>
+        
+        </Mobile>
+        <Desktop>
+      <PartyContainer>
+        <Header />
+        <PartyWrap>
+          <Grid padding="96px 14px 100px">
+            <Grid>
+              <Text margin="0 0 10px" size="16px" bold="600">모임 이름</Text>
+              <Input 
+                width="100%" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 0 34.5px"
+                placeholder="모임의 이름은 무엇인가요?"
+                _onChange={inputName}/>
+              <Text margin="0 0 10px" size="16px" bold="600">세부 내용</Text>
+              <Input 
+                width="100%" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 0 34.5px"
+                multiLine
+                placeholder="어떤 활동을 함께 하고 싶으신가요?"
+                _onChange={inputContent}/>
+            </Grid>
+            <Grid margin="28px 0">
+              <Grid isFlex margin="10px 0">
+                <Text margin="0" size="16px" bold="600">날짜</Text>
+                <Button width="auto" border="none">
+                  {/* <Grid flexRow _onClick={handleClick}> */}
+                  <Grid flexRow>
+
+                    <LocalizationProvider dateAdapter={AdapterDateFns} >
+                      <Stack component="form" noValidate spacing={1} sx={{ border: "none" }}>
+                        <TextField
+                          id="date"
+                          // label="Birthday"
+                          // variant="standard"
+                          type="date"
+                          // style={{ fontSize: 1 }}
+                          // size="medium"
+                          onChange={inputDate}
+                          // defaultValue="2017-05-24"
+                          value={dateValue}
+                          sx={{ width: 150, border: "none", fontSize: 15 }}
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                        />
+                      </Stack>
+                    </LocalizationProvider>
+
+                    {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text>
+                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} /> */}
+                  </Grid>
+                </Button>
+              </Grid>
+              <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
+              <Grid isFlex margin="10px 0">
+                <Text margin="0" size="16px" bold="600">시간</Text>
+                <Button width="auto" border="none">
+                  <Grid flexRow>
+
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                      <Stack component="form" noValidate spacing={1}>
+                        <TextField
+                        id="time"
+                        type="time"
+                        // defaultValue="07:30"
+
+                        onChange={inputTime}
+                        value={timeValue}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        inputProps={{
+                          step: 600, // 5 min
+                        }}
+                        sx={{ width: 150 }}
+                      />
+                      </Stack>
+                    </LocalizationProvider>
+                    {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text>
+                    <Icon type="detailBtn" width="7px" height="13" margin="auto"/> */}
+                  </Grid>
+                </Button>
+              </Grid>
+              <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
+              <Grid isFlex margin="10px 0">
+                <Text margin="0" size="16px" bold="600">인원</Text>
+                <Button width="auto" border="none">
+                  <Grid flexRow>
+
+                    <Input 
+                      width="150px" border="1px solid #BBBBBB" radius="8px" padding="16px 12px"
+                      placeholder="인원수 입력"
+                      _onChange={inputNumber}/>
+                    {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text>
+                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} /> */}
+                  </Grid>
+                </Button>
+              </Grid>
+              <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
+              <Grid isFlex margin="10px 0">
+                <Text margin="0" size="16px" bold="600">위치</Text>
+                <Button width="auto" border="none">
+                  <Grid flexRow>
+                    <Input 
+                      width="150px" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 10px"
+                      placeholder="산이름 입력"
+                      _onChange={inputMount}/>
+                    {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text> */}
+                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={searchMt} />
+                  </Grid>
+                </Button>
+              </Grid>
+              <ModalContainer>
+                <Modal>
+                {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <Stack component="form" noValidate spacing={3}>
+                    <TextField
+                      id="date"
+                      label="Birthday"
+                      type="date"
+                      defaultValue="2017-05-24"
+                      sx={{ width: 220 }}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                    <TextField
+                      id="time"
+                      label="Alarm clock"
+                      type="time"
+                      defaultValue="07:30"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      inputProps={{
+                        step: 300, // 5 min
+                      }}
+                      sx={{ width: 150 }}
+                    />
+                    <TextField
+                      id="datetime-local"
+                      label="Next appointment"
+                      type="datetime-local"
+                      defaultValue="2017-05-24T10:30"
+                      sx={{ width: 250 }}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </Stack>
+
+                </LocalizationProvider> */}
+                </Modal>
+              </ModalContainer>
+              
+            </Grid>
+            <Grid>
+            <Button 
+              bgColor="#C4C4C4" border="none" height="48px" margin="20px 0" radius="12px" 
+              _onClick={addParty}>
+              <Text margin="0" size="18px" bold="600" align>작성하기</Text>
+            </Button>
+
+            </Grid>
+          </Grid>
+
+        </PartyWrap>
+        
+        <MenubarContainer>
+          <Grid height="88px" maxWidth="500px" margin="auto">
+            <Menubar menuColor={menuColor}/>
+          </Grid>
+        </MenubarContainer>
+
+      </PartyContainer>
+
+        </Desktop>
     </React.Fragment>
   );
 }
@@ -263,8 +451,7 @@ const PartyWrite = (props) => {
 const PartyContainer = styled.div`
   width: 100%;
   height: 100%;
-  min-width: 414px;
-  max-width: 800px;
+  max-width: 500px;
   margin: auto;
   overflow: hidden;
 `;

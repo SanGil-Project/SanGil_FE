@@ -13,7 +13,13 @@ const Image = (props) => {
     type,
     onChange,
     objectFit,
+<<<<<<< HEAD
     shadow,
+=======
+    children,
+    hover,
+    
+>>>>>>> parks
   } = props;
   const styles = {
     src,
@@ -24,7 +30,11 @@ const Image = (props) => {
     border,
     borderRadius,
     objectFit,
+<<<<<<< HEAD
     shadow,
+=======
+    hover,
+>>>>>>> parks
   };
 
   if (type === "circle") {
@@ -85,6 +95,7 @@ const CircleImg = styled.img`
   ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
   border-radius: 100%;
   object-fit: cover;
+  ${(props) => props.hover ? `&:hover { cursor: pointer; };` : null}
 `;
 
 export default Image;
