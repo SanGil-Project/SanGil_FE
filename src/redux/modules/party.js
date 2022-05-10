@@ -45,37 +45,37 @@ const initialState = {
 const getPartyDB = () => {
   return function (dispatch, getState) {
 
-    const fakeDB = {
-      partyList : [
-        {
-        partyId : 1,
-        title : "관악산 같이 갈래?",
-        mountain : "관악산",
-        address : "서울 관악구",
-        partyDate : "2022-04-23",
-        partyTime: "11:00",
-        maxPeople : 8,
-        curPeople : 4,
-        completed : false,
-        createdAt : "09:00",
-        },
-        {
-        partyId : 2,
-        title : "관악산 나도 갈래!",
-        mountain : "북한산",
-        address : "서울 불광",
-        partyDate : "2022-04-23",
-        partyTime: "11:00",
-        maxPeople : 8,
-        curPeople : 8,
-        completed : true,
-        createdAt : "09:00"
-        }],
-        totalPage : 7,
-        currentPage : 1,
-    }
-    dispatch(setParty(fakeDB));
-    return;
+    // const fakeDB = {
+    //   partyList : [
+    //     {
+    //     partyId : 1,
+    //     title : "관악산 같이 갈래?",
+    //     mountain : "관악산",
+    //     address : "서울 관악구",
+    //     partyDate : "2022-04-23",
+    //     partyTime: "11:00",
+    //     maxPeople : 8,
+    //     curPeople : 4,
+    //     completed : false,
+    //     createdAt : "09:00",
+    //     },
+    //     {
+    //     partyId : 2,
+    //     title : "관악산 나도 갈래!",
+    //     mountain : "북한산",
+    //     address : "서울 불광",
+    //     partyDate : "2022-04-23",
+    //     partyTime: "11:00",
+    //     maxPeople : 8,
+    //     curPeople : 8,
+    //     completed : true,
+    //     createdAt : "09:00"
+    //     }],
+    //     totalPage : 7,
+    //     currentPage : 1,
+    // }
+    // dispatch(setParty(fakeDB));
+    // return;
     const pageNum = 1;
     api
       .getPartyList(pageNum)
@@ -152,17 +152,18 @@ const getOnePartyDB = (partyId = null) => {
 const addPartyDB = (token, party = {}) => {
   return function (dispatch, getState) {
 
-    console.log("리덕스 연결 성공 :: ", token, party);
-    const fakeDB = {
-      partyId: 1,
-      username: "이재진",
-      createdAt: "09:00",
-      ...party,      
-    }
-    dispatch(addParty(fakeDB));
-    return;
+    // console.log("리덕스 연결 성공 :: ", token, party);
+    // const fakeDB = {
+    //   partyId: 1,
+    //   username: "이재진",
+    //   createdAt: "09:00",
+    //   ...party,      
+    // }
+    // dispatch(addParty(fakeDB));
+    // return;
+    console.log(party);
     api
-      .addParty(token, party)
+      .addParty(party)
       .then((res) => {
         console.log("(addParty) 성공 데이터 확인 ::", res);
         dispatch(addParty(res.data));
