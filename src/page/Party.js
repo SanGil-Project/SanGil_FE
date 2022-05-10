@@ -20,16 +20,17 @@ const Party = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const partyList = useSelector((state) => state.party.partyList);
+  const partyList = useSelector((state) => state?.party?.partyList);
+  console.log(partyList);
 
   React.useEffect(() => {
-    if (partyList.length < 2) {
+    if (partyList?.length < 2) {
       dispatch(partyActions.getPartyDB());
     }
   }, []);
 
   const moveDetail = (partyId, completed) => {
-    if (completed) {
+    if (!completed) {
       window.alert("마감된 모임입니다!");
     } else {
       navigate(`/partydetail/${partyId}`, {state: {partyId: partyId}});
@@ -44,8 +45,8 @@ const Party = (props) => {
         <PartyWrap>
           <Grid padding="96px 14px 100px">
             {partyList?.map((p, idx) => {
-              const bg = p.completed ? "#C4C4C4" : "#E6E6E6";
-              const btnText = p.completed ? "마감 되었어요😢" : "모집내용확인";
+              const bg = p.completed ? "#E6E6E6" : "#C4C4C4";
+              const btnText = p.completed ? "모집내용확인" : "마감 되었어요😢";
               const curPeople = p.curPeople ? p.curPeople : 0;
               return (
                 <Grid
@@ -169,8 +170,8 @@ const Party = (props) => {
         <PartyWrap>
           <Grid padding="96px 14px 100px">
             {partyList?.map((p, idx) => {
-              const bg = p.completed ? "#C4C4C4" : "#E6E6E6";
-              const btnText = p.completed ? "마감 되었어요😢" : "모집내용확인";
+              const bg = p.completed ? "#E6E6E6" : "#C4C4C4";
+              const btnText = p.completed ? "모집내용확인" : "마감 되었어요😢";
               const curPeople = p.curPeople ? p.curPeople : 0;
               return (
                 <Grid

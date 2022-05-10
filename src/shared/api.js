@@ -73,7 +73,7 @@ export const api = {
     partyDate : party.partyDate,
     partyTime: party.partyTime,
     maxPeople : party.maxPeople,
-    partyContent : party.content,
+    partyContent : party.partyContent,
   }),
   editParty: (partyId, party) => instance.put(`/api/party/${partyId}`, {
     partyId : partyId,
@@ -82,7 +82,6 @@ export const api = {
     maxPeople : party.maxPeople,
     partyContent : party.content,
   }),
-  attendParty: (token, partyId) => instance.post(`/api/party/attend/${partyId}`, {
-    headers: { Authorization: token, }}),
+  attendParty: (partyId) => instance.post(`/api/party/attend/${partyId}`),
   delParty: (partyId) => instance.delete(`/api/party/join/${partyId}`),
 };
