@@ -1,13 +1,16 @@
 import React from "react";
+import styled from "styled-components";
 import { Grid, Image, Text, Icon } from "../elements/element";
-import { Header } from "../components/component";
+import { Header, Menubar } from "../components/component";
 import { Desktop, Mobile } from "../shared/responsive";
 
 const FeedDetail = () => {
+  const menuColor = [true, false, false, false, false]; // 메뉴바 색
+
   return (
     <>
       <Mobile>
-        <Grid width="100vw" margin="0 auto">
+        <FeedContainer>
           <Header />
           <Grid overflowY="scroll">
             <Grid height="50px" margin="82px 0 0 0">
@@ -50,12 +53,18 @@ const FeedDetail = () => {
               </Text>
             </Grid>
           </Grid>
-        </Grid>
+
+          <MenubarContainer>
+            <Grid height="88px" maxWidth="500px" margin="auto">
+              <Menubar menuColor={menuColor} />
+            </Grid>
+          </MenubarContainer>
+        </FeedContainer>
       </Mobile>
 
       {/* 데스크탑 */}
       <Desktop>
-        <Grid border="1px solid black" width="414px" margin="0 auto">
+        <FeedContainer>
           <Header />
           <Grid overflowY="scroll" height="1080px">
             <Grid height="50px" margin="82px 0 0 0">
@@ -98,10 +107,30 @@ const FeedDetail = () => {
               </Text>
             </Grid>
           </Grid>
-        </Grid>
+
+          <MenubarContainer>
+            <Grid height="88px" maxWidth="500px" margin="auto">
+              <Menubar menuColor={menuColor} />
+            </Grid>
+          </MenubarContainer>
+        </FeedContainer>
       </Desktop>
     </>
   );
 };
 
+const FeedContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  max-width: 500px;
+  margin: auto;
+`;
+
+const MenubarContainer = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+`;
 export default FeedDetail;
