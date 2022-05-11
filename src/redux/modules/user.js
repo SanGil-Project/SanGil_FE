@@ -114,6 +114,30 @@ const nameCheckDB = (username) => {
       });
   };
 };
+const changeImgDB = (file, image) => {
+  return function (dispatch, getState) {
+
+    const userdata = getState().user.userInfo;
+    const formData = new FormData();
+    formData.append("file", file);
+
+    api
+      .changeImg(formData)
+      .then((res) => {
+        console.log("(changeImg) 성공 후 데이터 ::", res);
+        const _user = {
+          userId: userdata.userId,
+          userImageUrl: image,
+          nickname: userdata.nickname,
+          userTitle: userdata.userTitle,
+        }
+        dispatch(changeInfo(_user));
+      })
+      .catch((err) => {
+        console.log("(changeImg) 실패 ::", err);
+      });
+  };
+};
 
 const changeNameDB = (nickname) => {
   return function (dispatch, getState) {
@@ -250,4 +274,5 @@ export const actionCreators = {
   changeNameDB,
   changeTitleDB,
   myBookmarkDB,
+  changeImgDB,
 };

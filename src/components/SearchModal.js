@@ -12,7 +12,7 @@ const SearchModal = (props) => {
   const { onClose, selectMnt } = props;
   const dispatch = useDispatch();
   const searchData = useSelector((state) => state.tracker?.searchList);
-  const [name, setName] = React.useState();
+  const [name, setName] = React.useState("");
 
   const getName = _.debounce((e) => {
     setName(e.target.value);

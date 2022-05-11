@@ -25,7 +25,7 @@ const Input = (props) => {
     is_submit,
     display,
     gridWidth,
-    id,
+    disabled,
   } = props;
 
   const styles = {
@@ -50,6 +50,7 @@ const Input = (props) => {
           <ElTextarea
             {...styles}
             rows={7}
+            value={value}
             placeholder={placeholder}
             onChange={_onChange}
           ></ElTextarea>
@@ -72,7 +73,7 @@ const Input = (props) => {
     );
   }
   return (
-    <Grid maxWidth={gridWidth}  alignItems="center" flexRow>
+    <Grid maxWidth={gridWidth} alignItems="center" flexRow>
       {label && <div>{label}</div>}
       {is_submit ? (
         <InfoInput
@@ -87,10 +88,26 @@ const Input = (props) => {
             }
           }}
         />
+      ) : disabled ? (
+        <InfoInput
+          {...styles}
+          type={type}
+          value={value}
+          disabled
+          onChange={_onChange}
+          placeholder={placeholder}
+        />
+      ) : value ? (
+        <InfoInput
+          {...styles}
+          type={type}
+          value={value}
+          onChange={_onChange}
+          placeholder={placeholder}
+        />
       ) : (
         <InfoInput
           {...styles}
-          id={id}
           type={type}
           onChange={_onChange}
           placeholder={placeholder}
