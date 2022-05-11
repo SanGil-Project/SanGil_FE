@@ -12,6 +12,7 @@ const PlanList = (props) => {
   const dispatch = useDispatch();
 
   const myPartyList = useSelector((state) => state?.party?.myPartyList);
+  
   React.useEffect(() => {
     dispatch(partyActions.getMyPartyDB());
   }, []);

@@ -3,7 +3,6 @@ import axios from "axios";
 const token = sessionStorage.getItem("token");
 
 const instance = axios.create({
-  // baseURL: "http://3.35.52.88",
   baseURL: "http://3.35.49.228",
   headers: {
     "content-type": "application/json;charset=UTF-8",
@@ -11,12 +10,6 @@ const instance = axios.create({
     Authorization: token,
   },
 });
-
-// instance.interceptors.request.use(function (config) {
-//   const accessToken = sessionStorage.getItem("token");
-//   config.headers.common["Authorization"] = `${accessToken}`; // header에 토큰값을 넣는다 => header에 토큰값이 있어 앞으로 request를 자유자재로 할 수 있다.
-//   return config;
-// });
 
 export const api = {
   // user.js - social login

@@ -162,6 +162,7 @@ const Search = (props) => {
           </MenubarContainer>
         </SearchContainer>
       </Mobile>
+      
       <Desktop>
         <SearchContainer>
           <Header />
