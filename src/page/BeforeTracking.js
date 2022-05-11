@@ -97,14 +97,14 @@ const BeforeTracking = (props) => {
         </Grid>
       </Mobile>
       <Desktop>
-        <Grid border="1px solid black" width="414px" margin="0 auto">
+        <Grid width="500px" margin="0 auto">
           <Header />
-          <Grid height="1080px">
+          <Grid padding="100px 0 0 0" height="1080px">
             <Grid
               border="1px solid black"
               width="91.46%"
               height="52px"
-              margin="96px auto 16px auto"
+              margin="0 auto 16px auto"
               radius="40px"
               bg="#ffffff"
               isFlex

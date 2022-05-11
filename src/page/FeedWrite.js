@@ -1,12 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import { Grid, Text, Image, Input, Icon, Button } from "../elements/element";
+import { Grid, Text, Image, Icon, Button, Input } from "../elements/element";
 import { Header, Menubar } from "../components/component";
 import { Desktop, Mobile } from "../shared/responsive";
+import _ from "lodash";
+import { feedDB } from "./../redux/modules/feed";
+import { useDispatch } from "react-redux";
 
 const FeedWrite = () => {
   const menuColor = [false, false, true, false, false];
-  const [img, setImg] = React.useState({ preImg: "", uploadImg: "" });
+  const dispatch = useDispatch();
+  const comment = React.useRef();
+  const [img, setImg] = React.useState({
+    preImg: "",
+    uploadImg: "",
+  });
 
   const preview = (e) => {
     const file = e.target.files[0];
@@ -20,15 +28,33 @@ const FeedWrite = () => {
   };
 
   const deletePreImg = () => {
-    setImg({ uploadImg: "", preImg: "" });
+    setImg({ ...img, uploadImg: "", preImg: "" });
+  };
+
+  const sendData = () => {
+    if (img.comment === "") {
+      return alert("글을 작성해주세요");
+    }
+    if (img.uploadImg === "") {
+      return alert("사진을 선택해주세요");
+    }
+    if (img.comment !== "" && img.uploadImg !== "") {
+      dispatch(
+        feedDB({
+          feedContent: comment.current?.value,
+          multipartfile: img.uploadImg,
+        })
+      );
+    }
   };
 
   return (
     <>
-      <Mobile>
-        <Grid width="100vw" height="100vw" margin="0 auto">
+      {/* 데스크탑 */}
+      <Desktop>
+        <Grid width="500px" margin="0 auto">
           <Header />
-          <Grid padding="7px" overflowY="scroll">
+          <Grid padding="7px" overflowY="scroll" height="1080px">
             <Grid
               maxWidth="93.23%"
               height="25px"
@@ -36,152 +62,75 @@ const FeedWrite = () => {
               isFlex
             >
               <Text size="2rem" bold="600" lineHeight="25px" margin="0">
-                글 작성하기
+                피드 작성하기
               </Text>
-              <Text bold="400" size="1.6rem" hover>
+              <Button
+                border="none"
+                color="white"
+                bold="600"
+                width="50px"
+                height="38px"
+                type="div"
+                radius="12px"
+                bgColor="#43CA3B"
+                fontSize="1.6rem"
+                _onClick={sendData}
+              >
                 완료
-              </Text>
+              </Button>
             </Grid>
-            <div>
-              <Grid maxWidth="93.23%" margin="50px auto 0 auto" flex="flex">
+
+            <Grid width="93.23%" height="25px" margin="10px auto 0 auto">
+              <TextArea
+                ref={comment}
+                placeholder="이 사진에 대해 이야기 해주세요...plz"
+              ></TextArea>
+            </Grid>
+            {img.preImg !== "" ? (
+              <Grid
+                width="100%"
+                height="500px"
+                radius="12px"
+                margin="20px 0 0 0"
+                border="1px solid green"
+              >
+                <Image
+                  width="100%"
+                  height="500px"
+                  borderRadius="12px"
+                  src={img.preImg}
+                  objectFit="contain"
+                />
+                <Icon
+                  width="15px"
+                  height="16px"
+                  type="delete"
+                  position="absolute"
+                  margin="10px 0 0 -30px"
+                  _onClick={deletePreImg}
+                  hover
+                />
+              </Grid>
+            ) : (
+              <label htmlFor="img">
                 <Grid
-                  width="100px"
-                  height="100px"
-                  margin="0 5px 0 5px"
-                  position="relative"
+                  width="100%"
+                  height="500px"
+                  bg="#e6e6e8"
+                  margin="20px 0 0 0"
+                  radius="12px"
+                  hover
                 >
-                  {img.preImg !== "" ? (
-                    <Button
-                      border="none"
-                      type="div"
-                      width="18px"
-                      height="18px"
-                      position="absolute"
-                      radius="100%"
-                      top="5px"
-                      left="75px"
-                      bgColor="#fff"
-                    >
-                      <Icon
-                        width="10px"
-                        height="18px"
-                        type="delete"
-                        _onClick={deletePreImg}
-                      />
-                    </Button>
-                  ) : null}
-                  <Image
-                    border="1px solid #c4c4c4"
-                    width="100px"
-                    height="100px"
-                    borderRadius="14px"
-                    objectFit="scale-down"
-                    src={
-                      img.preImg !== ""
-                        ? img.preImg
-                        : "https://cdn.daily.hankooki.com/news/photo/202205/820972_1091017_844.jpg"
-                    }
-                  />
-                </Grid>
-                <Label>
                   <Icon
                     type="plus"
-                    width="15px"
-                    height="15px"
-                    margin="42.5px 42.5px"
-                  />
-                  <Input
-                    type="file"
                     width="100px"
                     height="100px"
-                    display="none"
-                    _onChange={preview}
-                  ></Input>
-                </Label>
-              </Grid>
-            </div>
-          </Grid>
-          {/* <Menubar menuColor={menuColor} /> */}
-        </Grid>
-      </Mobile>
-
-      {/* 데스크탑 */}
-      <Desktop>
-        <Grid border="1px solid black" width="414px" margin="0 auto">
-          <Header />
-          <Grid padding="7px" overflowY="scroll" height="1080px">
-            <Grid
-              maxWidth="386px"
-              height="25px"
-              margin="88px auto 0 auto"
-              isFlex
-            >
-              <Text size="2rem" bold="600" lineHeight="25px" margin="0">
-                글 작성하기
-              </Text>
-              <Text bold="400" size="1.6rem" hover>
-                완료
-              </Text>
-            </Grid>
-            <div>
-              <Grid maxWidth="386px" margin="50px auto 0 auto" flex="flex">
-                <Grid
-                  position="relative"
-                  width="100px"
-                  height="100px"
-                  margin="0 5px 0 5px"
-                >
-                  {img.preImg !== "" ? (
-                    <Button
-                      border="none"
-                      type="div"
-                      width="18px"
-                      height="18px"
-                      position="absolute"
-                      radius="100%"
-                      top="5px"
-                      left="75px"
-                      bgColor="#fff"
-                    >
-                      <Icon
-                        width="10px"
-                        height="18px"
-                        type="delete"
-                        _onClick={deletePreImg}
-                      />
-                    </Button>
-                  ) : null}
-
-                  <Image
-                    border="1px solid #c4c4c4"
-                    width="100px"
-                    height="100px"
-                    borderRadius="14px"
-                    objectFit="scale-down"
-                    src={
-                      img.preImg !== ""
-                        ? img.preImg
-                        : "https://cdn.daily.hankooki.com/news/photo/202205/820972_1091017_844.jpg"
-                    }
+                    margin="200px 200px"
                   />
+                  <ImgInput id="img" type="file" onChange={preview}></ImgInput>
                 </Grid>
-                <Label>
-                  <Icon
-                    type="plus"
-                    width="15px"
-                    height="15px"
-                    margin="42.5px 42.5px"
-                  ></Icon>
-                  <Input
-                    type="file"
-                    width="100px"
-                    height="100px"
-                    display="none"
-                    _onChange={preview}
-                  ></Input>
-                </Label>
-              </Grid>
-            </div>
+              </label>
+            )}
           </Grid>
           <Menubar menuColor={menuColor} />
         </Grid>
@@ -190,14 +139,24 @@ const FeedWrite = () => {
   );
 };
 
-const Label = styled.label`
-  width: 100px;
-  height: 100px;
-  border-radius: 14px;
-  background-color: #c4c4c4;
-  &:hover {
-    cursor: pointer;
-  }
+const ImgInput = styled.input`
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: none;
+`;
+
+const TextArea = styled.textarea`
+  width: 100%;
+  height: 25px;
+  resize: none;
+  margin: 0 auto;
+  outline: none;
+  font-size: 1.8rem;
+  box-sizing: border-box;
+  border: none;
 `;
 
 export default FeedWrite;

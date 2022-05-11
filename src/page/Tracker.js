@@ -7,7 +7,7 @@ import { startDB, endClimbDB, deleteDB } from "../redux/modules/tracker";
 import { useDispatch, useSelector } from "react-redux";
 import StopWatch from "../components/StopWatch";
 import { useNavigate, useParams } from "react-router";
-import { setPathDB } from "./../redux/modules/tracker";
+import { setPathDB, setPath } from "./../redux/modules/tracker";
 
 const Tracker = (props) => {
   const { name, mountainId } = useParams();
@@ -69,7 +69,7 @@ const Tracker = (props) => {
             });
             if (time.isStart && completedId) {
               dispatch(setPathDB(completedId, myLoca));
-              // dispatch(pathActions.setPath(myLoca));
+              // dispatch(setPath(myLoca));
             }
           },
           (err) => {
@@ -77,7 +77,7 @@ const Tracker = (props) => {
           }
         );
       }
-    }, 5000);
+    }, 1000);
     return () => clearTimeout(path.current);
   }, [myLoca, time.isStart]);
 

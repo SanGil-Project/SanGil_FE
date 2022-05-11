@@ -88,7 +88,7 @@ const Input = (props) => {
             }
           }}
         />
-      ) : ( disabled ? 
+      ) : disabled ? (
         <InfoInput
           {...styles}
           type={type}
@@ -96,20 +96,22 @@ const Input = (props) => {
           disabled
           onChange={_onChange}
           placeholder={placeholder}
-        /> : (value ? 
-          <InfoInput
-            {...styles}
-            type={type}
-            value={value}
-            onChange={_onChange}
-            placeholder={placeholder}
-          /> : 
-          <InfoInput
-            {...styles}
-            type={type}
-            onChange={_onChange}
-            placeholder={placeholder}
-          /> )
+        />
+      ) : value ? (
+        <InfoInput
+          {...styles}
+          type={type}
+          value={value}
+          onChange={_onChange}
+          placeholder={placeholder}
+        />
+      ) : (
+        <InfoInput
+          {...styles}
+          type={type}
+          onChange={_onChange}
+          placeholder={placeholder}
+        />
       )}
     </Grid>
   );
@@ -134,7 +136,6 @@ const InfoInput = styled.input`
   box-sizing: border-box;
   font-size: ${(props) => (props.size ? `${props.size}` : `16px`)};
   outline: none;
-
   width: ${(props) => `${props.width}`};
   max-width: ${(props) => `${props.maxWidth}`};
   height: ${(props) => `${props.height}`};
@@ -146,7 +147,7 @@ const InfoInput = styled.input`
 
 const ElTextarea = styled.textarea`
   width: ${(props) => props.width};
-  width-width: ${(props) => props.maxWidth};
+  max-width: ${(props) => props.maxWidth};
   height: ${(props) => props.height};
   ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
   padding: ${(props) => props.padding};
@@ -156,6 +157,7 @@ const ElTextarea = styled.textarea`
   outline: none;
   font-size: ${(props) => (props.size ? `${props.size}` : `16px`)};
   ${(props) => (props.bg ? `background-color: ${props.bg};` : null)}
+  resize: none;
 `;
 
 export default Input;

@@ -60,7 +60,7 @@ const Img = styled.img`
   ${(props) => (props.border ? `border: ${props.border};` : null)}
   ${(props) =>
     props.borderRadius ? `border-radius: ${props.borderRadius};` : null}
- ${(props) => (props.shadow ? `shadow : 0 4px 12px rgba(0, 0, 0, 0.1);` : null)}
+  ${(props) => (props.shadow ? `shadow : 0 4px 12px rgba(0, 0, 0, 0.1);` : null)}
   object-fit:${(props) => `${props.objectFit}`};
   box-sizing: border-box;
   ${(props) => (props.zindex ? `z-index: ${props.zindex};` : null)}

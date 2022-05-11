@@ -65,7 +65,7 @@ const Header = () => {
             position="fixed"
             zindex="10"
           >
-            <Grid margin="0 0 0 39.25%" maxWidth="238px" isFlex>
+            <Grid margin="0 0 0 39.25%" maxWidth="280px" isFlex>
               <Grid
                 maxWidth="89px"
                 height="34px"
@@ -136,7 +136,7 @@ const Header = () => {
           position="fixed"
           zindex="10"
         >
-          <Grid margin="0 0 0 39.25%" maxWidth="230px" isFlex>
+          <Grid margin="0 0 0 39.25%" maxWidth="280px" isFlex>
             <Grid
               maxWidth="89px"
               height="34px"

@@ -8,7 +8,7 @@ const DISTANCE = "DISTANCE";
 const ENDCLIMB = "ENDCLIMB";
 const DELETE = "DELETE";
 
-const setPath = createAction(SET_PATH, (path) => ({ path }));
+export const setPath = createAction(SET_PATH, (path) => ({ path }));
 const getSearch = createAction(GETSEARCH, (data) => ({ data }));
 const distance = createAction(DISTANCE, (distance) => ({ distance }));
 const endClimb = createAction(ENDCLIMB, (comment) => ({ comment }));
