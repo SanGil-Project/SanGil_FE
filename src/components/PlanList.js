@@ -16,56 +16,8 @@ const PlanList = (props) => {
     dispatch(partyActions.getMyPartyDB());
   }, []);
 
-  // 테스트용
-  // const plans = [
-  //   {
-  //     title: "제목1",
-  //     partyId: 1,
-  //     createdAt: "2202-05-08",
-  //     maxPeople: 4,
-  //     curPeople: 2,
-  //     partyDate: "2202-05-10",
-  //     msg: true,
-  //   },
-  //   {
-  //     title: "제목2",
-  //     partyId: 2,
-  //     createdAt: "2202-05-08",
-  //     maxPeople: 5,
-  //     curPeople: 3,
-  //     partyDate: "2202-05-10",
-  //     msg: true,
-  //   },
-  //   {
-  //     title: "제목3",
-  //     partyId: 3,
-  //     createdAt: "2202-05-08",
-  //     maxPeople: 6,
-  //     curPeople: 6,
-  //     partyDate: "2202-05-10",
-  //     msg: true,
-  //   },
-  //   {
-  //     title: "제목4",
-  //     partyId: 4,
-  //     createdAt: "2202-05-08",
-  //     maxPeople: 8,
-  //     curPeople: 2,
-  //     partyDate: "2202-05-10",
-  //     msg: true,
-  //   },
-  //   {
-  //     title: "제목5",
-  //     partyId: 5,
-  //     createdAt: "2202-05-08",
-  //     maxPeople: 10,
-  //     curPeople: 10,
-  //     partyDate: "2202-05-10",
-  //     msg: false,
-  //   },
-  // ];
-
-  // const planList = plans.filter((p) => p.msg === true);
+  // 완료되지 않은 모임만 보여주기
+  const plans = myPartyList?.filter((p) => p.msg === "true");
 
   return (
     <React.Fragment>
@@ -74,7 +26,7 @@ const PlanList = (props) => {
       </Text>
       <div>
         <Grid margin="0 0 30px">
-          {myPartyList?.map((p, idx) => {
+          {plans?.map((p, idx) => {
             return <TextCard key={idx} data={p} />;
           })}
         </Grid>
