@@ -24,6 +24,7 @@ const Input = (props) => {
     onSubmit,
     is_submit,
     display,
+    gridWidth,
   } = props;
 
   const styles = {
@@ -37,22 +38,26 @@ const Input = (props) => {
     radius,
     bg,
     display,
+    gridWidth,
   };
 
-
-
-  if(multiLine) {
+  if (multiLine) {
     return (
       <React.Fragment>
         <Grid>
           {label && <div>{label}</div>}
-          <ElTextarea {...styles} rows={7} placeholder={placeholder} onChange={_onChange}></ElTextarea>
+          <ElTextarea
+            {...styles}
+            rows={7}
+            placeholder={placeholder}
+            onChange={_onChange}
+          ></ElTextarea>
         </Grid>
       </React.Fragment>
     );
   }
 
-  if(defaultValue) {
+  if (defaultValue) {
     return (
       <Grid alignItems="center" flexRow>
         {label && <div>{label}</div>}
@@ -66,7 +71,7 @@ const Input = (props) => {
     );
   }
   return (
-    <Grid alignItems="center" flexRow>
+    <Grid maxWidth={gridWidth} alignItems="center" flexRow>
       {label && <div>{label}</div>}
       {is_submit ? (
         <InfoInput

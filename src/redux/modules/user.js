@@ -1,9 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
-import axios from "axios";
 import { api } from "../../shared/api";
 
-const SIGNUP = "SIGNUP";
 const LOGIN = "LOGIN";
 const LOGOUT = "LOGOUT";
 const ISLOGIN = "ISLOGIN";

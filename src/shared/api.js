@@ -41,12 +41,14 @@ export const api = {
         Authorization: token,
       },
     }),
-  nameCheck: (username) => instance.post("/api/mypages/usernameCheck", {
-    nickname : username,
-  }),
-  changeName: (username) => instance.put("/api/mypages/profilename", {
-    nickname : username,
-  }),
+  nameCheck: (username) =>
+    instance.post("/api/mypages/usernameCheck", {
+      nickname: username,
+    }),
+  changeName: (username) =>
+    instance.put("/api/mypages/profilename", {
+      nickname: username,
+    }),
   myTracking: () => instance.get("/api/mypages/tracking"),
   myTitle: () => instance.get("/api/mypages/userTitle"),
   myBookmark: (lat, lng) => instance.get(`/api/mypages/bookmark?lat=${lat}&lng=${lng}`),
@@ -55,30 +57,34 @@ export const api = {
   }),
 
   // mountain.js
-  searchMount: (keyword, pageNum) => instance.get(`/api/mountain/search/${keyword}/${pageNum}`),
+  searchMount: (keyword, pageNum) =>
+    instance.get(`/api/mountain/search/${keyword}/${pageNum}`),
   getTopList: () => instance.get("/api/mountain/search/before"),
-  
+  getDetail: (mountainId, pageNum) =>
+    instance.get(`/api/mountain/${mountainId}/${pageNum}`),
 
   // party.js
   getMyParty: () => instance.get("/api/plan"),
   getPartyList: (pageNum) => instance.get(`/api/parties/${pageNum}`),
   getOneParty: (partyId) => instance.get(`/api/party/${partyId}`),
-  addParty: (party) => instance.post("/api/party/write", {
-    title : party.title,
-    mountain : party.mountain,
-    address : party.address,
-    partyDate : party.partyDate,
-    partyTime: party.partyTime,
-    maxPeople : party.maxPeople,
-    partyContent : party.partyContent,
-  }),
-  editParty: (partyId, party) => instance.put(`/api/party/${partyId}`, {
-    partyId : partyId,
-    partyDate : party.partyDate,
-    partyTime: party.partyTime,
-    maxPeople : party.maxPeople,
-    partyContent : party.content,
-  }),
+  addParty: (party) =>
+    instance.post("/api/party/write", {
+      title: party.title,
+      mountain: party.mountain,
+      address: party.address,
+      partyDate: party.partyDate,
+      partyTime: party.partyTime,
+      maxPeople: party.maxPeople,
+      partyContent: party.partyContent,
+    }),
+  editParty: (partyId, party) =>
+    instance.put(`/api/party/${partyId}`, {
+      partyId: partyId,
+      partyDate: party.partyDate,
+      partyTime: party.partyTime,
+      maxPeople: party.maxPeople,
+      partyContent: party.content,
+    }),
   attendParty: (partyId) => instance.post(`/api/party/attend/${partyId}`),
   delParty: (partyId) => instance.delete(`/api/party/join/${partyId}`),
 };
