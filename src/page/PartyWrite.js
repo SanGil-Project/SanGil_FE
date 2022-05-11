@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components";
 import { useNavigate } from "react-router";
 
@@ -18,34 +18,23 @@ import { Menubar, Header } from '../components/component';
 import { Desktop, Mobile } from "../shared/responsive";
 
 import { Grid, Text, Icon, Button, Input, Image } from '../elements/element';
+import Search from './Search';
+import SearchModal from '../components/SearchModal';
 
 const PartyWrite = (props) => {
   const menuColor = [false, true, false, false, false]; // 메뉴바 색
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const token = sessionStorage.getItem('token');
-
-  // const [time, setTime] = React.useState(new Date());
-  // const [isOpen, setIsOpen] = React.useState(false);
-  // const handleClick = () => {
-  //   console.log("선택")
-	// 	setIsOpen(true);
-	// }
-  // const handleCancel = () => {
-	// 	setIsOpen(false);
-	// }
-  // const handleSelect = (time) => {
-	// 	setTime(time);
-	// 	setIsOpen(false);
-	// }
-
   const [partyName, setPartyName] = React.useState("");
   const [partyContent, setPartyContent] = React.useState("");
   const [dateValue, setDateValue] = React.useState(new Date('2014-08-18T21:11:54'));
   const [timeValue, setTimeValue] = React.useState("");
-  const [numberValue, setNumberValue] = React.useState("");
+  const [numberValue, setNumberValue] = React.useState();
   const [mountValue, setMountValue] = React.useState("");
+  const [mountAddValue, setMountAddValue] = React.useState("");
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const inputName = (e) => {
     setPartyName(e.target.value);
@@ -62,37 +51,31 @@ const PartyWrite = (props) => {
   const inputNumber = (e) => {
     setNumberValue(e.target.value);
   }
-  const inputMount = (e) => {
-    setMountValue(e.target.value);
-  }
-
-  const searchMt = () => {
-    const pagenum = 1;
-    // console.log(mountValue);
-    dispatch(mountActions.searchMntDB(mountValue, pagenum));
+  const selectMnt = (data) => {
+    setMountValue(data.mountain);
+    setMountAddValue(data.mountainAddress);
   }
 
   const addParty = () => {
-    const testToken = "testToken";
-    if (partyName === "" || mountValue==="" || dateValue==="" || timeValue==="" || numberValue==="" || partyContent==="") {
+    if (partyName === "" || mountValue==="" || mountAddValue==="" || dateValue==="" || timeValue==="" || numberValue==="" || partyContent==="") {
       window.alert("입력되지 않은 부분이 있습니다!");
       return;
     }
+    const num = parseInt(numberValue);
     const partyData = {
       title : partyName,
       mountain : mountValue,
-      address : "서울시 관악구",
+      address : mountAddValue,
       partyDate : dateValue,
       partyTime: timeValue,
-      maxPeople : numberValue,
+      maxPeople : num,
       partyContent : partyContent,
     }
-    dispatch(partyActions.addPartyDB(testToken, partyData));
+    console.log(partyData);
+    dispatch(partyActions.addPartyDB(partyData));
     window.alert("작성 완료!");
     navigate(`/party`);
   }
-
-
 
   return (
     <React.Fragment>
@@ -183,6 +166,7 @@ const PartyWrite = (props) => {
                   <Grid flexRow>
 
                     <Input 
+                      type="number"
                       width="150px" border="1px solid #BBBBBB" radius="8px" padding="16px 12px"
                       placeholder="인원수 입력"
                       _onChange={inputNumber}/>
@@ -199,54 +183,14 @@ const PartyWrite = (props) => {
                     <Input 
                       width="150px" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 10px"
                       placeholder="산이름 입력"
-                      _onChange={inputMount}/>
+                      value={mountValue}
+                      is_submit/>
+                      {/* _onChange={inputMount}/> */}
                     {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text> */}
-                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={searchMt} />
+                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{setIsOpen(true)}} />
                   </Grid>
                 </Button>
               </Grid>
-              <ModalContainer>
-                <Modal>
-                {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <Stack component="form" noValidate spacing={3}>
-                    <TextField
-                      id="date"
-                      label="Birthday"
-                      type="date"
-                      defaultValue="2017-05-24"
-                      sx={{ width: 220 }}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                    <TextField
-                      id="time"
-                      label="Alarm clock"
-                      type="time"
-                      defaultValue="07:30"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      inputProps={{
-                        step: 300, // 5 min
-                      }}
-                      sx={{ width: 150 }}
-                    />
-                    <TextField
-                      id="datetime-local"
-                      label="Next appointment"
-                      type="datetime-local"
-                      defaultValue="2017-05-24T10:30"
-                      sx={{ width: 250 }}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </Stack>
-
-                </LocalizationProvider> */}
-                </Modal>
-              </ModalContainer>
               
             </Grid>
             <Grid>
@@ -260,7 +204,10 @@ const PartyWrite = (props) => {
           </Grid>
 
         </PartyWrap>
-        
+        {isOpen && 
+        <ModalContainer>
+          <SearchModal onClose={setIsOpen} selectMnt={selectMnt}/>
+        </ModalContainer>}
         <MenubarContainer>
           <Grid height="88px" maxWidth="500px" margin="auto">
             <Menubar menuColor={menuColor}/>
@@ -357,6 +304,7 @@ const PartyWrite = (props) => {
                   <Grid flexRow>
 
                     <Input 
+                      type="number"
                       width="150px" border="1px solid #BBBBBB" radius="8px" padding="16px 12px"
                       placeholder="인원수 입력"
                       _onChange={inputNumber}/>
@@ -372,55 +320,14 @@ const PartyWrite = (props) => {
                   <Grid flexRow>
                     <Input 
                       width="150px" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 10px"
+                      value={mountValue}
                       placeholder="산이름 입력"
-                      _onChange={inputMount}/>
+                      is_submit/>
                     {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text> */}
-                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={searchMt} />
+                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{setIsOpen(true)}} />
                   </Grid>
                 </Button>
               </Grid>
-              <ModalContainer>
-                <Modal>
-                {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <Stack component="form" noValidate spacing={3}>
-                    <TextField
-                      id="date"
-                      label="Birthday"
-                      type="date"
-                      defaultValue="2017-05-24"
-                      sx={{ width: 220 }}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                    <TextField
-                      id="time"
-                      label="Alarm clock"
-                      type="time"
-                      defaultValue="07:30"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      inputProps={{
-                        step: 300, // 5 min
-                      }}
-                      sx={{ width: 150 }}
-                    />
-                    <TextField
-                      id="datetime-local"
-                      label="Next appointment"
-                      type="datetime-local"
-                      defaultValue="2017-05-24T10:30"
-                      sx={{ width: 250 }}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </Stack>
-
-                </LocalizationProvider> */}
-                </Modal>
-              </ModalContainer>
               
             </Grid>
             <Grid>
@@ -434,6 +341,10 @@ const PartyWrite = (props) => {
           </Grid>
 
         </PartyWrap>
+        {isOpen && 
+        <ModalContainer>
+          <SearchModal onClose={setIsOpen} selectMnt={selectMnt}/>
+        </ModalContainer>}
         
         <MenubarContainer>
           <Grid height="88px" maxWidth="500px" margin="auto">
@@ -453,7 +364,7 @@ const PartyContainer = styled.div`
   height: 100%;
   max-width: 500px;
   margin: auto;
-  overflow: hidden;
+  // overflow: hidden;
 `;
 
 const PartyWrap = styled.div`
@@ -471,8 +382,14 @@ const MenubarContainer = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  position: relative;
-  padding: 
+  position: fixed;
+  bottom: 88px;
+  width: 100%;
+  max-width: 500px;
+  // height: 100%;
+  margin: 0;
+  padding: 0;
+  // align-items: flex-end
 `;
 
 const Modal = styled.div`

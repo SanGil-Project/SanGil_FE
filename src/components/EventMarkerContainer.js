@@ -48,19 +48,17 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
         style = {{display: "none"}}
         position={{lat: content.lat, lng: content.lng}} // 마커를 표시할 위치
         onClick={(marker) => {markerClick(marker)}} // 해당 좌표로 지동 이동시키기
-        // onClick={() => setSeleteMarker(index)}
-        // isClicked={selectedMarker === index}
-        // onClick={() => setIsVisible(!isVisible)} 
-        // MouseOver event 추가시 
-        // onMouseOver={(marker) => map.panTo(marker.getPosition())}
-        // onMouseOut={() => setIsVisible(false)}
+        // onClick={(marker) => map.panTo(marker.getPosition())} // 해당 좌표로 지동 이동시키기
+        onMouseOver={() => setIsVisible(true)}
+        onMouseOut={() => setIsVisible(false)}
       >
-        {isClicked && isVisible &&
+        { isVisible &&
+        // {isClicked && isVisible &&
         <CustomOverlayMap index={index} position={{lat: content.lat, lng: content.lng}} yAnchor={1.18} zIndex={1}>
           <MarkerInfo>
-            <Image src={content.mountainImageUrl} type="rectangle"/>
+            <Image src={content.mountainImgUrl} type="rectangle"/>
             <Grid padding="5px 10px 10px">
-              <Text margin="5px 0" bold="600" size="16px">{content.mountainName}</Text>
+              <Text margin="5px 0" bold="600" size="16px">{content.mountain}</Text>
               <Text margin="0" size="13px">{content.mountainAddress}</Text>
             </Grid>
             {/* <div className="close" onClick={()=> setIsVisible(!isVisible)}>X</div> */}

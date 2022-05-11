@@ -25,7 +25,7 @@ const Mypage = (props) => {
   const menuColor = [false, false, false, false, true]; // 메뉴바 색
 
   React.useEffect(() => {
-    dispatch(userActions.myTrackingDB());
+    // dispatch(userActions.getMyPartyDB());
   }, []);
 
   const num = [2, 3, 4, 5];

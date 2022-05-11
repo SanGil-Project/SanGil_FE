@@ -11,11 +11,11 @@ import { Desktop, Mobile } from "../shared/responsive";
 import { Grid, Text, Icon, Button, Image } from '../elements/element';
 
 const PartyDetail = (props) => {
-  const menuColor = [false, true, false, false, false]; // 메뉴바 색
   const navigate = useNavigate();
-  const partyId = useLocation().state.partyId;
   const dispatch = useDispatch();
-
+  const partyId = useLocation().state.partyId;
+  const userInfo = useSelector((state) => state?.user?.userInfo);
+  const menuColor = [false, true, false, false, false]; // 메뉴바 색
 
   React.useEffect(() => {
     console.log(partyId)
@@ -23,20 +23,21 @@ const PartyDetail = (props) => {
   }, []);
 
   const partyList = useSelector((state) => state?.party?.partyList[0]);
-  const partymember = partyList.partymember;
-  const [partyNumber, setPartyNumber] = React.useState(partyList.curtPeople);
+  const partymember = partyList.partymemberDto;
+  const img = (partyList?.userImgUrl !== "없음") ? partyList?.userImgUrl : "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png";
+  const attendBtn = (partymember?.some(m => m.username === userInfo.username)) ? "참가취소하기" : "참가하기"
 
-  // const token = sessionStorage.getItem('token');
-
-
+  console.log(partyList, partymember, attendBtn)
   const attendParty = (partyId) => {
-    if(partymember.length === partyList.maxPeople){
+    if (partyList.username === userInfo.username) {
+      window.alert("모임 주최자는 취소할수 없어요!!");
+      return;
+    }
+    if (partymember.length === partyList.maxPeople){
       window.alert("모집이 완료되었습니다!");
       return;
     }
-    const token = "dkdkdk"
-    dispatch(partyActions.attendPartyDB(token, partyId));
-    setPartyNumber(partymember.length);
+    dispatch(partyActions.attendPartyDB(partyId));
   }
 
   return (
@@ -52,7 +53,7 @@ const PartyDetail = (props) => {
                 type="circle"
                 width="32px"
                 margin="0 14px 0 0"
-                src={partyList.userImageUrl}/>
+                src={img}/>
               {/* </Mainprofile> */}
               <Grid>
                 <Text margin="0" size="12px" bold="500">[{partyList.userTitle}] {partyList.username}</Text>
@@ -78,7 +79,7 @@ const PartyDetail = (props) => {
                   <Grid width="18px">
                     <Icon type="partyPeople" width="16px" height="16px" margin="0 auto"/>
                   </Grid>
-                  <Text margin="0 8px 0 12px" bold="500" size="14px">{partyNumber}/{partyList.maxPeople}명</Text>
+                  <Text margin="0 8px 0 12px" bold="500" size="14px">{partyList.curPeople}/{partyList.maxPeople}명</Text>
                   {/* <Icon type="detailBtn" width="8px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} /> */}
                 </Grid>
                 <Grid margin="45px 0">
@@ -89,13 +90,14 @@ const PartyDetail = (props) => {
               <Grid padding="20px 0">
                 <Text margin="0 0 20px" size="18px" bold="600">참여인원</Text>
                 {partymember?.map((p, idx)=>{
+                  const image = (p?.userImageUrl !== "없음") ? p?.userImageUrl : "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png";
                   return (
                     <Grid key={idx} flexRow margin="0 0 20px">
                       <Image
                         type="circle"
                         width="32px"
                         margin="0 14px 0 0"
-                        src={p.userImageUrl}/>
+                        src={image}/>
                       <Grid>
                         <Text margin="0" size="12px" bold="500">[{p.userTitle}] {p.username}</Text>
                       </Grid>
@@ -117,7 +119,7 @@ const PartyDetail = (props) => {
                   _onClick={()=>{
                     attendParty(partyList.partyId);
                   }}>
-                  <Text margin="0" size="18px" bold="600" align>참가하기</Text>
+                  <Text margin="0" size="18px" bold="600" align>{attendBtn}</Text>
                 </Button>
               </Grid>
             </Grid>
@@ -169,7 +171,7 @@ const PartyDetail = (props) => {
                   <Grid width="18px">
                     <Icon type="partyPeople" width="16px" height="16px" margin="0 auto"/>
                   </Grid>
-                  <Text margin="0 8px 0 12px" bold="500" size="14px">{partyNumber}/{partyList.maxPeople}명</Text>
+                  <Text margin="0 8px 0 12px" bold="500" size="14px">{partyList.curPeople}/{partyList.maxPeople}명</Text>
                   {/* <Icon type="detailBtn" width="8px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} /> */}
                 </Grid>
                 <Grid margin="45px 0">
