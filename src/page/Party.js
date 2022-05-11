@@ -33,7 +33,7 @@ const Party = (props) => {
     if (!completed) {
       window.alert("마감된 모임입니다!");
     } else {
-      navigate(`/partydetail/${partyId}`, {state: {partyId: partyId}});
+      navigate(`/partydetail/${partyId}`);
     }
   }
 

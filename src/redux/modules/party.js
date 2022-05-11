@@ -13,13 +13,16 @@ const DELETE_PARTY = "DELETE_PARTY";
 const setParty = createAction(SET_PARTY, (partyList) => ({ partyList }));
 const getMyParty = createAction(GET_MY_PARTY, (partyList) => ({ partyList }));
 const addParty = createAction(ADD_PARTY, (party) => ({ party }));
-const editParty = createAction(EDIT_PARTY, (partyId, party) => ({ partyId, party }));
+const editParty = createAction(EDIT_PARTY, (partyId, party) => ({
+  partyId,
+  party,
+}));
 const attendParty = createAction(ATTEND_PARTY, (user) => ({ user }));
 const cancelParty = createAction(CANCEL_PARTY, (user) => ({ user }));
 const deleteParty = createAction(DELETE_PARTY, (partyId) => ({ partyId }));
 
 const initialState = {
-  partyList : [
+  partyList: [
     // {
     // partyId : null,
     // username : "",
@@ -42,18 +45,17 @@ const initialState = {
     //   userTitle: ""
     //   },]
     // },
-  ]
+  ],
 };
 
 const getMyPartyDB = () => {
   return function (dispatch, getState) {
-
     // return;
     api
       .getMyParty()
       .then((res) => {
         console.log("(getMyParty) 성공 데이터 확인 ::", res);
-        // dispatch(setParty(res.data));
+        dispatch(getMyParty(res.data));
       })
       .catch((err) => {
         console.log("(getMyParty) 실패 ::", err);
@@ -63,7 +65,6 @@ const getMyPartyDB = () => {
 
 const getPartyDB = () => {
   return function (dispatch, getState) {
-
     const pageNum = 1;
     api
       .getPartyList(pageNum)
@@ -78,21 +79,20 @@ const getPartyDB = () => {
 };
 
 const getOnePartyDB = (partyId = null) => {
-  return function(dispatch, getState){
-
+  return function (dispatch, getState) {
     api
       .getOneParty(partyId)
       .then((res) => {
         console.log("(getOneParty) 성공 데이터 확인 ::", res);
         const partyDB = {
           partyList: [res.data],
-        }
+        };
         dispatch(setParty(partyDB));
       })
       .catch((err) => {
         console.log("(getOneParty) 실패 ::", err);
       });
-  };  
+  };
 };
 
 const addPartyDB = (party = {}) => {
@@ -105,7 +105,7 @@ const addPartyDB = (party = {}) => {
       })
       .catch((err) => {
         console.log("(addParty) 실패 ::", err);
-      });    
+      });
   };
 };
 
@@ -120,13 +120,12 @@ const editPartyDB = (partyId = null, party = {}) => {
       })
       .catch((err) => {
         console.log("(editParty) 실패 ::", err);
-      });   
+      });
   };
 };
 
 const attendPartyDB = (partyId = null) => {
   return function (dispatch, getState) {
-
     const _user = getState().user.userInfo;
     // const _partyList = getState().party.partyList[0];
     // const _user = {
@@ -156,7 +155,7 @@ const attendPartyDB = (partyId = null) => {
       })
       .catch((err) => {
         console.log("(attendParty) 실패 ::", err);
-      });   
+      });
   };
 };
 
@@ -176,29 +175,40 @@ const deletePartyDB = (partyId = null) => {
 
 export default handleActions(
   {
-    [GET_MY_PARTY]: (state, action) => produce(state, (draft) => {
-      console.log(action.payload);
-      draft.myPartyList = action.payload.partyList;
-    }),
-    [SET_PARTY]: (state, action) => produce(state, (draft) => {
-      console.log(action.payload.partyList);
-      draft.partyList = action.payload.partyList.partyList;
-    }),
-    [ADD_PARTY]: (state, action) => produce(state, (draft) => {
-      draft.partyList.unshift(action.payload.party);
-    }),
+    [GET_MY_PARTY]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(action.payload);
+        draft.myPartyList = action.payload.partyList.plans;
+      }),
+    [SET_PARTY]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(action.payload.partyList);
+        draft.partyList = action.payload.partyList.partyList;
+      }),
+    [ADD_PARTY]: (state, action) =>
+      produce(state, (draft) => {
+        draft.partyList.unshift(action.payload.party);
+      }),
     [EDIT_PARTY]: (state, action) => produce(state, (draft) => {}),
-    [ATTEND_PARTY]: (state, action) => produce(state, (draft) => {
-      draft.partyList[0].partymemberDto.push(action.payload.user);
-      draft.partyList[0].curPeople++;
-    }),
-    [CANCEL_PARTY]: (state, action) => produce(state, (draft) => {
-      draft.partyList[0].partymemberDto = draft.partyList[0].partymemberDto.filter((p) => p.username !== action.payload.user.username);
-      draft.partyList[0].curPeople--;
-    }),
-    [DELETE_PARTY]: (state, action) => produce(state, (draft) => {
-      draft.partyList = draft.partyList.filter((p) => p.partyId !== action.payload.partyList.partyId);
-    }),
+    [ATTEND_PARTY]: (state, action) =>
+      produce(state, (draft) => {
+        draft.partyList[0].partymemberDto.push(action.payload.user);
+        draft.partyList[0].curPeople++;
+      }),
+    [CANCEL_PARTY]: (state, action) =>
+      produce(state, (draft) => {
+        draft.partyList[0].partymemberDto =
+          draft.partyList[0].partymemberDto.filter(
+            (p) => p.username !== action.payload.user.username
+          );
+        draft.partyList[0].curPeople--;
+      }),
+    [DELETE_PARTY]: (state, action) =>
+      produce(state, (draft) => {
+        draft.partyList = draft.partyList.filter(
+          (p) => p.partyId !== action.payload.partyList.partyId
+        );
+      }),
   },
   initialState
 );

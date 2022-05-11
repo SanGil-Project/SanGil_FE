@@ -5,7 +5,7 @@ import { Grid, Icon, Text } from "../elements/element";
 import KakaoMap from "./KakaoMap";
 
 const FullMap = (props) => {
-  const { data, getIndex } = props;
+  const { data, getIndex, zoomable } = props;
 
   // const tempIndex = (index) => {
   //   props.getIndex(index);
@@ -23,6 +23,7 @@ const FullMap = (props) => {
             level="13"
             full
             radius
+            zoomable={zoomable}
             data={data} // 지도에 마커 찍어야하는 정보 객체 전달
             // getIndex={getIndex}
           />
