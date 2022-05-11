@@ -23,12 +23,7 @@ const Mypage = (props) => {
   const userInfo = useSelector((state) => state?.user?.userInfo);
   const myTrackList = useSelector((state) => state?.user?.trackList);
   const myBookmarkList = useSelector((state) => state?.user?.mountList);
-  console.log(myBookmarkList);
   const menuColor = [false, false, false, false, true]; // 메뉴바 색
-
-  React.useEffect(() => {
-    // dispatch(userActions.getMyPartyDB());
-  }, []);
 
   React.useEffect(() => {
     if (navigator.geolocation) {
@@ -36,15 +31,8 @@ const Mypage = (props) => {
         dispatch(userActions.myBookmarkDB(position.coords.latitude, position.coords.longitude));
       });
     }
-    // dispatch(mountainsDB());
-    // dispatch(feedDB());
-    // dispatch(partyDB());
+    dispatch(userActions.myTrackingDB());
   }, []);
-
-  const num = [2, 3, 4, 5];
-  // 테스트용 DB
-
-  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   return (
     <React.Fragment>

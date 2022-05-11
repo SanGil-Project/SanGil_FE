@@ -10,6 +10,7 @@ import { Grid, Text, Icon, Image, Button, Input } from '../elements/element';
 
 const MypageModal = (props) => {
   const dispatch = useDispatch();
+  const fileInput = React.useRef();
   const user = useSelector((state) => state?.user);
   const titleList = useSelector((state) => state?.user?.titleList);
   const userInfo = user?.userInfo;
@@ -28,6 +29,20 @@ const MypageModal = (props) => {
   const [nickname, setNickname] = useState(userInfo?.nickname);
   const [_userTitle, set_userTitle] = useState(userInfo?.userTitle);
 
+  const [preview, setPreview] = useState(null);
+
+  const selectFile = (e) => {
+
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    // 읽기가 끝나면 발생하는 이벤트 핸들러
+    reader.onloadend = () => {
+      setPreview(reader.result); // 바로 보여주기
+      dispatch(userActions.changeImgDB(file, reader.result));
+    };
+  };
+
   const changeNickname = _.debounce((e) => {
     // 현 글자수 보여주기
     setNameCount(e.target.value.length);
@@ -43,6 +58,7 @@ const MypageModal = (props) => {
 
   const checkColor = checkData ? "#61D161" : "#6F6F6F";
   let checkType = true;
+  const defalutsrc = "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png";
 
   if (!checkData) {
     if (userInfo?.nickname === nickname || !nickname) {
@@ -89,6 +105,7 @@ const MypageModal = (props) => {
             <Image
               type="circle"
               width="80px"
+              height="80px"
               margin="0 10px 0 11px"
               src={img}/>
             <Editbtn>
@@ -138,23 +155,25 @@ const MypageModal = (props) => {
                 <Icon 
                   type="back" width="24px" height="25px" margin="0 auto" color="white"
                   _onClick={()=> {setModalIsOpen(false); setNameCount(userInfo?.nickname.length);}}/>
-                {/* <Button height="auto" width="auto" color="#fff" border="none" _onClick={()=> {setModalIsOpen(false); setNameCount(userInfo.username.length);}}>확인</Button> */}
               </Grid>
               <Grid flexColumn height="auto" padding="10px 15px 0">
                 <UserProfile>
+                  <Label className="input_file_button" htmlFor="input_image">
                   <Image
                     hover
                     type="circle"
                     width="100px"
-                    src="https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png"/>
-                  {/* <Icon type="profileEdit" width="21px" height="21px" margin="0 auto" /> */}
+                    height="100px"
+                    src={preview ? preview : userInfo?.userImageUrl !== "없음" ? userInfo?.userImageUrl : defalutsrc}/>
+
+                  </Label>
+                  <input id='input_image' type="file" ref={fileInput} onChange={selectFile} style={{display:"none"}}/>
                 </UserProfile>
                 <Grid flexRow padding="10px 0 45px">
                   <UserName>
                     <Input width="140px" padding="0" border="none" bg="transparent" defaultValue={userInfo?.nickname} _onChange={changeNickname}/>
                     <Text margin="0 10px 0 0" bold="500" size="10px" color="#c4c4c4"> {nameCount}/10</Text>
                   </UserName>
-                  {/* <Icon type="checkBtn" width="24px" height="24px" margin="0 auto" check="#6F6F6F" _onClick={nameCheck}/> */}
                   {checkType ? 
                   <Icon type="checkBtn" width="24px" height="24px" margin="0 auto" check="#6F6F6F" checkColor={checkColor} _onClick={changeName}/> : 
                   <Icon type="errorBtn" width="24px" height="24px" margin="0 auto" _onClick={changeName}/>}
@@ -175,7 +194,6 @@ const MypageModal = (props) => {
                   {noTitleList?.map((t, idx) => {
                     return (
                       <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} width="auto">
-                      {/* <Grid key={idx} width="auto"> */}
                         <TitleItem key={idx} title={t.userTitle} img={t.userTitleImgUrl}/>
                       </Grid>
                     );
@@ -221,29 +239,28 @@ const TitleList = styled.div`
   justify-content: center;
   margin-bottom: 30px;
 `;
+
+
+const Label = styled.label`
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 8px auto;
+    border-radius: 100%;
+    cursor: pointer;
+    &:hover {
+        box-shadow: 0 1px 4px rgb(0,0,0,0.3);
+      }
+`;
+
+
 export default MypageModal;
 
 
 const TitleItem = (props) => {
 
   const { title, img , pick, done, selectTitle } = props
-
-  // const [curTitle, setCurTitle] = useState();
-
-
-  // React.useEffect((curTitle) => {
-  //   console.log(curTitle);
-  // }, [curTitle]);
-
-  // if(selectTitle) {
-  //   props.selectTitle(curTitle);
-  // }
-  // const selectT = (title) => {
-  //   setCurTitle(title);
-  //   if(selectTitle) {
-  //   props.selectTitle(curTitle);
-  //   }
-  // }
 
   if(done) {
     return (
@@ -286,7 +303,4 @@ const TitleItem = (props) => {
       </Grid>
     </React.Fragment>
   );
-}
-
-TitleItem.defaultProps = {
 }

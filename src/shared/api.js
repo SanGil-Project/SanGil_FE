@@ -49,6 +49,12 @@ export const api = {
     instance.put("/api/mypages/profilename", {
       nickname: username,
     }),
+  changeImg: (formData) =>
+    instance.put("/api/mypages/profileUrl", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }),
   myTracking: () => instance.get("/api/mypages/tracking"),
   myTitle: () => instance.get("/api/mypages/userTitle"),
   myBookmark: (lat, lng) => instance.get(`/api/mypages/bookmark?lat=${lat}&lng=${lng}`),
