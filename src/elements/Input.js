@@ -25,6 +25,7 @@ const Input = (props) => {
     is_submit,
     display,
     gridWidth,
+    id,
   } = props;
 
   const styles = {
@@ -71,7 +72,7 @@ const Input = (props) => {
     );
   }
   return (
-    <Grid maxWidth={gridWidth} alignItems="center" flexRow>
+    <Grid maxWidth={gridWidth}  alignItems="center" flexRow>
       {label && <div>{label}</div>}
       {is_submit ? (
         <InfoInput
@@ -89,6 +90,7 @@ const Input = (props) => {
       ) : (
         <InfoInput
           {...styles}
+          id={id}
           type={type}
           onChange={_onChange}
           placeholder={placeholder}
@@ -117,7 +119,6 @@ const InfoInput = styled.input`
   box-sizing: border-box;
   font-size: ${(props) => (props.size ? `${props.size}` : `16px`)};
   outline: none;
-
   width: ${(props) => `${props.width}`};
   max-width: ${(props) => `${props.maxWidth}`};
   height: ${(props) => `${props.height}`};
@@ -129,7 +130,7 @@ const InfoInput = styled.input`
 
 const ElTextarea = styled.textarea`
   width: ${(props) => props.width};
-  width-width: ${(props) => props.maxWidth};
+  max-width: ${(props) => props.maxWidth};
   height: ${(props) => props.height};
   ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
   padding: ${(props) => props.padding};
@@ -139,6 +140,7 @@ const ElTextarea = styled.textarea`
   outline: none;
   font-size: ${(props) => (props.size ? `${props.size}` : `16px`)};
   ${(props) => (props.bg ? `background-color: ${props.bg};` : null)}
+  resize: none;
 `;
 
 export default Input;

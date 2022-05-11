@@ -42,7 +42,6 @@ const Main = (props) => {
     <>
       <Mobile>
         <MainContainer>
-        {/* <Grid width="100vw" margin="0 auto"> */}
           <Header />
           <Grid padding="7px" overflowY="scroll">
             <Grid height="453px" margin="86px 0 25px 0">
@@ -330,7 +329,6 @@ const Main = (props) => {
             <Grid height="88px" maxWidth="500px" margin="auto">
               <TrackBtn>
                 <Button
-
                   border="none"
                   width="50px"
                   height="50px"
@@ -345,14 +343,12 @@ const Main = (props) => {
               <Menubar menuColor={menuColor} />
             </Grid>
           </MenubarContainer>
-        {/* </Grid> */}
         </MainContainer>
       </Mobile>
 
       {/* 데스크탑 */}
       <Desktop>
         <MainContainer>
-        {/* <Grid width="414px" margin="0 auto"> */}
           <Header />
           <Grid padding="7px" overflowY="scroll" height="1080px">
             <Grid height="453px" margin="90px auto 75px auto">
@@ -561,8 +557,8 @@ const Main = (props) => {
                 ))}
               </HorizontalScroll>
             </Grid>
-            <Grid width="400px" height="238px" margin="40px auto 20px auto">
-              <Grid maxWidth="472px" margin="0 0 34px 7px" height="25px" isFlex>
+            <Grid width="94.4%" height="238px" margin="40px auto 20px auto">
+              <Grid maxWidth="100%" margin="0 0 34px 0" height="25px" isFlex>
                 <Text
                   width="350px"
                   height="24px"
@@ -628,25 +624,24 @@ const Main = (props) => {
           </Grid>
           <MenubarContainer>
             <Grid height="88px" maxWidth="500px" margin="auto">
-            <TrackBtn>
-              <Button
-                width="50px"
-                height="50px"
-                bgColor="#5CB16E"
-                border="none"
-                color="#fff"
-                radius="100%"
-                // position="fixed"
-                // margin="-80px 0 0 350px"
-                _onClick={() => navigate("/searchmountain")}
-              >
-                <Icon type="climber" width="20px" height="32px" />
-              </Button>
+              <TrackBtn>
+                <Button
+                  width="50px"
+                  height="50px"
+                  bgColor="#5CB16E"
+                  border="none"
+                  color="#fff"
+                  radius="100%"
+                  // position="fixed"
+                  // margin="-80px 0 0 350px"
+                  _onClick={() => navigate("/searchmountain")}
+                >
+                  <Icon type="climber" width="20px" height="32px" />
+                </Button>
               </TrackBtn>
               <Menubar menuColor={menuColor} />
             </Grid>
           </MenubarContainer>
-        {/* </Grid> */}
         </MainContainer>
       </Desktop>
     </>
@@ -657,6 +652,7 @@ const MainContainer = styled.div`
   // position: relative;
   width: 100%;
   height: 100%;
+  padding: 0 0 100px 0;
   // min-width: 414px;
   max-width: 500px;
   margin: auto;

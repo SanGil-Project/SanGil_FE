@@ -12,17 +12,39 @@ const Icon = (props) => {
     color,
     page,
     checkColor,
+    fill,
+    position,
+    hover
   } = props;
 
-  const styles = { width, height, maxWidth, maxHeight, margin };
+  const styles = { width, height, maxWidth, maxHeight, margin, fill, position, hover };
   const menuColor = page ? "#fff" : "#6F6F6F";
 
   if (type === "errorBtn") {
     return (
       <MenuIcon {...styles} viewBox="0 0 24 24" fill="none" onClick={_onClick}>
-        <path d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z" fill="white"/>
-        <line x1="16" y1="7.98995" x2="7.98995" y2="16" stroke="#FF1C1C" strokeWidth="1.4" strokeLinecap="round"/>
-        <line x1="7.98995" y1="8" x2="16" y2="16.0101" stroke="#FF1C1C" strokeWidth="1.4" strokeLinecap="round"/>
+        <path
+          d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z"
+          fill="white"
+        />
+        <line
+          x1="16"
+          y1="7.98995"
+          x2="7.98995"
+          y2="16"
+          stroke="#FF1C1C"
+          strokeWidth="1.4"
+          strokeLinecap="round"
+        />
+        <line
+          x1="7.98995"
+          y1="8"
+          x2="16"
+          y2="16.0101"
+          stroke="#FF1C1C"
+          strokeWidth="1.4"
+          strokeLinecap="round"
+        />
       </MenuIcon>
     );
   }
@@ -30,9 +52,17 @@ const Icon = (props) => {
   if (type === "checkBtn") {
     return (
       <MenuIcon {...styles} viewBox="0 0 24 24" fill="none" onClick={_onClick}>
-        <path d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z" fill="white"/>
-        <path d="M18 8L9.99999 16L6 12" stroke={checkColor} strokeWidth="2" strokeLinecap="round" linejoin="round"/>
-
+        <path
+          d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z"
+          fill="white"
+        />
+        <path
+          d="M18 8L9.99999 16L6 12"
+          stroke={checkColor}
+          strokeWidth="2"
+          strokeLinecap="round"
+          linejoin="round"
+        />
       </MenuIcon>
     );
   }
@@ -400,6 +430,8 @@ const Delete = styled.svg`
   height: ${(props) => `${props.height}`};
   max-height: ${(props) => `${props.maxHeight}`};
   ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
+  ${(props) => (props.position ? `position: ${props.position};` : null)}
+  ${(props) => (props.hover ? `&:hover {cursor: pointer};` : null)}
 `;
 
 const Find = styled.svg`
@@ -411,7 +443,7 @@ const Find = styled.svg`
 `;
 
 const Like = styled.svg`
-  fill: #fff;
+  fill: ${(props) => (props.fill ? `${props.fill}` : `#E6E6E8`)};
   width: ${(props) => `${props.width}`};
   max-width: ${(props) => `${props.maxWidth}`};
   height: ${(props) => `${props.height}`};

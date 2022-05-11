@@ -94,6 +94,7 @@ const DivBtn = styled.div`
   height: ${(props) => `${props.height}`};
   border: ${(props) => `${props.border}`};
   box-sizing: border-box;
+  font-weight: ${(props) => props.bold};
   font-size: ${(props) => `${props.fontSize}`};
   color: ${(props) => props.color};
   ${(props) => (props.radius ? `border-radius: ${props.radius};` : null)};

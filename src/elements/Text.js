@@ -19,6 +19,7 @@ const Text = (props) => {
     hover,
     _onClick,
     whiteSpace,
+    ellipsis,
   } = props;
   const styles = {
     bold: bold,
@@ -35,6 +36,7 @@ const Text = (props) => {
     nowrap,
     hover,
     whiteSpace,
+    ellipsis,
   };
   return (
     <React.Fragment>
@@ -74,6 +76,14 @@ const P = styled.p`
       ? `text-overflow: ${props.textOverflow}; overflow:hidden; white-space:nowrap;`
       : null}
   ${(props) => (props.hover ? `&:hover {cursor: pointer;};` : null)}
+  ${(props) =>
+    props.ellipsis
+      ? `overflow: hidden;
+text-overflow: ellipsis;
+display: -webkit-box;
+-webkit-line-clamp: ${props.ellipsis}; 
+-webkit-box-orient: vertical;`
+      : null}
 `;
 
 export default Text;

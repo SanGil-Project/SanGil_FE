@@ -94,12 +94,16 @@
 
 - 로그인 체크 api 수정
 - userInfo의 username -> nickname 변경
-- 마이페이지 
-    - titleList 불러오기, title 변경 , 닉네임 중복체크, 닉네임 변경 api 연결 완료
-    - bookmark list api 연결 완료
+- 마이페이지
+  - titleList 불러오기, title 변경 , 닉네임 중복체크, 닉네임 변경 api 연결 완료
+  - bookmark list api 연결 완료
 - 페이지 별 연결
 - 산 상세 페이지 api 연결 => 기상 api에서 응답이 느려지는 문제 발생
 
+# 05 12 작업
+
+- 트래킹 일시정지 시 completeId 새로 생성되는 오류 수정
+- 피드 작성 페이지 다시 작업
 
 # trouble shooting
 

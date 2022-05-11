@@ -44,7 +44,7 @@ function App() {
           <Route path="/searchmountain" element={<BeforeTracking />} />
           <Route path="/tracker/:name/:mountainId" element={<Tracker />} />
           <Route path="/endtracking/:name" element={<EndTracking />} />
-          <Route path="/feed" element={<FeedDetail />} />
+          <Route path="/feed" element={<Feed />} />
           <Route path="/feedwrite" element={<FeedWrite />} />
           <Route path="/chatroom/:partyid" element={<ChatRoom />} />
         </Routes>
