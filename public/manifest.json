@@ -1,23 +1,21 @@
 {
-  "short_name": "산길",
+  "background_color": "#ffffff",
+  "description": "App for enjoy climbing",
+  "dir": "ltr",
+  "display": "standalone",
   "name": "산길",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "short_name": "산길",
+  "start_url": "/",
+  "theme_color": "#000000",
   "icons": [
     {
-      "src": "./icons/favicon-144x144.png",
-      "sizes": "144x144",
-      "type": "image/png"
+      "src": "./favicon.ico"
     },
     {
-      "src": "./icons/favicon-128.png",
-      "sizes": "128x128",
-      "type": "image/png"
+      "src": "/favicon.ico",
+      "type": "image/x-icon"
     }
-  ],
-  "start_url": "/",
-  "description": "App for enjoy climbing",
-  "orientation": "portrait-primary",
-  "scope": ".",
-  "display": "standalone",
-  "theme_color": "#5CB16E",
-  "background_color": "#ffffff"
+  ]
 }

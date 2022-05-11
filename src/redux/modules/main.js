@@ -17,7 +17,7 @@ export const aroundDB = (lat, lng) => {
   return function (dispatch, getState) {
     console.log(lat, lng);
     axios
-      .get(`http://3.35.49.228/api/main/nearby/1?lat=37.45988&lng=126.9519`)
+      .get(`http://3.35.49.228/api/main/nearby/1?lat=${lat}&lng=${lng}`)
       .then((res) => {
         dispatch(getAround(res.data));
       })

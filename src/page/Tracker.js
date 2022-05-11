@@ -3,9 +3,8 @@ import KakaoMap from "../components/KakaoMap";
 import { Grid, Button, Text, Icon, Input } from "../elements/element";
 import { Header } from "../components/component";
 import { Desktop, Mobile } from "../shared/responsive";
-import { startDB, endClimbDB } from "../redux/modules/tracker";
+import { startDB, endClimbDB, deleteDB } from "../redux/modules/tracker";
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as pathActions } from "../redux/modules/tracker";
 import StopWatch from "../components/StopWatch";
 import { useNavigate, useParams } from "react-router";
 import { setPathDB } from "./../redux/modules/tracker";
@@ -47,17 +46,17 @@ const Tracker = (props) => {
   const polylinePath = useSelector((state) => state.polyline?.polylinePath);
   const dispatch = useDispatch();
 
-  // React.useEffect(() => {
-  //   if (navigator.geolocation) {
-  //     // console.log("이게1");
-  //     navigator.geolocation.getCurrentPosition((position) => {
-  //       setMyLoca({
-  //         lat: position.coords.latitude,
-  //         lng: position.coords.longitude,
-  //       });
-  //     });
-  //   }
-  // }, []);
+  React.useEffect(() => {
+    if (navigator.geolocation) {
+      // console.log("이게1");
+      navigator.geolocation.getCurrentPosition((position) => {
+        setMyLoca({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+      });
+    }
+  }, []);
 
   useEffect(() => {
     path.current = setTimeout(() => {
@@ -69,7 +68,6 @@ const Tracker = (props) => {
               lng: position.coords.longitude,
             });
             if (time.isStart && completedId) {
-              console.log(completedId);
               dispatch(setPathDB(completedId, myLoca));
               // dispatch(pathActions.setPath(myLoca));
             }
@@ -79,12 +77,13 @@ const Tracker = (props) => {
           }
         );
       }
-    }, 1000);
+    }, 5000);
     return () => clearTimeout(path.current);
   }, [myLoca, time.isStart]);
 
   const startCal = async () => {
     acquireWakeLock();
+    // dispatch(setPathDB(completedId, myLoca));
     await dispatch(startDB(mountainId, setCompletedId));
     setTime({ ...time, isStart: true });
   };
@@ -95,17 +94,24 @@ const Tracker = (props) => {
 
   const stop = (distance, endTime) => {
     releaseWakeLock();
-    console.log(distance?.distanceK);
-    dispatch(
-      endClimbDB(completedId, {
-        totalDistance: distance?.distanceK,
-        totalTime: `${time.h}시간 ${time.m}분 ${time.s}초`,
-      })
-    );
-    navigate(`/endtracking/${name}`, {
-      state: { distance: distance, time: endTime },
-    });
-    setTime({ ...time, s: 0, m: 0, h: 0, distance: 0, isStart: false });
+    if (time.h !== 0 && time.s >= 10) {
+      dispatch(
+        endClimbDB(completedId, {
+          totalDistance: distance,
+          totalTime: `${time.h}시간 ${time.m}분 ${time.s}초`,
+        })
+      );
+      navigate(`/endtracking/${name}`, {
+        state: { distance: distance, time: endTime },
+      });
+      setTime({ ...time, s: 0, m: 0, h: 0, distance: 0, isStart: false });
+    } else if (time.h === 0 && time.s < 10) {
+      if (window.confirm("10분 이하의 등산은 기록되지 않습니다") === true) {
+        dispatch(deleteDB(completedId));
+        setTime({ ...time, s: 0, m: 0, h: 0, distance: 0, isStart: false });
+        navigate("/", { replace: true });
+      }
+    }
   };
 
   return (
@@ -147,7 +153,10 @@ const Tracker = (props) => {
                 margin="5px auto 0 auto"
               >
                 <Text>
-                  <span style={{ fontSize: "2.5rem" }}>{time.distance}</span>km
+                  <span style={{ fontSize: "2.5rem" }}>
+                    {distance?.distanceK ? distance.distanceK : `0.00`}
+                  </span>
+                  km
                 </Text>
                 <Grid width="14.27%" textAlign lineHeight="25px">
                   <StopWatch time={time} setTime={setTime} size="2.5rem" />
@@ -229,10 +238,10 @@ const Tracker = (props) => {
                   소요 시간
                 </Text>
               </Grid>
-              <Grid width="250px" height="30px" isFlex margin="5px auto 0 auto">
-                <Text margin="0 0 0 40px">
+              <Grid width="260px" height="30px" isFlex margin="5px auto 0 auto">
+                <Text margin="0 0 0 30px">
                   <span style={{ fontSize: "2.5rem" }}>
-                    {distance?.distanceK ? distance.distanceK : `0`}
+                    {distance?.distanceK ? distance.distanceK : `0.00`}
                   </span>
                   km
                 </Text>
@@ -263,7 +272,11 @@ const Tracker = (props) => {
                       height="48px"
                       radius="12px"
                       _onClick={() =>
-                        stop(time.distance, { s: time.s, m: time.m, h: time.h })
+                        stop(distance?.distanceK, {
+                          s: time.s,
+                          m: time.m,
+                          h: time.h,
+                        })
                       }
                     >
                       등산 완료

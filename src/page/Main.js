@@ -48,13 +48,15 @@ const Main = (props) => {
                 size="2rem"
                 lineHeight="24px"
               >
-                🌲 지금 산길러 들이 오르고있는 산 TOP 10
+                🌲 좋아요 순 10
               </Text>
               <Card
                 border="2px solid #B3B3B3"
                 maxWidth="386px"
                 height="120px"
                 margin="34px auto 0 auto"
+                bgImg="https://i.esdrop.com/d/f/bww1Enn4jz/5RrOZgFwvp.jpg"
+                bgSize="cover"
                 // _onClick={() => navigate(`/searchdetail/관악산`)}
               >
                 <Icon width="34px" height="29px" type="rank" />
@@ -77,14 +79,14 @@ const Main = (props) => {
                   }}
                 >
                   <Text
-                    maxWidth="130px"
+                    maxWidth="170px"
                     margin="10px 8px 0 7px"
                     bold="600"
                     size="1.4rem"
                     height="17px"
                     lineHeight="17px"
                   >
-                    충청남도 서산시
+                    강원도 홍천군 두촌면
                   </Text>
                   <Text
                     margin="10px 0 0 0"
@@ -94,18 +96,20 @@ const Main = (props) => {
                     height="17px"
                     lineHeight="17px"
                   >
-                    산이름졸라길다아아아아아아앙?
+                    가리산
                   </Text>
                 </div>
               </Grid>
 
               <HorizontalScroll>
-                {num.map((cur, idx) => (
+                {mountain?.map((cur, idx) => (
                   <div key={idx}>
                     <Card
                       width="194px"
                       height="120px"
                       margin="34px 7px 8px 7px"
+                      bgImg={mountain[idx].mountainImgUrl}
+                      bgSize="cover"
                       // _onClick={() => navigate(`/searchdetail/관악산`)}
                     >
                       <Icon width="34px" height="29px" type="rank" />
@@ -117,7 +121,7 @@ const Main = (props) => {
                         margin="-32px 14px"
                         color="#fff"
                       >
-                        {cur}
+                        {mountain[idx].mountainId}
                       </Text>
                       <Icon
                         type="like"
@@ -132,10 +136,10 @@ const Main = (props) => {
                       bold="600"
                       size="1.4rem"
                     >
-                      충청남도 서산시
+                      {mountain[idx].mountainAddress}
                     </Text>
                     <Text margin="10px 0 0 7px" bold="200" size="1.4rem">
-                      산이름졸라길다아아아아아아앙
+                      {mountain[idx].mountainName}
                     </Text>
                   </div>
                 ))}
@@ -157,12 +161,16 @@ const Main = (props) => {
                 👀 주변 산길
               </Text>
               <HorizontalScroll>
-                {num.map((cur, idx) => (
+                {mainState.around?.nearbyMountainDtos.map((cur, idx) => (
                   <div key={idx}>
                     <Card
                       width="194px"
                       height="120px"
                       margin="10px 7px 8px 7px"
+                      bgImg={
+                        mainState.around?.nearbyMountainDtos[idx].mountainImgUrl
+                      }
+                      bgSize="cover"
                     >
                       <Icon
                         type="like"
@@ -172,7 +180,7 @@ const Main = (props) => {
                       />
                     </Card>
                     <Text margin="8px 0 0 7px" bold="600" size="1.4rem">
-                      어디어디 산의 어디 코스
+                      {mainState.around?.nearbyMountainDtos[idx].mountainName}
                     </Text>
 
                     <Grid
@@ -182,10 +190,11 @@ const Main = (props) => {
                       margin="8px 7px 0 7px"
                     >
                       <Text bold="300" size="1.2rem">
-                        매우 좋음 5.0
+                        평가 없음{" "}
+                        {mainState.around?.nearbyMountainDtos[idx].starAvr}
                       </Text>
                       <Text bold="400" size="1.2rem">
-                        100.800km
+                        {mainState.around?.nearbyMountainDtos[idx].distance}km
                       </Text>
                     </Grid>
                   </div>
@@ -194,7 +203,7 @@ const Main = (props) => {
             </Grid>
             <Grid height="220px">
               <Grid
-                maxWidth="93.23%"
+                maxWidth="99.23%"
                 margin="0 7px 24px 7px"
                 height="25px"
                 isFlex
@@ -206,7 +215,7 @@ const Main = (props) => {
                   size="2rem"
                   lineHeight="24px"
                 >
-                  👀 실시간 정복한 산길 인증샷
+                  📷 실시간 정복한 산길 인증샷
                 </Text>
                 <Grid
                   margin="0 18px 0 0"
@@ -243,7 +252,7 @@ const Main = (props) => {
             </Grid>
             <Grid height="238px" margin="36px 0 20px 0">
               <Grid
-                maxWidth="93.23%"
+                maxWidth="99.23%"
                 margin="0 7px 34px 7px"
                 height="25px"
                 isFlex
@@ -255,7 +264,7 @@ const Main = (props) => {
                   size="2rem"
                   lineHeight="24px"
                 >
-                  산길러 모여라~
+                  📣 산길러 모여라~
                 </Text>
                 <Grid
                   margin="0 18px 0 0"
@@ -314,8 +323,8 @@ const Main = (props) => {
             height="50px"
             bgColor="#5CB16E"
             radius="100%"
-            position="absolute"
-            margin="-80px 0 0 84.54%"
+            position="fixed"
+            margin="-167vw 0 0 85vw" // 스마트폰,태블릿마다 위치가 다름, 고칠 것
             _onClick={() => navigate("/searchmountain")}
           >
             <Icon type="climber" width="20px" height="32px" />
@@ -338,7 +347,7 @@ const Main = (props) => {
                 size="2rem"
                 lineHeight="24px"
               >
-                🌲 북마크 순 10
+                🌲 좋아요 순 10
               </Text>
               <Card
                 border="2px solid #B3B3B3"
