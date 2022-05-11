@@ -58,7 +58,7 @@ const BeforeTracking = (props) => {
                     hover
                     _onClick={() =>
                       navigate(
-                        `/tracker/${searchData[idx].mountain}/${searchData[idx].mountain100Id}`,
+                        `/tracker/${searchData[idx].mountain}/${searchData[idx].mountainId}`,
                         {
                           replace: true,
                         }
@@ -129,7 +129,7 @@ const BeforeTracking = (props) => {
                     hover
                     _onClick={() =>
                       navigate(
-                        `/tracker/${searchData[idx].mountain}/${searchData[idx].mountain100Id}`,
+                        `/tracker/${searchData[idx].mountain}/${searchData[idx].mountainId}`,
                         {
                           replace: true,
                         }

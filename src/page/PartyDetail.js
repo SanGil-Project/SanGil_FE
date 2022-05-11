@@ -16,6 +16,9 @@ const PartyDetail = (props) => {
   const { partyId } = useParams();
   console.log(partyId)
   const userInfo = useSelector((state) => state?.user?.userInfo);
+  const partyItem = useSelector((state) => state?.party.partyList[0]);
+
+  console.log(partyItem, userInfo);
   const menuColor = [false, true, false, false, false]; // 메뉴바 색
 
   React.useEffect(() => {
@@ -32,6 +35,7 @@ const PartyDetail = (props) => {
   const attendBtn = partymember?.some((m) => m.username === userInfo.username)
     ? "참가취소하기"
     : "참가하기";
+  const myMode = userInfo.nickname === partyItem.nickname ? true : false;
 
   console.log(partyList, partymember, attendBtn);
   const attendParty = (partyId) => {
@@ -46,6 +50,11 @@ const PartyDetail = (props) => {
     dispatch(partyActions.attendPartyDB(partyId));
   };
 
+  const deleteParty = (partyId) => {
+    dispatch(partyActions.deletePartyDB(partyId));
+    navigate("/party");
+  }
+
   return (
     <React.Fragment>
       <Mobile>
@@ -53,20 +62,36 @@ const PartyDetail = (props) => {
           <Header />
           <PartyWrap>
             <Grid padding="96px 14px 100px">
-              <Grid flexRow margin="0 0 20px">
-                {/* <Mainprofile> */}
-                <Image
-                  type="circle"
-                  width="32px"
-                  margin="0 14px 0 0"
-                  src={img}
-                />
-                {/* </Mainprofile> */}
-                <Grid>
-                  <Text margin="0" size="12px" bold="500">
-                    [{partyList?.userTitle}] {partyList?.username}
-                  </Text>
+              <Grid isFlex>
+                <Grid flexRow margin="0 0 20px">
+                  {/* <Mainprofile> */}
+                  <Image
+                    type="circle"
+                    width="32px"
+                    margin="0 14px 0 0"
+                    src={img}
+                  />
+                  {/* </Mainprofile> */}
+                  <Grid>
+                    <Text margin="0" size="12px" bold="500">
+                      [{partyList?.userTitle}] {partyList?.username}
+                    </Text>
+                  </Grid>
                 </Grid>
+                {myMode && 
+                <Grid width="auto" margin="0 0 20px" flexRow>
+                  <Button 
+                    width="auto" height="auto" padding="5px" margin="0 5px" 
+                    _onClick={()=>{
+                      navigate(`/partywrite/${partyList.partyId}`);}}>
+                    <Text margin="0">수정</Text>
+                  </Button>
+                  <Button 
+                    width="auto" height="auto" padding="5px" 
+                    _onClick={()=>{deleteParty(partyList.partyId)}}>
+                    <Text margin="0">삭제</Text>
+                  </Button>
+                </Grid>}
               </Grid>
               <hr style={{ border: "1px solid #DEDEDE" }} />
               <Grid padding="20px 0" margin="0 0 24px" flexColumn>
@@ -194,20 +219,37 @@ const PartyDetail = (props) => {
           <Header />
           <PartyWrap>
             <Grid padding="96px 14px 100px">
-              <Grid flexRow margin="0 0 20px">
-                {/* <Mainprofile> */}
-                <Image
-                  type="circle"
-                  width="32px"
-                  margin="0 14px 0 0"
-                  src={partyList?.userImageUrl}
-                />
-                {/* </Mainprofile> */}
-                <Grid>
-                  <Text margin="0" size="12px" bold="500">
-                    [{partyList?.userTitle}] {partyList?.username}
-                  </Text>
+              <Grid isFlex>
+                <Grid flexRow margin="0 0 20px">
+                  {/* <Mainprofile> */}
+                  <Image
+                    type="circle"
+                    width="32px"
+                    margin="0 14px 0 0"
+                    src={img}
+                  />
+                  {/* </Mainprofile> */}
+                  <Grid>
+                    <Text margin="0" size="12px" bold="500">
+                      [{partyList?.userTitle}] {partyList?.username}
+                    </Text>
+                  </Grid>
                 </Grid>
+                {/* {myMode &&  // 서버에서 nickname으로 전부 바꾸면 반영(테스트해야하니까...)*/} 
+                <Grid width="auto" margin="0 0 20px" flexRow>
+                  <Button 
+                    width="auto" height="auto" padding="5px" margin="0 5px" 
+                    _onClick={()=>{
+                      navigate(`/partywrite/${partyList.partyId}`);}}>
+                    <Text margin="0">수정</Text>
+                  </Button>
+                  <Button 
+                    width="auto" height="auto" padding="5px" 
+                    _onClick={()=>{deleteParty(partyList.partyId)}}>
+                    <Text margin="0">삭제</Text>
+                  </Button>
+                </Grid>
+                {/* } */}
               </Grid>
               <hr style={{ border: "1px solid #DEDEDE" }} />
               <Grid padding="20px 0" margin="0 0 24px" flexColumn>
