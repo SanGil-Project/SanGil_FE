@@ -88,13 +88,20 @@ const Tracker = (props) => {
     setTime({ ...time, isStart: true });
   };
 
+  const reStart = () => {
+    acquireWakeLock();
+    // dispatch(setPathDB(completedId, myLoca));
+    setTime({ ...time, isStart: true });
+  };
+
   const pause = () => {
+    console.log(completedId);
     setTime({ ...time, isStart: false });
   };
 
   const stop = (distance, endTime) => {
     releaseWakeLock();
-    if (time.h !== 0 && time.s >= 10) {
+    if (time.h !== 0 && time.m >= 10) {
       dispatch(
         endClimbDB(completedId, {
           totalDistance: distance,
@@ -105,8 +112,8 @@ const Tracker = (props) => {
         state: { distance: distance, time: endTime },
       });
       setTime({ ...time, s: 0, m: 0, h: 0, distance: 0, isStart: false });
-    } else if (time.h === 0 && time.s < 10) {
-      if (window.confirm("10분 이하의 등산은 기록되지 않습니다") === true) {
+    } else if (time.h === 0 && time.m < 10) {
+      if (window.confirm("10분 미만의 등산은 기록되지 않습니다") === true) {
         dispatch(deleteDB(completedId));
         setTime({ ...time, s: 0, m: 0, h: 0, distance: 0, isStart: false });
         navigate("/", { replace: true });
@@ -189,7 +196,7 @@ const Tracker = (props) => {
                       등산 완료
                     </Button>
                   </>
-                ) : (
+                ) : time.s === 0 ? (
                   <Button
                     bgColor="black"
                     color="#fff"
@@ -198,7 +205,18 @@ const Tracker = (props) => {
                     radius="12px"
                     _onClick={startCal}
                   >
-                    {time.s === 0 ? `등산 시작` : `다시 출발`}
+                    등산 시작
+                  </Button>
+                ) : (
+                  <Button
+                    bgColor="black"
+                    color="#fff"
+                    width="100%"
+                    height="48px"
+                    radius="12px"
+                    _onClick={reStart}
+                  >
+                    다시 출발
                   </Button>
                 )}
               </Grid>
@@ -282,16 +300,27 @@ const Tracker = (props) => {
                       등산 완료
                     </Button>
                   </>
-                ) : (
+                ) : time.s === 0 ? (
                   <Button
                     bgColor="black"
                     color="#fff"
-                    width="342px"
+                    width="100%"
                     height="48px"
                     radius="12px"
                     _onClick={startCal}
                   >
-                    {time.s === 0 ? `등산 시작` : `다시 출발`}
+                    등산 시작
+                  </Button>
+                ) : (
+                  <Button
+                    bgColor="black"
+                    color="#fff"
+                    width="100%"
+                    height="48px"
+                    radius="12px"
+                    _onClick={reStart}
+                  >
+                    다시 출발
                   </Button>
                 )}
               </Grid>
