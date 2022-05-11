@@ -111,6 +111,8 @@ const addPartyDB = (party = {}) => {
 
 const editPartyDB = (partyId = null, party = {}) => {
   return function (dispatch, getState) {
+    console.log(party);
+
     api
       .editParty(partyId, party)
       .then((res) => {
@@ -175,40 +177,34 @@ const deletePartyDB = (partyId = null) => {
 
 export default handleActions(
   {
-    [GET_MY_PARTY]: (state, action) =>
-      produce(state, (draft) => {
-        console.log(action.payload);
-        draft.myPartyList = action.payload.partyList.plans;
-      }),
-    [SET_PARTY]: (state, action) =>
-      produce(state, (draft) => {
-        console.log(action.payload.partyList);
-        draft.partyList = action.payload.partyList.partyList;
-      }),
-    [ADD_PARTY]: (state, action) =>
-      produce(state, (draft) => {
-        draft.partyList.unshift(action.payload.party);
-      }),
-    [EDIT_PARTY]: (state, action) => produce(state, (draft) => {}),
-    [ATTEND_PARTY]: (state, action) =>
-      produce(state, (draft) => {
-        draft.partyList[0].partymemberDto.push(action.payload.user);
-        draft.partyList[0].curPeople++;
-      }),
-    [CANCEL_PARTY]: (state, action) =>
-      produce(state, (draft) => {
-        draft.partyList[0].partymemberDto =
-          draft.partyList[0].partymemberDto.filter(
-            (p) => p.username !== action.payload.user.username
-          );
-        draft.partyList[0].curPeople--;
-      }),
-    [DELETE_PARTY]: (state, action) =>
-      produce(state, (draft) => {
-        draft.partyList = draft.partyList.filter(
-          (p) => p.partyId !== action.payload.partyList.partyId
+    [GET_MY_PARTY]: (state, action) => produce(state, (draft) => {
+      draft.myPartyList = action.payload.partyList.plans;
+    }),
+    [SET_PARTY]: (state, action) => produce(state, (draft) => {
+      draft.partyList = action.payload.partyList.partyList;
+    }),
+    [ADD_PARTY]: (state, action) => produce(state, (draft) => {
+      draft.partyList.unshift(action.payload.party);
+    }),
+    [EDIT_PARTY]: (state, action) => produce(state, (draft) => {
+      
+    }),
+    [ATTEND_PARTY]: (state, action) => produce(state, (draft) => {
+      draft.partyList[0].partymemberDto.push(action.payload.user);
+      draft.partyList[0].curPeople++;
+    }),
+    [CANCEL_PARTY]: (state, action) => produce(state, (draft) => {
+      draft.partyList[0].partymemberDto =
+        draft.partyList[0].partymemberDto.filter(
+          (p) => p.username !== action.payload.user.username
         );
-      }),
+      draft.partyList[0].curPeople--;
+    }),
+    [DELETE_PARTY]: (state, action) => produce(state, (draft) => {
+        // draft.partyList = draft.partyList.filter(
+        //   (p) => p.partyId !== action.payload.partyList.partyId
+        // );
+    }), 
   },
   initialState
 );

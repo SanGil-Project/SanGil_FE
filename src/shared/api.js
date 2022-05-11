@@ -89,8 +89,8 @@ export const api = {
       partyDate: party.partyDate,
       partyTime: party.partyTime,
       maxPeople: party.maxPeople,
-      partyContent: party.content,
+      partyContent: party.partyContent,
     }),
   attendParty: (partyId) => instance.post(`/api/party/attend/${partyId}`),
-  delParty: (partyId) => instance.delete(`/api/party/join/${partyId}`),
+  delParty: (partyId) => instance.delete(`/api/party/${partyId}`),
 };

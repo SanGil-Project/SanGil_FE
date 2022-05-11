@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as partyActions } from '../redux/modules/party';
@@ -22,17 +22,22 @@ import Search from './Search';
 import SearchModal from '../components/SearchModal';
 
 const PartyWrite = (props) => {
+  const { partyId } = useParams();
+  const is_edit = partyId ? true : false;
+  console.log(partyId);
+  const partyItem = useSelector((state) => state?.party?.partyList[0]);
+
   const menuColor = [false, true, false, false, false]; // 메뉴바 색
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [partyName, setPartyName] = React.useState("");
-  const [partyContent, setPartyContent] = React.useState("");
-  const [dateValue, setDateValue] = React.useState(new Date('2014-08-18T21:11:54'));
-  const [timeValue, setTimeValue] = React.useState("");
-  const [numberValue, setNumberValue] = React.useState();
-  const [mountValue, setMountValue] = React.useState("");
-  const [mountAddValue, setMountAddValue] = React.useState("");
+  const [partyName, setPartyName] = React.useState(is_edit ? partyItem.title :"");
+  const [partyContent, setPartyContent] = React.useState(is_edit ? partyItem.partyContent :"");
+  const [dateValue, setDateValue] = React.useState(is_edit ? partyItem.partyDate : null);
+  const [timeValue, setTimeValue] = React.useState(is_edit ? partyItem.partyTime :"");
+  const [numberValue, setNumberValue] = React.useState(is_edit ? partyItem.maxPeople : null);
+  const [mountValue, setMountValue] = React.useState(is_edit ? partyItem.mountain :"");
+  const [mountAddValue, setMountAddValue] = React.useState(is_edit ? partyItem.address :"");
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -61,6 +66,23 @@ const PartyWrite = (props) => {
       window.alert("입력되지 않은 부분이 있습니다!");
       return;
     }
+    if (is_edit) {
+      const num = parseInt(numberValue);
+      const partyData = {
+        title : partyName,
+        mountain : mountValue,
+        address : mountAddValue,
+        partyDate : dateValue,
+        partyTime: timeValue,
+        maxPeople : num,
+        partyContent : partyContent,
+      }
+      console.log(partyData);
+      dispatch(partyActions.editPartyDB(partyId, partyData));
+      window.alert("수정 완료!");
+      navigate(`/party`);
+      return;
+    }
     const num = parseInt(numberValue);
     const partyData = {
       title : partyName,
@@ -86,14 +108,23 @@ const PartyWrite = (props) => {
           <Grid padding="96px 14px 100px">
             <Grid>
               <Text margin="0 0 10px" size="16px" bold="600">모임 이름</Text>
-              <Input 
-                width="100%" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 0 34.5px"
-                placeholder="모임의 이름은 무엇인가요?"
-                _onChange={inputName}/>
+              {is_edit ? 
+                <Input 
+                  width="100%" bg="#eee" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 0 34.5px"
+                  placeholder="모임의 이름은 무엇인가요?"
+                  value={partyName}
+                  disabled
+                  _onChange={inputName}/> : 
+                <Input 
+                  width="100%" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 0 34.5px"
+                  placeholder="모임의 이름은 무엇인가요?"
+                  value={partyName}
+                  _onChange={inputName}/>}
               <Text margin="0 0 10px" size="16px" bold="600">세부 내용</Text>
               <Input 
                 width="100%" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 0 34.5px"
                 multiLine
+                value={partyContent}
                 placeholder="어떤 활동을 함께 하고 싶으신가요?"
                 _onChange={inputContent}/>
             </Grid>
@@ -169,6 +200,7 @@ const PartyWrite = (props) => {
                       type="number"
                       width="150px" border="1px solid #BBBBBB" radius="8px" padding="16px 12px"
                       placeholder="인원수 입력"
+                      value={numberValue}
                       _onChange={inputNumber}/>
                     {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text>
                     <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} /> */}
@@ -178,6 +210,20 @@ const PartyWrite = (props) => {
               <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
               <Grid isFlex margin="10px 0">
                 <Text margin="0" size="16px" bold="600">위치</Text>
+                {is_edit ? (
+                <Button width="auto" border="none">
+                  <Grid flexRow>
+                    <Input 
+                      width="150px" bg="#eee" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 10px"
+                      placeholder="산이름 입력"
+                      disabled
+                      value={mountValue}
+                      is_submit/>
+                      {/* _onChange={inputMount}/> */}
+                    {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text> */}
+                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{window.alert("산정보는 수정이 불가능합니다!")}} />
+                  </Grid>
+                </Button>) : (
                 <Button width="auto" border="none">
                   <Grid flexRow>
                     <Input 
@@ -189,7 +235,7 @@ const PartyWrite = (props) => {
                     {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text> */}
                     <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{setIsOpen(true)}} />
                   </Grid>
-                </Button>
+                </Button>)}
               </Grid>
               
             </Grid>
@@ -197,7 +243,7 @@ const PartyWrite = (props) => {
             <Button 
               bgColor="#C4C4C4" border="none" height="48px" margin="20px 0" radius="12px" 
               _onClick={addParty}>
-              <Text margin="0" size="18px" bold="600" align>작성하기</Text>
+              <Text margin="0" size="18px" bold="600" align>{is_edit ? "수정하기" : "작성하기"}</Text>
             </Button>
 
             </Grid>
@@ -224,14 +270,22 @@ const PartyWrite = (props) => {
           <Grid padding="96px 14px 100px">
             <Grid>
               <Text margin="0 0 10px" size="16px" bold="600">모임 이름</Text>
-              <Input 
-                width="100%" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 0 34.5px"
-                placeholder="모임의 이름은 무엇인가요?"
-                _onChange={inputName}/>
+              {is_edit ? 
+                <Input 
+                  width="100%" bg="#eee" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 0 34.5px"
+                  placeholder="모임의 이름은 무엇인가요?"
+                  value={partyName}
+                  disabled
+                  _onChange={inputName}/> : 
+                <Input 
+                  width="100%" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 0 34.5px"
+                  placeholder="모임의 이름은 무엇인가요?"
+                  _onChange={inputName}/>}
               <Text margin="0 0 10px" size="16px" bold="600">세부 내용</Text>
               <Input 
                 width="100%" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 0 34.5px"
                 multiLine
+                value={partyContent}
                 placeholder="어떤 활동을 함께 하고 싶으신가요?"
                 _onChange={inputContent}/>
             </Grid>
@@ -307,6 +361,7 @@ const PartyWrite = (props) => {
                       type="number"
                       width="150px" border="1px solid #BBBBBB" radius="8px" padding="16px 12px"
                       placeholder="인원수 입력"
+                      value={numberValue}
                       _onChange={inputNumber}/>
                     {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text>
                     <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} /> */}
@@ -316,17 +371,32 @@ const PartyWrite = (props) => {
               <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
               <Grid isFlex margin="10px 0">
                 <Text margin="0" size="16px" bold="600">위치</Text>
+                {is_edit ? (
+                <Button width="auto" border="none">
+                  <Grid flexRow>
+                    <Input 
+                      width="150px" bg="#eee" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 10px"
+                      placeholder="산이름 입력"
+                      disabled
+                      value={mountValue}
+                      is_submit/>
+                      {/* _onChange={inputMount}/> */}
+                    {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text> */}
+                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{window.alert("산정보는 수정이 불가능합니다!")}} />
+                  </Grid>
+                </Button>) : (
                 <Button width="auto" border="none">
                   <Grid flexRow>
                     <Input 
                       width="150px" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 10px"
-                      value={mountValue}
                       placeholder="산이름 입력"
+                      value={mountValue}
                       is_submit/>
+                      {/* _onChange={inputMount}/> */}
                     {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text> */}
                     <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{setIsOpen(true)}} />
                   </Grid>
-                </Button>
+                </Button>)}
               </Grid>
               
             </Grid>
@@ -334,7 +404,7 @@ const PartyWrite = (props) => {
             <Button 
               bgColor="#C4C4C4" border="none" height="48px" margin="20px 0" radius="12px" 
               _onClick={addParty}>
-              <Text margin="0" size="18px" bold="600" align>작성하기</Text>
+              <Text margin="0" size="18px" bold="600" align>{is_edit ? "수정하기" : "작성하기"}</Text>
             </Button>
 
             </Grid>

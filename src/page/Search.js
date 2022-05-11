@@ -64,7 +64,7 @@ const Search = (props) => {
   };
   const goDetail = (d, idx) => {
     console.log(d, idx);
-    navigate(`/searchdetail/${d.mountain100Id}`);
+    navigate(`/searchdetail/${d.mountainId}`);
   };
   const data = searchData ? searchData : mountainList;
 

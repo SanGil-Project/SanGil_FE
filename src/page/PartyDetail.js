@@ -46,6 +46,11 @@ const PartyDetail = (props) => {
     dispatch(partyActions.attendPartyDB(partyId));
   };
 
+  const deleteParty = (partyId) => {
+    dispatch(partyActions.deletePartyDB(partyId));
+    navigate("/party");
+  }
+
   return (
     <React.Fragment>
       <Mobile>
@@ -53,19 +58,34 @@ const PartyDetail = (props) => {
           <Header />
           <PartyWrap>
             <Grid padding="96px 14px 100px">
-              <Grid flexRow margin="0 0 20px">
-                {/* <Mainprofile> */}
-                <Image
-                  type="circle"
-                  width="32px"
-                  margin="0 14px 0 0"
-                  src={img}
-                />
-                {/* </Mainprofile> */}
-                <Grid>
-                  <Text margin="0" size="12px" bold="500">
-                    [{partyList?.userTitle}] {partyList?.username}
-                  </Text>
+              <Grid isFlex>
+                <Grid flexRow margin="0 0 20px">
+                  {/* <Mainprofile> */}
+                  <Image
+                    type="circle"
+                    width="32px"
+                    margin="0 14px 0 0"
+                    src={img}
+                  />
+                  {/* </Mainprofile> */}
+                  <Grid>
+                    <Text margin="0" size="12px" bold="500">
+                      [{partyList?.userTitle}] {partyList?.username}
+                    </Text>
+                  </Grid>
+                </Grid>
+                <Grid width="auto" margin="0 0 20px" flexRow>
+                  <Button 
+                    width="auto" height="auto" padding="5px" margin="0 5px" 
+                    _onClick={()=>{
+                      navigate(`/partywrite/${partyList.partyId}`);}}>
+                    <Text margin="0">수정</Text>
+                  </Button>
+                  <Button 
+                    width="auto" height="auto" padding="5px" 
+                    _onClick={()=>{deleteParty(partyList.partyId)}}>
+                    <Text margin="0">삭제</Text>
+                  </Button>
                 </Grid>
               </Grid>
               <hr style={{ border: "1px solid #DEDEDE" }} />
@@ -194,19 +214,34 @@ const PartyDetail = (props) => {
           <Header />
           <PartyWrap>
             <Grid padding="96px 14px 100px">
-              <Grid flexRow margin="0 0 20px">
-                {/* <Mainprofile> */}
-                <Image
-                  type="circle"
-                  width="32px"
-                  margin="0 14px 0 0"
-                  src={partyList?.userImageUrl}
-                />
-                {/* </Mainprofile> */}
-                <Grid>
-                  <Text margin="0" size="12px" bold="500">
-                    [{partyList?.userTitle}] {partyList?.username}
-                  </Text>
+              <Grid isFlex>
+                <Grid flexRow margin="0 0 20px">
+                  {/* <Mainprofile> */}
+                  <Image
+                    type="circle"
+                    width="32px"
+                    margin="0 14px 0 0"
+                    src={img}
+                  />
+                  {/* </Mainprofile> */}
+                  <Grid>
+                    <Text margin="0" size="12px" bold="500">
+                      [{partyList?.userTitle}] {partyList?.username}
+                    </Text>
+                  </Grid>
+                </Grid>
+                <Grid width="auto" margin="0 0 20px" flexRow>
+                  <Button 
+                    width="auto" height="auto" padding="5px" margin="0 5px" 
+                    _onClick={()=>{
+                      navigate(`/partywrite/${partyList.partyId}`);}}>
+                    <Text margin="0">수정</Text>
+                  </Button>
+                  <Button 
+                    width="auto" height="auto" padding="5px" 
+                    _onClick={()=>{deleteParty(partyList.partyId)}}>
+                    <Text margin="0">삭제</Text>
+                  </Button>
                 </Grid>
               </Grid>
               <hr style={{ border: "1px solid #DEDEDE" }} />

@@ -38,6 +38,7 @@ function App() {
           <Route path="/mypage" element={<Mypage />} />
           <Route path="/party" exact element={<Party />} />
           <Route path="/partywrite" exact element={<PartyWrite />} />
+          <Route path="/partywrite/:partyId" exact element={<PartyWrite />} />
           <Route path="/partydetail/:partyId" element={<PartyDetail />} />
           <Route path="/search" element={<Search />} />
           <Route path="/searchdetail/:mountainId" element={<SearchDetail />} />
