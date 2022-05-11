@@ -101,11 +101,13 @@ export const isLogInDB = (token) => {
 
 const nameCheckDB = (username) => {
   return function (dispatch, getState) {
+    console.log(username);
 
     api
       .nameCheck(username)
       .then((res) => {
         console.log("(nameCheck) 성공 후 데이터 ::", res);
+        dispatch(nameCheck(res.data));
       })
       .catch((err) => {
         console.log("(nameCheck) 실패 ::", err);
@@ -113,22 +115,21 @@ const nameCheckDB = (username) => {
   };
 };
 
-const changeNameDB = (username) => {
+const changeNameDB = (nickname) => {
   return function (dispatch, getState) {
 
     const userdata = getState().user.userInfo;
-    const _user = {
-      userId: userdata.userId,
-      userImageUrl: userdata.userImageUrl,
-      username: username,
-      userTitle: userdata.userTitle,
-    }
-    dispatch(changeInfo(_user));
-    return;
     api
-      .changeName(username)
+      .changeName(nickname)
       .then((res) => {
         console.log("(changeName) 성공 후 데이터 ::", res);
+        const _user = {
+          userId: userdata.userId,
+          userImageUrl: userdata.userImageUrl,
+          nickname: nickname,
+          userTitle: userdata.userTitle,
+        }
+        dispatch(changeInfo(_user));
       })
       .catch((err) => {
         console.log("(changeName) 실패 ::", err);
@@ -140,14 +141,7 @@ const changeTitleDB = (userTitle) => {
   return function (dispatch, getState) {
 
     const userdata = getState().user.userInfo;
-    const _user = {
-      userId: userdata.userId,
-      userImageUrl: userdata.userImageUrl,
-      username: userdata.username,
-      userTitle: userTitle,
-    }
-    dispatch(changeInfo(_user));
-    return;
+
     api
       .changeTitle(userTitle)
       .then((res) => {
@@ -184,30 +178,6 @@ const myTrackingDB = () => {
 
 const myTitleDB = () => {
   return function (dispatch, getState) {
-    const userTitleList = [
-      { userTitle: "등린이", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: true}, 
-      { userTitle: "홍길동", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: false},
-      { userTitle: "방구석 홍길", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: true},
-      { userTitle: "리틀홍길", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: true},
-      { userTitle: "내장래희망 홍길형님", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: false}, 
-      { userTitle: "UM.....홍길?", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: false},
-      { userTitle: "아직 여기라고?", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: true},
-      { userTitle: "백만불짜리다리", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: false},
-      { userTitle: "산타고 전국일주", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: false},
-      { userTitle: "내가탄 산 높이 히말라야", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: false}, 
-      { userTitle: "구름위를걷는자", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: false},
-      { userTitle: "대기권 돌파~", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: false},
-      { userTitle: "아싸중에인싸", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: true}, 
-      { userTitle: "인싸....?", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: false},
-      { userTitle: "인싸중에인싸", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: false},
-      { userTitle: "산길인맥왕", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: false},
-      { userTitle: "이구역의연예인", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: false}, 
-      { userTitle: "예비 찰칵러", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: true},
-      { userTitle: "셰르파", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: true},
-      { userTitle: "내가~~!! 등!!신!!!", userTitleImgUrl: "https://user-images.githubusercontent.com/91959791/166439276-e09b9d5c-5a85-461d-8204-1667d68c271e.png", have: false},
-    ];
-    dispatch(myTitle(userTitleList));
-    return;
 
     api
       .myTitle()
@@ -239,6 +209,10 @@ export default handleActions(
     [CHANGE_INFO]: (state, action) => produce(state, (draft) => {
       draft.userInfo = action.payload.userInfo;
     }),
+    [NAMECHECK]: (state, action) => produce(state, (draft) => {
+      console.log(action.payload);
+      draft.nameCheck = action.payload.check;
+    }), 
     
   },
   initialState

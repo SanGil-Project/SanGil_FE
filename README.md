@@ -90,6 +90,12 @@
 - 모임 페이지 api 연결 완료 (게시물 수정, 삭제 제외)
 - 검색 페이지 api 연결 완료 (페이징 처리 필요)
 
+# 05 11 작업
+
+- 로그인 체크 api 수정
+- userInfo의 username -> nickname 변경
+- 마이페이지 titleList 불러오기, title 변경 , 닉네임 중복체크, 닉네임 변경 api 연결 완료
+
 # trouble shooting
 
 - 0428

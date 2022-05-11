@@ -19,6 +19,12 @@ const instance = axios.create({
 // });
 
 export const api = {
+  // user.js - social login
+  kakaoLogin: (code) => instance.get(`/user/kakao/callback?code=${code}`),
+  naverLogin: (code, state) =>
+    instance.get(`/user/naver/callback?code=${code}&state=${state}`),
+  googleLogin: (code) => instance.get(`/user/google/callback?code=${code}`),
+
   // user.js
   signUp: (userInfo) =>
     instance.post("/user/signup", userInfo, {
@@ -35,28 +41,16 @@ export const api = {
         Authorization: token,
       },
     }),
-  nameCheck: (username) => 
-    instance.post("/api/mypages/usernameCheck", {
-      username : username,
-    }),
-  changeName: (username) =>
-    instance.put("/api/mypages/profilename", {
-      username : username,
-    }),
-  changeTitle: (userTitle) =>
-    instance.put("/api/mypages/userTitle", {
-      userTitle : userTitle,
-    }),
-  // - social login
-  kakaoLogin: (code) => instance.get(`/user/kakao/callback?code=${code}`),
-  naverLogin: (code, state) =>
-    instance.get(`/user/naver/callback?code=${code}&state=${state}`),
-  googleLogin: (code) => instance.get(`/user/google/callback?code=${code}`),
-
-
+  nameCheck: (username) => instance.post("/api/mypages/usernameCheck", {
+    nickname : username,
+  }),
+  changeName: (username) => instance.put("/api/mypages/profilename", {
+    nickname : username,
+  }),
   myTracking: () => instance.get("/api/mypages/tracking"),
   myTitle: () => instance.get("/api/mypages/userTitle"),
-  changeTitle: () => instance.put("/api/mypages/userTitle", {
+  changeTitle: (userTitle) => instance.put("/api/mypages/userTitle", {
+    userTitle : userTitle,
   }),
 
   // mountain.js
@@ -65,6 +59,7 @@ export const api = {
   
 
   // party.js
+  getMyParty: () => instance.get("/api/plan"),
   getPartyList: (pageNum) => instance.get(`/api/parties/${pageNum}`),
   getOneParty: (partyId) => instance.get(`/api/party/${partyId}`),
   addParty: (party) => instance.post("/api/party/write", {

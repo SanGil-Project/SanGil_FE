@@ -3,6 +3,7 @@ import produce from "immer";
 import { api } from "../../shared/api";
 
 const SET_PARTY = "SET_PARTY";
+const GET_MY_PARTY = "GET_MY_PARTY";
 const ADD_PARTY = "ADD_PARTY";
 const EDIT_PARTY = "EDIT_PARTY";
 const ATTEND_PARTY = "ATTEND_PARTY";
@@ -10,6 +11,7 @@ const CANCEL_PARTY = "CANCEL_PARTY";
 const DELETE_PARTY = "DELETE_PARTY";
 
 const setParty = createAction(SET_PARTY, (partyList) => ({ partyList }));
+const getMyParty = createAction(GET_MY_PARTY, (partyList) => ({ partyList }));
 const addParty = createAction(ADD_PARTY, (party) => ({ party }));
 const editParty = createAction(EDIT_PARTY, (partyId, party) => ({ partyId, party }));
 const attendParty = createAction(ATTEND_PARTY, (user) => ({ user }));
@@ -41,6 +43,22 @@ const initialState = {
     //   },]
     // },
   ]
+};
+
+const getMyPartyDB = () => {
+  return function (dispatch, getState) {
+
+    // return;
+    api
+      .getMyParty()
+      .then((res) => {
+        console.log("(getMyParty) 성공 데이터 확인 ::", res);
+        // dispatch(setParty(res.data));
+      })
+      .catch((err) => {
+        console.log("(getMyParty) 실패 ::", err);
+      });
+  };
 };
 
 const getPartyDB = () => {
@@ -158,6 +176,10 @@ const deletePartyDB = (partyId = null) => {
 
 export default handleActions(
   {
+    [GET_MY_PARTY]: (state, action) => produce(state, (draft) => {
+      console.log(action.payload);
+      draft.myPartyList = action.payload.partyList;
+    }),
     [SET_PARTY]: (state, action) => produce(state, (draft) => {
       console.log(action.payload.partyList);
       draft.partyList = action.payload.partyList.partyList;
@@ -194,6 +216,7 @@ const actionCreators = {
   editPartyDB,
   attendPartyDB,
   deletePartyDB,
+  getMyPartyDB,
 };
 
 export { actionCreators };
