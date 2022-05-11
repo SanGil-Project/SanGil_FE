@@ -8,14 +8,20 @@ import {
   Menubar,
 } from "../components/component";
 import { Desktop, Mobile } from "../shared/responsive";
+import { actionCreators as mountAction } from "../redux/modules/mountain";
 import _ from "lodash";
 import { useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
 
 const SearchDetail = () => {
+  const { mountainId } = useParams();
+  const dispatch = useDispatch();
+  const menuColor = [false, false, false, true, false]; // 메뉴바 색
   const { name } = useParams();
   const [comment, setComment] = React.useState();
   const [selected, setSelected] = React.useState(false);
-
+  const data = useSelector((state) => state.mountain.mountainData);
+  console.log(data);
   const show = (i) => {
     setSelected(i);
   };
@@ -27,6 +33,10 @@ const SearchDetail = () => {
     [comment]
   );
   const arr = [0, 1, 2, 3];
+
+  // React.useEffect(() => {
+  //   dispatch(mountAction.getDetailDB(mountainId, 1));
+  // }, []);
 
   return (
     <>
@@ -155,19 +165,14 @@ const SearchDetail = () => {
       </Mobile>
 
       <Desktop>
-        <Grid border="1px solid black" width="414px" margin="0 auto">
+        <Grid width="414px" margin="0 auto">
           <Header />
-          <Grid
-            margin="56px 0 0 0"
-            padding="7px"
-            overflowY="scroll"
-            height="1080px"
-          >
+          <Grid padding="100px 0 0 0" overflowY="scroll" height="1080px">
             <Grid
               border="1px solid red"
               maxWidth="386px"
               height="48px"
-              margin="40px auto 0 auto"
+              margin="0 auto"
               isFlex
             >
               <Text bold="400" size="30px" lineHeight="48px" width="200px">
@@ -250,8 +255,9 @@ const SearchDetail = () => {
                   isFlex
                 >
                   <Input
+                    gridWidth="230px"
                     border="none"
-                    margin="1px 0 1px 12px"
+                    margin="1px 0"
                     height="46px"
                     placeholder="댓글 작성"
                     _onChange={cmt}
@@ -277,7 +283,7 @@ const SearchDetail = () => {
               return <Comment key={idx} />;
             })}
           </Grid>
-          <Menubar />
+          <Menubar menuColor={menuColor} />
         </Grid>
       </Desktop>
     </>

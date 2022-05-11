@@ -38,9 +38,9 @@ function App() {
           <Route path="/mypage" element={<Mypage />} />
           <Route path="/party" exact element={<Party />} />
           <Route path="/partywrite" exact element={<PartyWrite />} />
-          <Route path="/partydetail/:partyid" element={<PartyDetail />} />
+          <Route path="/partydetail/:partyId" element={<PartyDetail />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/searchdetail/:name" element={<SearchDetail />} />
+          <Route path="/searchdetail/:mountainId" element={<SearchDetail />} />
           <Route path="/searchmountain" element={<BeforeTracking />} />
           <Route path="/tracker/:name/:mountainId" element={<Tracker />} />
           <Route path="/endtracking/:name" element={<EndTracking />} />

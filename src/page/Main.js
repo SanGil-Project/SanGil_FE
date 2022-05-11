@@ -33,6 +33,10 @@ const Main = (props) => {
     dispatch(partyDB());
   }, []);
 
+  const goParty = (el) => {
+    navigate(`/partydetail/${el?.partyId}`);
+  };
+
   return (
     <>
       <Mobile>
@@ -292,6 +296,9 @@ const Main = (props) => {
                     height="85px"
                     margin="0 auto 14px auto"
                     padding="10px"
+                    _onClick={() => {
+                      goParty(cur);
+                    }}
                   >
                     <Grid height="20px" margin="0" flex="flex">
                       <Icon type="partyMountain" width="14px" />
@@ -335,7 +342,7 @@ const Main = (props) => {
 
       {/* 데스크탑 */}
       <Desktop>
-        <Grid border="1px solid black" width="414px" margin="0 auto">
+        <Grid width="414px" margin="0 auto">
           <Header />
           <Grid padding="7px" overflowY="scroll" height="1080px">
             <Grid height="453px" margin="90px auto 75px auto">
@@ -398,17 +405,17 @@ const Main = (props) => {
               </Grid>
 
               <HorizontalScroll>
-                {mountain?.map((cur, idx) => (
+                {mountain?.map((el, idx) => (
                   <div key={idx}>
                     <Card
                       width="194px"
                       height="120px"
                       margin="34px 7px 8px 7px"
                       _onClick={() =>
-                        navigate(`/searchdetail/${mountain[idx].mountainName}`)
+                        navigate(`/searchdetail/${el.mountainId}`)
                       }
                       hover
-                      bgImg={mountain[idx].mountainImgUrl}
+                      bgImg={el.mountainImgUrl}
                       bgSize="cover"
                     >
                       <Icon width="34px" height="29px" type="rank" />
@@ -421,7 +428,7 @@ const Main = (props) => {
                         color="#fff"
                         align="center"
                       >
-                        {mountain[idx].mountainId}
+                        {el.mountainId}
                       </Text>
                       <Icon
                         type="like"
@@ -436,10 +443,10 @@ const Main = (props) => {
                       bold="600"
                       size="1.4rem"
                     >
-                      {mountain[idx].mountainAddress}
+                      {el.mountainAddress}
                     </Text>
                     <Text margin="0 0 0 7px" bold="200" size="1.4rem">
-                      {mountain[idx].mountainName}
+                      {el.mountainName}
                     </Text>
                   </div>
                 ))}
@@ -462,15 +469,13 @@ const Main = (props) => {
                 👀 주변 산길
               </Text>
               <HorizontalScroll>
-                {mainState.around?.nearbyMountainDtos.map((cur, idx) => (
+                {mainState.around?.nearbyMountainDtos.map((el, idx) => (
                   <div key={idx}>
                     <Card
                       width="194px"
                       height="120px"
                       margin="10px 7px 8px 7px"
-                      bgImg={
-                        mainState.around?.nearbyMountainDtos[idx].mountainImgUrl
-                      }
+                      bgImg={el.mountainImgUrl}
                       bgSize="cover"
                     >
                       <Icon
@@ -481,7 +486,7 @@ const Main = (props) => {
                       />
                     </Card>
                     <Text margin="8px 0 0 7px" bold="600" size="1.4rem">
-                      {mainState.around?.nearbyMountainDtos[idx].mountainName}
+                      {el.mountainName}
                     </Text>
 
                     <Grid
@@ -491,11 +496,10 @@ const Main = (props) => {
                       margin="8px 7px 0 7px"
                     >
                       <Text bold="300" size="1.2rem">
-                        평가 없음{" "}
-                        {mainState.around?.nearbyMountainDtos[idx].starAvr}
+                        평가 없음 {el.starAvr}
                       </Text>
                       <Text bold="400" size="1.2px">
-                        {mainState.around?.nearbyMountainDtos[idx].distance}km
+                        {el.distance}km
                       </Text>
                     </Grid>
                   </div>
@@ -532,7 +536,7 @@ const Main = (props) => {
                 </Grid>
               </Grid>
               <HorizontalScroll>
-                {mainState.feedList?.feedList.map((cur, idx) => (
+                {mainState.feedList?.feedList.map((el, idx) => (
                   <div key={idx} style={{ margin: "10px 0 10px 0" }}>
                     <Card width="150px" height="150px" margin="0 7px 0 7px">
                       <Image
@@ -540,7 +544,7 @@ const Main = (props) => {
                         height="150px"
                         borderRadius="10px"
                         border="none"
-                        src={mainState.feedList?.feedList[idx].feedImgUrl}
+                        src={el.feedImgUrl}
                       />
                     </Card>
                   </div>
@@ -575,7 +579,7 @@ const Main = (props) => {
                   <Icon type="arrow" width="5px" height="8px" />
                 </Grid>
               </Grid>
-              {mainState.parties?.parties.map((cur, idx) => {
+              {mainState.parties?.parties.map((el, idx) => {
                 return (
                   <Card
                     key={idx}
@@ -584,24 +588,27 @@ const Main = (props) => {
                     height="85px"
                     padding="10px"
                     margin="0 auto 14px auto"
+                    hover
+                    _onClick={() => {
+                      goParty(el);
+                    }}
                   >
                     <Grid height="20px" margin="0" flex="flex">
                       <Icon type="partyMountain" width="14px" />
                       <Text size="14px" margin="0 0 0 10px">
-                        {mainState.parties?.parties[idx].title}
+                        {el.title}
                       </Text>
                     </Grid>
                     <Grid height="20px" margin="0" flex="flex">
                       <Icon type="partyDate" width="14px" />
                       <Text size="14px" margin="0 0 0 10px">
-                        {mainState.parties?.parties[idx].partyDate}
+                        {el.partyDate}
                       </Text>
                     </Grid>
                     <Grid height="20px" margin="0" flex="flex">
                       <Icon type="partyPeople" width="14px" />
                       <Text size="14px" margin="0 0 0 10px">
-                        {mainState.parties?.parties[idx].curPeople}/
-                        {mainState.parties?.parties[idx].maxPeople}
+                        {el.curPeople}/{el.maxPeople}
                       </Text>
                     </Grid>
                   </Card>
