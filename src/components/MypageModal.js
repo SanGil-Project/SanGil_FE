@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import styled from "styled-components";
+import _ from "lodash";
 
 import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
@@ -9,8 +10,10 @@ import { Grid, Text, Icon, Image, Button, Input } from '../elements/element';
 
 const MypageModal = (props) => {
   const dispatch = useDispatch();
-  const userInfo = useSelector((state) => state?.user?.userInfo);
+  const user = useSelector((state) => state?.user);
   const titleList = useSelector((state) => state?.user?.titleList);
+  const userInfo = user?.userInfo;
+  const checkData = user?.nameCheck;
 
   React.useEffect(() => {
     dispatch(userActions.myTitleDB());
@@ -21,28 +24,53 @@ const MypageModal = (props) => {
   const noTitleList = titleList?.filter((p) => p.have === false);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [nameCount, setNameCount] = useState(userInfo?.username?.length);
-  const [username, setUsername] = useState(userInfo?.username);
+  const [nameCount, setNameCount] = useState(userInfo?.nickname?.length);
+  const [nickname, setNickname] = useState(userInfo?.nickname);
   const [_userTitle, set_userTitle] = useState(userInfo?.userTitle);
 
-  const changeNickname = (e) => {
+  const changeNickname = _.debounce((e) => {
     // 현 글자수 보여주기
     setNameCount(e.target.value.length);
     //  글자수 10자로 제한
     if (e.target.value.length > 10) {
       e.target.value = e.target.value.substr(0, 10);
-      setUsername(e.target.value.substr(0, 10));
+      setNickname(e.target.value.substr(0, 10));
       // 10이상은 10으로 고정 (11 안나오게)
       setNameCount(10);
     }
-    setUsername(e.target.value)
+    setNickname(e.target.value)
+  }, 1000);
+
+  const checkColor = checkData ? "#61D161" : "#6F6F6F";
+  let checkType = true;
+
+  if (!checkData) {
+    if (userInfo?.nickname === nickname || !nickname) {
+      checkType = true;
+    } else {
+      checkType = false;
+    }
+  } else {
+    checkType = true;
   }
 
-  const nameCheck = () => {
-    dispatch(userActions.nameCheckDB(username));
-  }
+  React.useEffect(() => {
+    if (nickname) {
+      dispatch(userActions.nameCheckDB(nickname));
+    }
+  }, [nickname]);
+
+  // const selectMt = (data) => {
+  //   props.selectMnt(data);
+  //   onClose(false);
+  // }
+
   const changeName = () => {
-    dispatch(userActions.changeNameDB(username));
+    if (!checkData) {
+      checkType ? window.alert("변경사항이 없습니다") : window.alert("중복된 닉네임입니다");
+      return; 
+    }
+    dispatch(userActions.changeNameDB(nickname));
   }
 
   const selectTitle = (curTitle) => {
@@ -52,8 +80,7 @@ const MypageModal = (props) => {
     dispatch(userActions.changeTitleDB(curTitle));
 
   }
-  console.log(_userTitle)
-
+  
   return (
     <React.Fragment>
       <Grid>
@@ -65,12 +92,12 @@ const MypageModal = (props) => {
               margin="0 10px 0 11px"
               src={img}/>
             <Editbtn>
-              <Icon type="profileEdit" width="21px" height="21px" margin="0 auto" _onClick={()=> {setModalIsOpen(true); setNameCount(userInfo?.username?.length);}}/>
+              <Icon type="profileEdit" width="21px" height="21px" margin="0 auto" _onClick={()=> {setModalIsOpen(true); setNameCount(userInfo?.nickname?.length);}}/>
             </Editbtn>
           </Mainprofile>
           <Grid>
             <Text margin="0" size="14px">{userInfo?.userTitle}</Text>
-            <Text margin="8px 0 13px" size="20px" bold="600">{userInfo?.username}</Text>
+            <Text margin="8px 0 13px" size="20px" bold="600">{userInfo?.nickname}</Text>
           </Grid>
         </Grid>
         {/* <button onClick={()=> setModalIsOpen(true)}>프로필 수정</button> */}
@@ -108,7 +135,9 @@ const MypageModal = (props) => {
           onRequestClose={() => setModalIsOpen(false)}>
             <Grid>
               <Grid isFlex height="auto">
-                <Icon type="back" width="24px" height="25px" margin="0 auto" color="white" _onClick={()=> {setModalIsOpen(false); setNameCount(userInfo.username.length);}}/>
+                <Icon 
+                  type="back" width="24px" height="25px" margin="0 auto" color="white"
+                  _onClick={()=> {setModalIsOpen(false); setNameCount(userInfo?.nickname.length);}}/>
                 {/* <Button height="auto" width="auto" color="#fff" border="none" _onClick={()=> {setModalIsOpen(false); setNameCount(userInfo.username.length);}}>확인</Button> */}
               </Grid>
               <Grid flexColumn height="auto" padding="10px 15px 0">
@@ -122,28 +151,31 @@ const MypageModal = (props) => {
                 </UserProfile>
                 <Grid flexRow padding="10px 0 45px">
                   <UserName>
-                    <Input width="140px" padding="0" border="none" bg="transparent" defaultValue={userInfo?.username} _onChange={changeNickname}/>
+                    <Input width="140px" padding="0" border="none" bg="transparent" defaultValue={userInfo?.nickname} _onChange={changeNickname}/>
                     <Text margin="0 10px 0 0" bold="500" size="10px" color="#c4c4c4"> {nameCount}/10</Text>
                   </UserName>
-                  <Icon type="checkBtn" width="24px" height="24px" margin="0 auto" check="#6F6F6F" _onClick={nameCheck}/>
-                  <Icon type="checkBtn" width="24px" height="24px" margin="0 auto" check="#6F6F6F" _onClick={changeName}/>
-                  {/* <path d="M18 8L9.99999 16L6 12" stroke="#61D161" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> */}
+                  {/* <Icon type="checkBtn" width="24px" height="24px" margin="0 auto" check="#6F6F6F" _onClick={nameCheck}/> */}
+                  {checkType ? 
+                  <Icon type="checkBtn" width="24px" height="24px" margin="0 auto" check="#6F6F6F" checkColor={checkColor} _onClick={changeName}/> : 
+                  <Icon type="errorBtn" width="24px" height="24px" margin="0 auto" _onClick={changeName}/>}
                 </Grid>
               </Grid>
               <Grid height="auto" padding="0 0 20px 0">
                 <TitleList>
                   {userTitleList?.map((t, idx) => {
                     const pick = (userInfo?.userTitle === t.userTitle) ? true : false;
+                    const img = (t.userTitleImgUrl === "없음") ? "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png" : t.userTitleImgUrl;
                     return (
-                      <Grid _onClick={()=>{selectTitle(t.userTitle)}} width="auto">
-                        <TitleItem key={idx} title={t.userTitle} img={t.userTitleImgUrl} pick={pick} done/>
+                      <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} width="auto">
+                        <TitleItem key={idx} title={t.userTitle} img={img} pick={pick} done/>
                       </Grid> 
                     );
                     
                   })}
                   {noTitleList?.map((t, idx) => {
                     return (
-                      <Grid _onClick={()=>{selectTitle(t.userTitle)}} width="auto">
+                      <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} width="auto">
+                      {/* <Grid key={idx} width="auto"> */}
                         <TitleItem key={idx} title={t.userTitle} img={t.userTitleImgUrl}/>
                       </Grid>
                     );
