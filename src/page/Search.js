@@ -232,7 +232,7 @@ const Search = (props) => {
                         height="auto"
                       >
                         <Text margin="0" size="18px" nowrap>
-                          {d.mountainId}. {d.mountainName}
+                          {idx + 1}. {d.mountain}
                         </Text>
                       </Grid>
                       <Text size="16px" bold="400" margin="0 20px">

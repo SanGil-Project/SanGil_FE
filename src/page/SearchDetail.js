@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { Grid, Text, Image, Input, Button } from "../elements/element";
 import {
   Header,
@@ -41,7 +42,7 @@ const SearchDetail = () => {
   return (
     <>
       <Mobile>
-        <Grid border="1px solid black" width="100vw" margin="0 auto">
+        <DetailContainer>
           <Header />
           <Grid
             margin="56px 0 0 0"
@@ -160,12 +161,17 @@ const SearchDetail = () => {
               return <Comment key={idx} />;
             })}
           </Grid>
-          <Menubar />
-        </Grid>
+          <MenubarContainer>
+            <Grid height="88px" maxWidth="500px" margin="auto">
+              <Menubar menuColor={menuColor} />
+            </Grid>
+          </MenubarContainer>
+        </DetailContainer>
       </Mobile>
 
       <Desktop>
-        <Grid width="414px" margin="0 auto">
+
+      <DetailContainer>
           <Header />
           <Grid padding="100px 0 0 0" overflowY="scroll" height="1080px">
             <Grid
@@ -283,11 +289,31 @@ const SearchDetail = () => {
               return <Comment key={idx} />;
             })}
           </Grid>
-          <Menubar menuColor={menuColor} />
-        </Grid>
+          <MenubarContainer>
+            <Grid height="88px" maxWidth="500px" margin="auto">
+              <Menubar menuColor={menuColor} />
+            </Grid>
+          </MenubarContainer>
+
+        </DetailContainer>
       </Desktop>
     </>
   );
 };
 
+const DetailContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  // min-width: 414px;
+  max-width: 500px;
+  margin: auto;
+`;
+
+const MenubarContainer = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+`;
 export default SearchDetail;

@@ -67,7 +67,7 @@ const Mypage = (props) => {
               <Text bold="600" size="20px" margin="0 0 24px" align="left">
                 🚩 정복한 산길
               </Text>
-              <FullMap data={myTrackList} />{" "}
+              <FullMap zoomable={false} data={myTrackList} />{" "}
               {/* 지도에 마커 찍어야하는 정보 객체 전달 : 여기서 보낼지, FullMap에서 보낼지.. */}
             </Grid>
             <Grid padding="35px 14px 70px" height="auto">
@@ -87,7 +87,7 @@ const Mypage = (props) => {
                   ❤️ 정복해야할 산길
                 </Text>
                 <HorizontalScroll>
-                  {num.map((cur, idx) => (
+                  {myBookmarkList?.map((cur, idx) => (
                     <div key={idx}>
                       <Card
                         width="194px"
@@ -171,7 +171,7 @@ const Mypage = (props) => {
                   ❤️ 정복해야할 산길
                 </Text>
                 <HorizontalScroll>
-                  {num.map((cur, idx) => (
+                  {myBookmarkList?.map((cur, idx) => (
                     <div key={idx}>
                       <Card
                         width="194px"
@@ -186,7 +186,7 @@ const Mypage = (props) => {
                         />
                       </Card>
                       <Text margin="8px 0 0 7px" bold="600" size="1.4rem">
-                        어디어디 산의 어디 코스
+                        {cur.mountainName}({cur.mountainAddress})
                       </Text>
 
                       <Grid
@@ -196,10 +196,10 @@ const Mypage = (props) => {
                         margin="8px 7px 0 7px"
                       >
                         <Text bold="300" size="1.2rem">
-                          매우 좋음 5.0
+                          평균 ⭐ {cur.starAvr}
                         </Text>
                         <Text bold="400" size="1.2px">
-                          100.800km
+                          {cur.distance}
                         </Text>
                       </Grid>
                     </div>

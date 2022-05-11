@@ -302,7 +302,7 @@ const CreatPartyBtn = styled.div`
   
   // // position: fixed;
   position: absolute;
-  // right: 110px;
+  left: calc(50% + 130px);
   bottom: 110px;
   // right: 5%;
   // z-index: 9;
