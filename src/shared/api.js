@@ -49,6 +49,7 @@ export const api = {
   }),
   myTracking: () => instance.get("/api/mypages/tracking"),
   myTitle: () => instance.get("/api/mypages/userTitle"),
+  myBookmark: (lat, lng) => instance.get(`/api/mypages/bookmark?lat=${lat}&lng=${lng}`),
   changeTitle: (userTitle) => instance.put("/api/mypages/userTitle", {
     userTitle : userTitle,
   }),
