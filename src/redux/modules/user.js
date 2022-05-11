@@ -7,6 +7,7 @@ const LOGOUT = "LOGOUT";
 const ISLOGIN = "ISLOGIN";
 const MY_TRACK = "MY_TRACK"
 const MY_TITLE = "MY_TITLE"
+const MY_BOOKMARK = "MY_BOOKMARK"
 const NAMECHECK = "NAMECHECK"
 const CHANGE_INFO = "CHANGE_INFO"
 
@@ -15,6 +16,7 @@ const logOut = createAction(LOGOUT, (userInfo) => ({ userInfo }));
 const isLogin = createAction(ISLOGIN, (token) => ({ token }));
 const myTracking = createAction(MY_TRACK, (trackList) => ({ trackList }));
 const myTitle = createAction(MY_TITLE, (titleList) => ({ titleList }));
+const myBookmark = createAction(MY_BOOKMARK, (mountList) => ({ mountList }));
 const nameCheck = createAction(NAMECHECK, (check) => ({ check }));
 const changeInfo = createAction(CHANGE_INFO, (userInfo) => ({ userInfo }));
 
@@ -173,6 +175,20 @@ const myTrackingDB = () => {
   };
 };
 
+const myBookmarkDB = (lat, lng) => {
+  return function (dispatch, getState) {
+
+    api
+      .myBookmark(lat, lng)
+      .then((res) => {
+        console.log("(myBookmark) 성공 후 데이터 ::", res);
+        dispatch(myBookmark(res.data));
+      })
+      .catch((err) => {
+        console.log("(myBookmark) 실패 ::", err);
+      });
+  };
+};
 
 const myTitleDB = () => {
   return function (dispatch, getState) {
@@ -204,6 +220,9 @@ export default handleActions(
     [MY_TITLE]: (state, action) => produce(state, (draft) => {
       draft.titleList = action.payload.titleList;
     }),
+    [MY_BOOKMARK]: (state, action) => produce(state, (draft) => {
+      draft.mountList = action.payload.mountList;
+    }),
     [CHANGE_INFO]: (state, action) => produce(state, (draft) => {
       draft.userInfo = action.payload.userInfo;
     }),
@@ -222,6 +241,7 @@ export const actionCreators = {
   googleLoginDB,
   myTracking,
   myTitle,
+  myBookmark,
   nameCheck,
   changeInfo,
   myTrackingDB,
@@ -229,4 +249,5 @@ export const actionCreators = {
   nameCheckDB,
   changeNameDB,
   changeTitleDB,
+  myBookmarkDB,
 };
