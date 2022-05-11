@@ -17,7 +17,7 @@ export const aroundDB = (lat, lng) => {
   return function (dispatch, getState) {
     console.log(lat, lng);
     axios
-      .get(`http://52.78.68.95/api/main/nearby/1?lat=37.45988&lng=126.9519`)
+      .get(`http://3.35.49.228/api/main/nearby/1?lat=${lat}&lng=${lng}`)
       .then((res) => {
         dispatch(getAround(res.data));
       })
@@ -30,7 +30,7 @@ export const aroundDB = (lat, lng) => {
 export const feedDB = (token) => {
   return function (dispatch, getState) {
     axios
-      .get("http://52.78.68.95/api/main/feeds/1")
+      .get("http://3.35.49.228/api/main/feeds/1")
       .then((res) => {
         dispatch(getFeed(res.data));
       })
@@ -43,7 +43,7 @@ export const feedDB = (token) => {
 export const mountainsDB = () => {
   return function (dispatch, getState) {
     axios
-      .get("http://52.78.68.95/api/main/mountains")
+      .get("http://3.35.49.228/api/main/mountains")
       .then((res) => {
         dispatch(getBest(res.data));
       })
@@ -56,7 +56,7 @@ export const mountainsDB = () => {
 export const partyDB = () => {
   return function (dispatch, getState) {
     axios
-      .get("http://52.78.68.95/api/main/parties")
+      .get("http://3.35.49.228/api/main/parties")
       .then((res) => {
         dispatch(getParty(res.data));
       })

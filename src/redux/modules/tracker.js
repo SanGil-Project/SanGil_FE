@@ -6,10 +6,12 @@ const SET_PATH = "SET_PATH";
 const GETSEARCH = "GETSEARCH";
 const DISTANCE = "DISTANCE";
 const ENDCLIMB = "ENDCLIMB";
+const DELETE = "DELETE";
 
 const setPath = createAction(SET_PATH, (path) => ({ path }));
 const getSearch = createAction(GETSEARCH, (data) => ({ data }));
 const distance = createAction(DISTANCE, (distance) => ({ distance }));
+const endClimb = createAction(ENDCLIMB, (comment) => ({ comment }));
 
 export const startDB = (mountainId, setCompletedId) => {
   return function (dispatch, getState) {
@@ -56,7 +58,7 @@ export const setPathDB = (completedId, loca) => {
   return function (dispatch, getState) {
     axios
       .post(
-        `http://3.35.49.228/api/mountain/tracking/${completedId}`,
+        `http://3.35.49.228/api/tracking/mountain/${completedId}`,
         { lat: loca.lat, lng: loca.lng },
         {
           headers: {
@@ -73,12 +75,45 @@ export const setPathDB = (completedId, loca) => {
   };
 };
 
-export const endClimb = (completedId, data) => {
+export const endClimbDB = (completedId, data) => {
   return function (dispatch, getState) {
-    axios.put(`http://3.35.49.228/api/mountain/tracking/${completedId}`, {
-      totalDistance: "",
-      totalTime: "",
-    });
+    axios
+      .put(
+        `http://3.35.49.228/api/tracking/${completedId}`,
+        {
+          totalDistance: data.totalDistance,
+          totalTime: data.totalTime,
+        },
+        {
+          headers: {
+            Authorization: sessionStorage.getItem("token"),
+          },
+        }
+      )
+      .then((res) => {
+        dispatch(endClimb(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+export const deleteDB = (completedId) => {
+  console.log(completedId);
+  return function (distpatch, getState) {
+    axios
+      .delete(`http://3.35.49.228/api/tracking/${completedId}`, {
+        headers: {
+          Authorization: sessionStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 };
 
@@ -98,7 +133,11 @@ export default handleActions(
       }),
     [DISTANCE]: (state, action) =>
       produce(state, (draft) => {
-        draft.distance = { ...draft.distance, ...action.payload.distance };
+        draft.distance = action.payload.distance;
+      }),
+    [ENDCLIMB]: (state, action) =>
+      produce(state, (draft) => {
+        draft.comment = action.payload.comment;
       }),
   },
   initialState

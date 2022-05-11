@@ -3,9 +3,11 @@ import { Grid, Text, Image, Button } from "../elements/element";
 import { Header } from "../components/component";
 import { useLocation, useNavigate } from "react-router";
 import { useParams } from "react-router";
+import { useSelector } from "react-redux";
 
 const EndTracking = () => {
   const { name } = useParams();
+  const commentCheck = useSelector((state) => state.tracker.comment);
   const navigateState = useLocation().state;
   const navigate = useNavigate();
   const nextTime = () => {
@@ -14,6 +16,9 @@ const EndTracking = () => {
 
   const goReview = () => {
     navigate(`/searchdetail/${name}`);
+  };
+  const goFeed = () => {
+    navigate(`/feed`, { replace: true });
   };
 
   return (
@@ -77,18 +82,32 @@ const EndTracking = () => {
           >
             다음에요
           </Button>
-          <Button
-            border="none"
-            type="div"
-            width="48.9%"
-            height="42px"
-            color="#fff"
-            bgColor="black"
-            radius="30px"
-            _onClick={goReview}
-          >
-            리뷰 남기기
-          </Button>
+          {!commentCheck ? (
+            <Button
+              border="none"
+              type="div"
+              width="48.9%"
+              height="42px"
+              color="#fff"
+              bgColor="black"
+              radius="30px"
+              _onClick={goReview}
+            >
+              리뷰 남기기
+            </Button>
+          ) : (
+            <Button
+              border="none"
+              type="div"
+              width="48.9%"
+              height="42px"
+              color="#fff"
+              bgColor="black"
+              radius="30px"
+            >
+              인증사진 남기기
+            </Button>
+          )}
         </Grid>
       </Grid>
     </Grid>
