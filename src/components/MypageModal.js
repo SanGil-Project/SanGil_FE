@@ -20,7 +20,7 @@ const MypageModal = (props) => {
     dispatch(userActions.myTitleDB());
   }, []);
 
-  const img = (userInfo?.userImageUrl !== "없음") ? userInfo?.userImageUrl : "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png";
+  const img = (userInfo?.userImageUrl !== "없음") ? userInfo?.userImageUrl : "https://user-images.githubusercontent.com/91959791/168119302-948f0dcf-8165-47af-8b6b-2f90f74aca06.png";
   const userTitleList = titleList?.filter((p) => p.have === true);
   const noTitleList = titleList?.filter((p) => p.have === false);
 
@@ -58,7 +58,7 @@ const MypageModal = (props) => {
 
   const checkColor = checkData ? "#61D161" : "#6F6F6F";
   let checkType = true;
-  const defalutsrc = "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png";
+  const defalutsrc = "https://user-images.githubusercontent.com/91959791/168119302-948f0dcf-8165-47af-8b6b-2f90f74aca06.png";
 
   if (!checkData) {
     if (userInfo?.nickname === nickname || !nickname) {
@@ -113,8 +113,8 @@ const MypageModal = (props) => {
             </Editbtn>
           </Mainprofile>
           <Grid>
-            <Text margin="0" size="14px">{userInfo?.userTitle}</Text>
-            <Text margin="8px 0 13px" size="20px" bold="600">{userInfo?.nickname}</Text>
+            <Text margin="0" size="14px" bold="400">{userInfo?.userTitle}</Text>
+            <Text margin="8px 0 13px" size="20px" bold="600" color="#43CA3B">{userInfo?.nickname}</Text>
           </Grid>
         </Grid>
         <Modal isOpen={modalIsOpen} 
@@ -182,7 +182,7 @@ const MypageModal = (props) => {
                 <TitleList>
                   {userTitleList?.map((t, idx) => {
                     const pick = (userInfo?.userTitle === t.userTitle) ? true : false;
-                    const img = (t.userTitleImgUrl === "없음") ? "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png" : t.userTitleImgUrl;
+                    const img = (t.userTitleImgUrl === "없음") ? "https://user-images.githubusercontent.com/91959791/168119302-948f0dcf-8165-47af-8b6b-2f90f74aca06.png" : t.userTitleImgUrl;
                     return (
                       <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} width="auto">
                         <TitleItem key={idx} title={t.userTitle} img={img} pick={pick} done/>

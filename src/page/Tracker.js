@@ -43,7 +43,7 @@ const Tracker = (props) => {
   };
 
   const path = useRef();
-  const polylinePath = useSelector((state) => state.polyline?.polylinePath);
+  const polylinePath = useSelector((state) => state.tracker.polylinePath.polylinePath);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -112,7 +112,7 @@ const Tracker = (props) => {
         state: { distance: distance, time: endTime },
       });
       setTime({ ...time, s: 0, m: 0, h: 0, distance: 0, isStart: false });
-    } else if (time.h === 0 && time.m < 10) {
+    } else if (time.h === 0 && time.m < 3) {
       if (window.confirm("10분 미만의 등산은 기록되지 않습니다") === true) {
         dispatch(deleteDB(completedId));
         setTime({ ...time, s: 0, m: 0, h: 0, distance: 0, isStart: false });

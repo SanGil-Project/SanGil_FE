@@ -44,21 +44,21 @@ const EndTracking = () => {
         <Grid width="242px" margin="20px 0 0 98px" height="24px" isFlex>
           <Text bold="500">
             <span style={{ fontWeight: "600", fontSize: "25px" }}>
-              {navigateState.distance}
+              {navigateState?.distance}
             </span>
             km
           </Text>
           <Text bold="500">
             <span style={{ fontWeight: "600", fontSize: "25px" }}>
-              {navigateState.time.h}
+              {navigateState?.time.h}
             </span>
             시간{" "}
             <span style={{ fontWeight: "600", fontSize: "25px" }}>
-              {navigateState.time.m}
+              {navigateState?.time.m}
             </span>
             분{" "}
             <span style={{ fontWeight: "600", fontSize: "25px" }}>
-              {navigateState.time.s}
+              {navigateState?.time.s}
             </span>
             초
           </Text>
