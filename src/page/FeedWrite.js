@@ -4,10 +4,12 @@ import { Grid, Text, Image, Icon, Button, Input } from "../elements/element";
 import { Header, Menubar } from "../components/component";
 import { Desktop, Mobile } from "../shared/responsive";
 import _ from "lodash";
-import { feedDB } from "./../redux/modules/feed";
+import { addFeedDB } from "./../redux/modules/feed";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 
 const FeedWrite = () => {
+  const navigate = useNavigate();
   const menuColor = [false, false, true, false, false];
   const dispatch = useDispatch();
   const comment = React.useRef();
@@ -40,11 +42,12 @@ const FeedWrite = () => {
     }
     if (img.comment !== "" && img.uploadImg !== "") {
       dispatch(
-        feedDB({
+        addFeedDB({
           feedContent: comment.current?.value,
           multipartfile: img.uploadImg,
         })
       );
+      navigate("/feed", { replace: true });
     }
   };
 
@@ -64,20 +67,22 @@ const FeedWrite = () => {
               <Text size="2rem" bold="600" lineHeight="25px" margin="0">
                 피드 작성하기
               </Text>
-              <Button
-                border="none"
-                color="white"
-                bold="600"
-                width="50px"
-                height="38px"
-                type="div"
-                radius="12px"
-                bgColor="#43CA3B"
-                fontSize="1.6rem"
-                _onClick={sendData}
-              >
-                완료
-              </Button>
+              {img.preImg !== "" ? (
+                <Button
+                  border="none"
+                  color="white"
+                  bold="600"
+                  width="50px"
+                  height="38px"
+                  type="div"
+                  radius="12px"
+                  bgColor="#43CA3B"
+                  fontSize="1.6rem"
+                  _onClick={sendData}
+                >
+                  완료
+                </Button>
+              ) : null}
             </Grid>
 
             <Grid width="93.23%" height="25px" margin="10px auto 0 auto">
