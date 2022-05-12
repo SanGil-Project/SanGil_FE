@@ -118,14 +118,15 @@ export const deleteDB = (completedId) => {
 };
 
 const initialState = {
-  polylinePath: { distance: {} },
+  polylinePath: { polylinePath: [] },
 };
 
 export default handleActions(
   {
     [SET_PATH]: (state, action) =>
       produce(state, (draft) => {
-        draft.polylinePath.push(action.payload.path);
+        console.log(action.payload.path);
+        draft.polylinePath.polylinePath.push(action.payload.path);
       }),
     [GETSEARCH]: (state, action) =>
       produce(state, (draft) => {

@@ -5,11 +5,11 @@ import { api } from "../../shared/api";
 const LOGIN = "LOGIN";
 const LOGOUT = "LOGOUT";
 const ISLOGIN = "ISLOGIN";
-const MY_TRACK = "MY_TRACK"
-const MY_TITLE = "MY_TITLE"
-const MY_BOOKMARK = "MY_BOOKMARK"
-const NAMECHECK = "NAMECHECK"
-const CHANGE_INFO = "CHANGE_INFO"
+const MY_TRACK = "MY_TRACK";
+const MY_TITLE = "MY_TITLE";
+const MY_BOOKMARK = "MY_BOOKMARK";
+const NAMECHECK = "NAMECHECK";
+const CHANGE_INFO = "CHANGE_INFO";
 
 const logIn = createAction(LOGIN, (userInfo) => ({ userInfo }));
 const logOut = createAction(LOGOUT, (userInfo) => ({ userInfo }));
@@ -19,7 +19,6 @@ const myTitle = createAction(MY_TITLE, (titleList) => ({ titleList }));
 const myBookmark = createAction(MY_BOOKMARK, (mountList) => ({ mountList }));
 const nameCheck = createAction(NAMECHECK, (check) => ({ check }));
 const changeInfo = createAction(CHANGE_INFO, (userInfo) => ({ userInfo }));
-
 
 const initialState = {};
 
@@ -35,8 +34,9 @@ const kakaoLoginDB = (code) => {
         dispatch(isLogInDB(ACCESS_TOKEN));
       })
       .catch((err) => {
-        console.log("카카오로그인 에러", err);
-        window.alert("로그인에 실패하였습니다.");
+        console.log("카카오로그인 에러", err.response);
+        alert("api는 가는 거겠죠?");
+        // window.alert("로그인에 실패하였습니다.");
       });
   };
 };
@@ -106,7 +106,6 @@ const nameCheckDB = (username) => {
 };
 const changeImgDB = (file, image) => {
   return function (dispatch, getState) {
-
     const userdata = getState().user.userInfo;
     const formData = new FormData();
     formData.append("file", file);
@@ -120,7 +119,7 @@ const changeImgDB = (file, image) => {
           userImageUrl: image,
           nickname: userdata.nickname,
           userTitle: userdata.userTitle,
-        }
+        };
         dispatch(changeInfo(_user));
       })
       .catch((err) => {
@@ -131,7 +130,6 @@ const changeImgDB = (file, image) => {
 
 const changeNameDB = (nickname) => {
   return function (dispatch, getState) {
-
     const userdata = getState().user.userInfo;
     api
       .changeName(nickname)
@@ -142,7 +140,7 @@ const changeNameDB = (nickname) => {
           userImageUrl: userdata.userImageUrl,
           nickname: nickname,
           userTitle: userdata.userTitle,
-        }
+        };
         dispatch(changeInfo(_user));
       })
       .catch((err) => {
@@ -153,7 +151,6 @@ const changeNameDB = (nickname) => {
 
 const changeTitleDB = (userTitle) => {
   return function (dispatch, getState) {
-
     const userdata = getState().user.userInfo;
 
     api
@@ -165,7 +162,7 @@ const changeTitleDB = (userTitle) => {
           userImageUrl: userdata.userImageUrl,
           username: userdata.username,
           userTitle: userTitle,
-        }
+        };
         dispatch(changeInfo(_user));
       })
       .catch((err) => {
@@ -176,7 +173,6 @@ const changeTitleDB = (userTitle) => {
 
 const myTrackingDB = () => {
   return function (dispatch, getState) {
-
     api
       .myTracking()
       .then((res) => {
@@ -191,7 +187,6 @@ const myTrackingDB = () => {
 
 const myBookmarkDB = (lat, lng) => {
   return function (dispatch, getState) {
-
     api
       .myBookmark(lat, lng)
       .then((res) => {
@@ -206,7 +201,6 @@ const myBookmarkDB = (lat, lng) => {
 
 const myTitleDB = () => {
   return function (dispatch, getState) {
-
     api
       .myTitle()
       .then((res) => {
@@ -219,8 +213,6 @@ const myTitleDB = () => {
   };
 };
 
-
-
 export default handleActions(
   {
     [ISLOGIN]: (state, action) =>
@@ -228,23 +220,27 @@ export default handleActions(
         draft.userInfo = action.payload.token;
       }),
     [LOGOUT]: (state, action) => produce(state, (draft) => {}),
-    [MY_TRACK]: (state, action) => produce(state, (draft) => {
-      draft.trackList = action.payload.trackList;
-    }),
-    [MY_TITLE]: (state, action) => produce(state, (draft) => {
-      draft.titleList = action.payload.titleList;
-    }),
-    [MY_BOOKMARK]: (state, action) => produce(state, (draft) => {
-      draft.mountList = action.payload.mountList;
-    }),
-    [CHANGE_INFO]: (state, action) => produce(state, (draft) => {
-      draft.userInfo = action.payload.userInfo;
-    }),
-    [NAMECHECK]: (state, action) => produce(state, (draft) => {
-      console.log(action.payload);
-      draft.nameCheck = action.payload.check;
-    }), 
-    
+    [MY_TRACK]: (state, action) =>
+      produce(state, (draft) => {
+        draft.trackList = action.payload.trackList;
+      }),
+    [MY_TITLE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.titleList = action.payload.titleList;
+      }),
+    [MY_BOOKMARK]: (state, action) =>
+      produce(state, (draft) => {
+        draft.mountList = action.payload.mountList;
+      }),
+    [CHANGE_INFO]: (state, action) =>
+      produce(state, (draft) => {
+        draft.userInfo = action.payload.userInfo;
+      }),
+    [NAMECHECK]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(action.payload);
+        draft.nameCheck = action.payload.check;
+      }),
   },
   initialState
 );

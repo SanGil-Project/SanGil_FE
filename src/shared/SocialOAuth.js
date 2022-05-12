@@ -2,11 +2,11 @@ const CLIENT_ID = "7e0e932177f25c237ca90728893d9a21";
 const REDIRECT_URI = "http://localhost:3000/user/kakao/callback";
 // const REDIRECT_URI = "https://산길.com/user/kakao/callback";
 
+
 const GOOGLE_CLIENT_ID =
   "77683946484-86n78jead6i4agakkjdf3482c3609des.apps.googleusercontent.com";
 const GOOGLE_REDIRECT_URI = "http://localhost:3000/user/google/callback";
 // const GOOGLE_REDIRECT_URI = "https://xn--wk0b636a.com/user/google/callback";
-
 
 const NAVER_CLIENT_ID = "oq32J_8jgLtjcSRvYUO4";
 const NAVER_CLIENT_SECRET = "dc6LwAfBEL";

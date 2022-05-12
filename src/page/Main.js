@@ -26,7 +26,6 @@ const Main = (props) => {
         dispatch(aroundDB(position.coords.latitude, position.coords.longitude));
       });
     }
-
     dispatch(mountainsDB());
     dispatch(feedDB());
     dispatch(partyDB());

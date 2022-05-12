@@ -43,7 +43,7 @@ const Tracker = (props) => {
   };
 
   const path = useRef();
-  const polylinePath = useSelector((state) => state.polyline?.polylinePath);
+  const polylinePath = useSelector((state) => state.tracker.polylinePath.polylinePath);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -73,7 +73,7 @@ const Tracker = (props) => {
             }
           },
           (err) => {
-            console.log("에러: ", err);
+            alert("에러: ", err);
           }
         );
       }
@@ -101,7 +101,7 @@ const Tracker = (props) => {
 
   const stop = (distance, endTime) => {
     releaseWakeLock();
-    if (time.m >= 3) {
+    if (time.h !== 0 || time.m >= 3) {
       dispatch(
         endClimbDB(completedId, {
           totalDistance: distance,

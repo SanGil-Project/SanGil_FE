@@ -21,8 +21,8 @@ const SearchDetail = () => {
   const { name } = useParams();
   const [comment, setComment] = React.useState();
   const [selected, setSelected] = React.useState(false);
-  const data = useSelector((state) => state.mountain.mountainData);
-  console.log(data);
+  const mountain = useSelector((state) => state.mountain.mountainData);
+  console.log(mountain);
   const show = (i) => {
     setSelected(i);
   };
@@ -34,10 +34,9 @@ const SearchDetail = () => {
     [comment]
   );
   const arr = [0, 1, 2, 3];
-
-  // React.useEffect(() => {
-  //   dispatch(mountAction.getDetailDB(mountainId, 1));
-  // }, []);
+  React.useEffect(() => {
+    dispatch(mountAction.getDetailDB(mountainId, 1));
+  }, []);
 
   return (
     <>
@@ -56,9 +55,12 @@ const SearchDetail = () => {
               margin="40px auto 0 auto"
               isFlex
             >
-              <Text bold="400" size="30px" lineHeight="48px" width="200px">
-                {name}
-              </Text>
+              <Text
+                bold="400"
+                size="30px"
+                lineHeight="48px"
+                width="200px"
+              ></Text>
               <Grid
                 width="90px"
                 height="40px"
@@ -170,8 +172,7 @@ const SearchDetail = () => {
       </Mobile>
 
       <Desktop>
-
-      <DetailContainer>
+        <DetailContainer>
           <Header />
           <Grid padding="100px 0 0 0" overflowY="scroll" height="1080px">
             <Grid
@@ -182,7 +183,7 @@ const SearchDetail = () => {
               isFlex
             >
               <Text bold="400" size="30px" lineHeight="48px" width="200px">
-                {name}
+                {mountain?.mountain}
               </Text>
               <Grid
                 border="1px solid black"
@@ -204,7 +205,7 @@ const SearchDetail = () => {
               margin="24.5px auto 0 auto"
             >
               <Text margin="0" height="18px" size="1.8rem" lineHeight="18px">
-                위치: 내용내용내용내용내용
+                위치: {mountain?.mountainAddress}
               </Text>
             </Grid>
             <Grid width="386px" height="287px">
@@ -212,7 +213,7 @@ const SearchDetail = () => {
                 width="386px"
                 height="287px"
                 margin="35px auto 0 auto"
-                src="https://cdn.cashfeed.co.kr/attachments/ed4679c002.jpg"
+                src={mountain?.mountainImgUrl}
               />
             </Grid>
             <div>
@@ -294,7 +295,6 @@ const SearchDetail = () => {
               <Menubar menuColor={menuColor} />
             </Grid>
           </MenubarContainer>
-
         </DetailContainer>
       </Desktop>
     </>
