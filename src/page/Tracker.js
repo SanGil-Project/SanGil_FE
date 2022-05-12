@@ -73,7 +73,7 @@ const Tracker = (props) => {
             }
           },
           (err) => {
-            console.log("에러: ", err);
+            alert("에러: ", err);
           }
         );
       }
@@ -83,14 +83,14 @@ const Tracker = (props) => {
 
   const startCal = async () => {
     acquireWakeLock();
-    dispatch(setPathDB(completedId, myLoca));
     await dispatch(startDB(mountainId, setCompletedId));
+    // dispatch(setPathDB(completedId, myLoca));
     setTime({ ...time, isStart: true });
   };
 
   const reStart = () => {
     acquireWakeLock();
-    dispatch(setPathDB(completedId, myLoca));
+    // dispatch(setPathDB(completedId, myLoca));
     setTime({ ...time, isStart: true });
   };
 
@@ -101,7 +101,7 @@ const Tracker = (props) => {
 
   const stop = (distance, endTime) => {
     releaseWakeLock();
-    if (time.h !== 0 && time.m >= 10) {
+    if (time.h !== 0 || time.m >= 3) {
       dispatch(
         endClimbDB(completedId, {
           totalDistance: distance,

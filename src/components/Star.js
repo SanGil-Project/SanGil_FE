@@ -77,7 +77,7 @@ const Star = (props) => {
         return (
           <BsStarFill
             key={idx}
-            fill={clicked[idx] ? "green" : "black"}
+            fill={clicked[idx] ? "#43CA3B" : "black"}
             onClick={() => selectStar(el)}
             style={{ margin: starMargin }}
           />

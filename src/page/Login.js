@@ -16,7 +16,7 @@ const Login = (props) => {
     <>
       <Mobile>
         <Grid>
-          <Grid width="100vw" margin="0 auto">
+          <Grid margin="0 auto">
             <Text
               width="35px"
               height="50px"
@@ -26,15 +26,20 @@ const Login = (props) => {
               hover
               _onClick={() => navigate(-1)}
             >{`<`}</Text>
-            <Grid overflowY="scroll" height="1080px">
-              <Grid fontSize="4rem" margin="170px 0 0 20px" height="160px">
+            <Grid>
+              <Grid
+                width="100%"
+                fontSize="4rem"
+                margin="25% 0 0 20px"
+                height="160px"
+              >
                 🌲
                 <br />
                 산길과 함께
                 <br />
                 등산을 시작해봐요!
               </Grid>
-              <Grid width="372px" height="184px" margin="110px auto 0 auto">
+              <Grid width="89.85%" height="184px" margin="110px auto 0 auto">
                 <A href={KAKAO_AUTH_URL}>
                   <Grid
                     height="56px"
@@ -43,7 +48,7 @@ const Login = (props) => {
                     bg="#FFDC00"
                     hover
                   >
-                    <Grid margin="0 0 0 18px" width="250px" isFlex>
+                    <Grid margin="0 0 0 18px" width="60.38%" isFlex>
                       <Image
                         width="27px"
                         height="24px"
@@ -107,6 +112,7 @@ const Login = (props) => {
           </Grid>
         </Grid>
       </Mobile>
+
       <Desktop>
         <Grid>
           <Grid border="1px solid black" width="414px" margin="0 auto">
