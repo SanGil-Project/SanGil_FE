@@ -11,6 +11,7 @@ import Comment from "./Comment";
 import CourseCard from "./CourseCard";
 import FullMap from "./FullMap";
 import MypageModal from "./MypageModal";
+import FeedCard from "./FeedCard";
 
 export {
   GoogleLogin,
@@ -26,4 +27,5 @@ export {
   CourseCard,
   FullMap,
   MypageModal,
+  FeedCard,
 };

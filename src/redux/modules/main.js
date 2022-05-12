@@ -17,7 +17,11 @@ export const aroundDB = (lat, lng) => {
   return function (dispatch, getState) {
     console.log(lat, lng);
     axios
-      .get(`http://3.35.49.228/api/main/nearby/1?lat=${lat}&lng=${lng}`)
+      .get(`http://3.35.49.228/api/main/nearby/1?lat=${lat}&lng=${lng}`, {
+        headers: {
+          Authorization: sessionStorage.getItem("token"),
+        },
+      })
       .then((res) => {
         dispatch(getAround(res.data));
       })
@@ -30,7 +34,11 @@ export const aroundDB = (lat, lng) => {
 export const feedDB = (token) => {
   return function (dispatch, getState) {
     axios
-      .get("http://3.35.49.228/api/main/feeds/1")
+      .get("http://3.35.49.228/api/main/feeds/1", {
+        headers: {
+          Authorization: sessionStorage.getItem("token"),
+        },
+      })
       .then((res) => {
         dispatch(getFeed(res.data));
       })
@@ -43,7 +51,11 @@ export const feedDB = (token) => {
 export const mountainsDB = () => {
   return function (dispatch, getState) {
     axios
-      .get("http://3.35.49.228/api/main/mountains")
+      .get("http://3.35.49.228/api/main/mountains", {
+        headers: {
+          Authorization: sessionStorage.getItem("token"),
+        },
+      })
       .then((res) => {
         dispatch(getBest(res.data));
       })
@@ -56,7 +68,11 @@ export const mountainsDB = () => {
 export const partyDB = () => {
   return function (dispatch, getState) {
     axios
-      .get("http://3.35.49.228/api/main/parties")
+      .get("http://3.35.49.228/api/main/parties", {
+        headers: {
+          Authorization: sessionStorage.getItem("token"),
+        },
+      })
       .then((res) => {
         dispatch(getParty(res.data));
       })

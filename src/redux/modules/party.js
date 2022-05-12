@@ -28,7 +28,6 @@ const initialState = {
 
 const getMyPartyDB = () => {
   return function (dispatch, getState) {
-    // return;
     api
       .getMyParty()
       .then((res) => {
