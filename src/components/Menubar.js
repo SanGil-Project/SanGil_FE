@@ -2,11 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
 
+import { useSelector, useDispatch } from "react-redux";
 import { Grid, Icon, Text } from "../elements/element";
 
 const Menubar = (props) => {
   const { menuColor } = props;
   const navigate = useNavigate();
+
+  const userInfo = useSelector((state) => state?.user?.userInfo);
+  const token = sessionStorage?.getItem("token");
+  const isLogin = (token && userInfo) ? true : false;
 
   const textColor = menuColor.map((m) => {
     return m ? "#fff" : "#6F6F6F";
