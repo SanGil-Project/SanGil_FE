@@ -69,7 +69,7 @@ const Tracker = (props) => {
             });
             if (time.isStart && completedId) {
               dispatch(setPathDB(completedId, myLoca));
-              // dispatch(setPath(myLoca));
+              dispatch(setPath(myLoca));
             }
           },
           (err) => {
@@ -83,8 +83,8 @@ const Tracker = (props) => {
 
   const startCal = async () => {
     acquireWakeLock();
-    // dispatch(setPathDB(completedId, myLoca));
     await dispatch(startDB(mountainId, setCompletedId));
+    // dispatch(setPathDB(completedId, myLoca));
     setTime({ ...time, isStart: true });
   };
 
@@ -101,7 +101,7 @@ const Tracker = (props) => {
 
   const stop = (distance, endTime) => {
     releaseWakeLock();
-    if (time.h !== 0 && time.m >= 10) {
+    if (time.m >= 3) {
       dispatch(
         endClimbDB(completedId, {
           totalDistance: distance,
@@ -112,7 +112,7 @@ const Tracker = (props) => {
         state: { distance: distance, time: endTime },
       });
       setTime({ ...time, s: 0, m: 0, h: 0, distance: 0, isStart: false });
-    } else if (time.h === 0 && time.m < 10) {
+    } else if (time.h === 0 && time.m < 3) {
       if (window.confirm("10분 미만의 등산은 기록되지 않습니다") === true) {
         dispatch(deleteDB(completedId));
         setTime({ ...time, s: 0, m: 0, h: 0, distance: 0, isStart: false });

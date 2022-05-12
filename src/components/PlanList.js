@@ -22,9 +22,12 @@ const PlanList = (props) => {
 
   return (
     <React.Fragment>
-      <Text bold="600" size="20px" margin="0 0 24px" align="left">
-        🗓 {userInfo?.nickname}님의 산길 일정
-      </Text>
+      <Grid height="auto" flexRow justify="left" margin="0 0 24px" >
+        <Text bold="600" size="20px" color="#43CA3B" margin="0" width="auto">🗓 {userInfo?.nickname}</Text>
+        <Text bold="600" size="20px" margin="0" align="left">
+          님의 산길 일정
+        </Text>
+      </Grid>
       <div>
         <Grid margin="0 0 30px">
           {plans?.map((p, idx) => {
