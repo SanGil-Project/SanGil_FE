@@ -69,7 +69,7 @@ const Tracker = (props) => {
             });
             if (time.isStart && completedId) {
               dispatch(setPathDB(completedId, myLoca));
-              // dispatch(setPath(myLoca));
+              dispatch(setPath(myLoca));
             }
           },
           (err) => {
@@ -83,14 +83,14 @@ const Tracker = (props) => {
 
   const startCal = async () => {
     acquireWakeLock();
-    // dispatch(setPathDB(completedId, myLoca));
+    dispatch(setPathDB(completedId, myLoca));
     await dispatch(startDB(mountainId, setCompletedId));
     setTime({ ...time, isStart: true });
   };
 
   const reStart = () => {
     acquireWakeLock();
-    // dispatch(setPathDB(completedId, myLoca));
+    dispatch(setPathDB(completedId, myLoca));
     setTime({ ...time, isStart: true });
   };
 
