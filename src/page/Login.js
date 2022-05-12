@@ -12,6 +12,8 @@ import { Desktop, Mobile } from "../shared/responsive";
 const Login = (props) => {
   const navigate = useNavigate();
 
+  console.log(KAKAO_AUTH_URL);
+
   return (
     <>
       <Mobile>

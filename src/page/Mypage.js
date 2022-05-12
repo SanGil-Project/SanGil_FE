@@ -40,11 +40,10 @@ const Mypage = (props) => {
         <MypageContainer>
           <Header />
           <MypageWrap>
-            <Grid bg="#979797" padding="96px 14px 35px" height="auto">
+            <Grid bg="#F5FCF4" padding="96px 14px 35px" height="auto">
               <MypageModal />
             </Grid>
             <Grid
-              bg="#D2D2D2"
               padding="27px 14px 28px"
               height="312px"
               overflowY="scroll"
@@ -215,6 +214,7 @@ const MypageContainer = styled.div`
   // min-width: 414px;
   max-width: 500px;
   margin: auto;
+  background-color: #F1F1F1;
 `;
 
 const MypageWrap = styled.div`
