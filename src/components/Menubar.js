@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useNavigate } from "react-router";
 
 import { Grid, Icon, Text } from "../elements/element";
-// import { Desktop, Mobile } from "../shared/MediaQuery";
 
 const Menubar = (props) => {
   const { menuColor } = props;
