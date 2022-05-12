@@ -7,11 +7,6 @@ import KakaoMap from "./KakaoMap";
 const FullMap = (props) => {
   const { data, getIndex, zoomable } = props;
 
-  // const tempIndex = (index) => {
-  //   props.getIndex(index);
-  //   console.log("중간 전달 index ::", index);
-  // }
-
   return (
     <>
       <MapContainer>
