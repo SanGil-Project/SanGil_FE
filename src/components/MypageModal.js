@@ -117,7 +117,6 @@ const MypageModal = (props) => {
             <Text margin="8px 0 13px" size="20px" bold="600">{userInfo?.nickname}</Text>
           </Grid>
         </Grid>
-        {/* <button onClick={()=> setModalIsOpen(true)}>프로필 수정</button> */}
         <Modal isOpen={modalIsOpen} 
           ariaHideApp={false}
           style={{

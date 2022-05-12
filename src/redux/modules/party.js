@@ -23,28 +23,6 @@ const deleteParty = createAction(DELETE_PARTY, (partyId) => ({ partyId }));
 
 const initialState = {
   partyList: [
-    // {
-    // partyId : null,
-    // username : "",
-    // userImgUrl: "",
-    // userTitle : "",
-    // title : "",
-    // mountain : "",
-    // address : "",
-    // partyDate : "",
-    // partyTime: "",
-    // partyContent : "",
-    // maxPeople : null,
-    // curPeople : null,
-    // completed : false,
-    // createdAt : "",
-    // partymember: [
-    //   {
-    //   username: "",
-    //   userImageUrl: "",
-    //   userTitle: ""
-    //   },]
-    // },
   ],
 };
 
@@ -129,12 +107,6 @@ const editPartyDB = (partyId = null, party = {}) => {
 const attendPartyDB = (partyId = null) => {
   return function (dispatch, getState) {
     const _user = getState().user.userInfo;
-    // const _partyList = getState().party.partyList[0];
-    // const _user = {
-    //   username: "테스트용",
-    //   userTitle: "테스트한다",
-    //   userImageUrl: "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
-    // }
     console.log(_user);
     const user_info = {
       username: _user.username,
@@ -142,8 +114,6 @@ const attendPartyDB = (partyId = null) => {
       userImageUrl: _user.userImageUrl,
     };
 
-    // dispatch(attendParty(partyId, user_info));
-    // return;
     api
       .attendParty(partyId)
       .then((res) => {
@@ -210,12 +180,6 @@ export default handleActions(
 );
 
 const actionCreators = {
-  setParty,
-  addParty,
-  editParty,
-  attendParty,
-  cancelParty,
-  deleteParty,
   getPartyDB,
   getOnePartyDB,
   addPartyDB,
