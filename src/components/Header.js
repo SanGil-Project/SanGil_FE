@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Button, Icon, Image } from "../elements/element";
+import { Grid, Button, Icon, Image, Text } from "../elements/element";
 import { Desktop, Mobile } from "../shared/responsive";
 import { isLogInDB } from "../redux/modules/user";
 import { useNavigate } from "react-router";
@@ -28,9 +28,10 @@ const Header = () => {
           <Grid
             width="100vw"
             height="64px"
-            bg="#C4C4C4"
+            bg="#FFFFFF"
             position="fixed"
-            zindex="10"
+            zindex="1000"
+            borderBottom="2px solid #F5F5F5"
           >
             <Grid margin="0 0 0 39.25%" maxWidth="55%" isFlex>
               <Grid
@@ -41,7 +42,7 @@ const Header = () => {
                 fontSize="1.6rem"
                 textAlign
               >
-                모바일
+                <Image width="auto" height="auto" margin="5px 0 0" src="https://user-images.githubusercontent.com/91959791/168339851-d18da908-8213-49a7-a365-9cad6a0e862e.png"/>
               </Grid>
               {userInfo?.userImageUrl && userInfo.userImageUrl !== "없음" ? (
                 <Image
@@ -58,7 +59,14 @@ const Header = () => {
         </Mobile>
 
         <Desktop>
-          <Grid maxWidth="500px" height="64px" bg="#C4C4C4" position="fixed">
+          <Grid
+            maxWidth="500px"
+            height="64px"
+            bg="#FFFFFF"
+            position="fixed"
+            zindex="1000"
+            borderBottom="2px solid #F5F5F5"
+          >
             <Grid margin="0 0 0 39.25%" maxWidth="280px" isFlex>
               <Grid
                 maxWidth="89px"
@@ -68,7 +76,7 @@ const Header = () => {
                 fontSize="1.6rem"
                 textAlign
               >
-                데스크탑
+                <Image width="auto" height="auto" margin="5px 0 0" src="https://user-images.githubusercontent.com/91959791/168339851-d18da908-8213-49a7-a365-9cad6a0e862e.png"/>
               </Grid>
               {userInfo?.userImageUrl && userInfo.userImageUrl !== "없음" ? (
                 <Image
@@ -93,9 +101,10 @@ const Header = () => {
         <Grid
           maxWidth="500px"
           height="64px"
-          bg="#C4C4C4"
+          bg="#FFFFFF"
           position="fixed"
-          zindex="10"
+          zindex="1000"
+          borderBottom="2px solid #F5F5F5"
         >
           <Grid margin="0 0 0 39.25%" maxWidth="55%" isFlex>
             <Grid
@@ -106,24 +115,33 @@ const Header = () => {
               fontSize="1.6rem"
               textAlign
             >
-              모바일
+              <Image width="auto" height="auto" margin="5px 0 0" src="https://user-images.githubusercontent.com/91959791/168339851-d18da908-8213-49a7-a365-9cad6a0e862e.png"/>
             </Grid>
             <Button
-              border="1px solid #fff"
+              bgColor="#43CA3B"
+              border="none"
               radius="4px"
-              maxWidth="28.8%"
-              height="34px"
-              fontSize="1.4rem"
+              padding="9px 10px"
+              // maxWidth="28.8%"
+              width="57px"
+              height="35px"
               _onClick={logIn}
             >
-              로그인
+              <Text margin="0" color="#fff" size="14px" bold="700">로그인</Text>              
             </Button>
           </Grid>
         </Grid>
       </Mobile>
 
       <Desktop>
-        <Grid maxWidth="500px" height="64px" bg="#C4C4C4" position="fixed">
+        <Grid
+          maxWidth="500px"
+          height="64px"
+          bg="#FFFFFF"
+          zindex="1000"
+          position="fixed"
+          borderBottom="2px solid #F5F5F5"
+        >
           <Grid margin="0 0 0 39.25%" maxWidth="280px" isFlex>
             <Grid
               maxWidth="89px"
@@ -133,17 +151,19 @@ const Header = () => {
               fontSize="1.6rem"
               textAlign
             >
-              데스크탑
+              <Image width="auto" height="auto" margin="5px 0 0" src="https://user-images.githubusercontent.com/91959791/168339851-d18da908-8213-49a7-a365-9cad6a0e862e.png"/>
             </Grid>
             <Button
-              border="1px solid #fff"
+              bgColor="#43CA3B"
+              border="none"
               radius="4px"
-              maxWidth="57px"
-              height="34px"
-              fontSize="1.4rem"
+              padding="9px 10px"
+              // maxWidth="28.8%"
+              width="57px"
+              height="35px"
               _onClick={logIn}
             >
-              로그인
+              <Text margin="0" color="#fff" size="14px" bold="700">로그인</Text>              
             </Button>
           </Grid>
         </Grid>

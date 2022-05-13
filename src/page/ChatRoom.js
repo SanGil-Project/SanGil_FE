@@ -163,6 +163,8 @@ const ChatRoom = (props) => {
 }
 
 const ChatContainer = styled.div`
+
+  background-color: #fff;
   width: 100%;
   height: 100%;
   max-width: 500px;

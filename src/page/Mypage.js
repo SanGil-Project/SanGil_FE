@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router";
 
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
@@ -20,6 +21,7 @@ import { Grid, Text, Icon, Image } from "../elements/element";
 
 const Mypage = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const userInfo = useSelector((state) => state?.user?.userInfo);
   const myTrackList = useSelector((state) => state?.user?.tracker);
   const myFeedList = useSelector((state) => state?.user?.feedList);
@@ -35,6 +37,16 @@ const Mypage = (props) => {
     dispatch(userActions.myTrackingDB());
     dispatch(userActions.myFeedDB(1));
   }, []);
+
+
+  const moveFeedDetail = (feedId) => {
+    console.log("디테일페이지로 연결해야함");
+    // navigate(`/partydetail/${feedId}`);
+  }
+
+  const moveMountDetail = (mountainId) => {
+    navigate(`/searchdetail/${mountainId}`);
+  }
 
   return (
     <React.Fragment>
@@ -67,7 +79,7 @@ const Mypage = (props) => {
                   {myFeedList?.feedList?.map((cur, idx) => {
                     const good = cur.goodStatus ? false : "0.2"
                     return (
-                    <Grid key={idx} width="auto" margin="0 10px 0 0">
+                    <Grid key={idx} width="auto" margin="0 10px 0 0" _onClick={()=>{moveFeedDetail(idx)}} hover>
                       <Card width="150px" height="150px" margin="0" shadow="0px 1px 4px rgba(0, 0, 0, 0.1)">
                         <Image
                           width="150px"
@@ -103,38 +115,34 @@ const Mypage = (props) => {
                   ❤️ 정복해야할 산길
                 </Text>
                 <HorizontalScroll>
-                  {myBookmarkList?.map((cur, idx) => (
-                    <div key={idx}>
+                  {myBookmarkList?.mountainList?.map((cur, idx) => (
+                    <Grid key={idx} width="auto" margin="0 10px 0 0" _onClick={()=>{moveMountDetail(cur.mountainId)}} hover>
                       <Card
                         width="194px"
                         height="120px"
-                        margin="10px 7px 8px 7px"
+                        margin="0"
                       >
-                        <Icon
-                          type="like"
-                          width="18px"
-                          height="18px"
-                          margin="0 0 -103px 163px"
+                        <Image
+                          width="194px"
+                          height="120px"
+                          borderRadius="10px"
+                          border="none"
+                          src={cur.mountainImageUrl}
                         />
                       </Card>
-                      <Text margin="8px 0 0 7px" bold="600" size="1.4rem">
-                        {cur.mountainName}
+                      <Text margin="8px 0" bold="600" size="14px">
+                        {cur.mountainName} ({cur.mountainAddress})
                       </Text>
-
-                      <Grid
-                        height="20px"
-                        isFlex
-                        width="194px"
-                        margin="8px 7px 0 7px"
-                      >
-                        <Text bold="300" size="1.2rem">
-                          {cur.starAvr}
-                        </Text>
-                        <Text bold="400" size="1.2px">
+                      <Grid isFlex>
+                        <Grid margin="0 4px 0 0" flexRow justify="left">
+                          <Icon type="mypageBookStar" width="13px" height="12px" margin="0 auto"/>
+                          <Text bold="300" size="12px" margin="0 4px">{cur.starAvr}</Text>
+                        </Grid>
+                        <Text bold="500" size="12px" color="#43CA3B" margin="0">
                           {cur.distance}
                         </Text>
                       </Grid>
-                    </div>
+                    </Grid>
                   ))}
                 </HorizontalScroll>
               </Grid>
@@ -152,23 +160,49 @@ const Mypage = (props) => {
         <MypageContainer>
           <Header />
           <MypageWrap>
-            <Grid bg="#979797" padding="96px 14px 35px" height="auto">
+            <Grid bg="#F5FCF4" padding="96px 25px 23px" height="auto">
               <MypageModal />
             </Grid>
             <Grid
-              bg="#D2D2D2"
-              padding="27px 14px 28px"
-              height="312px"
+              padding="27px 14px 0"
+              maxHeight="312px"
               overflowY="scroll"
             >
               <PlanList userInfo={userInfo} />
             </Grid>
-            <Grid padding="36px 14px 25px" height="auto">
+            <Grid padding="34px 14px 25px" height="auto">
               <Text bold="600" size="20px" margin="0 0 24px" align="left">
                 🚩 정복한 산길
               </Text>
               <FullMap zoomable={false} data={myTrackList} />{" "}
               {/* 지도에 마커 찍어야하는 정보 객체 전달 : 여기서 보낼지, FullMap에서 보낼지.. */}
+            </Grid>
+            <Grid padding="35px 14px 25px" height="auto">
+              <Text bold="600" size="20px" margin="0 0 24px" align="left">
+                🚩 나의 피드 모아보기
+              </Text>
+                <HorizontalScroll>
+                  {myFeedList?.feedList?.map((cur, idx) => {
+                    const good = cur.goodStatus ? false : "0.2"
+                    return (
+                    <Grid key={idx} width="auto" margin="0 10px 0 0" _onClick={()=>{moveFeedDetail(idx)}} hover>
+                      <Card width="150px" height="150px" margin="0" shadow="0px 1px 4px rgba(0, 0, 0, 0.1)">
+                        <Image
+                          width="150px"
+                          height="150px"
+                          borderRadius="10px"
+                          border="none"
+                          src={cur.feedImageUrl}
+                        />
+                      </Card>
+                      <Grid margin="4px" flexRow justify="left">
+                        <Icon fillOpacity={good} type="mypageFeedLike" width="13px" height="12px" margin="0 auto"/>
+                        <Text margin="0 4px" size="12px" bold="500" color="#43CA3B">{cur.goodCnt}</Text>
+                      </Grid>
+                    </Grid>
+                    );}
+                  )}
+                </HorizontalScroll>
             </Grid>
             <Grid padding="35px 14px 70px" height="auto">
               <Grid
@@ -179,7 +213,7 @@ const Mypage = (props) => {
                 <Text
                   width="350px"
                   height="24px"
-                  margin="0 7px 24px 7px"
+                  margin="0 7px 24px 0"
                   bold="600"
                   size="2rem"
                   lineHeight="24px"
@@ -187,38 +221,34 @@ const Mypage = (props) => {
                   ❤️ 정복해야할 산길
                 </Text>
                 <HorizontalScroll>
-                  {myBookmarkList?.map((cur, idx) => (
-                    <div key={idx}>
+                  {myBookmarkList?.mountainList?.map((cur, idx) => (
+                    <Grid key={idx} width="auto" margin="0 10px 0 0" _onClick={()=>{moveMountDetail(cur.mountainId)}} hover>
                       <Card
                         width="194px"
                         height="120px"
-                        margin="10px 7px 8px 7px"
+                        margin="0"
                       >
-                        <Icon
-                          type="like"
-                          width="18px"
-                          height="18px"
-                          margin="0 0 -103px 163px"
+                        <Image
+                          width="194px"
+                          height="120px"
+                          borderRadius="10px"
+                          border="none"
+                          src={cur.mountainImageUrl}
                         />
                       </Card>
-                      <Text margin="8px 0 0 7px" bold="600" size="1.4rem">
-                        {cur.mountainName}({cur.mountainAddress})
+                      <Text margin="8px 0" bold="600" size="14px">
+                        {cur.mountainName} ({cur.mountainAddress})
                       </Text>
-
-                      <Grid
-                        height="20px"
-                        isFlex
-                        width="194px"
-                        margin="8px 7px 0 7px"
-                      >
-                        <Text bold="300" size="1.2rem">
-                          평균 ⭐ {cur.starAvr}
-                        </Text>
-                        <Text bold="400" size="1.2px">
+                      <Grid isFlex>
+                        <Grid margin="0 4px 0 0" flexRow justify="left">
+                          <Icon type="mypageBookStar" width="13px" height="12px" margin="0 auto"/>
+                          <Text bold="300" size="12px" margin="0 4px">{cur.starAvr}</Text>
+                        </Grid>
+                        <Text bold="500" size="12px" color="#43CA3B" margin="0">
                           {cur.distance}
                         </Text>
                       </Grid>
-                    </div>
+                    </Grid>
                   ))}
                 </HorizontalScroll>
               </Grid>
@@ -237,6 +267,7 @@ const Mypage = (props) => {
 };
 
 const MypageContainer = styled.div`
+
   // position: relative;
   width: 100%;
   height: 100%;
