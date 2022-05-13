@@ -33,7 +33,7 @@ const MapContainer = styled.div`
   width: 100%;
   height: 0;
   overflow: hidden;
-  padding-bottom: 141%;
+  padding-bottom: 150%;
 `;
 
 const MapBox = styled.div`

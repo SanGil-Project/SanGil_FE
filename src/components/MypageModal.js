@@ -106,7 +106,7 @@ const MypageModal = (props) => {
               type="circle"
               width="80px"
               height="80px"
-              margin="0 10px 0 0"
+              margin="0 10px 0 11px"
               src={img}/>
             <Editbtn>
               <Icon type="profileEdit" width="21px" height="21px" margin="0 auto" _onClick={()=> {setModalIsOpen(true); setNameCount(userInfo?.nickname?.length);}}/>
@@ -213,7 +213,7 @@ const Mainprofile = styled.div`
 const Editbtn = styled.div`
   position: absolute;
   top: 0;
-  left: 0;
+  left: 10px;
   cursor: pointer;
 `;
 

@@ -50,7 +50,6 @@ export const api = {
     }),
   myTracking: () => instance.get("/api/mypages/tracking"),
   myTitle: () => instance.get("/api/mypages/userTitle"),
-  myFeed: (pageNum) => instance.get(`/api/myfeeds/${pageNum}`),
   myBookmark: (lat, lng) =>
     instance.get(`/api/mypages/bookmark?lat=${lat}&lng=${lng}`),
   changeTitle: (userTitle) =>

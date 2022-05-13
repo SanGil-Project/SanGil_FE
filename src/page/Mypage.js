@@ -21,8 +21,7 @@ import { Grid, Text, Icon, Image } from "../elements/element";
 const Mypage = (props) => {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state?.user?.userInfo);
-  const myTrackList = useSelector((state) => state?.user?.tracker);
-  const myFeedList = useSelector((state) => state?.user?.feedList);
+  const myTrackList = useSelector((state) => state?.user?.trackList);
   const myBookmarkList = useSelector((state) => state?.user?.mountList);
   const menuColor = [false, false, false, false, true]; // 메뉴바 색
 
@@ -33,7 +32,6 @@ const Mypage = (props) => {
       });
     }
     dispatch(userActions.myTrackingDB());
-    dispatch(userActions.myFeedDB(1));
   }, []);
 
   return (
@@ -42,45 +40,22 @@ const Mypage = (props) => {
         <MypageContainer>
           <Header />
           <MypageWrap>
-            <Grid bg="#F5FCF4" padding="96px 25px 23px" height="auto">
+            <Grid bg="#F5FCF4" padding="96px 14px 35px" height="auto">
               <MypageModal />
             </Grid>
             <Grid
-              padding="27px 14px 0"
-              maxHeight="312px"
+              padding="27px 14px 28px"
+              height="312px"
               overflowY="scroll"
             >
               <PlanList userInfo={userInfo} />
             </Grid>
-            <Grid padding="34px 14px 25px" height="auto">
+            <Grid padding="36px 14px 25px" height="auto">
               <Text bold="600" size="20px" margin="0 0 24px" align="left">
                 🚩 정복한 산길
               </Text>
               <FullMap zoomable={false} data={myTrackList} />{" "}
               {/* 지도에 마커 찍어야하는 정보 객체 전달 : 여기서 보낼지, FullMap에서 보낼지.. */}
-            </Grid>
-            <Grid padding="35px 14px 25px" height="auto">
-              <Text bold="600" size="20px" margin="0 0 24px" align="left">
-
-              {/* <Icon type="feedEmoji" width="25px" height="22px" margin="0 auto"/> */}
-
-                🚩 나의 피드 모아보기
-              </Text>
-                <HorizontalScroll>
-                  {myFeedList?.feedList?.map((cur, idx) => (
-                    <div key={idx} style={{ margin: "10px 0 10px 0" }}>
-                      <Card width="150px" height="150px" margin="0 7px 0 7px">
-                        <Image
-                          width="150px"
-                          height="150px"
-                          borderRadius="10px"
-                          border="none"
-                          src={cur.feedImgUrl}
-                        />
-                      </Card>
-                    </div>
-                  ))}
-                </HorizontalScroll>
             </Grid>
             <Grid padding="35px 14px 70px" height="auto">
               <Grid
@@ -91,7 +66,7 @@ const Mypage = (props) => {
                 <Text
                   width="350px"
                   height="24px"
-                  margin="0 7px 24px 0"
+                  margin="0 7px 24px 7px"
                   bold="600"
                   size="2rem"
                   lineHeight="24px"
