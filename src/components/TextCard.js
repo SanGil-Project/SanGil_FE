@@ -12,7 +12,6 @@ const TextCard = (props) => {
   const moveDetail = (partyId) => {
     navigate(`/partydetail/${partyId}`, {state: {partyId: partyId}});
   }
-  console.log(data);
 
   return (
     <React.Fragment>

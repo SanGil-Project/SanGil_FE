@@ -189,6 +189,37 @@ const myTrackingDB = () => {
 
 const myFeedDB = (pageNum) => {
   return function (dispatch, getState) {
+
+    const fakeDB = {
+      feedList : [
+      {
+      userId : 1,
+      username : "jsjune",
+      userImageUrl : "없음",
+      feedImageUrl : "https://user-images.githubusercontent.com/91959791/168317315-e860569b-0325-4f92-b0dd-cc951b063dca.jpeg",
+      feedContent : "feedContent",
+      createdAt: "11:00",
+      goodCnt: 5,
+      goodStatus:false,
+      },
+      {
+      userId : 2,
+      username : "jsjune",
+      userImageUrl : "없음",
+      feedImageUrl : "https://user-images.githubusercontent.com/91959791/168317315-e860569b-0325-4f92-b0dd-cc951b063dca.jpeg",
+      feedContent : "feedContent",
+      createdAt : "11:00",
+      goodCnt : 5,
+      goodStatus :true,
+      }
+      ],
+      totalPage: 3,
+      currentPage: 1,
+      };
+    
+    dispatch(myFeed(fakeDB));
+    return;
+
     api
       .myFeed(pageNum)
       .then((res) => {
@@ -203,6 +234,34 @@ const myFeedDB = (pageNum) => {
 
 const myBookmarkDB = (lat, lng) => {
   return function (dispatch, getState) {
+
+
+    const fakeDB = {
+      mountainList : [
+      {
+        mountainId : 1,
+        mountainName : "관악산",
+        mountainAddress : "서울 관악구",
+        mountainImageUrl : "https://user-images.githubusercontent.com/91959791/168317315-e860569b-0325-4f92-b0dd-cc951b063dca.jpeg",
+        bookmark : true,
+        starAvr: 3,
+        distance: "5km",
+      },
+      {
+        mountainId : 10,
+        mountainName : "북한산",
+        mountainAddress : "서울 은평구",
+        mountainImageUrl : "https://user-images.githubusercontent.com/91959791/168317315-e860569b-0325-4f92-b0dd-cc951b063dca.jpeg",
+        bookmark : true,
+        starAvr: 4,
+        distance: "6km",
+      },
+      ]
+      };
+    
+      dispatch(myBookmark(fakeDB));
+      return;
+
     api
       .myBookmark(lat, lng)
       .then((res) => {

@@ -61,25 +61,29 @@ const Mypage = (props) => {
             </Grid>
             <Grid padding="35px 14px 25px" height="auto">
               <Text bold="600" size="20px" margin="0 0 24px" align="left">
-
-              {/* <Icon type="feedEmoji" width="25px" height="22px" margin="0 auto"/> */}
-
                 🚩 나의 피드 모아보기
               </Text>
                 <HorizontalScroll>
-                  {myFeedList?.feedList?.map((cur, idx) => (
-                    <div key={idx} style={{ margin: "10px 0 10px 0" }}>
-                      <Card width="150px" height="150px" margin="0 7px 0 7px">
+                  {myFeedList?.feedList?.map((cur, idx) => {
+                    const good = cur.goodStatus ? false : "0.2"
+                    return (
+                    <Grid key={idx} width="auto" margin="0 10px 0 0">
+                      <Card width="150px" height="150px" margin="0" shadow="0px 1px 4px rgba(0, 0, 0, 0.1)">
                         <Image
                           width="150px"
                           height="150px"
                           borderRadius="10px"
                           border="none"
-                          src={cur.feedImgUrl}
+                          src={cur.feedImageUrl}
                         />
                       </Card>
-                    </div>
-                  ))}
+                      <Grid margin="4px" flexRow justify="left">
+                        <Icon fillOpacity={good} type="mypageFeedLike" width="13px" height="12px" margin="0 auto"/>
+                        <Text margin="0 4px" size="12px" bold="500" color="#43CA3B">{cur.goodCnt}</Text>
+                      </Grid>
+                    </Grid>
+                    );}
+                  )}
                 </HorizontalScroll>
             </Grid>
             <Grid padding="35px 14px 70px" height="auto">
@@ -114,7 +118,7 @@ const Mypage = (props) => {
                         />
                       </Card>
                       <Text margin="8px 0 0 7px" bold="600" size="1.4rem">
-                        어디어디 산의 어디 코스
+                        {cur.mountainName}
                       </Text>
 
                       <Grid
@@ -124,10 +128,10 @@ const Mypage = (props) => {
                         margin="8px 7px 0 7px"
                       >
                         <Text bold="300" size="1.2rem">
-                          매우 좋음 5.0
+                          {cur.starAvr}
                         </Text>
                         <Text bold="400" size="1.2px">
-                          100.800km
+                          {cur.distance}
                         </Text>
                       </Grid>
                     </div>
