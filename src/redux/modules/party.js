@@ -2,7 +2,8 @@ import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import { api } from "../../shared/api";
 
-const SET_PARTY = "SET_PARTY";
+const GET_PARTY = "GET_PARTY";
+const GET_ONE_PARTY = "GET_ONE_PARTY";
 const GET_MY_PARTY = "GET_MY_PARTY";
 const ADD_PARTY = "ADD_PARTY";
 const EDIT_PARTY = "EDIT_PARTY";
@@ -10,7 +11,8 @@ const ATTEND_PARTY = "ATTEND_PARTY";
 const CANCEL_PARTY = "CANCEL_PARTY";
 const DELETE_PARTY = "DELETE_PARTY";
 
-const setParty = createAction(SET_PARTY, (partyList) => ({ partyList }));
+const getParty = createAction(GET_PARTY, (partyList) => ({ partyList }));
+const getOneParty = createAction(GET_ONE_PARTY, (party) => ({ party }));
 const getMyParty = createAction(GET_MY_PARTY, (partyList) => ({ partyList }));
 const addParty = createAction(ADD_PARTY, (party) => ({ party }));
 const editParty = createAction(EDIT_PARTY, (partyId, party) => ({
@@ -22,8 +24,6 @@ const cancelParty = createAction(CANCEL_PARTY, (user) => ({ user }));
 const deleteParty = createAction(DELETE_PARTY, (partyId) => ({ partyId }));
 
 const initialState = {
-  partyList: [
-  ],
 };
 
 const getMyPartyDB = () => {
@@ -40,14 +40,13 @@ const getMyPartyDB = () => {
   };
 };
 
-const getPartyDB = () => {
+const getPartyDB = (pageNum) => {
   return function (dispatch, getState) {
-    const pageNum = 1;
     api
       .getPartyList(pageNum)
       .then((res) => {
         console.log("(getPartyList) 성공 데이터 확인 ::", res);
-        dispatch(setParty(res.data));
+        dispatch(getParty(res.data));
       })
       .catch((err) => {
         console.log("(getPartyList) 실패 ::", err);
@@ -57,14 +56,19 @@ const getPartyDB = () => {
 
 const getOnePartyDB = (partyId = null) => {
   return function (dispatch, getState) {
+
+    // const partyList = getState().party.list.partyList;
+    // console.log(partyList);
     api
       .getOneParty(partyId)
       .then((res) => {
         console.log("(getOneParty) 성공 데이터 확인 ::", res);
-        const partyDB = {
-          partyList: [res.data],
-        };
-        dispatch(setParty(partyDB));
+        // const partyDB = {
+        //   partyList: [...partyList],
+        //   curtParty: res.data,
+        // };
+        // dispatch(getParty(partyDB));
+        dispatch(getOneParty(res.data));
       })
       .catch((err) => {
         console.log("(getOneParty) 실패 ::", err);
@@ -149,8 +153,15 @@ export default handleActions(
     [GET_MY_PARTY]: (state, action) => produce(state, (draft) => {
       draft.myPartyList = action.payload.partyList.plans;
     }),
-    [SET_PARTY]: (state, action) => produce(state, (draft) => {
-      draft.partyList = action.payload.partyList.partyList;
+    [GET_PARTY]: (state, action) => produce(state, (draft) => {
+      // draft.partyList = action.payload.partyList.partyList;
+      // draft.list = action.payload.partyList;
+      draft.list = action.payload.partyList;
+    }),
+    [GET_ONE_PARTY]: (state, action) => produce(state, (draft) => {
+      // draft.partyList = action.payload.partyList.partyList;
+      // draft.list = action.payload.partyList;
+      draft.curtParty = action.payload.party;
     }),
     [ADD_PARTY]: (state, action) => produce(state, (draft) => {
       draft.partyList.unshift(action.payload.party);
