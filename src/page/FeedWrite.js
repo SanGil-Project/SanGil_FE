@@ -55,7 +55,7 @@ const FeedWrite = () => {
     <>
       {/* 데스크탑 */}
       <Desktop>
-        <Grid width="500px" margin="0 auto">
+        <Grid width="500px" margin="0 auto" bg="#fff">
           <Header />
           <Grid padding="7px" overflowY="scroll" height="1080px">
             <Grid

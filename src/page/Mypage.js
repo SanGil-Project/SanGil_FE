@@ -267,6 +267,7 @@ const Mypage = (props) => {
 };
 
 const MypageContainer = styled.div`
+
   // position: relative;
   width: 100%;
   height: 100%;
