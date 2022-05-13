@@ -29,7 +29,7 @@ const Icon = (props) => {
     hover,
     fillOpacity,
   };
-  const menuColor = page ? "#fff" : "#6F6F6F";
+  const menuColor = page ? "#43CA3B" : "#C0C0C0";
   const fillOpa = fillOpacity ? fillOpacity : false;
 
   if (type === "mypageBookStar") {

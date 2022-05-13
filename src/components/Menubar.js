@@ -14,12 +14,12 @@ const Menubar = (props) => {
   const isLogin = (token && userInfo) ? true : false;
 
   const textColor = menuColor.map((m) => {
-    return m ? "#fff" : "#6F6F6F";
+    return m ? "#43CA3B" : "#C0C0C0";
   });
 
   return (
     <React.Fragment>
-      <Grid isFlex bg="#c4c4c4">
+      <Grid isFlex bg="#fff" borderTop="2px solid #F5F5F5">
         <Grid
           flexColumn
           hover
