@@ -25,21 +25,22 @@ const PartyWrite = (props) => {
   const { partyId } = useParams();
   const is_edit = partyId ? true : false;
   console.log(partyId);
-  const partyItem = useSelector((state) => state?.party?.partyList[0]);
+  const partyItem = useSelector((state) => state?.party?.curtParty);
 
   const menuColor = [false, true, false, false, false]; // 메뉴바 색
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [partyName, setPartyName] = React.useState(is_edit ? partyItem.title :"");
-  const [partyContent, setPartyContent] = React.useState(is_edit ? partyItem.partyContent :"");
-  const [dateValue, setDateValue] = React.useState(is_edit ? partyItem.partyDate : null);
-  const [timeValue, setTimeValue] = React.useState(is_edit ? partyItem.partyTime :"");
-  const [numberValue, setNumberValue] = React.useState(is_edit ? partyItem.maxPeople : null);
-  const [mountValue, setMountValue] = React.useState(is_edit ? partyItem.mountain :"");
-  const [mountAddValue, setMountAddValue] = React.useState(is_edit ? partyItem.address :"");
+  const [partyName, setPartyName] = React.useState(is_edit ? partyItem?.title :"");
+  const [partyContent, setPartyContent] = React.useState(is_edit ? partyItem?.partyContent :"");
+  const [dateValue, setDateValue] = React.useState(is_edit ? partyItem?.partyDate : null);
+  const [timeValue, setTimeValue] = React.useState(is_edit ? partyItem?.partyTime :"");
+  const [numberValue, setNumberValue] = React.useState(is_edit ? partyItem?.maxPeople : null);
+  const [mountValue, setMountValue] = React.useState(is_edit ? partyItem?.mountain :"");
+  const [mountAddValue, setMountAddValue] = React.useState(is_edit ? partyItem?.address :"");
 
   const [isOpen, setIsOpen] = useState(false);
+  const [complete, setcomplete] = useState(is_edit ? true : false);
 
   const inputName = (e) => {
     setPartyName(e.target.value);
@@ -60,6 +61,10 @@ const PartyWrite = (props) => {
     setMountValue(data.mountain);
     setMountAddValue(data.mountainAddress);
   }
+
+  // if (partyName !== "" && mountValue !=="" && mountAddValue !=="" && dateValue !=="" && timeValue !=="" && numberValue !=="" && partyContent !=="") {
+  //   setcomplete(true);
+  // }
 
   const addParty = () => {
     if (partyName === "" || mountValue==="" || mountAddValue==="" || dateValue==="" || timeValue==="" || numberValue==="" || partyContent==="") {
@@ -240,11 +245,17 @@ const PartyWrite = (props) => {
               
             </Grid>
             <Grid>
+            {complete ? 
             <Button 
-              bgColor="#C4C4C4" border="none" height="48px" margin="20px 0" radius="12px" 
+              bgColor="#43CA3B" border="none" height="48px" margin="20px 0" radius="8px" 
               _onClick={addParty}>
-              <Text margin="0" size="18px" bold="600" align>{is_edit ? "수정하기" : "작성하기"}</Text>
-            </Button>
+              <Text color="#fff" margin="0" size="18px" bold="600" align>{is_edit ? "수정 완료" : "작성 완료"}</Text>
+            </Button> : 
+            <Button 
+              bgColor="#E6E6E6" border="none" height="48px" margin="20px 0" radius="8px" 
+              _onClick={addParty}>
+              <Text margin="0" size="18px" bold="600" align>{is_edit ? "수정 완료" : "작성 완료"}</Text>
+            </Button>}
 
             </Grid>
           </Grid>
@@ -262,8 +273,8 @@ const PartyWrite = (props) => {
 
       </PartyContainer>
         
-        </Mobile>
-        <Desktop>
+    </Mobile>
+    <Desktop>
       <PartyContainer>
         <Header />
         <PartyWrap>
@@ -280,6 +291,7 @@ const PartyWrite = (props) => {
                 <Input 
                   width="100%" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 0 34.5px"
                   placeholder="모임의 이름은 무엇인가요?"
+                  value={partyName}
                   _onChange={inputName}/>}
               <Text margin="0 0 10px" size="16px" bold="600">세부 내용</Text>
               <Input 
@@ -401,11 +413,17 @@ const PartyWrite = (props) => {
               
             </Grid>
             <Grid>
+            {complete ? 
             <Button 
-              bgColor="#C4C4C4" border="none" height="48px" margin="20px 0" radius="12px" 
+              bgColor="#43CA3B" border="none" height="48px" margin="20px 0" radius="8px" 
               _onClick={addParty}>
-              <Text margin="0" size="18px" bold="600" align>{is_edit ? "수정하기" : "작성하기"}</Text>
-            </Button>
+              <Text color="#fff" margin="0" size="18px" bold="600" align>{is_edit ? "수정 완료" : "작성 완료"}</Text>
+            </Button> : 
+            <Button 
+              bgColor="#E6E6E6" border="none" height="48px" margin="20px 0" radius="8px" 
+              _onClick={addParty}>
+              <Text margin="0" size="18px" bold="600" align>{is_edit ? "수정 완료" : "작성 완료"}</Text>
+            </Button>}
 
             </Grid>
           </Grid>
@@ -415,7 +433,6 @@ const PartyWrite = (props) => {
         <ModalContainer>
           <SearchModal onClose={setIsOpen} selectMnt={selectMnt}/>
         </ModalContainer>}
-        
         <MenubarContainer>
           <Grid height="88px" maxWidth="500px" margin="auto">
             <Menubar menuColor={menuColor}/>
@@ -423,9 +440,9 @@ const PartyWrite = (props) => {
         </MenubarContainer>
 
       </PartyContainer>
-
-        </Desktop>
-    </React.Fragment>
+        
+    </Desktop>
+  </React.Fragment>
   );
 }
 

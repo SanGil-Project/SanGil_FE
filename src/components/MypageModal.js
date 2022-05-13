@@ -43,7 +43,20 @@ const MypageModal = (props) => {
     };
   };
 
-  const changeNickname = _.debounce((e) => {
+  // const changeNickname = _.debounce((e) => {
+  //   // 현 글자수 보여주기
+  //   setNameCount(e.target.value.length);
+  //   //  글자수 10자로 제한
+  //   if (e.target.value.length > 10) {
+  //     e.target.value = e.target.value.substr(0, 10);
+  //     setNickname(e.target.value.substr(0, 10));
+  //     // 10이상은 10으로 고정 (11 안나오게)
+  //     setNameCount(10);
+  //   }
+  //   setNickname(e.target.value)
+  // }, 1000);
+
+  const changeNickname = (e) => {
     // 현 글자수 보여주기
     setNameCount(e.target.value.length);
     //  글자수 10자로 제한
@@ -54,7 +67,7 @@ const MypageModal = (props) => {
       setNameCount(10);
     }
     setNickname(e.target.value)
-  }, 1000);
+  };
 
   const checkColor = checkData ? "#61D161" : "#6F6F6F";
   let checkType = true;
@@ -75,11 +88,6 @@ const MypageModal = (props) => {
       dispatch(userActions.nameCheckDB(nickname));
     }
   }, [nickname]);
-
-  // const selectMt = (data) => {
-  //   props.selectMnt(data);
-  //   onClose(false);
-  // }
 
   const changeName = () => {
     if (!checkData) {
@@ -106,7 +114,7 @@ const MypageModal = (props) => {
               type="circle"
               width="80px"
               height="80px"
-              margin="0 10px 0 11px"
+              margin="0 10px 0 0"
               src={img}/>
             <Editbtn>
               <Icon type="profileEdit" width="21px" height="21px" margin="0 auto" _onClick={()=> {setModalIsOpen(true); setNameCount(userInfo?.nickname?.length);}}/>
@@ -168,7 +176,7 @@ const MypageModal = (props) => {
                   </Label>
                   <input id='input_image' type="file" ref={fileInput} onChange={selectFile} style={{display:"none"}}/>
                 </UserProfile>
-                <Grid flexRow padding="10px 0 45px">
+                <Grid flexRow padding="10px 0 53px">
                   <UserName>
                     <Input width="140px" padding="0" border="none" bg="transparent" defaultValue={userInfo?.nickname} _onChange={changeNickname}/>
                     <Text margin="0 10px 0 0" bold="500" size="10px" color="#c4c4c4"> {nameCount}/10</Text>
@@ -182,9 +190,9 @@ const MypageModal = (props) => {
                 <TitleList>
                   {userTitleList?.map((t, idx) => {
                     const pick = (userInfo?.userTitle === t.userTitle) ? true : false;
-                    const img = (t.userTitleImgUrl === "없음") ? "https://user-images.githubusercontent.com/91959791/168119302-948f0dcf-8165-47af-8b6b-2f90f74aca06.png" : t.userTitleImgUrl;
+                    const img = (t.userTitleImgUrl === "없음") ? "https://user-images.githubusercontent.com/91959791/168312178-a06a5ceb-490f-4844-ab17-b8888de30e68.png" : t.userTitleImgUrl;
                     return (
-                      <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} width="auto">
+                      <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} width="auto" height="130px">
                         <TitleItem key={idx} title={t.userTitle} img={img} pick={pick} done/>
                       </Grid> 
                     );
@@ -192,8 +200,8 @@ const MypageModal = (props) => {
                   })}
                   {noTitleList?.map((t, idx) => {
                     return (
-                      <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} width="auto">
-                        <TitleItem key={idx} title={t.userTitle} img={t.userTitleImgUrl}/>
+                      <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} width="auto" height="130px">
+                        <TitleItem key={idx} title={t.userTitle} img={img}/>
                       </Grid>
                     );
                   })}
@@ -213,7 +221,7 @@ const Mainprofile = styled.div`
 const Editbtn = styled.div`
   position: absolute;
   top: 0;
-  left: 10px;
+  left: 0;
   cursor: pointer;
 `;
 
@@ -264,22 +272,22 @@ const TitleItem = (props) => {
   if(done) {
     return (
       <React.Fragment>
-        <Grid padding="2px" flexColumn width="82px" margin="0 12px 12px 0" radius="4px" hover>
+        <Grid flexColumn width="70px" margin="0 12px 0 0" radius="4px" hover justify="flex-start">
         {pick ? 
           <Image
             width="70px"
             height="70px"
             bg="#fff"
             border="2px solid #000000"
-            borderRadius="12px"
+            borderRadius="64px"
             src={img}/> : 
           <Image
             width="70px"
             height="70px" 
             bg="#fff"
-            borderRadius="12px"
+            borderRadius="64px"
             src={img}/>}
-          <Text margin="5px 0 0 0" size="10px" bold="500" align="center">{title}</Text>
+          <Text width="70px" margin="5px 0 0 0" size="10px" bold="500" align="center">{title}</Text>
         </Grid>
       </React.Fragment>
     );
@@ -287,18 +295,12 @@ const TitleItem = (props) => {
 
   return (
     <React.Fragment>
-      <Grid padding="2px" flexColumn width="82px" margin="0 12px 12px 0" radius="4px">
-        {/* <Image
-          width="70px"
-          height="70px" 
-          bg="#C4C4C4"
-          borderRadius="12px"
-          src={img}/> */}
+      <Grid flexColumn width="70px" margin="0 12px 0 0" radius="4px" justify="flex-start">
         <Grid width="70px"
           height="70px" 
           bg="#C4C4C4"
-          radius="12px"></Grid>
-        <Text margin="5px 0 0 0" size="10px" bold="500" color="#D2D2D2" align="center">{title}</Text>
+          radius="64px"></Grid>
+        <Text width="70px" margin="5px 0 0 0" size="10px" bold="500" color="#D2D2D2" align="center">{title}</Text>
       </Grid>
     </React.Fragment>
   );
