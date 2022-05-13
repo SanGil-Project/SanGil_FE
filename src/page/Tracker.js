@@ -23,6 +23,7 @@ const Tracker = (props) => {
   const polylinePath = useSelector(
     (state) => state.tracker?.polylinePath.polylinePath
   );
+  // console.log(polylinePath);
   const [myLoca, setMyLoca] = useState({ lat: "", lng: "" });
   const [completedId, setCompletedId] = useState();
   const [distance, setDistance] = useState({ distanceM: 0.0, distanceK: 0.0 });
@@ -61,6 +62,7 @@ const Tracker = (props) => {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           });
+          console.log(myLoca);
           if (time.isStart === true && completedId) {
             dispatch(setPathDB(completedId, myLoca));
             dispatch(setPath(myLoca));
@@ -75,7 +77,7 @@ const Tracker = (props) => {
       }
     }, 1000);
     return () => clearTimeout(path.current);
-  }, []);
+  }, [time]);
 
   const start = () => {
     acquireWakeLock();
@@ -239,7 +241,7 @@ const Tracker = (props) => {
         <Grid width="500px" margin="0 auto">
           <Header />
           <Grid height="64px" />
-          <Grid height="1016px">
+          <Grid height="1016px" bg="#fff">
             <KakaoMap
               width="100%"
               height="70%"
@@ -250,7 +252,7 @@ const Tracker = (props) => {
               polylinePath={polylinePath}
             />
             <Grid
-              width="412px"
+              width="414px"
               bg="#fff"
               height="30%"
               padding="16px 0 0 0"
@@ -265,6 +267,7 @@ const Tracker = (props) => {
                 isFlex
                 margin="20px auto 0 auto"
               >
+                {/* 이 부분 고칠 것 : 먼저 발견하신 분은 천누리에게 문의 */}
                 <Text width="100px" align="center" color="#C4C4C4">
                   이동한 거리
                 </Text>
@@ -284,12 +287,7 @@ const Tracker = (props) => {
                 </Grid>
               </Grid>
 
-              <Grid
-                border="1px solid black"
-                width="342px"
-                height="48px"
-                margin="20px auto"
-              >
+              <Grid width="342px" height="48px" margin="20px auto">
                 {time.isStart ? (
                   <>
                     <Button

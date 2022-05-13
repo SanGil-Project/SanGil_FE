@@ -117,7 +117,12 @@ const Login = (props) => {
 
       <Desktop>
         <Grid>
-          <Grid border="1px solid black" width="414px" margin="0 auto">
+          <Grid
+            bg="#fff"
+            border="1px solid black"
+            width="414px"
+            margin="0 auto"
+          >
             <Text
               width="35px"
               height="50px"
