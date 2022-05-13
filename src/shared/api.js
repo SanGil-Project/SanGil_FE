@@ -4,6 +4,10 @@ const token = sessionStorage.getItem("token");
 
 const instance = axios.create({
   baseURL: "http://3.35.49.228",
+  // baseURL: "https://3.36.113.119",
+  // baseURL: "https://burgerrr.shop/",
+  // baseURL: "https://ehjeong.shop/",
+  // baseURL: "https://산길.com",
   headers: {
     Authorization: token,
     "content-type": "application/json;charset=UTF-8",

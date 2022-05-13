@@ -26,7 +26,7 @@ const Header = () => {
       <>
         <Mobile>
           <Grid
-            maxWidth="500px"
+            width="100vw"
             height="64px"
             bg="#C4C4C4"
             position="fixed"
@@ -58,12 +58,7 @@ const Header = () => {
         </Mobile>
 
         <Desktop>
-          <Grid
-            maxWidth="500px"
-            height="64px"
-            bg="#C4C4C4"
-            position="fixed"
-          >
+          <Grid maxWidth="500px" height="64px" bg="#C4C4C4" position="fixed">
             <Grid margin="0 0 0 39.25%" maxWidth="280px" isFlex>
               <Grid
                 maxWidth="89px"
@@ -128,12 +123,7 @@ const Header = () => {
       </Mobile>
 
       <Desktop>
-        <Grid
-          maxWidth="500px"
-          height="64px"
-          bg="#C4C4C4"
-          position="fixed"
-        >
+        <Grid maxWidth="500px" height="64px" bg="#C4C4C4" position="fixed">
           <Grid margin="0 0 0 39.25%" maxWidth="280px" isFlex>
             <Grid
               maxWidth="89px"
