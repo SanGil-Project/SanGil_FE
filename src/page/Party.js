@@ -4,8 +4,6 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as partyActions } from '../redux/modules/party';
 
-import { history } from "../redux/configureStore";
-
 import { Desktop, Mobile } from "../shared/responsive";
 import {
   Menubar,
@@ -20,13 +18,14 @@ const Party = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const partyList = useSelector((state) => state?.party?.partyList);
-  console.log(partyList);
+  const partydata = useSelector((state) => state?.party?.list);
+  const partyList = partydata?.partyList
 
   React.useEffect(() => {
-    if (partyList?.length < 2) {
-      dispatch(partyActions.getPartyDB());
-    }
+    dispatch(partyActions.getPartyDB(1));
+    // if (partyList?.length < 2) {
+    //   dispatch(partyActions.getPartyDB(1));
+    // }
   }, []);
 
   const moveDetail = (partyId, completed) => {
@@ -36,239 +35,240 @@ const Party = (props) => {
       navigate(`/partydetail/${partyId}`);
     }
   }
+  console.log(partyList)
 
   return (
     <React.Fragment>
       <Mobile>
-      <PartyContainer>
-        <Header />
-        <PartyWrap>
-          <Grid padding="96px 14px 100px">
-            {partyList?.map((p, idx) => {
-              const bg = p.completed ? "#E6E6E6" : "#C4C4C4";
-              const btnText = p.completed ? "모집내용확인" : "마감 되었어요😢";
-              const curPeople = p.curPeople ? p.curPeople : 0;
-              return (
-                <Grid
-                  key={idx}
-                  bg={bg}
-                  radius="16px"
-                  padding="17px 16px"
-                  margin="0 0 24px"
-                  flexColumn
-                >
-                  <Grid alignItems="left">
-                    <Text margin="0 0 18px" bold="500">
-                      {p.title}
-                    </Text>
-                    <Grid flexRow justify="left" padding="0 0 10px">
-                      <Grid width="18px">
-                        <Icon
-                          type="partyMountain"
-                          width="18px"
-                          height="17px"
-                          margin="0 auto"
-                        />
-                      </Grid>
-                      <Text margin="0 12px" bold="500" size="14px">
-                        {p.mountain} ({p.address})
+        <PartyContainer>
+          <Header />
+          <PartyWrap>
+            <Grid padding="96px 14px 100px">
+              {partyList?.map((p, idx) => {
+                console.log(p)
+                const btnBg = p.completed ? "#43CA3B" : "#E6E6E6";
+                const btnColor = p.completed ? "#fff" : "#000";
+                const btnText = p.completed ? "모집내용확인" : "마감 되었어요😢";
+                const curPeople = p.curPeople ? p.curPeople : 0;
+                return (
+                  <Grid
+                    key={idx}
+                    bg="#fff"
+                    shadow="1px 3px 10px rgba(69, 69, 69, 0.2)"
+                    radius="16px"
+                    height="230px"
+                    padding="17px 16px"
+                    margin="0 0 24px"
+                    flexColumn
+                  >
+                    <Grid alignItems="left" height="auto">
+                      <Text margin="0 0 18px" bold="500">
+                        {p.title}
                       </Text>
+                      <Grid flexRow justify="left" padding="0 0 10px" height="auto">
+                        <Grid width="18px">
+                          <Icon
+                            type="partyMountain"
+                            width="18px"
+                            height="17px"
+                            margin="0 auto"
+                          />
+                        </Grid>
+                        <Text margin="0 12px" bold="500" size="14px" height="auto">
+                          {p.mountain} ({p.address})
+                        </Text>
+                      </Grid>
+                      <Grid flexRow justify="left" padding="0 0 10px" height="auto">
+                        <Grid width="18px">
+                          <Icon
+                            type="partyDate"
+                            width="15px"
+                            height="17px"
+                            margin="0 auto"
+                          />
+                        </Grid>
+                        <Text margin="0 12px" bold="500" size="14px">
+                          {p.partyDate} (시간 {p.partyTime})
+                        </Text>
+                      </Grid>
+                      <Grid flexRow justify="left" padding="0" height="auto">
+                        <Grid width="18px">
+                          <Icon
+                            type="partyPeople"
+                            width="16px"
+                            height="16px"
+                            margin="0 auto"
+                          />
+                        </Grid>
+                        <Text margin="0 12px" bold="500" size="14px">
+                          {curPeople}/{p.maxPeople}명
+                        </Text>
+                      </Grid>
                     </Grid>
-                    <Grid flexRow justify="left" padding="0 0 10px">
-                      <Grid width="18px">
-                        <Icon
-                          type="partyDate"
-                          width="15px"
-                          height="17px"
-                          margin="0 auto"
-                        />
-                      </Grid>
-                      <Text margin="0 12px" bold="500" size="14px">
-                        {p.partyDate} (시간 {p.partyTime})
-                      </Text>
-                    </Grid>
-                    <Grid flexRow justify="left" padding="0 0 10px">
-                      <Grid width="18px">
-                        <Icon
-                          type="partyPeople"
-                          width="16px"
-                          height="16px"
-                          margin="0 auto"
-                        />
-                      </Grid>
-                      <Text margin="0 12px" bold="500" size="14px">
-                        {curPeople}/{p.maxPeople}명
-                      </Text>
+                    <Grid flexColumn padding="27px 0 0">
+                      <Button
+                        type="div"
+                        bgColor={btnBg}
+                        border="none"
+                        radius="8px"
+                        width="170px"
+                        height="48px"
+                        margin="20px 0 0"
+                        _onClick={() => {
+                          moveDetail(p.partyId, p.completed);
+                        }}
+                      >
+                        <Text margin="0" align color={btnColor}>
+                          {btnText}
+                        </Text>
+                      </Button>
                     </Grid>
                   </Grid>
-                  <Button
-                    bgColor="#fff"
-                    border="none"
-                    width="170px"
-                    height="48px"
-                    margin="20px 0 0"
-                    _onClick={() => {
-                      moveDetail(p.partyId, p.completed);
-                    }}
-                  >
-                    <Text margin="0" align>
-                      {btnText}
-                    </Text>
-                  </Button>
-                </Grid>
-              );
-            })}
-          </Grid>
-        </PartyWrap>
-        {/* <CreatPartyBtn>
-          <Button
-            bgColor="#48E988"
-            border="none"
-            width="105px"
-            height="45px"
-            radius="16px"
-            shadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-            _onClick={() => {
-              navigate(`/partywrite`);
-            }}
-          >
-            <Text margin="0" align size="14px">
-              모임 만들기
-            </Text>
-          </Button>
-        </CreatPartyBtn> */}
+                );
+              })}
+            </Grid>
+          </PartyWrap>
 
-        <MenubarContainer>
-          <Grid height="88px" maxWidth="500px" margin="auto">
+          <MenubarContainer>
+            <Grid height="88px" maxWidth="500px" margin="auto">
 
-            <CreatPartyBtn>
-              <Button
-                bgColor="#48E988"
-                border="none"
-                width="105px"
-                height="45px"
-                radius="16px"
-                shadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-                _onClick={() => {
-                  navigate(`/partywrite`);
-                }}
-              >
-                <Text margin="0" align size="14px">
-                  모임 만들기
-                </Text>
-              </Button>
-            </CreatPartyBtn>
-            <Menubar menuColor={menuColor} />
-          </Grid>
-        </MenubarContainer>
-      </PartyContainer>
-
+              <CreatPartyBtn>
+                <Button
+                  bgColor="#48E988"
+                  border="none"
+                  width="105px"
+                  height="45px"
+                  radius="16px"
+                  shadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+                  _onClick={() => {
+                    navigate(`/partywrite`);
+                  }}
+                >
+                  <Text margin="0" align size="14px">
+                    모임 만들기
+                  </Text>
+                </Button>
+              </CreatPartyBtn>
+              <Menubar menuColor={menuColor} />
+            </Grid>
+          </MenubarContainer>
+        </PartyContainer>
       </Mobile>
+
       <Desktop>
-      <PartyContainer>
-        <Header />
-        <PartyWrap>
-          <Grid padding="96px 14px 100px">
-            {partyList?.map((p, idx) => {
-              const bg = p.completed ? "#E6E6E6" : "#C4C4C4";
-              const btnText = p.completed ? "모집내용확인" : "마감 되었어요😢";
-              const curPeople = p.curPeople ? p.curPeople : 0;
-              return (
-                <Grid
-                  key={idx}
-                  bg={bg}
-                  radius="16px"
-                  padding="17px 16px"
-                  margin="0 0 24px"
-                  flexColumn
-                >
-                  <Grid alignItems="left">
-                    <Text margin="0 0 18px" bold="500">
-                      {p.title}
-                    </Text>
-                    <Grid flexRow justify="left" padding="0 0 10px">
-                      <Grid width="18px">
-                        <Icon
-                          type="partyMountain"
-                          width="18px"
-                          height="17px"
-                          margin="0 auto"
-                        />
-                      </Grid>
-                      <Text margin="0 12px" bold="500" size="14px">
-                        {p.mountain} ({p.address})
+        <PartyContainer>
+          <Header />
+          <PartyWrap>
+            <Grid padding="96px 14px 100px">
+              {partyList?.map((p, idx) => {
+                console.log(p)
+                const btnBg = p.completed ? "#43CA3B" : "#E6E6E6";
+                const btnColor = p.completed ? "#fff" : "#000";
+                const btnText = p.completed ? "모집내용확인" : "마감 되었어요😢";
+                const curPeople = p.curPeople ? p.curPeople : 0;
+                return (
+                  <Grid
+                    key={idx}
+                    bg="#fff"
+                    shadow="1px 3px 10px rgba(69, 69, 69, 0.2)"
+                    radius="16px"
+                    height="230px"
+                    padding="17px 16px"
+                    margin="0 0 24px"
+                    flexColumn
+                  >
+                    <Grid alignItems="left" height="auto">
+                      <Text margin="0 0 18px" bold="500">
+                        {p.title}
                       </Text>
+                      <Grid flexRow justify="left" padding="0 0 10px" height="auto">
+                        <Grid width="18px">
+                          <Icon
+                            type="partyMountain"
+                            width="18px"
+                            height="17px"
+                            margin="0 auto"
+                          />
+                        </Grid>
+                        <Text margin="0 12px" bold="500" size="14px" height="auto">
+                          {p.mountain} ({p.address})
+                        </Text>
+                      </Grid>
+                      <Grid flexRow justify="left" padding="0 0 10px" height="auto">
+                        <Grid width="18px">
+                          <Icon
+                            type="partyDate"
+                            width="15px"
+                            height="17px"
+                            margin="0 auto"
+                          />
+                        </Grid>
+                        <Text margin="0 12px" bold="500" size="14px">
+                          {p.partyDate} (시간 {p.partyTime})
+                        </Text>
+                      </Grid>
+                      <Grid flexRow justify="left" padding="0" height="auto">
+                        <Grid width="18px">
+                          <Icon
+                            type="partyPeople"
+                            width="16px"
+                            height="16px"
+                            margin="0 auto"
+                          />
+                        </Grid>
+                        <Text margin="0 12px" bold="500" size="14px">
+                          {curPeople}/{p.maxPeople}명
+                        </Text>
+                      </Grid>
                     </Grid>
-                    <Grid flexRow justify="left" padding="0 0 10px">
-                      <Grid width="18px">
-                        <Icon
-                          type="partyDate"
-                          width="15px"
-                          height="17px"
-                          margin="0 auto"
-                        />
-                      </Grid>
-                      <Text margin="0 12px" bold="500" size="14px">
-                        {p.partyDate} (시간 {p.partyTime})
-                      </Text>
-                    </Grid>
-                    <Grid flexRow justify="left" padding="0 0 10px">
-                      <Grid width="18px">
-                        <Icon
-                          type="partyPeople"
-                          width="16px"
-                          height="16px"
-                          margin="0 auto"
-                        />
-                      </Grid>
-                      <Text margin="0 12px" bold="500" size="14px">
-                        {curPeople}/{p.maxPeople}명
-                      </Text>
+                    <Grid flexColumn padding="27px 0 0">
+                      <Button
+                        type="div"
+                        bgColor={btnBg}
+                        border="none"
+                        radius="8px"
+                        width="170px"
+                        height="48px"
+                        margin="20px 0 0"
+                        _onClick={() => {
+                          moveDetail(p.partyId, p.completed);
+                        }}
+                      >
+                        <Text margin="0" align color={btnColor}>
+                          {btnText}
+                        </Text>
+                      </Button>
                     </Grid>
                   </Grid>
-                  <Button
-                    bgColor="#fff"
-                    border="none"
-                    width="170px"
-                    height="48px"
-                    margin="20px 0 0"
-                    _onClick={() => {
-                      moveDetail(p.partyId, p.completed);
-                    }}
-                  >
-                    <Text margin="0" align>
-                      {btnText}
-                    </Text>
-                  </Button>
-                </Grid>
-              );
-            })}
-          </Grid>
-        </PartyWrap>
+                );
+              })}
+            </Grid>
+          </PartyWrap>
 
-        <MenubarContainer>
-          <Grid height="88px" maxWidth="500px" margin="auto">
-            <CreatPartyBtn>
-              <Button
-                bgColor="#48E988"
-                border="none"
-                width="105px"
-                height="45px"
-                radius="16px"
-                shadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-                _onClick={() => {
-                  navigate(`/partywrite`);
-                }}
-              >
-                <Text margin="0" align size="14px">
-                  모임 만들기
-                </Text>
-              </Button>
-            </CreatPartyBtn>
-            <Menubar menuColor={menuColor} />
-          </Grid>
-        </MenubarContainer>
-      </PartyContainer>
+          <MenubarContainer>
+            <Grid height="88px" maxWidth="500px" margin="auto">
+
+              <CreatPartyBtn>
+                <Button
+                  bgColor="#48E988"
+                  border="none"
+                  width="105px"
+                  height="45px"
+                  radius="16px"
+                  shadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+                  _onClick={() => {
+                    navigate(`/partywrite`);
+                  }}
+                >
+                  <Text margin="0" align size="14px">
+                    모임 만들기
+                  </Text>
+                </Button>
+              </CreatPartyBtn>
+              <Menubar menuColor={menuColor} />
+            </Grid>
+          </MenubarContainer>
+        </PartyContainer>
       </Desktop>
     </React.Fragment>
   );
@@ -300,8 +300,8 @@ const MenubarContainer = styled.div`
 
 const CreatPartyBtn = styled.div`
   
-  // // position: fixed;
-  position: absolute;
+  position: fixed;
+  // position: absolute;
   left: calc(50% + 130px);
   bottom: 110px;
   // right: 5%;

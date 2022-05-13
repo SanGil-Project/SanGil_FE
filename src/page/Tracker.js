@@ -1,24 +1,33 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import KakaoMap from "../components/KakaoMap";
 import { Grid, Button, Text, Icon, Input } from "../elements/element";
 import { Header } from "../components/component";
 import { Desktop, Mobile } from "../shared/responsive";
-import { startDB, endClimbDB, deleteDB } from "../redux/modules/tracker";
+import {
+  startDB,
+  endClimbDB,
+  deleteDB,
+  setPathDB,
+  setPath,
+} from "../redux/modules/tracker";
 import { useDispatch, useSelector } from "react-redux";
 import StopWatch from "../components/StopWatch";
 import { useNavigate, useParams } from "react-router";
-import { setPathDB, setPath } from "./../redux/modules/tracker";
+import _ from "lodash";
 
 const Tracker = (props) => {
   const { name, mountainId } = useParams();
   const navigate = useNavigate();
-  const distance = useSelector((state) => state.tracker.distance);
-  const [completedId, setCompletedId] = React.useState();
-  const [myLoca, setMyLoca] = React.useState();
-  const [time, setTime] = React.useState({
-    s: 0,
-    m: 0,
-    h: 0,
+  const dispatch = useDispatch();
+  const _distance = useSelector((state) => state.tracker.distance);
+  const polylinePath = useSelector(
+    (state) => state.tracker?.polylinePath.polylinePath
+  );
+  const [myLoca, setMyLoca] = useState({ lat: "", lng: "" });
+  const [completedId, setCompletedId] = useState();
+  const [distance, setDistance] = useState({ distanceM: 0.0, distanceK: 0.0 });
+  const [time, setTime] = useState({
+    stopwatch: { s: 0, m: 0, h: 0 },
     isStart: false,
   });
 
@@ -43,291 +52,175 @@ const Tracker = (props) => {
   };
 
   const path = useRef();
-  const polylinePath = useSelector((state) => state.tracker.polylinePath.polylinePath);
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    if (navigator.geolocation) {
-      // console.log("이게1");
-      navigator.geolocation.getCurrentPosition((position) => {
-        setMyLoca({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-      });
-    }
-  }, []);
 
   useEffect(() => {
     path.current = setTimeout(() => {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            setMyLoca({
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            });
-            if (time.isStart && completedId) {
-              dispatch(setPathDB(completedId, myLoca));
-              dispatch(setPath(myLoca));
+        navigator.geolocation.getCurrentPosition((position) => {
+          setMyLoca({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+          if (time.isStart === true && completedId) {
+            dispatch(setPathDB(completedId, myLoca));
+            dispatch(setPath(myLoca));
+            if (_distance?.distanceM) {
+              setDistance((prev) => ({
+                distanceM: (prev.distanceM += parseFloat(_distance?.distanceM)),
+                distanceK: (prev.distanceK += parseFloat(_distance?.distanceK)),
+              }));
             }
-          },
-          (err) => {
-            alert("에러: ", err);
           }
-        );
+        });
       }
     }, 1000);
     return () => clearTimeout(path.current);
-  }, [myLoca, time.isStart]);
+  }, []);
 
-  const startCal = async () => {
+  const start = () => {
     acquireWakeLock();
-    await dispatch(startDB(mountainId, setCompletedId));
-    // dispatch(setPathDB(completedId, myLoca));
-    setTime({ ...time, isStart: true });
-  };
-
-  const reStart = () => {
-    acquireWakeLock();
-    // dispatch(setPathDB(completedId, myLoca));
+    dispatch(startDB(mountainId, setCompletedId));
     setTime({ ...time, isStart: true });
   };
 
   const pause = () => {
-    console.log(completedId);
+    releaseWakeLock();
     setTime({ ...time, isStart: false });
   };
 
-  const stop = (distance, endTime) => {
-    releaseWakeLock();
-    if (time.h !== 0 || time.m >= 3) {
-      dispatch(
-        endClimbDB(completedId, {
-          totalDistance: distance,
-          totalTime: `${time.h}시간 ${time.m}분 ${time.s}초`,
-        })
-      );
-      navigate(`/endtracking/${name}`, {
-        state: { distance: distance, time: endTime },
-      });
-      setTime({ ...time, s: 0, m: 0, h: 0, distance: 0, isStart: false });
-    } else if (time.h === 0 && time.m < 3) {
-      if (window.confirm("10분 미만의 등산은 기록되지 않습니다") === true) {
+  const reStart = () => {
+    acquireWakeLock();
+    setTime({ ...time, isStart: true });
+  };
+
+  const endClimb = () => {
+    if (
+      time.stopwatch.s + time.stopwatch.m * 60 + time.stopwatch.h * 3600 <
+      600
+    ) {
+      if (window.confirm("10분 미만의 등산은 기록되지 않습니다.") === true) {
         dispatch(deleteDB(completedId));
-        setTime({ ...time, s: 0, m: 0, h: 0, distance: 0, isStart: false });
-        navigate("/", { replace: true });
+        setTime({
+          stopwatch: { s: 0, m: 0, h: 0 },
+          isStart: false,
+        });
+        setDistance({ distanceM: 0.0, distanceK: 0.0 });
+        setCompletedId();
+        releaseWakeLock();
+        // navigate("/", { replace: true });
+      }
+    } else {
+      if (window.confirm("겨우 이거하고 등산 완료?") === true) {
+        dispatch(
+          endClimbDB(completedId, {
+            totalDistance: distance.distanceK,
+            totalTime: `${time.stopwatch.h}시간 ${time.stopwatch.m}분 ${time.stopwatch.s}초`,
+          })
+        );
+        setTime({
+          stopwatch: { s: 0, m: 0, h: 0 },
+          isStart: false,
+        });
+        setDistance({ distanceM: 0.0, distanceK: 0.0 });
+        setCompletedId();
+        releaseWakeLock();
+        navigate(`/endtracking/${name}`, {
+          state: { time: time.stopwatch, distance: distance.distanceK },
+        });
       }
     }
   };
 
   return (
     <>
-      <Mobile>
-        <Grid width="100vw" margin="0 auto">
-          <Header />
-          <Grid height="100vh">
-            <KakaoMap
-              width="100%"
-              height="70%"
-              level="3"
-              margin="0"
-              myLoca={myLoca}
-              zoomable={false}
-              polylinePath={polylinePath}
-            />
-            <Grid width="99.5%" bg="#fff" height="30%" padding="16px 0 0 0">
-              <Text align="center" size="2rem" bold="600" margin="0 0 19px 0">
-                {name}
+      <Grid width="500px" margin="0 auto">
+        <Header />
+        <Grid height="64px" />
+        <Grid height="1016px">
+          <KakaoMap
+            width="100%"
+            height="70%"
+            level="3"
+            margin="0"
+            zoomable={false}
+            myLoca={myLoca}
+            polylinePath={polylinePath}
+          />
+          <Grid width="412px" bg="#fff" height="30%" padding="16px 0 0 0">
+            <Text align="center" size="2rem" bold="600" margin="0 0 19px 0">
+              {name}
+            </Text>
+            <Grid width="250px" height="19px" isFlex margin="20px auto 0 auto">
+              <Text width="100px" align="center" color="#C4C4C4">
+                이동한 거리
               </Text>
-              <Grid
-                width="60.67%"
-                height="19px"
-                isFlex
-                margin="20px auto 0 auto"
-              >
-                <Text width="40%" align="center" color="#C4C4C4">
-                  이동한 거리
-                </Text>
-                <Text width="30.27%" align="center" color="#C4C4C4">
-                  소요 시간
-                </Text>
+              <Text width="100px" align="center" color="#C4C4C4">
+                소요 시간
+              </Text>
+            </Grid>
+            <Grid width="260px" height="30px" isFlex margin="5px auto 0 auto">
+              <Text margin="0 0 0 30px">
+                <span style={{ fontSize: "2.5rem" }}>{distance.distanceK}</span>
+                km
+              </Text>
+              <Grid width="100px" textAlign lineHeight="25px">
+                <StopWatch size="2.5rem" time={time} setTime={setTime} />
               </Grid>
-              <Grid
-                width="40.52%"
-                height="30px"
-                isFlex
-                margin="5px auto 0 auto"
-              >
-                <Text>
-                  <span style={{ fontSize: "2.5rem" }}>
-                    {distance?.distanceK ? distance.distanceK : `0.00`}
-                  </span>
-                  km
-                </Text>
-                <Grid width="14.27%" textAlign lineHeight="25px">
-                  <StopWatch time={time} setTime={setTime} size="2.5rem" />
-                </Grid>
-              </Grid>
+            </Grid>
 
-              <Grid width="82.76%" height="48px" margin="20px auto">
-                {time.isStart ? (
-                  <>
-                    <Button
-                      border="none"
-                      bgColor="#6F6F6F"
-                      color="#fff"
-                      maxWidth="48.53%"
-                      height="48px"
-                      radius="12px"
-                      margin="0 5px"
-                      _onClick={pause}
-                    >
-                      잠시 쉬기
-                    </Button>
-                    <Button
-                      bgColor="black"
-                      color="#fff"
-                      maxWidth="48.53%"
-                      height="48px"
-                      radius="12px"
-                      _onClick={stop}
-                    >
-                      등산 완료
-                    </Button>
-                  </>
-                ) : time.s === 0 ? (
+            <Grid width="342px" height="48px" margin="20px auto">
+              {time.isStart ? (
+                <>
+                  <Button
+                    border="none"
+                    bgColor="#6F6F6F"
+                    color="#fff"
+                    width="166px"
+                    height="48px"
+                    radius="12px"
+                    margin="0 5px"
+                    _onClick={pause}
+                  >
+                    잠시 쉬기
+                  </Button>
                   <Button
                     bgColor="black"
                     color="#fff"
-                    width="100%"
+                    width="166px"
                     height="48px"
                     radius="12px"
-                    _onClick={startCal}
+                    _onClick={endClimb}
                   >
-                    등산 시작
+                    등산 완료
                   </Button>
-                ) : (
-                  <Button
-                    bgColor="black"
-                    color="#fff"
-                    width="100%"
-                    height="48px"
-                    radius="12px"
-                    _onClick={reStart}
-                  >
-                    다시 출발
-                  </Button>
-                )}
-              </Grid>
+                </>
+              ) : !completedId ? (
+                <Button
+                  bgColor="black"
+                  color="#fff"
+                  width="100%"
+                  height="48px"
+                  radius="12px"
+                  _onClick={start}
+                >
+                  등산 시작
+                </Button>
+              ) : (
+                <Button
+                  bgColor="black"
+                  color="#fff"
+                  width="100%"
+                  height="48px"
+                  radius="12px"
+                  _onClick={reStart}
+                >
+                  다시 출발
+                </Button>
+              )}
             </Grid>
           </Grid>
         </Grid>
-      </Mobile>
-
-      {/* 데스크탑 */}
-      <Desktop>
-        <Grid border="1px solid black" width="414px" margin="0 auto">
-          <Header />
-          <Grid height="1080px">
-            <KakaoMap
-              width="100%"
-              height="70%"
-              level="3"
-              margin="0"
-              myLoca={myLoca}
-              zoomable={false}
-              polylinePath={polylinePath}
-            />
-            <Grid width="412px" bg="#fff" height="30%" padding="16px 0 0 0">
-              <Text align="center" size="2rem" bold="600" margin="0 0 19px 0">
-                {name}
-              </Text>
-              <Grid
-                width="250px"
-                height="19px"
-                isFlex
-                margin="20px auto 0 auto"
-              >
-                <Text width="100px" align="center" color="#C4C4C4">
-                  이동한 거리
-                </Text>
-                <Text width="100px" align="center" color="#C4C4C4">
-                  소요 시간
-                </Text>
-              </Grid>
-              <Grid width="260px" height="30px" isFlex margin="5px auto 0 auto">
-                <Text margin="0 0 0 30px">
-                  <span style={{ fontSize: "2.5rem" }}>
-                    {distance?.distanceK ? distance.distanceK : `0.00`}
-                  </span>
-                  km
-                </Text>
-                <Grid width="100px" textAlign lineHeight="25px">
-                  <StopWatch time={time} setTime={setTime} size="2.5rem" />
-                </Grid>
-              </Grid>
-
-              <Grid width="342px" height="48px" margin="20px auto">
-                {time.isStart ? (
-                  <>
-                    <Button
-                      border="none"
-                      bgColor="#6F6F6F"
-                      color="#fff"
-                      width="166px"
-                      height="48px"
-                      radius="12px"
-                      margin="0 5px"
-                      _onClick={pause}
-                    >
-                      잠시 쉬기
-                    </Button>
-                    <Button
-                      bgColor="black"
-                      color="#fff"
-                      width="166px"
-                      height="48px"
-                      radius="12px"
-                      _onClick={() =>
-                        stop(distance?.distanceK, {
-                          s: time.s,
-                          m: time.m,
-                          h: time.h,
-                        })
-                      }
-                    >
-                      등산 완료
-                    </Button>
-                  </>
-                ) : time.s === 0 ? (
-                  <Button
-                    bgColor="black"
-                    color="#fff"
-                    width="100%"
-                    height="48px"
-                    radius="12px"
-                    _onClick={startCal}
-                  >
-                    등산 시작
-                  </Button>
-                ) : (
-                  <Button
-                    bgColor="black"
-                    color="#fff"
-                    width="100%"
-                    height="48px"
-                    radius="12px"
-                    _onClick={reStart}
-                  >
-                    다시 출발
-                  </Button>
-                )}
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Desktop>
+      </Grid>
     </>
   );
 };

@@ -118,7 +118,6 @@ export default handleActions(
           ...draft.feedList.feedList[idx],
           goodStatus: action.payload.data.goodStatus,
         };
-        console.log(state.feedList.feedList[idx].goodStatus);
       }),
   },
   initialState

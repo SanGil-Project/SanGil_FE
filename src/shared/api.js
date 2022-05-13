@@ -5,9 +5,9 @@ const token = sessionStorage.getItem("token");
 const instance = axios.create({
   baseURL: "http://3.35.49.228",
   headers: {
+    Authorization: token,
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
-    Authorization: token,
   },
 });
 
@@ -50,6 +50,7 @@ export const api = {
     }),
   myTracking: () => instance.get("/api/mypages/tracking"),
   myTitle: () => instance.get("/api/mypages/userTitle"),
+  myFeed: (pageNum) => instance.get(`/api/myfeeds/${pageNum}`),
   myBookmark: (lat, lng) =>
     instance.get(`/api/mypages/bookmark?lat=${lat}&lng=${lng}`),
   changeTitle: (userTitle) =>
@@ -63,6 +64,10 @@ export const api = {
   getTopList: () => instance.get("/api/mountain/search/before"),
   getDetail: (mountainId, pageNum) =>
     instance.get(`/api/mountain/${mountainId}/${pageNum}`),
+  addComment: (mountainId, commentData) =>
+    instance.post(`/api/mountain/comment/${mountainId}`, commentData),
+  deleteComment: (mountainCommentId) =>
+    instance.delete(`/api/mountain/comment/${mountainCommentId}`),
 
   // party.js
   getMyParty: () => instance.get("/api/plan"),
