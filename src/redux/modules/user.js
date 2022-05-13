@@ -7,6 +7,7 @@ const LOGOUT = "LOGOUT";
 const ISLOGIN = "ISLOGIN";
 const MY_TRACK = "MY_TRACK";
 const MY_TITLE = "MY_TITLE";
+const MY_FEED = "MY_FEED";
 const MY_BOOKMARK = "MY_BOOKMARK";
 const NAMECHECK = "NAMECHECK";
 const CHANGE_INFO = "CHANGE_INFO";
@@ -15,6 +16,7 @@ const logIn = createAction(LOGIN, (userInfo) => ({ userInfo }));
 const logOut = createAction(LOGOUT, (userInfo) => ({ userInfo }));
 const isLogin = createAction(ISLOGIN, (token) => ({ token }));
 const myTracking = createAction(MY_TRACK, (trackList) => ({ trackList }));
+const myFeed = createAction(MY_FEED, (feedList) => ({ feedList }));
 const myTitle = createAction(MY_TITLE, (titleList) => ({ titleList }));
 const myBookmark = createAction(MY_BOOKMARK, (mountList) => ({ mountList }));
 const nameCheck = createAction(NAMECHECK, (check) => ({ check }));
@@ -185,6 +187,20 @@ const myTrackingDB = () => {
   };
 };
 
+const myFeedDB = (pageNum) => {
+  return function (dispatch, getState) {
+    api
+      .myFeed(pageNum)
+      .then((res) => {
+        console.log("(myFeed) 성공 후 데이터 ::", res);
+        dispatch(myFeed(res.data));
+      })
+      .catch((err) => {
+        console.log("(myFeed) 실패 ::", err);
+      });
+  };
+};
+
 const myBookmarkDB = (lat, lng) => {
   return function (dispatch, getState) {
     api
@@ -228,6 +244,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.titleList = action.payload.titleList;
       }),
+    [MY_FEED]: (state, action) =>
+      produce(state, (draft) => {
+        draft.feedList = action.payload.feedList;
+      }),
     [MY_BOOKMARK]: (state, action) =>
       produce(state, (draft) => {
         draft.mountList = action.payload.mountList;
@@ -261,4 +281,5 @@ export const actionCreators = {
   changeTitleDB,
   myBookmarkDB,
   changeImgDB,
+  myFeedDB,
 };

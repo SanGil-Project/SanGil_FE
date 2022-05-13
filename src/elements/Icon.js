@@ -29,6 +29,17 @@ const Icon = (props) => {
   };
   const menuColor = page ? "#fff" : "#6F6F6F";
 
+
+  if (type === "feedEmoji") {
+    return (
+      <MenuIcon {...styles} viewBox="0 0 25 22" fill="none">
+        <rect x="1" y="1.0437" width="22.2308" height="19" rx="1" stroke="black" stroke-width="2"/>
+        <path d="M6.46143 20.236L14.8133 6.81334C15.1624 6.25221 15.9502 6.17806 16.3979 6.66418L23.423 14.2917" stroke="black" stroke-width="2"/>
+        <rect x="5.13672" y="5.41248" width="3.48923" height="3.42081" rx="1.71041" stroke="black" stroke-width="2"/>
+      </MenuIcon>
+    );
+  }
+
   if (type === "errorBtn") {
     return (
       <MenuIcon {...styles} viewBox="0 0 24 24" fill="none" onClick={_onClick}>
@@ -237,6 +248,7 @@ const Icon = (props) => {
 
   if (type === "feedIcon") {
     return (
+      
       <MenuIcon {...styles} viewBox="0 0 36 36" fill="none">
         <rect
           x="4"
