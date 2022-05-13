@@ -91,6 +91,7 @@ export const endClimbDB = (completedId, data) => {
         }
       )
       .then((res) => {
+        console.log(res)
         dispatch(endClimb(res.data));
       })
       .catch((err) => {

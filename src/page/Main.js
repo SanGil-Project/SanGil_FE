@@ -13,31 +13,35 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
 const Main = (props) => {
-  const userInfo = useSelector((state) => state.user.userInfo);
-  const token = sessionStorage.getItem("token");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const mainState = useSelector((state) => state.main);
-  const mountain = mainState.mountains?.filter((el) => el.mountainId !== 1);
-  const menuColor = [false, false, true, false, false]; // 메뉴바 색
-  React.useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        dispatch(aroundDB(position.coords.latitude, position.coords.longitude));
-      });
-    }
-    dispatch(mountainsDB());
-    dispatch(feedDB());
-    dispatch(partyDB());
-  }, []);
+  const token = sessionStorage.getItem("token");
+  const userInfo = useSelector((state) => state.user.userInfo);
+  const menuColor = [true, false, false, false, false]; // 메뉴바 색
 
-  const goParty = (el) => {
-    navigate(`/partydetail/${el?.partyId}`);
-  };
+  const feedList = useSelector((state) => state.main.feedList?.feedList);
+  const around = useSelector((state) => state.main.around?.nearbyMountainDtos);
+  const party = useSelector((state) => state.main.parties?.parties);
+  const mountain = useSelector((state) => state.main?.mountains);
+
+  React.useEffect(() => {
+    if (userInfo && token) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          dispatch(
+            aroundDB(position.coords.latitude, position.coords.longitude)
+          );
+        });
+      }
+      dispatch(mountainsDB());
+      dispatch(feedDB());
+      dispatch(partyDB());
+    }
+  }, [userInfo]);
 
   return (
     <>
-      <Mobile>
+      {/* <Mobile>
         <MainContainer>
           <Header />
           <Grid padding="7px" overflowY="scroll">
@@ -337,7 +341,7 @@ const Main = (props) => {
             </Grid>
           </MenubarContainer>
         </MainContainer>
-      </Mobile>
+      </Mobile> */}
 
       {/* 데스크탑 */}
       <Desktop>
@@ -361,7 +365,7 @@ const Main = (props) => {
                 height="200px"
                 margin="34px auto 0 auto"
                 // _onClick={() => navigate(`/searchdetail/관악산`)}
-                bgImg="https://i.esdrop.com/d/f/bww1Enn4jz/5RrOZgFwvp.jpg"
+                bgImg={mountain && mountain[0].mountainImgUrl}
                 hover
                 bgSize="cover"
               >
@@ -390,7 +394,7 @@ const Main = (props) => {
                     bold="600"
                     size="1.4rem"
                   >
-                    강원도 홍천군 두촌면
+                    {mountain && mountain[0].mountainAddress}
                   </Text>
                   <Text
                     margin="10px 0 0 0"
@@ -398,57 +402,60 @@ const Main = (props) => {
                     bold="200"
                     size="1.4rem"
                   >
-                    가리산
+                    {mountain && mountain[0].mountain}
                   </Text>
                 </div>
               </Grid>
 
               <HorizontalScroll>
-                {mountain?.map((el, idx) => (
-                  <div key={idx}>
-                    <Card
-                      width="194px"
-                      height="120px"
-                      margin="34px 7px 8px 7px"
-                      _onClick={() =>
-                        navigate(`/searchdetail/${el.mountainId}`)
-                      }
-                      hover
-                      bgImg={el.mountainImgUrl}
-                      bgSize="cover"
-                    >
-                      <Icon width="34px" height="29px" type="rank" />
-                      <Text
-                        width="9px"
-                        height="17px"
-                        size="1.4rem"
-                        bold="300"
-                        margin="-32px 0 0 12px"
-                        color="#fff"
-                        align="center"
-                      >
-                        {idx + 2}
-                      </Text>
-                      <Icon
-                        type="like"
-                        width="18px"
-                        height="18px"
-                        margin="0 0 -87px 163px"
-                      />
-                    </Card>
-                    <Text
-                      maxWidth="160px"
-                      margin="10px 8px 0 7px"
-                      bold="600"
-                      size="1.4rem"
-                    >
-                      {el.mountainAddress}
-                    </Text>
-                    <Text margin="0 0 0 7px" bold="200" size="1.4rem">
-                      {el.mountain}
-                    </Text>
-                  </div>
-                ))}
+                {mountain &&
+                  mountain
+                    .filter((el, idx) => idx !== 0)
+                    .map((el, idx) => (
+                      <div key={idx}>
+                        <Card
+                          width="194px"
+                          height="120px"
+                          margin="34px 7px 8px 7px"
+                          _onClick={() =>
+                            navigate(`/searchdetail/${el.mountainId}`)
+                          }
+                          hover
+                          bgImg={el.mountainImgUrl}
+                          bgSize="cover"
+                        >
+                          <Icon width="34px" height="29px" type="rank" />
+                          <Text
+                            width="9px"
+                            height="17px"
+                            size="1.4rem"
+                            bold="300"
+                            margin="-32px 0 0 12px"
+                            color="#fff"
+                            align="center"
+                          >
+                            {idx + 2}
+                          </Text>
+                          <Icon
+                            type="like"
+                            width="18px"
+                            height="18px"
+                            margin="0 0 -87px 163px"
+                          />
+                        </Card>
+                        <Text
+                          maxWidth="160px"
+                          margin="10px 8px 0 7px"
+                          bold="600"
+                          size="1.4rem"
+                        >
+                          {el.mountainAddress}
+                        </Text>
+                        <Text margin="0 0 0 7px" bold="200" size="1.4rem">
+                          {el.mountain}
+                        </Text>
+                      </div>
+                    ))}
               </HorizontalScroll>
             </Grid>
 
@@ -468,7 +475,7 @@ const Main = (props) => {
                 👀 주변 산길
               </Text>
               <HorizontalScroll>
-                {mainState.around?.nearbyMountainDtos.map((el, idx) => (
+                {around?.map((el, idx) => (
                   <div key={idx}>
                     <Card
                       width="194px"
@@ -535,7 +542,7 @@ const Main = (props) => {
                 </Grid>
               </Grid>
               <HorizontalScroll>
-                {mainState.feedList?.feedList.map((el, idx) => (
+                {feedList?.map((el, idx) => (
                   <div key={idx} style={{ margin: "10px 0 10px 0" }}>
                     <Card width="150px" height="150px" margin="0 7px 0 7px">
                       <Image
@@ -578,7 +585,7 @@ const Main = (props) => {
                   <Icon type="arrow" width="5px" height="8px" />
                 </Grid>
               </Grid>
-              {mainState.parties?.parties.map((el, idx) => {
+              {party?.map((el, idx) => {
                 return (
                   <Card
                     key={idx}
@@ -588,9 +595,6 @@ const Main = (props) => {
                     padding="10px"
                     margin="0 auto 14px auto"
                     hover
-                    _onClick={() => {
-                      goParty(el);
-                    }}
                   >
                     <Grid height="20px" margin="0" flex="flex">
                       <Icon type="partyMountain" width="14px" />

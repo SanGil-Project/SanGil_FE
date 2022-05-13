@@ -1,177 +1,53 @@
+import { el } from "date-fns/locale";
 import React from "react";
 import { Grid, Text } from "../elements/element";
 import { Desktop, Mobile } from "../shared/responsive";
 
-const CourseCard = () => {
+const CourseCard = (props) => {
+  const { data } = props;
+  console.log(data);
   return (
     <>
-      <Mobile>
+      <Desktop>
         <Grid
           padding="1px 0 0 0"
           width="100%"
           height="210px"
-          margin="0 auto"
-          bg="#E2E2E2"
+          margin="18px auto 0 auto"
+          radius="12px"
         >
-          <Text bold="600" size="1.6rem" lineHeight="18px" margin="15px 7px">
-            [천국 직행 코스]
-          </Text>
-          <div>
-            <Grid margin="0 0 17px 19px" maxWidth="74.08%" isFlex>
-              <Grid
-                width="50px"
-                height="26px"
-                border="1px solid black"
-                radius="12px"
-                lineHeight="24px"
-                size="1.6rem"
-                textAlign
-                bg="#fff"
-                margin="0 10px 0 0"
-              >
-                코스
-              </Grid>
-              <Text
-                size="1.6rem"
-                margin="0 0 0 0"
-                maxWidth="95.12%"
-                wordBreak="break-word"
-                bold="500"
-              >
-                서울대입구역 - 제2야영장 - 백년암수 - 쌍생수 - 장군봉 - 연주대
-              </Text>
+          <Grid margin="20px 0 0 0" height="70px" isFlex>
+            <Grid
+              border="0.5px solid #ADADAD"
+              width="50px"
+              height="26px"
+              lineHeight="26px"
+              radius="12px"
+              margin="0 0 0 25px"
+              fontSize="1.6rem"
+              textAlign="center"
+            >
+              코스
             </Grid>
-            <Grid margin="0 0 18px 19px" maxWidth="131px" isFlex>
-              <Grid
-                width="50px"
-                height="26px"
-                border="1px solid black"
-                radius="12px"
-                lineHeight="24px"
-                size="1.6rem"
-                textAlign
-                bg="#fff"
-              >
-                거리
-              </Grid>
-              <Text
-                size="1.6rem"
-                margin="0"
-                maxWidth="80px"
-                wordBreak="break-word"
-                bold="500"
-              >
-                3055.5km
-              </Text>
+            <Text width="84%" margin="0 0 0 8px">{data.course}</Text>
+          </Grid>
+          <Grid height="70px" isFlex>
+            <Grid
+              border="0.5px solid #ADADAD"
+              width="80px"
+              height="26px"
+              lineHeight="26px"
+              radius="12px"
+              margin="0 0 0 25px"
+              fontSize="1.6rem"
+              textAlign="center"
+            >
+              소요시간
             </Grid>
-            <Grid margin="0 0 0 19px" maxWidth="154px" isFlex>
-              <Grid
-                width="80px"
-                height="26px"
-                border="1px solid black"
-                radius="12px"
-                lineHeight="24px"
-                size="1.6rem"
-                textAlign
-                bg="#fff"
-              >
-                소요시간
-              </Grid>
-              <Text
-                size="1.6rem"
-                margin="0"
-                maxWidth="120px"
-                wordBreak="break-word"
-                bold="500"
-              >
-                1500시간
-              </Text>
-            </Grid>
-          </div>
-        </Grid>
-      </Mobile>
-      <Desktop>
-        <Grid
-          padding="1px 0 0 0"
-          width="384px"
-          height="210px"
-          margin="0 auto"
-          bg="#E2E2E2"
-        >
-          <Text bold="600" size="1.6rem" lineHeight="18px" margin="15px 7px">
-            [천국 직행 코스]
-          </Text>
-          <div>
-            <Grid margin="0 0 17px 19px" width="364px" isFlex>
-              <Grid
-                width="50px"
-                height="26px"
-                border="1px solid black"
-                radius="12px"
-                lineHeight="24px"
-                size="1.6rem"
-                textAlign
-                bg="#fff"
-              >
-                코스
-              </Grid>
-              <Text
-                size="1.6rem"
-                margin="0"
-                maxWidth="304px"
-                wordBreak="break-word"
-                bold="500"
-              >
-                서울대입구역 - 제2야영장 - 백년암수 - 쌍생수 - 장군봉 - 연주대
-              </Text>
-            </Grid>
-            <Grid margin="0 0 18px 19px" maxWidth="130px" isFlex>
-              <Grid
-                width="50px"
-                height="26px"
-                border="1px solid black"
-                radius="12px"
-                lineHeight="24px"
-                size="1.6rem"
-                textAlign
-                bg="#fff"
-              >
-                거리
-              </Grid>
-              <Text
-                size="1.6rem"
-                margin="0"
-                maxWidth="80px"
-                wordBreak="break-word"
-                bold="500"
-              >
-                3055.5km
-              </Text>
-            </Grid>
-            <Grid margin="0 0 0 19px" maxWidth="154px" isFlex>
-              <Grid
-                width="80px"
-                height="26px"
-                border="1px solid black"
-                radius="12px"
-                lineHeight="24px"
-                size="1.6rem"
-                textAlign
-                bg="#fff"
-              >
-                소요시간
-              </Grid>
-              <Text
-                size="1.6rem"
-                margin="0"
-                maxWidth="120px"
-                wordBreak="break-word"
-                bold="500"
-              >
-                1500시간
-              </Text>
-            </Grid>
-          </div>
+            <Text size="1.6rem" width="75%" margin="0 0 0 8px">
+              {data.courseTime}
+            </Text>
+          </Grid>
         </Grid>
       </Desktop>
     </>

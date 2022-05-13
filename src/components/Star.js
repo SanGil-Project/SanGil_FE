@@ -13,6 +13,7 @@ const Star = (props) => {
     type,
     showIndex,
     minWidth,
+    setStar,
   } = props;
 
   const starArr = [0, 1, 2, 3, 4];
@@ -40,6 +41,7 @@ const Star = (props) => {
       clickStates[i] = i <= index ? true : false;
     }
     setClicked(clickStates);
+    setStar(clickStates);
   };
 
   if (type === "showStar") {
