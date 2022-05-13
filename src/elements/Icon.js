@@ -561,9 +561,10 @@ const Like = styled.svg`
   ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
   &:hover {
     cursor: pointer;
-    fill: #e54353;
+    fill: #43ca3b;
   }
 `;
+
 
 const Rank = styled.svg`
   width: ${(props) => `${props.width}`};

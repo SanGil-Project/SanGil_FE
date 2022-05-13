@@ -26,7 +26,7 @@ const Header = () => {
       <>
         <Mobile>
           <Grid
-            maxWidth="500px"
+            width="100vw"
             height="64px"
             bg="#FFFFFF"
             position="fixed"
