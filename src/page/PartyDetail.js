@@ -17,7 +17,6 @@ const PartyDetail = (props) => {
   console.log(partyId)
   const userInfo = useSelector((state) => state?.user?.userInfo);
   const curtParty = useSelector((state) => state?.party?.curtParty);
-  // const curtParty = partyList?.curtParty;
   const menuColor = [false, true, false, false, false]; // 메뉴바 색
 
   React.useEffect(() => {
@@ -30,17 +29,14 @@ const PartyDetail = (props) => {
     curtParty?.userImgUrl !== "없음"
       ? curtParty?.userImgUrl
       : "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png";
-  // const attendBtn = partymember?.some((m) => m.nickname === userInfo.nickname)
-  const attendBtn = partymember?.some((m) => m.username === userInfo.username)
+  const attendBtn = partymember?.some((m) => m.nickname === userInfo.nickname)
     ? "참가취소하기"
     : "참가하기";
   const myMode = userInfo?.nickname === curtParty?.nickname ? true : false;
   const isChief = userInfo?.nickname === curtParty?.nickname ? true : false;
 
-  // console.log(partyList, partymember, curtParty);
   const attendParty = (partyId) => {
-    // if (curtParty.nickname === userInfo.nickname) {
-    if (curtParty.username === userInfo.username) {
+    if (curtParty.nickname === userInfo.nickname) {
       window.alert("모임 주최자는 취소할수 없어요!!");
       return;
     }
@@ -167,8 +163,7 @@ const PartyDetail = (props) => {
                         />
                         <Grid>
                           <Text margin="0" size="12px" bold="500">
-                            {/* [{p.userTitle}] {p.nickname} */}
-                            [{p.userTitle}] {p.username}
+                            [{p.userTitle}] {p.nickname}
                           </Text>
                         </Grid>
                       </Grid>
@@ -329,8 +324,7 @@ const PartyDetail = (props) => {
                         />
                         <Grid>
                           <Text margin="0" size="12px" bold="500">
-                            {/* [{p.userTitle}] {p.nickname} */}
-                            [{p.userTitle}] {p.username}
+                            [{p.userTitle}] {p.nickname}
                           </Text>
                         </Grid>
                       </Grid>

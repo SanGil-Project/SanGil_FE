@@ -19,6 +19,7 @@ const Grid = (props) => {
     _onClick,
     bg,
     maxWidth,
+    minHeight,
     maxHeight,
     fontWeight,
     fontSize,
@@ -48,6 +49,7 @@ const Grid = (props) => {
     textAlign,
     lineHeight,
     maxWidth,
+    minHeight,
     maxHeight,
     fontWeight,
     fontSize,
@@ -83,6 +85,8 @@ const Box = styled.div`
   height: ${(props) => `${props.height}`};
   ${(props) => (props.maxWidth ? `max-width: ${props.maxWidth};` : null)}
   ${(props) => (props.minWidth ? `min-width: ${props.minWidth};` : null)}
+  ${(props) => (props.maxHeight ? `max-height: ${props.maxHeight};` : null)}
+  ${(props) => (props.minHeight ? `min-height: ${props.minHeight};` : null)}
   ${(props) => (props.bg ? `background-color: ${props.bg};` : null)}
   ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
   ${(props) => (props.radius ? `border-radius: ${props.radius};` : null)}

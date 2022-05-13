@@ -112,7 +112,7 @@ const attendPartyDB = (partyId = null) => {
     const _user = getState().user.userInfo;
     console.log(_user);
     const user_info = {
-      username: _user.username,
+      nickname: _user.nickname,
       userTitle: _user.userTitle,
       userImageUrl: _user.userImageUrl,
     };
@@ -170,15 +170,15 @@ export default handleActions(
       
     }),
     [ATTEND_PARTY]: (state, action) => produce(state, (draft) => {
-      draft.partyList[0].partymemberDto.push(action.payload.user);
-      draft.partyList[0].curPeople++;
+      draft.curtParty.partymemberDto.push(action.payload.user);
+      draft.curtParty.curPeople++;
     }),
     [CANCEL_PARTY]: (state, action) => produce(state, (draft) => {
-      draft.partyList[0].partymemberDto =
-        draft.partyList[0].partymemberDto.filter(
-          (p) => p.username !== action.payload.user.username
+      draft.curtParty.partymemberDto =
+        draft.curtParty.partymemberDto.filter(
+          (p) => p.nickname !== action.payload.user.nickname
         );
-      draft.partyList[0].curPeople--;
+      draft.curtParty.curPeople--;
     }),
     [DELETE_PARTY]: (state, action) => produce(state, (draft) => {
         // draft.partyList = draft.partyList.filter(
