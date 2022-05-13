@@ -128,6 +128,7 @@ const FeedDetail = () => {
 };
 
 const FeedContainer = styled.div`
+  background-color: #fff;
   width: 100%;
   height: 100%;
   max-width: 500px;

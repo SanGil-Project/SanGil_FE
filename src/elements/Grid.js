@@ -34,6 +34,7 @@ const Grid = (props) => {
     bgImg,
     bgSize,
     borderBottom,
+    borderTop,
   } = props;
   const styles = {
     bg,
@@ -65,6 +66,7 @@ const Grid = (props) => {
     bgImg,
     bgSize,
     borderBottom,
+    borderTop,
   };
 
   return (
@@ -93,6 +95,7 @@ const Box = styled.div`
   ${(props) => (props.padding ? `padding: ${props.padding};` : null)}
   ${(props) => (props.border ? `border: ${props.border};` : null)}
   ${(props) => (props.borderBottom ? `border-bottom: ${props.borderBottom};` : null)}
+  ${(props) => (props.borderTop ? `border-top: ${props.borderTop};` : null)}
   ${(props) =>
     props.flexColumn ? `display:flex; flex-direction: column;` : null}
   ${(props) => (props.flexRow ? `display:flex; flex-direction: row;` : null)}

@@ -17,7 +17,7 @@ const Main = (props) => {
   const dispatch = useDispatch();
   const token = sessionStorage.getItem("token");
   const userInfo = useSelector((state) => state.user.userInfo);
-  const menuColor = [true, false, false, false, false]; // 메뉴바 색
+  const menuColor = [false, false, true, false, false]; // 메뉴바 색
 
   const feedList = useSelector((state) => state.main.feedList?.feedList);
   const around = useSelector((state) => state.main.around?.nearbyMountainDtos);
@@ -647,6 +647,7 @@ const Main = (props) => {
 
 const MainContainer = styled.div`
   // position: relative;
+  background-color: #fff;
   width: 100%;
   height: 100%;
   padding: 0 0 100px 0;
