@@ -160,7 +160,8 @@ const Party = (props) => {
           <Header />
           <PartyWrap>
             <Grid padding="96px 14px 100px">
-              {partyList?.partyList?.map((p, idx) => {
+              {partyList?.map((p, idx) => {
+                console.log(p)
                 const btnBg = p.completed ? "#43CA3B" : "#E6E6E6";
                 const btnColor = p.completed ? "#fff" : "#000";
                 const btnText = p.completed ? "모집내용확인" : "마감 되었어요😢";
