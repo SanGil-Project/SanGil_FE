@@ -9,6 +9,7 @@ const EndTracking = () => {
   const { name } = useParams();
   const commentCheck = useSelector((state) => state.tracker.comment);
   const navigateState = useLocation().state;
+  console.log(navigateState);
   const navigate = useNavigate();
   const nextTime = () => {
     navigate("/", { replace: true });
