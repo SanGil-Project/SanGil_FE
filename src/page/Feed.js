@@ -6,18 +6,41 @@ import { Desktop, Mobile } from "../shared/responsive";
 import { useSelector, useDispatch } from "react-redux";
 import { getFeedDB } from "../redux/modules/feed";
 import { useNavigate } from "react-router";
+import _ from "lodash";
 
 const FeedDetail = () => {
   const userInfo = useSelector((state) => state.user?.userInfo);
-  const feedList = useSelector((state) => state.feed.feedList?.feedList);
+  const feedList = useSelector((state) => state.feed.feedList);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const menuColor = [true, false, false, false, false]; // 메뉴바 색
+  const [pageNum, setPageNum] = React.useState(1);
+
+  const scroll = React.useCallback(
+    _.throttle((e) => {
+      // console.log("현재 위치: " + window.scrollY);
+      // console.log("현재 위치: " + e.srcElement.scrollingElement.scrollTop);
+      // console.log("현재 높이: " + document.body.scrollHeight);
+      const clientHeight = document.body.scrollHeight;
+      const curHeight = window.scrollY;
+      // console.log(clientHeight - curHeight);
+      if (clientHeight - curHeight <= 2000) {
+        setPageNum((prev) => prev + 1);
+      }
+    }, 1000),
+    []
+  );
 
   React.useEffect(() => {
-    dispatch(getFeedDB());
-    console.log("니가범인?2");
-  }, []);
+    if (!feedList.totalPage || feedList.totalPage >= pageNum) {
+      dispatch(getFeedDB(pageNum));
+    }
+
+    window.addEventListener("scroll", scroll);
+    return () => {
+      window.removeEventListener("scroll", scroll);
+    };
+  }, [pageNum]);
 
   return (
     <>
@@ -27,9 +50,9 @@ const FeedDetail = () => {
       <Desktop>
         <FeedContainer>
           <Header />
-          <Grid overflowY="scroll">
+          <Grid overflowY="scroll" _onScroll={scroll}>
             <Grid height="94px"></Grid>
-            {feedList?.map((el, idx) => (
+            {feedList?.feedList?.map((el, idx) => (
               <FeedCard el={el} key={idx} />
             ))}
           </Grid>

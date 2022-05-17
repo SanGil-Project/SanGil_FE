@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import axios from "axios";
+import { arrayIncludes } from "@material-ui/pickers/_helpers/utils";
 
 const ADD_FEED = "ADD_FEED";
 const DELETE_FEED = "DELETE_FEED";
@@ -14,7 +15,7 @@ const likeFeed = createAction(LIKE, (data) => ({
   data,
 }));
 
-const initialState = {};
+const initialState = { feedList: { feedList: [] } };
 
 export const addFeedDB = (feed) => {
   const frm = new FormData();
@@ -42,12 +43,13 @@ export const getFeedDB = (pageNum) => {
   return function (dispatch, getState) {
     axios
       // .get("https://burgerrr.shop/api/main/feeds/1", {
-      .get("http://3.35.49.228/api/main/feeds/1", {
+      .get(`http://3.35.49.228/api/main/feeds/${pageNum}`, {
         headers: {
           Authorization: sessionStorage.getItem("token"),
         },
       })
       .then((res) => {
+        console.log(res.data);
         dispatch(getFeed(res.data));
       })
       .catch((err) => {
@@ -107,13 +109,15 @@ export default handleActions(
   {
     [ADD_FEED]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload);
-        console.log(state.feedList.feedList);
         draft.feedList.feedList.unshift(action.payload.data);
       }),
     [GET_FEED]: (state, action) =>
       produce(state, (draft) => {
-        draft.feedList = action.payload.feedList;
+        const _feedList = action.payload.feedList;
+        draft.feedList = {
+          ..._feedList,
+          feedList: draft.feedList.feedList.concat(_feedList.feedList),
+        };
       }),
     [DELETE_FEED]: (state, action) =>
       produce(state, (draft) => {

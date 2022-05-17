@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
   const location = useLocation();
-  console.log(location);
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.user?.userInfo);
   const token = sessionStorage?.getItem("token");

@@ -55,6 +55,23 @@ const Tracker = (props) => {
   const path = useRef();
 
   useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setMyLoca({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        (err) => {
+          alert("현재 위치를 표시할 수 없어요");
+        },
+        { enableHighAccuracy: true }
+      );
+    }
+  }, []);
+
+  useEffect(() => {
     path.current = setTimeout(() => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -68,12 +85,8 @@ const Tracker = (props) => {
               dispatch(setPath(myLoca));
               if (_distance?.distanceM) {
                 setDistance((prev) => ({
-                  distanceM: (prev.distanceM += parseFloat(
-                    _distance?.distanceM
-                  )),
-                  distanceK: (prev.distanceK += parseFloat(
-                    _distance?.distanceK
-                  )),
+                  distanceM: prev.distanceM + parseFloat(_distance?.distanceM),
+                  distanceK: prev.distanceK + parseFloat(_distance?.distanceK),
                 }));
               }
             }
@@ -84,7 +97,7 @@ const Tracker = (props) => {
           { enableHighAccuracy: true }
         );
       }
-    }, 4000);
+    }, 5000);
     return () => clearTimeout(path.current);
   }, [myLoca]);
 
@@ -103,7 +116,8 @@ const Tracker = (props) => {
     acquireWakeLock();
     setTime({ ...time, isStart: true });
   };
-
+  console.log(`서버: ${_distance?.distanceK}`);
+  console.log(`프론트: ${distance?.distanceK}`);
   const endClimb = () => {
     if (
       time.stopwatch.s + time.stopwatch.m * 60 + time.stopwatch.h * 3600 <
