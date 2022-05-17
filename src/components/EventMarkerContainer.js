@@ -1,10 +1,15 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import { actionCreators as handleActions } from "../redux/modules/handle";
 
 import { Grid, Text, Icon, Image } from '../elements/element';
 import { Map, MapMarker, Polyline, ZoomControl, useMap, CustomOverlayMap } from "react-kakao-maps-sdk";
 
 const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const map = useMap();
   const [isVisible, setIsVisible] = useState(false)
   // const [selectedMarker, setSeleteMarker] = useState()
@@ -14,18 +19,27 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
     // map.panTo(marker.getPosition());
   }
 
+  const select = (completedId, idx) => {
+    console.log(idx);
+    dispatch(handleActions.selectMarkerDB(completedId, idx));
+    navigate(`/mytrack/${completedId}`);
+  }
+
   if (content.totalTime) {
     return (
       <React.Fragment>
         <MapMarker
           position={{lat: content.lat, lng: content.lng}} // 마커를 표시할 위치
           onClick={(marker) => {markerClick(marker)}} // 해당 좌표로 지동 이동시키기
+          // onMouseOver={() => setIsVisible(true)}
+          // onMouseOut={() => setIsVisible(false)}
         >
+          {/* {isVisible && */}
           {isClicked && isVisible &&
           <CustomOverlayMap index={index} position={{lat: content.lat, lng: content.lng}} yAnchor={1.45} zIndex={1}>
             <MymarkerInfo>
-              <Grid padding="9px 13px" _onClick={()=>{window.alert(`아이디값 :: ${content.completedId}`)}} hover>
-                <Text margin="5px 0" bold="600" size="14px">{content.mountainId}</Text>
+              <Grid padding="9px 13px" _onClick={()=>{select(content.completedId, index)}} hover>
+                <Text margin="5px 0" bold="600" size="14px">{content.mountain}</Text>
                 <Grid flexRow justify="left" margin="8px 0 4px">
                   <Text margin="0 18px 0 0" size="12px" bold="500" color="#C4C4C4">총 거리</Text>
                   <Text margin="0" size="12px" bold="500" color="#C4C4C4">소요 시간</Text>

@@ -26,6 +26,8 @@ const Input = (props) => {
     display,
     gridWidth,
     disabled,
+    dir,
+    hover,
   } = props;
 
   const styles = {
@@ -40,6 +42,8 @@ const Input = (props) => {
     bg,
     display,
     gridWidth,
+    dir,
+    hover,
   };
 
   if (multiLine) {
@@ -100,7 +104,7 @@ const Input = (props) => {
       ) : value ? (
         <InfoInput
           {...styles}
-          size="20"
+          dir={dir}
           type={type}
           value={value}
           onChange={_onChange}
@@ -129,6 +133,7 @@ Input.defaultProps = {
   border: "1px solid #212121",
   padding: "12px 4px",
   multiLine: false,
+  dir: "ltr"
 };
 
 const InfoInput = styled.input`
@@ -137,13 +142,14 @@ const InfoInput = styled.input`
   box-sizing: border-box;
   font-size: ${(props) => (props.size ? `${props.size}` : `16px`)};
   outline: none;
-  ${(props) => (props.width ? `width: ${props.width};` : null)}
+  width: ${(props) => `${props.width}`};
   max-width: ${(props) => `${props.maxWidth}`};
   height: ${(props) => `${props.height}`};
   ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
   ${(props) => (props.radius ? `border-radius: ${props.radius};` : null)}
   ${(props) => (props.bg ? `background-color: ${props.bg};` : null)}
   ${(props) => (props.display ? `display: ${props.display};` : null)}
+  ${(props) => props.hover ? `&:hover { cursor: pointer; };` : null}
 `;
 
 const ElTextarea = styled.textarea`

@@ -20,7 +20,6 @@ const FullMap = (props) => {
             radius
             zoomable={zoomable}
             data={data} // 지도에 마커 찍어야하는 정보 객체 전달
-            // getIndex={getIndex}
           />
         </MapBox>
       </MapContainer>

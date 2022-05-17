@@ -52,11 +52,12 @@ export const api = {
     instance.put("/api/mypages/profileUrl", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
-      },
+      }, 
     }),
   myTracking: () => instance.get("/api/mypages/tracking"),
   myTitle: () => instance.get("/api/mypages/userTitle"),
   myFeed: (pageNum) => instance.get(`/api/myfeeds/${pageNum}`),
+  myMount: (mountainId) => instance.get(`/api/mypages/tracking/${mountainId}`),
   myBookmark: (lat, lng) =>
     instance.get(`/api/mypages/bookmark?lat=${lat}&lng=${lng}`),
   changeTitle: (userTitle) =>
@@ -79,6 +80,9 @@ export const api = {
       mountainComment: commentData.mountainComment,
     }),
 
+  // trancker.js
+  getMytrack: (completedid) => instance.get(`/api/tracking/detail/${completedid}`),
+  
   // party.js
   getMyParty: () => instance.get("/api/plan"),
   getPartyList: (pageNum) => instance.get(`/api/parties/${pageNum}`),

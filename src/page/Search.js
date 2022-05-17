@@ -22,32 +22,22 @@ const Search = (props) => {
   const menuColor = [false, false, false, true, false]; // 메뉴바 색
   const mountainList = useSelector((state) => state?.mountain?.mountainList);
   const searchData = useSelector((state) => state?.tracker?.searchList);
+  const selectMarker = useSelector((state) => state?.handle?.selectMarker?.index);
   const listRef = useRef([]);
-  // const refs = useRef([]);
-  // const listRef = (el)=>{refs.current.push(el)}
-  // const listRef.current=[];
 
   let listIndex = 0;
 
   const [currentList, setCurrentList] = useState(0);
 
-  const getIndex = (index) => {
-    listIndex = index;
-    console.log("자식한테 받은 index ::", index);
-    console.log("ref index ::", listRef);
-    listRef.current[index]?.scrollIntoView();
-    setCurrentList(listRef.current[index]);
-  };
+  React.useEffect(() => {
+    if (selectMarker !== "undefined") {
+      listRef.current[selectMarker]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [selectMarker]);
 
   React.useEffect(() => {
     dispatch(mountActions.getTopMntDB());
   }, []);
-
-  // console.log(currentList);
-  // React.useEffect((listIndex) => {
-  //   console.log("최종 index ::", listIndex);
-  // }, [listIndex]);
-  // const listFocus = useRef([]);
 
   const [searchKeyword, setSearchKeyword] = React.useState("");
 
@@ -78,7 +68,8 @@ const Search = (props) => {
         <SearchContainer>
           <Header />
           <SearchWrap>
-            <Grid padding="82px 14px 18px" bg="#fff">
+            <SearchInput>
+            {/* <SearchInput padding="82px 14px 18px" bg="#fff"> */}
               <Grid
                 bg="#F2F3F6"
                 height="50px"
@@ -109,23 +100,21 @@ const Search = (props) => {
                   <Text size="16px" bold="500" margin="0" color="#959595">취소</Text>
                 </Button>
               </Grid>
-            </Grid>
-            <Grid padding="9px 14px 11.5px" height="auto" bg="#fff" margin="0 0 8px">
+            </SearchInput>
+            <Grid padding="160px 14px 11.5px" height="auto" bg="#fff" margin="0 0 8px">
               {!searchData && (
                 <Text bold="600" size="20px" margin="0 0 12px" align="left">
                   ⛰ 100대 명산 중 10개의 산을 랜덤으로 확인해보세요
                 </Text>
               )}
-              <FullMap data={data} getIndex={getIndex} />
+              <FullMap data={data}/>
             </Grid>
             <Grid padding="0 0 100px" height="auto">
               {data?.map((d, idx) => {
+                const star = d.starAvr==="n" ? "0" : d.starAvr;
                 return (
+                  <div key={idx} ref={el => (listRef.current[idx] = el)}>
                   <Grid
-                    key={idx}
-                    // ref={listRef.current[idx]}
-                    // ref={el => (listRef.current[idx] = el)}
-                    // ref={el => (listRef.current.push(el))}
                     bg="#fff"
                     padding="23px 25px"
                     margin="0 0 8px"
@@ -137,9 +126,11 @@ const Search = (props) => {
                   > 
                     <Grid padding="0 0 24px" flexRow justify="left">
                       <Icon type="searchMnt" width="24px" height="18px" margin="0 auto"/>
+                      <div key={idx} ref={el => (listRef.current[idx] = el)}>
                       <Text margin="0 10px" size="18px" bold="500" nowrap>
                         {d.mountain}
                       </Text>
+                      </div>
                     </Grid>
                     <Grid padding="0 0 24px" flexRow justify="left">
                       <Icon type="searchAddr" width="24px" height="21px" margin="0 auto"/>
@@ -150,10 +141,11 @@ const Search = (props) => {
                     <Grid flexRow justify="left">
                       <Icon type="searchStar" width="24px" height="21px" margin="0 auto"/>
                       <Text margin="0 10px" size="18px" bold="500" nowrap>
-                        ({d.starAvr})
+                        ({star})
                       </Text>
                     </Grid>
                   </Grid>
+                  </div>
                 );
               })}
             </Grid>
@@ -161,6 +153,19 @@ const Search = (props) => {
 
           <MenubarContainer>
             <Grid height="88px" maxWidth="500px" margin="auto">
+              <TrackBtn>
+                <Button
+                  width="50px"
+                  height="50px"
+                  bgColor="#5CB16E"
+                  border="none"
+                  color="#fff"
+                  radius="100%"
+                  _onClick={() => navigate("/searchmountain")}
+                >
+                  <Icon type="climber" width="20px" height="32px" />
+                </Button>
+              </TrackBtn>
               <Menubar menuColor={menuColor} />
             </Grid>
           </MenubarContainer>
@@ -171,7 +176,8 @@ const Search = (props) => {
         <SearchContainer>
           <Header />
           <SearchWrap>
-            <Grid padding="82px 14px 18px" bg="#fff">
+            <SearchInput>
+            {/* <SearchInput padding="82px 14px 18px" bg="#fff"> */}
               <Grid
                 bg="#F2F3F6"
                 height="50px"
@@ -202,23 +208,21 @@ const Search = (props) => {
                   <Text size="16px" bold="500" margin="0" color="#959595">취소</Text>
                 </Button>
               </Grid>
-            </Grid>
-            <Grid padding="9px 14px 11.5px" height="auto" bg="#fff" margin="0 0 8px">
+            </SearchInput>
+            <Grid padding="160px 14px 11.5px" height="auto" bg="#fff" margin="0 0 8px">
               {!searchData && (
                 <Text bold="600" size="20px" margin="0 0 12px" align="left">
                   ⛰ 100대 명산 중 10개의 산을 랜덤으로 확인해보세요
                 </Text>
               )}
-              <FullMap data={data} getIndex={getIndex} />
+              <FullMap data={data}/>
             </Grid>
             <Grid padding="0 0 100px" height="auto">
               {data?.map((d, idx) => {
+                const star = d.starAvr==="n" ? "0" : d.starAvr;
                 return (
+                  <div key={idx} ref={el => (listRef.current[idx] = el)}>
                   <Grid
-                    key={idx}
-                    // ref={listRef.current[idx]}
-                    // ref={el => (listRef.current[idx] = el)}
-                    // ref={el => (listRef.current.push(el))}
                     bg="#fff"
                     padding="23px 25px"
                     margin="0 0 8px"
@@ -230,9 +234,11 @@ const Search = (props) => {
                   > 
                     <Grid padding="0 0 24px" flexRow justify="left">
                       <Icon type="searchMnt" width="24px" height="18px" margin="0 auto"/>
+                      <div key={idx} ref={el => (listRef.current[idx] = el)}>
                       <Text margin="0 10px" size="18px" bold="500" nowrap>
                         {d.mountain}
                       </Text>
+                      </div>
                     </Grid>
                     <Grid padding="0 0 24px" flexRow justify="left">
                       <Icon type="searchAddr" width="24px" height="21px" margin="0 auto"/>
@@ -243,10 +249,11 @@ const Search = (props) => {
                     <Grid flexRow justify="left">
                       <Icon type="searchStar" width="24px" height="21px" margin="0 auto"/>
                       <Text margin="0 10px" size="18px" bold="500" nowrap>
-                        ({d.starAvr})
+                        ({star})
                       </Text>
                     </Grid>
                   </Grid>
+                  </div>
                 );
               })}
             </Grid>
@@ -254,6 +261,19 @@ const Search = (props) => {
 
           <MenubarContainer>
             <Grid height="88px" maxWidth="500px" margin="auto">
+              <TrackBtn>
+                <Button
+                  width="50px"
+                  height="50px"
+                  bgColor="#5CB16E"
+                  border="none"
+                  color="#fff"
+                  radius="100%"
+                  _onClick={() => navigate("/searchmountain")}
+                >
+                  <Icon type="climber" width="20px" height="32px" />
+                </Button>
+              </TrackBtn>
               <Menubar menuColor={menuColor} />
             </Grid>
           </MenubarContainer>
@@ -280,6 +300,17 @@ const SearchWrap = styled.div`
   overflow-y: auto;
 `;
 
+const SearchInput = styled.div`
+  position: fixed;
+  top: 64px;
+  z-index: 10;
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+  padding: 20px 14px 27px;
+  background-color: #fff;
+`;
+
 const MenubarContainer = styled.div`
   position: fixed;
   bottom: 0;
@@ -287,4 +318,12 @@ const MenubarContainer = styled.div`
   right: 0;
   z-index: 10;
 `;
+
+const TrackBtn = styled.div`
+  position: absolute;
+  right: calc(50% - 220px);
+  bottom: 110px;
+`;
+
+
 export default Search;

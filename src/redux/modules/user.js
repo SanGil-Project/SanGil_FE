@@ -6,6 +6,7 @@ const LOGIN = "LOGIN";
 const LOGOUT = "LOGOUT";
 const ISLOGIN = "ISLOGIN";
 const MY_TRACK = "MY_TRACK";
+const MY_MOUNTAIN = "MY_MOUNTAIN";
 const MY_TITLE = "MY_TITLE";
 const MY_FEED = "MY_FEED";
 const MY_BOOKMARK = "MY_BOOKMARK";
@@ -16,6 +17,7 @@ const logIn = createAction(LOGIN, (userInfo) => ({ userInfo }));
 const logOut = createAction(LOGOUT, (userInfo) => ({ userInfo }));
 const isLogin = createAction(ISLOGIN, (token) => ({ token }));
 const myTracking = createAction(MY_TRACK, (trackList) => ({ trackList }));
+const myMountain = createAction(MY_MOUNTAIN, (mountainList) => ({ mountainList }));
 const myFeed = createAction(MY_FEED, (feedList) => ({ feedList }));
 const myTitle = createAction(MY_TITLE, (titleList) => ({ titleList }));
 const myBookmark = createAction(MY_BOOKMARK, (mountList) => ({ mountList }));
@@ -175,6 +177,33 @@ const changeTitleDB = (userTitle) => {
 
 const myTrackingDB = () => {
   return function (dispatch, getState) {
+
+
+    const fakeDB = {
+      completedList : [
+      {
+        completedId : 1,
+        mountainId : 1,
+        mountain : "속리산",
+        lat : 36.56329698,
+        lng : 127.9172195,
+        totalDistance: 10.3,
+        totalTime: "4시간 20분 13초",
+      },
+      {
+        completedId : 3,
+        mountainId : 2,
+        mountain : "화악산",
+        lat : 37.8881266,
+        lng : 127.5492755,
+        totalDistance: 20.3,
+        totalTime: "6시간 20분 13초",
+      },
+    ]}
+
+    dispatch(myTracking(fakeDB));
+    return;
+
     api
       .myTracking()
       .then((res) => {
@@ -187,38 +216,74 @@ const myTrackingDB = () => {
   };
 };
 
+const myMountainDB = (mountainId) => {
+  return function (dispatch, getState) {
+
+    // const fakeDB = {
+    //   completedList : [
+    //   {
+    //     completedId : 1,
+    //     mountain : "속리산",
+    //     totalDistance: 10.3,
+    //     totalTime: "4시간 20분 13초",
+    //     creatDate: "2022-05-22",
+    //   },
+    //   {
+    //     completedId : 3,
+    //     mountain : "화악산",
+    //     totalDistance: 20.3,
+    //     totalTime: "6시간 20분 13초",
+    //     creatDate: "2022-05-22",
+    //   },
+    // ]}
+
+    // dispatch(myMountain(fakeDB));
+    // return;
+
+    api
+      .myMount(mountainId)
+      .then((res) => {
+        console.log("(myMount) 성공 후 데이터 ::", res);
+        dispatch(myMountain(res.data));
+      })
+      .catch((err) => {
+        console.log("(myMount) 실패 ::", err);
+      });
+  };
+};
+
 const myFeedDB = (pageNum) => {
   return function (dispatch, getState) {
 
-    const fakeDB = {
-      feedList : [
-      {
-      userId : 1,
-      username : "jsjune",
-      userImageUrl : "없음",
-      feedImageUrl : "https://user-images.githubusercontent.com/91959791/168317315-e860569b-0325-4f92-b0dd-cc951b063dca.jpeg",
-      feedContent : "feedContent",
-      createdAt: "11:00",
-      goodCnt: 5,
-      goodStatus:false,
-      },
-      {
-      userId : 2,
-      username : "jsjune",
-      userImageUrl : "없음",
-      feedImageUrl : "https://user-images.githubusercontent.com/91959791/168317315-e860569b-0325-4f92-b0dd-cc951b063dca.jpeg",
-      feedContent : "feedContent",
-      createdAt : "11:00",
-      goodCnt : 5,
-      goodStatus :true,
-      }
-      ],
-      totalPage: 3,
-      currentPage: 1,
-      };
+    // const fakeDB = {
+    //   feedList : [
+    //   {
+    //   userId : 1,
+    //   username : "jsjune",
+    //   userImageUrl : "없음",
+    //   feedImageUrl : "https://user-images.githubusercontent.com/91959791/168317315-e860569b-0325-4f92-b0dd-cc951b063dca.jpeg",
+    //   feedContent : "feedContent",
+    //   createdAt: "11:00",
+    //   goodCnt: 5,
+    //   goodStatus:false,
+    //   },
+    //   {
+    //   userId : 2,
+    //   username : "jsjune",
+    //   userImageUrl : "없음",
+    //   feedImageUrl : "https://user-images.githubusercontent.com/91959791/168317315-e860569b-0325-4f92-b0dd-cc951b063dca.jpeg",
+    //   feedContent : "feedContent",
+    //   createdAt : "11:00",
+    //   goodCnt : 5,
+    //   goodStatus :true,
+    //   }
+    //   ],
+    //   totalPage: 3,
+    //   currentPage: 1,
+    //   };
     
-    dispatch(myFeed(fakeDB));
-    return;
+    // dispatch(myFeed(fakeDB));
+    // return;
 
     api
       .myFeed(pageNum)
@@ -236,31 +301,31 @@ const myBookmarkDB = (lat, lng) => {
   return function (dispatch, getState) {
 
 
-    const fakeDB = {
-      mountainList : [
-      {
-        mountainId : 1,
-        mountainName : "관악산",
-        mountainAddress : "서울 관악구",
-        mountainImageUrl : "https://i.esdrop.com/d/f/bww1Enn4jz/5RrOZgFwvp.jpg",
-        bookmark : true,
-        starAvr: 3,
-        distance: "5km",
-      },
-      {
-        mountainId : 10,
-        mountainName : "북한산",
-        mountainAddress : "서울 은평구",
-        mountainImageUrl : "https://i.esdrop.com/d/f/bww1Enn4jz/5RrOZgFwvp.jpg",
-        bookmark : true,
-        starAvr: 4,
-        distance: "6km",
-      },
-      ]
-      };
+    // const fakeDB = {
+    //   mountainList : [
+    //   {
+    //     mountainId : 1,
+    //     mountainName : "관악산",
+    //     mountainAddress : "서울 관악구",
+    //     mountainImageUrl : "https://i.esdrop.com/d/f/bww1Enn4jz/5RrOZgFwvp.jpg",
+    //     bookmark : true,
+    //     starAvr: 3,
+    //     distance: "5km",
+    //   },
+    //   {
+    //     mountainId : 10,
+    //     mountainName : "북한산",
+    //     mountainAddress : "서울 은평구",
+    //     mountainImageUrl : "https://i.esdrop.com/d/f/bww1Enn4jz/5RrOZgFwvp.jpg",
+    //     bookmark : true,
+    //     starAvr: 4,
+    //     distance: "6km",
+    //   },
+    //   ]
+    //   };
     
-      dispatch(myBookmark(fakeDB));
-      return;
+    //   dispatch(myBookmark(fakeDB));
+    //   return;
 
     api
       .myBookmark(lat, lng)
@@ -311,6 +376,11 @@ export default handleActions(
       produce(state, (draft) => {
         draft.mountList = action.payload.mountList;
       }),
+    [MY_MOUNTAIN]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(action.payload)
+        draft.myMountain = action.payload.mountainList;
+      }),
     [CHANGE_INFO]: (state, action) =>
       produce(state, (draft) => {
         draft.userInfo = action.payload.userInfo;
@@ -341,4 +411,5 @@ export const actionCreators = {
   myBookmarkDB,
   changeImgDB,
   myFeedDB,
+  myMountainDB,
 };

@@ -35,7 +35,6 @@ const Party = (props) => {
       navigate(`/partydetail/${partyId}`);
     }
   }
-  console.log(partyList)
 
   return (
     <React.Fragment>
@@ -45,7 +44,6 @@ const Party = (props) => {
           <PartyWrap>
             <Grid padding="96px 14px 100px">
               {partyList?.map((p, idx) => {
-                console.log(p)
                 const btnBg = p.completed ? "#43CA3B" : "#E6E6E6";
                 const btnColor = p.completed ? "#fff" : "#000";
                 const btnText = p.completed ? "모집내용확인" : "마감 되었어요😢";
@@ -134,7 +132,7 @@ const Party = (props) => {
 
               <CreatPartyBtn>
                 <Button
-                  bgColor="#48E988"
+                  bgColor="#43CA3B"
                   border="none"
                   width="105px"
                   height="45px"
@@ -144,7 +142,7 @@ const Party = (props) => {
                     navigate(`/partywrite`);
                   }}
                 >
-                  <Text margin="0" align size="14px">
+                  <Text margin="0" align size="14px" color="#fff">
                     모임 만들기
                   </Text>
                 </Button>
@@ -161,7 +159,6 @@ const Party = (props) => {
           <PartyWrap>
             <Grid padding="96px 14px 100px">
               {partyList?.map((p, idx) => {
-                console.log(p)
                 const btnBg = p.completed ? "#43CA3B" : "#E6E6E6";
                 const btnColor = p.completed ? "#fff" : "#000";
                 const btnText = p.completed ? "모집내용확인" : "마감 되었어요😢";
@@ -250,7 +247,7 @@ const Party = (props) => {
 
               <CreatPartyBtn>
                 <Button
-                  bgColor="#48E988"
+                  bgColor="#43CA3B"
                   border="none"
                   width="105px"
                   height="45px"
@@ -260,7 +257,7 @@ const Party = (props) => {
                     navigate(`/partywrite`);
                   }}
                 >
-                  <Text margin="0" align size="14px">
+                  <Text color="#fff" margin="0" align size="14px">
                     모임 만들기
                   </Text>
                 </Button>

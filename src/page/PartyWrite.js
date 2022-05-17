@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import styled, { keyframes } from "styled-components";
+import styled, {keyframes} from "styled-components";
 import { useNavigate, useParams } from "react-router";
 
 import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as partyActions } from '../redux/modules/party';
 import { actionCreators as mountActions } from '../redux/modules/mountain';
 
+import 'date-fns';
 import DatePicker from "react-datepicker";
 import ko from "date-fns/locale/ko";
 import "react-datepicker/dist/react-datepicker.css";
 
-import 'date-fns';
 // import DatePicker from 'react-mobile-datepicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 // import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
@@ -18,7 +18,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 
-import { Menubar, Header } from '../components/component';
+import { Menubar, Header, ScrollTime } from '../components/component';
 import { Desktop, Mobile } from "../shared/responsive";
 
 import { Grid, Text, Icon, Button, Input, Image } from '../elements/element';
@@ -38,15 +38,19 @@ const PartyWrite = (props) => {
   const [partyName, setPartyName] = React.useState(is_edit ? partyItem?.title :"");
   const [partyContent, setPartyContent] = React.useState(is_edit ? partyItem?.partyContent :"");
   const [dateValue, setDateValue] = React.useState(is_edit ? partyItem?.partyDate : "선택");
-  const [timeValue, setTimeValue] = React.useState(is_edit ? partyItem?.partyTime :"");
+  const [timeValue, setTimeValue] = React.useState(is_edit ? partyItem?.partyTime :"선택");
   const [numberValue, setNumberValue] = React.useState(is_edit ? partyItem?.maxPeople : null);
   const [mountValue, setMountValue] = React.useState(is_edit ? partyItem?.mountain :"");
   const [mountAddValue, setMountAddValue] = React.useState(is_edit ? partyItem?.address :"");
 
   const [startDate, setStartDate] = useState(new Date());
   const [dateOpen, setDateOpen] = useState(false);
+  const [timeOpen, setTimeOpen] = useState(false);
   const handleDateModal = () => {
     setDateOpen(false);
+  };
+  const handleTimeModal = () => {
+    setTimeOpen(false);
   };
   const saveDateModal = () => {
     const year = startDate.getFullYear();
@@ -58,7 +62,10 @@ const PartyWrite = (props) => {
     setDateValue(dateString);
     setDateOpen(false);
   };
-  console.log(dateValue)
+  const saveTimeModal = () => {
+    setTimeValue("");
+    setTimeOpen(false);
+  };
   const formatDate = (d) => {
     const date = new Date(d);
     const monthIndex = date.getMonth() + 1;
@@ -167,12 +174,13 @@ const PartyWrite = (props) => {
                 <Button width="auto" border="none">
                   {/* <Grid flexRow _onClick={handleClick}> */}
                   <Grid flexRow width="auto">
-                    <Grid flexRow
-                    _onClick={()=>{setDateOpen(!dateOpen); console.log(dateOpen)}} >
+                    <Grid 
+                      flexRow
+                      _onClick={()=>{setDateOpen(!dateOpen);}} >
                       <Text margin="0 6px" width="auto" size="16px" color="#989898">{dateValue}</Text>
                       <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
                     </Grid>
-                    <DateModal className="dateModal" dateOpen={dateOpen}>
+                    <DateModal className="dateModal" modalOpen={dateOpen}>
                       <div className="modal_container">
                       <DatePicker 
                         selected={startDate} 
@@ -206,26 +214,6 @@ const PartyWrite = (props) => {
                           <Text margin="0 auto" align color="white" bold="700">확인</Text>
                         </Button>
                       </Grid>
-                        
-                      {/* <LocalizationProvider dateAdapter={AdapterDateFns} >
-                        <Stack component="form" noValidate spacing={1} sx={{ border: "none" }}>
-                          <TextField
-                            id="date"
-                            // label="Birthday"
-                            // variant="standard"
-                            type="date"
-                            // style={{ fontSize: 1 }}
-                            // size="medium"
-                            onChange={inputDate}
-                            // defaultValue="2017-05-24"
-                            value={dateValue}
-                            sx={{ width: 150, border: "none", fontSize: 15 }}
-                            InputLabelProps={{
-                              shrink: true,
-                            }}
-                          />
-                        </Stack>
-                      </LocalizationProvider> */}
                       </div>
                     </DateModal>
                   </Grid>
@@ -236,8 +224,29 @@ const PartyWrite = (props) => {
                 <Text margin="0" size="16px" bold="600">시간</Text>
                 <Button width="auto" border="none">
                   <Grid flexRow>
+                    <Grid 
+                      flexRow
+                      _onClick={()=>{setTimeOpen(!timeOpen);}} >
+                      <Text margin="0 6px" width="auto" size="16px" color="#989898">{timeValue}</Text>
+                      <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
+                    </Grid>
+                    <DateModal className="dateModal" modalOpen={timeOpen}>
+                      <div className="modal_container">
+                        <Grid>
+                          <ScrollTime/>
+                        </Grid>
+                        <Grid flexRow height="auto" padding="10px 20px">
+                          <Button _onClick={handleTimeModal} margin="0 10px 0 0" radius="8px" border="none" bgColor="#E6E6E6">
+                            <Text margin="0 auto" align bold="700">취소</Text>
+                          </Button>
+                          <Button _onClick={saveTimeModal} radius="8px" border="none" bgColor="#43CA3B">
+                            <Text margin="0 auto" align color="white" bold="700">확인</Text>
+                          </Button>
+                        </Grid>
+                      </div>
+                    </DateModal>
 
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
                       <Stack component="form" noValidate spacing={1}>
                         <TextField
                         id="time"
@@ -255,9 +264,7 @@ const PartyWrite = (props) => {
                         sx={{ width: 150 }}
                       />
                       </Stack>
-                    </LocalizationProvider>
-                    {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text>
-                    <Icon type="detailBtn" width="7px" height="13" margin="auto"/> */}
+                    </LocalizationProvider> */}
                   </Grid>
                 </Button>
               </Grid>
@@ -268,8 +275,9 @@ const PartyWrite = (props) => {
                   <Grid flexRow>
 
                     <Input 
-                      type="number"
-                      width="150px" border="1px solid #BBBBBB" radius="8px" padding="16px 12px"
+                      dir="rtl"
+                      // type="number"
+                      width="150px" border="1px solid #BBBBBB" radius="8px" padding="16px 6px" border="none"
                       placeholder="인원수 입력"
                       value={numberValue}
                       _onChange={inputNumber}/>
@@ -282,31 +290,35 @@ const PartyWrite = (props) => {
               <Grid isFlex margin="10px 0">
                 <Text margin="0" size="16px" bold="600">위치</Text>
                 {is_edit ? (
-                <Button width="auto" border="none">
+                <Button width="auto" border="none" _onClick={()=>{window.alert("산정보는 수정이 불가능합니다!")}} >
                   <Grid flexRow>
                     <Input 
-                      width="150px" bg="#eee" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 10px"
-                      placeholder="산이름 입력"
+                      dir="rtl"
+                      width="auto" bg="#eee" border="none" radius="8px" padding="16px 6px" margin="0 10px"
+                      placeholder="선택"
                       disabled
                       value={mountValue}
                       is_submit/>
                       {/* _onChange={inputMount}/> */}
                     {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text> */}
-                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{window.alert("산정보는 수정이 불가능합니다!")}} />
+                    <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
                   </Grid>
                 </Button>) : (
-                <Button width="auto" border="none">
-                  <Grid flexRow>
+                // <Button width="auto" border="none">
+                  <Grid flexRow _onClick={()=>{setIsOpen(true)}} hover width="auto">
                     <Input 
-                      width="150px" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 10px"
-                      placeholder="산이름 입력"
+                      hover
+                      dir="rtl"
+                      width="auto" border="none" radius="8px" padding="16px 0" margin="0 6px"
+                      placeholder="선택"
                       value={mountValue}
                       is_submit/>
                       {/* _onChange={inputMount}/> */}
                     {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text> */}
-                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{setIsOpen(true)}} />
+                    <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
                   </Grid>
-                </Button>)}
+                // </Button>
+                )}
               </Grid>
               
             </Grid>
@@ -372,30 +384,49 @@ const PartyWrite = (props) => {
                 <Text margin="0" size="16px" bold="600">날짜</Text>
                 <Button width="auto" border="none">
                   {/* <Grid flexRow _onClick={handleClick}> */}
-                  <Grid flexRow>
-
-                    <LocalizationProvider dateAdapter={AdapterDateFns} >
-                      <Stack component="form" noValidate spacing={1} sx={{ border: "none" }}>
-                        <TextField
-                          id="date"
-                          // label="Birthday"
-                          // variant="standard"
-                          type="date"
-                          // style={{ fontSize: 1 }}
-                          // size="medium"
-                          onChange={inputDate}
-                          // defaultValue="2017-05-24"
-                          value={dateValue}
-                          sx={{ width: 150, border: "none", fontSize: 15 }}
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                        />
-                      </Stack>
-                    </LocalizationProvider>
-
-                    {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text>
-                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} /> */}
+                  <Grid flexRow width="auto">
+                    <Grid 
+                      flexRow
+                      _onClick={()=>{setDateOpen(!dateOpen);}} >
+                      <Text margin="0 6px" width="auto" size="16px" color="#989898">{dateValue}</Text>
+                      <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
+                    </Grid>
+                    <DateModal className="dateModal" modalOpen={dateOpen}>
+                      <div className="modal_container">
+                      <DatePicker 
+                        selected={startDate} 
+                        onChange={(date) => setStartDate(date)}
+                        dateFormat="yyyy-MM-dd (eee)" 
+                        showPopperArrow={false}
+                        inline
+                        locale={ko}
+                        popperModifiers={{ preventOverflow: { enabled: true } }}
+                        popperPlacement="auto"
+                        minDate={new Date()} 
+                        renderCustomHeader={({date, decreaseMonth, increaseMonth}) => (
+                          <Grid className="datepickerHeader" isFlex padding="10px 58px">
+                            <div className="fomrmatDate">{formatDate(date)}</div>
+                            <Grid width="auto" isFlex>
+                              <div onClick={decreaseMonth}>
+                                <Text margin="0 10px 0" color="#43CA3B" bold="700">&lt;</Text>
+                              </div>
+                              <div onClick={increaseMonth}>
+                                <Text margin="0" color="#43CA3B" bold="700">&gt;</Text>
+                              </div>
+                            </Grid>
+                          </Grid>
+                          
+                        )}/>
+                      <Grid flexRow height="auto" padding="10px 20px">
+                        <Button _onClick={handleDateModal} margin="0 10px 0 0" radius="8px" border="none" bgColor="#E6E6E6">
+                          <Text margin="0 auto" align bold="700">취소</Text>
+                        </Button>
+                        <Button _onClick={saveDateModal} radius="8px" border="none" bgColor="#43CA3B">
+                          <Text margin="0 auto" align color="white" bold="700">확인</Text>
+                        </Button>
+                      </Grid>
+                      </div>
+                    </DateModal>
                   </Grid>
                 </Button>
               </Grid>
@@ -404,8 +435,29 @@ const PartyWrite = (props) => {
                 <Text margin="0" size="16px" bold="600">시간</Text>
                 <Button width="auto" border="none">
                   <Grid flexRow>
+                    <Grid 
+                      flexRow
+                      _onClick={()=>{setTimeOpen(!timeOpen);}} >
+                      <Text margin="0 6px" width="auto" size="16px" color="#989898">{timeValue}</Text>
+                      <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
+                    </Grid>
+                    <DateModal className="dateModal" modalOpen={timeOpen}>
+                      <div className="modal_container">
+                        <Grid>
+                          <ScrollTime/>
+                        </Grid>
+                        <Grid flexRow height="auto" padding="10px 20px">
+                          <Button _onClick={handleTimeModal} margin="0 10px 0 0" radius="8px" border="none" bgColor="#E6E6E6">
+                            <Text margin="0 auto" align bold="700">취소</Text>
+                          </Button>
+                          <Button _onClick={saveTimeModal} radius="8px" border="none" bgColor="#43CA3B">
+                            <Text margin="0 auto" align color="white" bold="700">확인</Text>
+                          </Button>
+                        </Grid>
+                      </div>
+                    </DateModal>
 
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
                       <Stack component="form" noValidate spacing={1}>
                         <TextField
                         id="time"
@@ -423,9 +475,7 @@ const PartyWrite = (props) => {
                         sx={{ width: 150 }}
                       />
                       </Stack>
-                    </LocalizationProvider>
-                    {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text>
-                    <Icon type="detailBtn" width="7px" height="13" margin="auto"/> */}
+                    </LocalizationProvider> */}
                   </Grid>
                 </Button>
               </Grid>
@@ -436,8 +486,9 @@ const PartyWrite = (props) => {
                   <Grid flexRow>
 
                     <Input 
-                      type="number"
-                      width="150px" border="1px solid #BBBBBB" radius="8px" padding="16px 12px"
+                      dir="rtl"
+                      // type="number"
+                      width="150px" border="1px solid #BBBBBB" radius="8px" padding="16px 6px" border="none"
                       placeholder="인원수 입력"
                       value={numberValue}
                       _onChange={inputNumber}/>
@@ -450,31 +501,35 @@ const PartyWrite = (props) => {
               <Grid isFlex margin="10px 0">
                 <Text margin="0" size="16px" bold="600">위치</Text>
                 {is_edit ? (
-                <Button width="auto" border="none">
+                <Button width="auto" border="none" _onClick={()=>{window.alert("산정보는 수정이 불가능합니다!")}} >
                   <Grid flexRow>
                     <Input 
-                      width="150px" bg="#eee" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 10px"
-                      placeholder="산이름 입력"
+                      dir="rtl"
+                      width="auto" bg="#eee" border="none" radius="8px" padding="16px 6px" margin="0 10px"
+                      placeholder="선택"
                       disabled
                       value={mountValue}
                       is_submit/>
                       {/* _onChange={inputMount}/> */}
                     {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text> */}
-                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{window.alert("산정보는 수정이 불가능합니다!")}} />
+                    <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
                   </Grid>
                 </Button>) : (
-                <Button width="auto" border="none">
-                  <Grid flexRow>
+                // <Button width="auto" border="none">
+                  <Grid flexRow _onClick={()=>{setIsOpen(true)}} hover width="auto">
                     <Input 
-                      width="150px" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 10px"
-                      placeholder="산이름 입력"
+                      hover
+                      dir="rtl"
+                      width="auto" border="none" radius="8px" padding="16px 0" margin="0 6px"
+                      placeholder="선택"
                       value={mountValue}
                       is_submit/>
                       {/* _onChange={inputMount}/> */}
                     {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text> */}
-                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{setIsOpen(true)}} />
+                    <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
                   </Grid>
-                </Button>)}
+                // </Button>
+                )}
               </Grid>
               
             </Grid>
@@ -532,7 +587,7 @@ const FadeOut = keyframes`
 
 const DateModal = styled.div`
   position: fixed;
-  bottom: ${props => props.dateOpen ? '88px' : '-100%'};
+  bottom: ${props => props.modalOpen ? '88px' : '-100%'};
   left: 0;
   right: 0;
   z-index: 100px;
@@ -540,7 +595,7 @@ const DateModal = styled.div`
   // transform: translate(-50%, -50%);
   // transition: all;
   // transform: duration
-  animation: ${props => props.dateOpen ? FadeIn : FadeOut} 0.5s ease-out alternate;
+  animation: ${props => props.modalOpen ? FadeIn : FadeOut} 0.5s ease-out alternate;
   .modal_container {
     background-color: white;
     width: 100%;

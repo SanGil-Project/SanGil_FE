@@ -8,6 +8,7 @@ import tracker from "./modules/tracker";
 import feed from "./modules/feed";
 import party from "./modules/party";
 import mountain from "./modules/mountain";
+import handle from "./modules/handle";
 
 export const history = createBrowserHistory();
 
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   feed: feed,
   party: party,
   mountain: mountain,
+  handle: handle,
   router: connectRouter(history),
 });
 

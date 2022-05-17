@@ -30,7 +30,7 @@ const Icon = (props) => {
     fillOpacity,
   };
   const menuColor = page ? "#43CA3B" : "#C0C0C0";
-  const fillOpa = fillOpacity ? fillOpacity : false;
+  const fillOpa = fillOpacity==="false" ? false : fillOpacity ;
 
   if (type === "mypageBookStar") {
     return (

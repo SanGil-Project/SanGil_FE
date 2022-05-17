@@ -23,6 +23,7 @@ import {
   EndTracking,
   PartyWrite,
   ChatRoom,
+  Mytrack,
 } from "../page/page";
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
           <Route path="/searchmountain" element={<BeforeTracking />} />
           <Route path="/tracker/:name/:mountainId" element={<Tracker />} />
           <Route path="/endtracking/:name" element={<EndTracking />} />
+          <Route path="/mytrack/:completedId" element={<Mytrack />} />
           <Route path="/feed" element={<Feed />} />
           <Route path="/feedwrite" element={<FeedWrite />} />
           <Route path="/chatroom/:partyid" element={<ChatRoom />} />
@@ -56,8 +58,11 @@ function App() {
 
 const Container = styled.div`
   background-color: #9EE59C;
+<<<<<<< HEAD
+=======
   width: 100vw,
   // height: 100vh,
+>>>>>>> develop
 `;
 
 Modal.setAppElement("#root");
