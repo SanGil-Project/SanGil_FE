@@ -15,6 +15,7 @@ const Star = (props) => {
     minWidth,
     setStar,
   } = props;
+  console.log(showIndex);
 
   const starArr = [0, 1, 2, 3, 4];
   const [clicked, setClicked] = React.useState([

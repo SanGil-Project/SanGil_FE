@@ -35,6 +35,7 @@ const Grid = (props) => {
     bgSize,
     borderBottom,
     borderTop,
+    _onScroll,
   } = props;
   const styles = {
     bg,
@@ -70,7 +71,7 @@ const Grid = (props) => {
   };
 
   return (
-    <Box {...styles} onClick={_onClick} id={id}>
+    <Box {...styles} onClick={_onClick} onScroll={_onScroll} id={id}>
       {props.children}
     </Box>
   );
@@ -94,7 +95,8 @@ const Box = styled.div`
   ${(props) => (props.radius ? `border-radius: ${props.radius};` : null)}
   ${(props) => (props.padding ? `padding: ${props.padding};` : null)}
   ${(props) => (props.border ? `border: ${props.border};` : null)}
-  ${(props) => (props.borderBottom ? `border-bottom: ${props.borderBottom};` : null)}
+  ${(props) =>
+    props.borderBottom ? `border-bottom: ${props.borderBottom};` : null}
   ${(props) => (props.borderTop ? `border-top: ${props.borderTop};` : null)}
   ${(props) =>
     props.flexColumn ? `display:flex; flex-direction: column;` : null}

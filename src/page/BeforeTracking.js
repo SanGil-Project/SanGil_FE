@@ -26,7 +26,7 @@ const BeforeTracking = (props) => {
   return (
     <>
       <Mobile>
-        <Grid width="100vw" margin="0 auto">
+        <Grid bg="#fff" width="100vw" margin="0 auto">
           <Header />
           <Grid padding="97px 0 0 0">
             <Grid
@@ -97,7 +97,7 @@ const BeforeTracking = (props) => {
         </Grid>
       </Mobile>
       <Desktop>
-        <Grid width="500px" margin="0 auto">
+        <Grid bg="#fff" width="500px" margin="0 auto">
           <Header />
           <Grid padding="100px 0 0 0" height="1080px">
             <Grid

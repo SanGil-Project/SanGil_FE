@@ -20,6 +20,7 @@ export const aroundDB = (lat, lng) => {
   return function (dispatch, getState) {
     console.log(lat, lng);
     axios
+      // .get(`https://burgerrr.shop/api/main/nearby/1?lat=${lat}&lng=${lng}`, {
       .get(`http://3.35.49.228/api/main/nearby/1?lat=${lat}&lng=${lng}`, {
         headers: {
           Authorization: sessionStorage.getItem("token"),
@@ -37,6 +38,7 @@ export const aroundDB = (lat, lng) => {
 export const feedDB = (token) => {
   return function (dispatch, getState) {
     axios
+      // .get("https://burgerrr.shop/api/main/feeds/1", {
       .get("http://3.35.49.228/api/main/feeds/1", {
         headers: {
           Authorization: sessionStorage.getItem("token"),
@@ -54,6 +56,7 @@ export const feedDB = (token) => {
 export const mountainsDB = () => {
   return function (dispatch, getState) {
     axios
+      // .get("https://burgerrr.shop/api/main/mountains", {
       .get("http://3.35.49.228/api/main/mountains", {
         headers: {
           Authorization: sessionStorage.getItem("token"),
@@ -71,6 +74,7 @@ export const mountainsDB = () => {
 export const partyDB = () => {
   return function (dispatch, getState) {
     axios
+      // .get("https://burgerrr.shop/api/main/parties", {
       .get("http://3.35.49.228/api/main/parties", {
         headers: {
           Authorization: sessionStorage.getItem("token"),
@@ -89,6 +93,7 @@ export const bookmarkDB = (mountainId, type) => {
   return function (dispatch, getState) {
     axios
       .post(
+        // `https://burgerrr.shop/api/mountain/bookmark/${mountainId}`,
         `http://3.35.49.228/api/mountain/bookmark/${mountainId}`,
         {
           mountainId: mountainId,

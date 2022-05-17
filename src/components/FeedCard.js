@@ -7,18 +7,12 @@ import { deleteFeedDB, feedLikeDB } from "../redux/modules/feed";
 const FeedCard = (props) => {
   const { el } = props;
   const userInfo = useSelector((state) => state.user?.userInfo);
+  const [likeCnt, setLikeCnt] = React.useState(el.goodCnt);
   const dispatch = useDispatch();
 
-  const [liked, setLiked] = React.useState({
-    likeCnt: el.goodCnt,
-    likeStatus: el.goodStatus,
-  });
-
   const like = (feedId) => {
-    liked.likeStatus
-      ? setLiked((prev) => ({ likeCnt: prev.likeCnt - 1, likeStatus: false }))
-      : setLiked((prev) => ({ likeCnt: prev.likeCnt + 1, likeStatus: true }));
     dispatch(feedLikeDB(feedId));
+    setLikeCnt((prev) => (el.goodStatus ? (prev -= 1) : (prev += 1)));
   };
 
   const deleteFeed = (feedId) => {
@@ -42,10 +36,10 @@ const FeedCard = (props) => {
           />
           <Grid height="40px" margin="0 0 0 5px">
             <Text margin="6px 0 0 5px" size="0.9rem" bold="200">
-              칭호
+              {el.userTitle}
             </Text>
             <Text margin="0 0 6px 5px" bold="500" size="1.2rem">
-              호랑이
+              {el.nickname}
             </Text>
           </Grid>
         </Grid>
@@ -78,16 +72,16 @@ const FeedCard = (props) => {
             type="like"
             width="18px"
             height="18px"
-            fill={liked.likeStatus ? "#e54353" : `#c4c4c4`}
+            fill={el.goodStatus ? "#e54353" : `#c4c4c4`}
             _onClick={() => like(el.feedId)}
           />
           <Text size="1.2rem" bold="500">
-            {liked.likeCnt}
+            {likeCnt}
           </Text>
         </Grid>
 
         <Text height="15px" size="1.2rem" color="#C4C4C4">
-          15분 전
+          {el.createdAt.split("T")[0]}
         </Text>
       </Grid>
       <Grid maxWidth="86%" height="50px" margin="0 auto">
