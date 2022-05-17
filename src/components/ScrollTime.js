@@ -86,14 +86,14 @@ const ScrollTime = () => {
     <React.Fragment>
       <Modal className="modal">
           <div className="section">
-            <Grid className="select-time" height="60px" isFlex padding="40px">
+            <div className="select-time" isFlex>
               {makeScroll(division, 'division')}
               {makeScroll(hour, 'hour')}
               {makeScroll(minute, 'minute')}
               {/* {makeDivisionScroll()}
               {makeHourScroll()}
               {makeMinuteScroll()} */}
-            </Grid>
+            </div>
           </div>
         </Modal>
     </React.Fragment>
@@ -105,12 +105,18 @@ const Modal = styled.div`
   font-size: 24px;
   .select-time {
     height: 100px;
-    width: 200px;
+    width: 100%;
     margin-bottom: 20px;
+    
     display: flex;
-    // font-size: 20px;
-    // overflow-y: scroll;
+    padding: 40px;
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+
     div {
+        height: 200px;
+        background-color: black;
         flex: 1;
         text-align: center;
         overflow-y: scroll;
