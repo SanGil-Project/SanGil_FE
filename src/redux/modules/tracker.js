@@ -21,6 +21,7 @@ export const startDB = (mountainId, setCompletedId) => {
   return function (dispatch, getState) {
     axios
       .post(
+        // `https://burgerrr.shop/api/tracking/${mountainId}`,
         `http://3.35.49.228/api/tracking/${mountainId}`,
         { send: 1 },
         {
@@ -42,6 +43,7 @@ export const searchNameDB = (keyword, pageNum) => {
   return function (dispatch, getState) {
     axios
       .get(
+        // `https://burgerrr.shop/api/mountain/search?keyword=${keyword}&pageNum=${pageNum}`,
         `http://3.35.49.228/api/mountain/search?keyword=${keyword}&pageNum=${pageNum}`,
         {
           headers: {
@@ -62,6 +64,7 @@ export const setPathDB = (completedId, loca) => {
   return function (dispatch, getState) {
     axios
       .post(
+        // `https://burgerrr.shop/api/tracking/mountain/${completedId}`,
         `http://3.35.49.228/api/tracking/mountain/${completedId}`,
         { lat: loca.lat, lng: loca.lng },
         {
@@ -83,6 +86,7 @@ export const endClimbDB = (completedId, data) => {
   return function (dispatch, getState) {
     axios
       .put(
+        // `https://burgerrr.shop/api/tracking/${completedId}`,
         `http://3.35.49.228/api/tracking/${completedId}`,
         {
           totalDistance: data.totalDistance,
@@ -95,7 +99,7 @@ export const endClimbDB = (completedId, data) => {
         }
       )
       .then((res) => {
-        console.log(res)
+        console.log(res);
         dispatch(endClimb(res.data));
       })
       .catch((err) => {
@@ -108,7 +112,8 @@ export const deleteDB = (completedId) => {
   console.log(completedId);
   return function (distpatch, getState) {
     axios
-      .delete(`http://3.35.49.228/api/tracking/${completedId}`, {
+      // .delete(`https://burgerrr.shop/api/tracking/${completedId}`, {
+        .delete(`http://3.35.49.228/api/tracking/${completedId}`, {
         headers: {
           Authorization: sessionStorage.getItem("token"),
         },

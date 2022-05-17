@@ -7,6 +7,7 @@ const GET_TOP_MNT = "GET_TOP_MNT";
 const GET_DETAIL = "GET_DEATIL";
 const ADD_COMMENT = "ADD_COMMENT";
 const DELETE_COMMENT = "DELETE_COMMENT";
+const UPDATE_COMMENT = "UPDATE_COMMENT";
 
 const getTopMnt = createAction(GET_TOP_MNT, (mountainList) => ({
   mountainList,
@@ -15,6 +16,9 @@ const addComment = createAction(ADD_COMMENT, (comment) => ({ comment }));
 const getDetail = createAction(GET_DETAIL, (data) => ({ data }));
 const deleteComment = createAction(DELETE_COMMENT, (commentId) => ({
   commentId,
+}));
+const updateCmt = createAction(UPDATE_COMMENT, (commentData) => ({
+  commentData,
 }));
 
 const initialState = {};
@@ -80,6 +84,19 @@ const deleteCmtDB = (mountainCommentId) => {
   };
 };
 
+const updateCmtDB = (commentData) => {
+  return function (dispatch, getState) {
+    api
+      .updateComment(commentData)
+      .then((res) => {
+        dispatch(updateCmt(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
 export default handleActions(
   {
     [GET_TOP_MNT]: (state, action) =>
@@ -110,6 +127,17 @@ export default handleActions(
           },
         };
       }),
+    [UPDATE_COMMENT]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(action.payload.commentData);
+        const idx = draft.mountainData.commentDto.commentLists.findIndex(
+          (el, idx) =>
+            el.mountainCommentId ===
+            action.payload.commentData.mountainCommentId
+        );
+        draft.mountainData.commentDto.commentLists[idx].mountainComment =
+          action.payload.commentData.mountainComment;
+      }),
   },
   initialState
 );
@@ -120,6 +148,7 @@ const actionCreators = {
   getDetailDB,
   addCommentDB,
   deleteCmtDB,
+  updateCmtDB,
 };
 
 export { actionCreators };

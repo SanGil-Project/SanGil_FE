@@ -58,6 +58,11 @@ function App() {
 
 const Container = styled.div`
   background-color: #9EE59C;
+<<<<<<< HEAD
+=======
+  width: 100vw,
+  // height: 100vh,
+>>>>>>> develop
 `;
 
 Modal.setAppElement("#root");

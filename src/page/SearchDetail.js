@@ -10,7 +10,7 @@ import {
 } from "../components/component";
 import { Desktop, Mobile } from "../shared/responsive";
 import { actionCreators as mountAction } from "../redux/modules/mountain";
-import _ from "lodash";
+import _, { update } from "lodash";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -21,8 +21,12 @@ const SearchDetail = () => {
   const dispatch = useDispatch();
   const menuColor = [false, false, false, true, false]; // 메뉴바 색
   const [star, setStar] = React.useState([false, false, false, false, false]);
-  const [comment, setComment] = React.useState();
-
+  const [comment, setComment] = React.useState("");
+  const [updateCmt, setUpdateCmt] = React.useState({
+    content: "",
+    mountainCommentId: 0,
+    state: true,
+  });
   const [selected, setSelected] = React.useState(false);
   const mountain = useSelector((state) => state.mountain.mountainData);
   const show = (i) => {
@@ -37,12 +41,24 @@ const SearchDetail = () => {
   );
 
   const sendComment = () => {
-    dispatch(
-      mountAction.addCommentDB(mountainId, {
-        mountainComment: comment,
-        star: star.filter(Boolean).length,
-      })
-    );
+    if (updateCmt.state) {
+      dispatch(
+        mountAction.addCommentDB(mountainId, {
+          mountainComment: comment,
+          star: star.filter(Boolean).length,
+        })
+      );
+      setComment("");
+    } else {
+      dispatch(
+        mountAction.updateCmtDB({
+          mountainCommentId: updateCmt.mountainCommentId,
+          mountainComment: comment,
+        })
+      );
+      setUpdateCmt({ content: "", state: true, mountainCommentId: 0 });
+      setComment("");
+    }
   };
 
   React.useEffect(() => {
@@ -55,7 +71,7 @@ const SearchDetail = () => {
         <DetailContainer>
           <Header />
           <Grid height="74px" />
-          <Grid overflowY="scroll" height="1080px">
+          <Grid overflowY="scroll" height="100vh">
             <Grid width="93.23%" height="48px" margin="0 auto" isFlex>
               <Text bold="400" size="30px" lineHeight="48px" width="200px">
                 {mountain?.mountain}
@@ -89,7 +105,7 @@ const SearchDetail = () => {
             {mountain &&
               mountain.courseLists.map((el, idx) => (
                 <div key={idx}>
-                  <Grid width="93.23%" margin="0 auto 0 auto">
+                  <Grid width="93.23%" margin="0 auto">
                     <Grid height="8px" border="4px solid #F2F3F6"></Grid>
                     <Grid
                       width="52%"
@@ -128,47 +144,83 @@ const SearchDetail = () => {
                 height="8px"
                 border="4px solid #F2F3F6"
                 margin="0 auto"
-              ></Grid>
-              <Grid width="93.23%" margin="35px auto 0 auto" isFlex>
-                <Grid
-                  border="1px solid #C4C4C4"
-                  maxWidth="330px"
-                  height="50px"
-                  margin="0 0 0 7px"
-                  radius="12px"
-                  isFlex
-                >
-                  <Input
-                    gridWidth="230px"
+              />
+              {updateCmt.state ? (
+                <Grid width="93.23%" margin="23px auto 0 auto" isFlex>
+                  <Grid
+                    border="1px solid #C4C4C4"
+                    maxWidth="330px"
+                    height="50px"
+                    margin="0 0 0 7px"
+                    radius="12px"
+                    isFlex
+                  >
+                    <Input
+                      gridWidth="230px"
+                      border="none"
+                      margin="1px 0"
+                      height="46px"
+                      placeholder="댓글과 별점을 남겨보세요!"
+                      _onChange={cmt}
+                    />
+                    <Star
+                      width="77px"
+                      height="18px"
+                      lineHeight="18px"
+                      starMargin="0 1px"
+                      setStar={setStar}
+                    />
+                  </Grid>
+                  <Button
                     border="none"
-                    margin="1px 0"
-                    height="46px"
-                    placeholder="댓글 작성"
-                    _onChange={cmt}
-                  />
-                  <Star
-                    width="77px"
-                    height="18px"
-                    lineHeight="18px"
-                    starMargin="0 1px"
-                    setStar={setStar}
-                  />
+                    maxWidth="50px"
+                    height="50px"
+                    margin="0 1px"
+                    _onClick={sendComment}
+                  >
+                    등록
+                  </Button>
                 </Grid>
-                <Button
-                  border="none"
-                  maxWidth="50px"
-                  height="50px"
-                  margin="0 1px"
-                  _onClick={sendComment}
-                >
-                  등록
-                </Button>
-              </Grid>
+              ) : (
+                <Grid width="93.23%" margin="23px auto 0 auto" isFlex>
+                  <Grid
+                    border="1px solid #C4C4C4"
+                    maxWidth="330px"
+                    height="50px"
+                    margin="0 0 0 7px"
+                    radius="12px"
+                    isFlex
+                  >
+                    <Input
+                      gridWidth="230px"
+                      border="none"
+                      margin="1px 100px 0 0"
+                      height="46px"
+                      defaultValue={updateCmt.content}
+                      _onChange={cmt}
+                    />
+                  </Grid>
+                  <Button
+                    border="none"
+                    maxWidth="50px"
+                    height="50px"
+                    margin="0 1px"
+                    _onClick={sendComment}
+                  >
+                    수정
+                  </Button>
+                </Grid>
+              )}
             </div>
+
             {mountain?.commentDto.commentLists.map((el, idx) => {
-              return <Comment key={idx} data={el} showIndex={el.star} />;
+              return (
+                <Comment key={idx} data={el} setUpdateCmt={setUpdateCmt} />
+              );
             })}
           </Grid>
+
+          <Grid height="88px" />
           <MenubarContainer>
             <Grid height="88px" maxWidth="500px" margin="auto">
               <Menubar menuColor={menuColor} />
@@ -186,6 +238,7 @@ const DetailContainer = styled.div`
   // min-width: 414px;
   max-width: 500px;
   margin: auto;
+  background-color: #fff;
 `;
 
 const MenubarContainer = styled.div`
