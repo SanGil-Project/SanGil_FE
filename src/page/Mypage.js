@@ -25,7 +25,7 @@ const Mypage = (props) => {
   const userInfo = useSelector((state) => state?.user?.userInfo);
   // const myTrackList = useSelector((state) => state?.user?.tracker);
   const myTrackList = useSelector((state) => state?.user?.trackList?.completedList);
-  const selectMarker = useSelector((state) => state?.handle?.selectMarker);
+  const selectMarker = useSelector((state) => state?.handle?.selectMarker?.id);
   const completedList = useSelector((state) => state?.user?.myMountain?.completedList);
   const myFeedList = useSelector((state) => state?.user?.feedList);
   const myBookmarkList = useSelector((state) => state?.user?.mountList);

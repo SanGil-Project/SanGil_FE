@@ -43,7 +43,7 @@ export const KakaoMap = (props) => {
   // const [selectMarker, setSeletMarker] = useState();
 
   const select = (mountainId, idx) => {
-    dispatch(handleActions.selectMarkerDB(mountainId));
+    dispatch(handleActions.selectMarkerDB(mountainId, idx));
     setSeleteMarker(idx)
     // console.log(selectedMarker, p);
   }

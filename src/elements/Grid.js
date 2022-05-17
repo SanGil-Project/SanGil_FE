@@ -35,6 +35,7 @@ const Grid = (props) => {
     bgSize,
     borderBottom,
     borderTop,
+    ref,
   } = props;
   const styles = {
     bg,
@@ -68,6 +69,16 @@ const Grid = (props) => {
     borderBottom,
     borderTop,
   };
+
+  if(ref) {
+
+  console.log(ref);
+    return (
+      <Box {...styles} ref={ref} onClick={_onClick} id={id}>
+        {props.children}
+      </Box>
+    );
+  }
 
   return (
     <Box {...styles} onClick={_onClick} id={id}>

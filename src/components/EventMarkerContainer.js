@@ -19,8 +19,9 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
     // map.panTo(marker.getPosition());
   }
 
-  const select = (completedId) => {
-    dispatch(handleActions.selectMarkerDB(completedId));
+  const select = (completedId, idx) => {
+    console.log(idx);
+    dispatch(handleActions.selectMarkerDB(completedId, idx));
     navigate(`/mytrack/${completedId}`);
   }
 
@@ -37,7 +38,7 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
           {isClicked && isVisible &&
           <CustomOverlayMap index={index} position={{lat: content.lat, lng: content.lng}} yAnchor={1.45} zIndex={1}>
             <MymarkerInfo>
-              <Grid padding="9px 13px" _onClick={()=>{select(content.completedId)}} hover>
+              <Grid padding="9px 13px" _onClick={()=>{select(content.completedId, index)}} hover>
                 <Text margin="5px 0" bold="600" size="14px">{content.mountain}</Text>
                 <Grid flexRow justify="left" margin="8px 0 4px">
                   <Text margin="0 18px 0 0" size="12px" bold="500" color="#C4C4C4">총 거리</Text>
