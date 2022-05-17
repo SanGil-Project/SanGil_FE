@@ -100,7 +100,6 @@ const Input = (props) => {
       ) : value ? (
         <InfoInput
           {...styles}
-          size="20"
           type={type}
           value={value}
           onChange={_onChange}
@@ -137,7 +136,7 @@ const InfoInput = styled.input`
   box-sizing: border-box;
   font-size: ${(props) => (props.size ? `${props.size}` : `16px`)};
   outline: none;
-  ${(props) => (props.width ? `width: ${props.width};` : null)}
+  width: ${(props) => `${props.width}`};
   max-width: ${(props) => `${props.maxWidth}`};
   height: ${(props) => `${props.height}`};
   ${(props) => (props.margin ? `margin: ${props.margin};` : null)}

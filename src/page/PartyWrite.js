@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { useNavigate, useParams } from "react-router";
 
 import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as partyActions } from '../redux/modules/party';
 import { actionCreators as mountActions } from '../redux/modules/mountain';
 
-import DatePicker from "react-datepicker";
-import ko from "date-fns/locale/ko";
-import "react-datepicker/dist/react-datepicker.css";
-
 import 'date-fns';
-// import DatePicker from 'react-mobile-datepicker';
+import DatePicker from 'react-mobile-datepicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 // import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -37,35 +33,11 @@ const PartyWrite = (props) => {
 
   const [partyName, setPartyName] = React.useState(is_edit ? partyItem?.title :"");
   const [partyContent, setPartyContent] = React.useState(is_edit ? partyItem?.partyContent :"");
-  const [dateValue, setDateValue] = React.useState(is_edit ? partyItem?.partyDate : "선택");
+  const [dateValue, setDateValue] = React.useState(is_edit ? partyItem?.partyDate : null);
   const [timeValue, setTimeValue] = React.useState(is_edit ? partyItem?.partyTime :"");
   const [numberValue, setNumberValue] = React.useState(is_edit ? partyItem?.maxPeople : null);
   const [mountValue, setMountValue] = React.useState(is_edit ? partyItem?.mountain :"");
   const [mountAddValue, setMountAddValue] = React.useState(is_edit ? partyItem?.address :"");
-
-  const [startDate, setStartDate] = useState(new Date());
-  const [dateOpen, setDateOpen] = useState(false);
-  const handleDateModal = () => {
-    setDateOpen(false);
-  };
-  const saveDateModal = () => {
-    const year = startDate.getFullYear();
-    const month = ('0' + (startDate.getMonth() + 1)).slice(-2);
-    const day = ('0' + startDate.getDate()).slice(-2);
-
-    const dateString = year + '-' + month  + '-' + day;
-    // console.log(dateString, year, month, day);
-    setDateValue(dateString);
-    setDateOpen(false);
-  };
-  console.log(dateValue)
-  const formatDate = (d) => {
-    const date = new Date(d);
-    const monthIndex = date.getMonth() + 1;
-    const year = date.getFullYear();
-    return `${year}년 ${`0${monthIndex}`.slice(-2)}월`;
-  }
-  
 
   const [isOpen, setIsOpen] = useState(false);
   const [complete, setcomplete] = useState(is_edit ? true : false);
@@ -166,68 +138,30 @@ const PartyWrite = (props) => {
                 <Text margin="0" size="16px" bold="600">날짜</Text>
                 <Button width="auto" border="none">
                   {/* <Grid flexRow _onClick={handleClick}> */}
-                  <Grid flexRow width="auto">
-                    <Grid flexRow
-                    _onClick={()=>{setDateOpen(!dateOpen); console.log(dateOpen)}} >
-                      <Text margin="0 6px" width="auto" size="16px" color="#989898">{dateValue}</Text>
-                      <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
-                    </Grid>
-                    <DateModal className="dateModal" dateOpen={dateOpen}>
-                      <div className="modal_container">
-                      <DatePicker 
-                        selected={startDate} 
-                        onChange={(date) => setStartDate(date)}
-                        dateFormat="yyyy-MM-dd (eee)" 
-                        showPopperArrow={false}
-                        inline
-                        locale={ko}
-                        popperModifiers={{ preventOverflow: { enabled: true } }}
-                        popperPlacement="auto"
-                        minDate={new Date()} 
-                        renderCustomHeader={({date, decreaseMonth, increaseMonth}) => (
-                          <Grid className="datepickerHeader" isFlex padding="10px 58px">
-                            <div className="fomrmatDate">{formatDate(date)}</div>
-                            <Grid width="auto" isFlex>
-                              <div onClick={decreaseMonth}>
-                                <Text margin="0 10px 0" color="#43CA3B" bold="700">&lt;</Text>
-                              </div>
-                              <div onClick={increaseMonth}>
-                                <Text margin="0" color="#43CA3B" bold="700">&gt;</Text>
-                              </div>
-                            </Grid>
-                          </Grid>
-                          
-                        )}/>
-                      <Grid flexRow height="auto" padding="10px 20px">
-                        <Button _onClick={handleDateModal} margin="0 10px 0 0" radius="8px" border="none" bgColor="#E6E6E6">
-                          <Text margin="0 auto" align bold="700">취소</Text>
-                        </Button>
-                        <Button _onClick={saveDateModal} radius="8px" border="none" bgColor="#43CA3B">
-                          <Text margin="0 auto" align color="white" bold="700">확인</Text>
-                        </Button>
-                      </Grid>
-                        
-                      {/* <LocalizationProvider dateAdapter={AdapterDateFns} >
-                        <Stack component="form" noValidate spacing={1} sx={{ border: "none" }}>
-                          <TextField
-                            id="date"
-                            // label="Birthday"
-                            // variant="standard"
-                            type="date"
-                            // style={{ fontSize: 1 }}
-                            // size="medium"
-                            onChange={inputDate}
-                            // defaultValue="2017-05-24"
-                            value={dateValue}
-                            sx={{ width: 150, border: "none", fontSize: 15 }}
-                            InputLabelProps={{
-                              shrink: true,
-                            }}
-                          />
-                        </Stack>
-                      </LocalizationProvider> */}
-                      </div>
-                    </DateModal>
+                  <Grid flexRow>
+
+                    <LocalizationProvider dateAdapter={AdapterDateFns} >
+                      <Stack component="form" noValidate spacing={1} sx={{ border: "none" }}>
+                        <TextField
+                          id="date"
+                          // label="Birthday"
+                          // variant="standard"
+                          type="date"
+                          // style={{ fontSize: 1 }}
+                          // size="medium"
+                          onChange={inputDate}
+                          // defaultValue="2017-05-24"
+                          value={dateValue}
+                          sx={{ width: 150, border: "none", fontSize: 15 }}
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                        />
+                      </Stack>
+                    </LocalizationProvider>
+
+                    {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text>
+                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} /> */}
                   </Grid>
                 </Button>
               </Grid>
@@ -511,116 +445,6 @@ const PartyWrite = (props) => {
   </React.Fragment>
   );
 }
-
-const FadeIn = keyframes`
-  0% {
-    bottom: -100%;
-  }
-  100% {
-    bottom: 88px;
-  }
-`;
-
-const FadeOut = keyframes`
-  0% {
-    bottom: 88px;
-  }
-  100% {
-    bottom: -100%;
-  }
-`;
-
-const DateModal = styled.div`
-  position: fixed;
-  bottom: ${props => props.dateOpen ? '88px' : '-100%'};
-  left: 0;
-  right: 0;
-  z-index: 100px;
-  height: auto;
-  // transform: translate(-50%, -50%);
-  // transition: all;
-  // transform: duration
-  animation: ${props => props.dateOpen ? FadeIn : FadeOut} 0.5s ease-out alternate;
-  .modal_container {
-    background-color: white;
-    width: 100%;
-    max-width: 500px;
-    // height: 70vh;
-    margin: auto;
-    // height: 50vh;
-    // overflow-y: scroll;
-  }
-  .react-datepicker {
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    border: none;
-    border-top: 1px solid #ccc;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    // background-color: orange;
-    // justify-content: center;
-  }
-  .react-datepicker__header {
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    padding-top: 0.8em;
-    background-color: white;
-    width: 100%;
-    max-width: 500px;
-    margin: auto;
-    // background-color: orange;
-    border: none;
-    font-size: 2.5rem;
-  }
-  .react-datepicker__month {
-    margin: .4em 1em;
-    // background-color: orange;
-  }
-  .react-datepicker__day-name {
-    font-size: 1.6rem;
-    font-weight: 500;
-    margin: 2rem;
-    color: #959595; 
-  }
-  .react-datepicker__day {
-    width: 28px;
-    height: 28px;
-    font-size: 2.0rem;
-    margin: 1.5rem;
-    line-height: 1.8;
-    text-align: center;
-  }
-  .react-datepicker__navigation {
-    background-color: orange;
-    top: 2em;
-    line-height: 1.7em;
-    border: 0.45em solid transparent;
-  }
-  .fomrmatDate {
-    font-size: 22px;
-    font-weight: 500;
-  }
-  .react-datepicker__day--selected {
-    // background: #2E1C8B;
-    color: #43CA3B;
-    border: none;
-    background-color: transparent;
-    // border-radius: 50%;
-    font-weight: 700;
-    text-align: center;
-    line-height: 1.8;
-    // display: flex;
-    // flex-direction: row;
-    // justify-content: center;
-    // align-items: center;
-    // width: 2.2rem;
-    // height: 2.2rem;
-    // border-radius: 4.2rem;
-    // box-sizing: border-box;
-  }
-
-`;
 
 const PartyContainer = styled.div`
   background-color: #fff;
