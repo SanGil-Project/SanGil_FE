@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 import { actionCreators as handleActions } from "../redux/modules/handle";
 
 import { Grid, Text, Icon, Image } from '../elements/element';
@@ -8,6 +9,7 @@ import { Map, MapMarker, Polyline, ZoomControl, useMap, CustomOverlayMap } from 
 
 const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const map = useMap();
   const [isVisible, setIsVisible] = useState(false)
   // const [selectedMarker, setSeleteMarker] = useState()
@@ -19,6 +21,7 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
 
   const select = (completedId) => {
     dispatch(handleActions.selectMarkerDB(completedId));
+    navigate(`/mytrack/${completedId}`);
   }
 
   if (content.totalTime) {

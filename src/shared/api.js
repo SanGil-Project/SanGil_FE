@@ -74,6 +74,9 @@ export const api = {
   deleteComment: (mountainCommentId) =>
     instance.delete(`/api/mountain/comment/${mountainCommentId}`),
 
+  // trancker.js
+  getMytrack: (completedid) => instance.get(`/api/tracking/detail/${completedid}`),
+  
   // party.js
   getMyParty: () => instance.get("/api/plan"),
   getPartyList: (pageNum) => instance.get(`/api/parties/${pageNum}`),
