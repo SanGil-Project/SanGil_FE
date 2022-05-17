@@ -136,7 +136,7 @@ const MypageModal = (props) => {
               bottom: 0,
               backgroundColor: "transparent",
               backdropFilter: "blur(5px)",
-              zIndex: "100",
+              zIndex: "1001",
             },
             content: {
               position: "absolute",
@@ -272,23 +272,26 @@ const TitleItem = (props) => {
   if(done) {
     return (
       <React.Fragment>
-        <Grid flexColumn width="70px" margin="0 12px 0 0" radius="4px" hover justify="flex-start">
         {pick ? 
-          <Image
-            width="70px"
-            height="70px"
-            bg="#fff"
-            border="2px solid #000000"
-            borderRadius="64px"
-            src={img}/> : 
-          <Image
-            width="70px"
-            height="70px" 
-            bg="#fff"
-            borderRadius="64px"
-            src={img}/>}
-          <Text width="70px" margin="5px 0 0 0" size="10px" bold="500" align="center">{title}</Text>
-        </Grid>
+          (<Grid flexColumn width="70px" margin="0 12px 0 0" radius="4px" hover justify="flex-start">
+              <Image
+                width="70px"
+                height="70px"
+                bg="#fff"
+                border="2px solid #43CA3B"
+                borderRadius="64px"
+                src={img}/>
+              <Text width="70px" margin="5px 0 0 0" size="10px" bold="600" align="center" color="#43CA3B">{title}</Text>
+            </Grid>) : 
+          (<Grid flexColumn width="70px" margin="0 12px 0 0" radius="4px" hover justify="flex-start">
+              <Image
+                width="70px"
+                height="70px" 
+                bg="#fff"
+                borderRadius="64px"
+                src={img}/>
+              <Text width="70px" margin="5px 0 0 0" size="10px" bold="300" align="center">{title}</Text>
+            </Grid>)}
       </React.Fragment>
     );
   }
@@ -300,7 +303,7 @@ const TitleItem = (props) => {
           height="70px" 
           bg="#C4C4C4"
           radius="64px"></Grid>
-        <Text width="70px" margin="5px 0 0 0" size="10px" bold="500" color="#D2D2D2" align="center">{title}</Text>
+        <Text width="70px" margin="5px 0 0 0" size="10px" bold="300" color="#D2D2D2" align="center">{title}</Text>
       </Grid>
     </React.Fragment>
   );
