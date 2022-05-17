@@ -12,6 +12,7 @@ import CourseCard from "./CourseCard";
 import FullMap from "./FullMap";
 import MypageModal from "./MypageModal";
 import FeedCard from "./FeedCard";
+import ScrollTime from "./ScrollTime"
 
 export {
   GoogleLogin,
@@ -28,4 +29,5 @@ export {
   FullMap,
   MypageModal,
   FeedCard,
+  ScrollTime,
 };

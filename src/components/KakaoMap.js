@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as handleActions } from "../redux/modules/handle";
 
 import { Grid, Text, Icon, Image } from "../elements/element";
 import EventMarkerContainer from "./EventMarkerContainer";
@@ -15,6 +17,7 @@ import {
 const { kakao } = window;
 
 export const KakaoMap = (props) => {
+  const dispatch = useDispatch();
 
   const {
     width,
@@ -37,7 +40,15 @@ export const KakaoMap = (props) => {
     lat: 36.5,
     lng: 127.8,
   });
-  const [selectedMarker, setSeleteMarker] = useState()
+  // const [selectMarker, setSeletMarker] = useState();
+
+  const select = (mountainId, idx) => {
+    dispatch(handleActions.selectMarkerDB(mountainId));
+    setSeleteMarker(idx)
+    // console.log(selectedMarker, p);
+  }
+
+  const [selectedMarker, setSeleteMarker] = useState();
   // console.log("여기서 선택된 값 :: ", selectedMarker);
   if(getIndex) {
     props.getIndex(selectedMarker); // 검색 페이지로 선택된 marker index 보내기
@@ -78,7 +89,7 @@ export const KakaoMap = (props) => {
                       index={idx} 
                       content={p}
                       data={data}
-                      onClick={() => setSeleteMarker(idx)}
+                      onClick={() => {select(p.mountainId, idx)}}
                       isClicked={selectedMarker === idx}
                     />;
           })
