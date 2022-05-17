@@ -22,6 +22,7 @@ export const addFeedDB = (feed) => {
   frm.append("feedContent", feed.feedContent);
   return function (dispatch, getState) {
     axios
+      // .post("https://burgerrr.shop/api/feeds/write", frm, {
       .post("http://3.35.49.228/api/feeds/write", frm, {
         headers: {
           Authorization: sessionStorage.getItem("token"),
@@ -40,6 +41,7 @@ export const addFeedDB = (feed) => {
 export const getFeedDB = (pageNum) => {
   return function (dispatch, getState) {
     axios
+      // .get("https://burgerrr.shop/api/main/feeds/1", {
       .get("http://3.35.49.228/api/main/feeds/1", {
         headers: {
           Authorization: sessionStorage.getItem("token"),
@@ -57,6 +59,7 @@ export const getFeedDB = (pageNum) => {
 export const deleteFeedDB = (feedId) => {
   return function (dispatch, getState) {
     axios
+      // .delete(`https://burgerrr.shop/api/feeds/delete/${feedId}`, {
       .delete(`http://3.35.49.228/api/feeds/delete/${feedId}`, {
         headers: {
           Authorization: sessionStorage.getItem("token"),
@@ -75,6 +78,7 @@ export const feedLikeDB = (feedId) => {
   return function (dispatch, getState) {
     axios
       .post(
+        // `https://burgerrr.shop/api/feeds/good/${feedId}`,
         `http://3.35.49.228/api/feeds/good/${feedId}`,
         { feedId: feedId },
         {
@@ -84,7 +88,14 @@ export const feedLikeDB = (feedId) => {
         }
       )
       .then((res) => {
-        dispatch(likeFeed({ goodStatus: res.data.goodStatus, feedId }));
+        console.log(res.data);
+        dispatch(
+          likeFeed({
+            goodStatus: res.data.goodStatus,
+            goodCnt: res.data.goodCnt,
+            feedId,
+          })
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -96,6 +107,8 @@ export default handleActions(
   {
     [ADD_FEED]: (state, action) =>
       produce(state, (draft) => {
+        console.log(action.payload);
+        console.log(state.feedList.feedList);
         draft.feedList.feedList.unshift(action.payload.data);
       }),
     [GET_FEED]: (state, action) =>
@@ -114,10 +127,9 @@ export default handleActions(
         const idx = state.feedList.feedList.findIndex(
           (el) => el.feedId === action.payload.data.feedId
         );
-        draft.feedList.feedList[idx] = {
-          ...draft.feedList.feedList[idx],
-          goodStatus: action.payload.data.goodStatus,
-        };
+        draft.feedList.feedList[idx].goodStatus =
+          action.payload.data.goodStatus;
+        draft.feedList.feedList[idx].goodCnt = action.payload.data.goodCnt;
       }),
   },
   initialState

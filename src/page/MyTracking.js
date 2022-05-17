@@ -118,7 +118,7 @@ const Tracker = (props) => {
         setDistance({ distanceM: 0.0, distanceK: 0.0 });
         setCompletedId();
         releaseWakeLock();
-        navigate("/", { replace: true });
+        // navigate("/", { replace: true });
       }
     } else {
       if (window.confirm("겨우 이거하고 등산 완료?") === true) {
@@ -294,57 +294,6 @@ const Tracker = (props) => {
                 <Grid width="100px" textAlign lineHeight="25px">
                   <StopWatch size="2.5rem" time={time} setTime={setTime} />
                 </Grid>
-              </Grid>
-
-              <Grid width="342px" height="48px" margin="20px auto">
-                {time.isStart ? (
-                  <>
-                    <Button
-                      border="none"
-                      bgColor="#6F6F6F"
-                      color="#fff"
-                      width="166px"
-                      height="48px"
-                      radius="12px"
-                      margin="0 5px"
-                      _onClick={pause}
-                    >
-                      잠시 쉬기
-                    </Button>
-                    <Button
-                      bgColor="black"
-                      color="#fff"
-                      width="166px"
-                      height="48px"
-                      radius="12px"
-                      _onClick={endClimb}
-                    >
-                      등산 완료
-                    </Button>
-                  </>
-                ) : !completedId ? (
-                  <Button
-                    bgColor="black"
-                    color="#fff"
-                    width="100%"
-                    height="48px"
-                    radius="12px"
-                    _onClick={start}
-                  >
-                    등산 시작
-                  </Button>
-                ) : (
-                  <Button
-                    bgColor="black"
-                    color="#fff"
-                    width="100%"
-                    height="48px"
-                    radius="12px"
-                    _onClick={reStart}
-                  >
-                    다시 출발
-                  </Button>
-                )}
               </Grid>
             </Grid>
           </Grid>
