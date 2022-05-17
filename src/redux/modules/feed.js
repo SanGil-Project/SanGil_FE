@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import axios from "axios";
+import { arrayIncludes } from "@material-ui/pickers/_helpers/utils";
 
 const ADD_FEED = "ADD_FEED";
 const DELETE_FEED = "DELETE_FEED";
@@ -14,7 +15,7 @@ const likeFeed = createAction(LIKE, (data) => ({
   data,
 }));
 
-const initialState = {};
+const initialState = { feedList: { feedList: [] } };
 
 export const addFeedDB = (feed) => {
   const frm = new FormData();
@@ -22,6 +23,7 @@ export const addFeedDB = (feed) => {
   frm.append("feedContent", feed.feedContent);
   return function (dispatch, getState) {
     axios
+      // .post("https://burgerrr.shop/api/feeds/write", frm, {
       .post("http://3.35.49.228/api/feeds/write", frm, {
         headers: {
           Authorization: sessionStorage.getItem("token"),
@@ -40,12 +42,14 @@ export const addFeedDB = (feed) => {
 export const getFeedDB = (pageNum) => {
   return function (dispatch, getState) {
     axios
-      .get("http://3.35.49.228/api/main/feeds/1", {
+      // .get("https://burgerrr.shop/api/main/feeds/1", {
+      .get(`http://3.35.49.228/api/main/feeds/${pageNum}`, {
         headers: {
           Authorization: sessionStorage.getItem("token"),
         },
       })
       .then((res) => {
+        console.log(res.data);
         dispatch(getFeed(res.data));
       })
       .catch((err) => {
@@ -57,6 +61,7 @@ export const getFeedDB = (pageNum) => {
 export const deleteFeedDB = (feedId) => {
   return function (dispatch, getState) {
     axios
+      // .delete(`https://burgerrr.shop/api/feeds/delete/${feedId}`, {
       .delete(`http://3.35.49.228/api/feeds/delete/${feedId}`, {
         headers: {
           Authorization: sessionStorage.getItem("token"),
@@ -75,6 +80,7 @@ export const feedLikeDB = (feedId) => {
   return function (dispatch, getState) {
     axios
       .post(
+        // `https://burgerrr.shop/api/feeds/good/${feedId}`,
         `http://3.35.49.228/api/feeds/good/${feedId}`,
         { feedId: feedId },
         {
@@ -84,7 +90,14 @@ export const feedLikeDB = (feedId) => {
         }
       )
       .then((res) => {
-        dispatch(likeFeed({ goodStatus: res.data.goodStatus, feedId }));
+        console.log(res.data);
+        dispatch(
+          likeFeed({
+            goodStatus: res.data.goodStatus,
+            goodCnt: res.data.goodCnt,
+            feedId,
+          })
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -100,7 +113,11 @@ export default handleActions(
       }),
     [GET_FEED]: (state, action) =>
       produce(state, (draft) => {
-        draft.feedList = action.payload.feedList;
+        const _feedList = action.payload.feedList;
+        draft.feedList = {
+          ..._feedList,
+          feedList: draft.feedList.feedList.concat(_feedList.feedList),
+        };
       }),
     [DELETE_FEED]: (state, action) =>
       produce(state, (draft) => {
@@ -114,10 +131,9 @@ export default handleActions(
         const idx = state.feedList.feedList.findIndex(
           (el) => el.feedId === action.payload.data.feedId
         );
-        draft.feedList.feedList[idx] = {
-          ...draft.feedList.feedList[idx],
-          goodStatus: action.payload.data.goodStatus,
-        };
+        draft.feedList.feedList[idx].goodStatus =
+          action.payload.data.goodStatus;
+        draft.feedList.feedList[idx].goodCnt = action.payload.data.goodCnt;
       }),
   },
   initialState

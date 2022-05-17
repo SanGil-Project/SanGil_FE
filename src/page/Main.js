@@ -362,7 +362,7 @@ const Main = (props) => {
       {/* <Desktop> */}
       <MainContainer>
         <Header />
-        <Grid padding="7px" overflowY="scroll" height="1080px">
+        <Grid padding="7px" overflowY="scroll">
           <Grid height="453px" margin="90px auto 75px auto">
             <Text
               width="380px"
@@ -383,13 +383,18 @@ const Main = (props) => {
               bgImg={mountain && mountain[0].mountainImgUrl}
               bgSize="cover"
             >
-              <Icon width="34px" height="29px" type="rank" />
+              <Icon
+                margin="0 0 0 24px"
+                width="34px"
+                height="29px"
+                type="rank"
+              />
               <Text
                 width="9px"
                 height="17px"
-                size="1.4rem"
-                bold="300"
-                margin="-32px 14px"
+                size="1.6rem"
+                bold="700"
+                margin="-32px 37px"
                 color="#fff"
               >
                 1
@@ -448,13 +453,18 @@ const Main = (props) => {
                         bgImg={el.mountainImgUrl}
                         bgSize="cover"
                       >
-                        <Icon width="34px" height="29px" type="rank" />
+                        <Icon
+                          margin="0 0 0 20px"
+                          width="34px"
+                          height="29px"
+                          type="rank"
+                        />
                         <Text
                           width="9px"
                           height="17px"
-                          size="1.4rem"
-                          bold="300"
-                          margin="-32px 0 0 12px"
+                          size="1.6rem"
+                          bold="700"
+                          margin="-32px 0 0 33px"
                           color="#fff"
                           align="center"
                         >
@@ -477,6 +487,7 @@ const Main = (props) => {
                         _onClick={() => {
                           goDetail(el.mountainId);
                         }}
+                        margin="0 0 0 7px"
                       >
                         <Text
                           maxWidth="160px"
@@ -548,7 +559,7 @@ const Main = (props) => {
                       <Text bold="300" size="1.2rem">
                         <BsStarFill color="#43CA3B" /> {el.starAvr}
                       </Text>
-                      <Text bold="400" size="1.2px">
+                      <Text bold="400" size="1.2rem" color="#43CA3B">
                         {el.distance}km
                       </Text>
                     </Grid>
@@ -708,6 +719,7 @@ const MenubarContainer = styled.div`
   left: 0;
   right: 0;
   z-index: 10;
+  background-color: #9ee59c;
 `;
 
 const TrackBtn = styled.div`

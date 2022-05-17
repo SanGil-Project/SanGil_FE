@@ -5,9 +5,11 @@ const token = sessionStorage.getItem("token");
 const instance = axios.create({
   baseURL: "http://3.35.49.228",
   // baseURL: "https://3.36.113.119",
-  // baseURL: "https://burgerrr.shop/",
-  // baseURL: "https://ehjeong.shop/",
+  // baseURL: "https://burgerrr.shop",
+  // baseURL: "https://ehjeong.shop",
   // baseURL: "https://산길.com",
+  // baseURL: "https://ehjeong.shop",
+
   headers: {
     Authorization: token,
     "content-type": "application/json;charset=UTF-8",
@@ -72,6 +74,10 @@ export const api = {
     instance.post(`/api/mountain/comment/${mountainId}`, commentData),
   deleteComment: (mountainCommentId) =>
     instance.delete(`/api/mountain/comment/${mountainCommentId}`),
+  updateComment: (commentData) =>
+    instance.put(`/api/mountain/comment/${commentData.mountainCommentId}`, {
+      mountainComment: commentData.mountainComment,
+    }),
 
   // party.js
   getMyParty: () => instance.get("/api/plan"),
