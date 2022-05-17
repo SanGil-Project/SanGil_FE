@@ -43,12 +43,6 @@ const Search = (props) => {
     dispatch(mountActions.getTopMntDB());
   }, []);
 
-  // console.log(currentList);
-  // React.useEffect((listIndex) => {
-  //   console.log("최종 index ::", listIndex);
-  // }, [listIndex]);
-  // const listFocus = useRef([]);
-
   const [searchKeyword, setSearchKeyword] = React.useState("");
 
   const onChange = (e) => {
@@ -216,9 +210,6 @@ const Search = (props) => {
                 return (
                   <Grid
                     key={idx}
-                    // ref={listRef.current[idx]}
-                    // ref={el => (listRef.current[idx] = el)}
-                    // ref={el => (listRef.current.push(el))}
                     bg="#fff"
                     padding="23px 25px"
                     margin="0 0 8px"
