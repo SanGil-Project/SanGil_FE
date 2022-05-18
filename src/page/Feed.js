@@ -116,9 +116,9 @@ const MenubarContainer = styled.div`
 `;
 
 const TrackBtn = styled.div`
-  position: absolute;
+  position: fixed;
   right: calc(50% - 220px);
-  bottom: 120px;
+  bottom: 110px;
 `;
 
 const AddFeed = styled.svg`

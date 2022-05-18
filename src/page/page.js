@@ -8,7 +8,6 @@ import Mypage from "./Mypage";
 import Search from "./Search";
 import SearchDetail from "./SearchDetail";
 import Tracker from "./Tracker";
-import FeedDetail from "./FeedDetail";
 import FeedWrite from "./FeedWrite";
 import BeforeTracking from "./BeforeTracking";
 import EndTracking from "./EndTracking";
@@ -25,7 +24,6 @@ export {
   SearchDetail,
   Tracker,
   Mytrack,
-  FeedDetail,
   PartyDetail,
   FeedWrite,
   BeforeTracking,

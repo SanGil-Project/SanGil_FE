@@ -29,6 +29,7 @@ const Main = (props) => {
   const feedList = useSelector((state) => state.main.feedList?.feedList);
   const around = useSelector((state) => state.main.around?.nearbyMountainDtos);
   const party = useSelector((state) => state.main.parties?.parties);
+  console.log(party);
   const mountain = useSelector((state) => state.main?.mountains);
 
   const goDetail = (mountainId) => {
@@ -359,345 +360,358 @@ const Main = (props) => {
       </Mobile> */}
 
       {/* 데스크탑 */}
-      {/* <Desktop> */}
-      <MainContainer>
-        <Header />
-        <Grid padding="7px" overflowY="scroll">
-          <Grid height="453px" margin="90px auto 75px auto">
-            <Text
-              width="380px"
-              height="24px"
-              margin="0 0 0 7px"
-              bold="600"
-              size="2rem"
-              lineHeight="24px"
-            >
-              🌲 좋아요 순 10
-            </Text>
-            <Card
-              border="2px solid #B3B3B3"
-              width="386px"
-              height="200px"
-              margin="34px auto 0 auto"
-              // _onClick={() => navigate(`/searchdetail/관악산`)}
-              bgImg={mountain && mountain[0].mountainImgUrl}
-              bgSize="cover"
-            >
-              <Icon
-                margin="0 0 0 24px"
-                width="34px"
-                height="29px"
-                type="rank"
-              />
+      <Desktop>
+        <MainContainer>
+          <Header />
+          <Grid padding="7px" overflowY="scroll">
+            <Grid height="453px" margin="90px auto 75px auto">
               <Text
-                width="9px"
-                height="17px"
-                size="1.6rem"
-                bold="700"
-                margin="-32px 37px"
-                color="#fff"
+                width="380px"
+                height="24px"
+                margin="0 0 0 7px"
+                bold="600"
+                size="2rem"
+                lineHeight="24px"
               >
-                1
+                🌲 좋아요 순 10
               </Text>
-              <Icon
-                type="like"
-                width="18px"
-                margin="0 0 -190px 355px"
-                fill={mountain && mountain[0].bookmark ? "#43ca3b" : "#c4c4c4"}
+              <Card
+                border="2px solid #B3B3B3"
+                width="386px"
+                height="200px"
+                margin="34px auto 0 auto"
+                // _onClick={() => navigate(`/searchdetail/관악산`)}
+                bgImg={mountain && mountain[0].mountainImgUrl}
+                bgSize="cover"
+              >
+                <Icon
+                  margin="0 0 0 24px"
+                  width="34px"
+                  height="29px"
+                  type="rank"
+                />
+                <Text
+                  width="9px"
+                  height="17px"
+                  size="1.6rem"
+                  bold="700"
+                  margin="-32px 37px"
+                  color="#fff"
+                >
+                  1
+                </Text>
+                <Icon
+                  type="like"
+                  width="18px"
+                  margin="0 0 -190px 355px"
+                  fill={
+                    mountain && mountain[0].bookmark ? "#43ca3b" : "#c4c4c4"
+                  }
+                  _onClick={() => {
+                    bookmark(mountain[0].mountainId, "mountain");
+                  }}
+                />
+              </Card>
+              <Grid
+                height="30px"
+                maxWidth="386px"
+                margin="0 auto"
+                hover
+                isFlex
                 _onClick={() => {
-                  bookmark(mountain[0].mountainId, "mountain");
-                }}
-              />
-            </Card>
-            <Grid
-              height="30px"
-              hover
-              _onClick={() => {
-                goDetail(mountain[0].mountainId);
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
+                  goDetail(mountain[0].mountainId);
                 }}
               >
-                <Text
-                  maxWidth="170px"
-                  margin="10px 8px 0 10px"
-                  bold="600"
-                  size="1.4rem"
-                >
+                <Text maxWidth="170px" bold="600" size="1.4rem">
                   {mountain && mountain[0].mountainAddress}
                 </Text>
-                <Text
-                  margin="10px 0 0 0"
-                  width="240px"
-                  bold="200"
-                  size="1.4rem"
-                >
+                <Text width="240px" bold="200" size="1.4rem">
                   {mountain && mountain[0].mountain}
                 </Text>
-              </div>
+              </Grid>
+
+              <HorizontalScroll>
+                {mountain &&
+                  mountain
+                    .filter((el, idx) => idx !== 0)
+                    .map((el, idx) => (
+                      <div key={idx}>
+                        <Card
+                          width="194px"
+                          height="120px"
+                          margin="34px 7px 8px 7px"
+                          bgImg={el.mountainImgUrl}
+                          bgSize="cover"
+                        >
+                          <Icon
+                            margin="0 0 0 20px"
+                            width="34px"
+                            height="29px"
+                            type="rank"
+                          />
+                          <Text
+                            width="9px"
+                            height="17px"
+                            size="1.6rem"
+                            bold="700"
+                            margin="-32px 0 0 33px"
+                            color="#fff"
+                            align="center"
+                          >
+                            {idx + 2}
+                          </Text>
+                          <Icon
+                            type="like"
+                            width="18px"
+                            height="18px"
+                            margin="0 0 -87px 163px"
+                            fill={el.bookmark ? "#43ca3b" : "#c4c4c4"}
+                            _onClick={() => {
+                              bookmark(el.mountainId, "mountain");
+                            }}
+                          />
+                        </Card>
+                        <Grid
+                          height="40px"
+                          hover
+                          _onClick={() => {
+                            goDetail(el.mountainId);
+                          }}
+                          margin="0 0 0 7px"
+                        >
+                          <Text
+                            maxWidth="160px"
+                            margin="0"
+                            bold="600"
+                            size="1.4rem"
+                          >
+                            {el.mountainAddress}
+                          </Text>
+                          <Text margin="0" bold="200" size="1.4rem">
+                            {el.mountain}
+                          </Text>
+                        </Grid>
+                      </div>
+                    ))}
+              </HorizontalScroll>
             </Grid>
 
-            <HorizontalScroll>
-              {mountain &&
-                mountain
-                  .filter((el, idx) => idx !== 0)
-                  .map((el, idx) => (
-                    <div key={idx}>
-                      <Card
-                        width="194px"
-                        height="120px"
-                        margin="34px 7px 8px 7px"
-                        bgImg={el.mountainImgUrl}
-                        bgSize="cover"
-                      >
-                        <Icon
-                          margin="0 0 0 20px"
-                          width="34px"
-                          height="29px"
-                          type="rank"
-                        />
-                        <Text
-                          width="9px"
-                          height="17px"
-                          size="1.6rem"
-                          bold="700"
-                          margin="-32px 0 0 33px"
-                          color="#fff"
-                          align="center"
-                        >
-                          {idx + 2}
-                        </Text>
-                        <Icon
-                          type="like"
-                          width="18px"
-                          height="18px"
-                          margin="0 0 -87px 163px"
-                          fill={el.bookmark ? "#43ca3b" : "#c4c4c4"}
-                          _onClick={() => {
-                            bookmark(el.mountainId, "mountain");
-                          }}
-                        />
-                      </Card>
-                      <Grid
-                        height="40px"
-                        hover
+            <Grid
+              // border="1px solid green"
+              margin="0 auto 50px auto"
+              height="238px"
+            >
+              <Text
+                width="350px"
+                height="24px"
+                margin="0 7px 24px 7px"
+                bold="600"
+                size="2rem"
+                lineHeight="24px"
+              >
+                👀 주변 산길
+              </Text>
+              <HorizontalScroll>
+                {around?.map((el, idx) => (
+                  <div key={idx}>
+                    <Card
+                      width="194px"
+                      height="120px"
+                      margin="10px 7px 8px 7px"
+                      bgImg={el.mountainImgUrl}
+                      bgSize="cover"
+                    >
+                      <Icon
+                        type="like"
+                        width="18px"
+                        height="18px"
+                        margin="0 0 -103px 163px"
+                        fill={el.bookmark ? "#43ca3b" : "#c4c4c4"}
                         _onClick={() => {
-                          goDetail(el.mountainId);
+                          bookmark(el.mountainId, "around");
                         }}
-                        margin="0 0 0 7px"
-                      >
-                        <Text
-                          maxWidth="160px"
-                          margin="0"
-                          bold="600"
-                          size="1.4rem"
-                        >
-                          {el.mountainAddress}
+                      />
+                    </Card>
+                    <Grid
+                      hover
+                      width="195px"
+                      height="40px"
+                      margin="0 0 0 7px"
+                      _onClick={() => {
+                        goDetail(el.mountainId);
+                      }}
+                    >
+                      <Text margin="0" bold="600" size="1.4rem">
+                        {el.mountainName}
+                      </Text>
+
+                      <Grid height="20px" isFlex width="194px" margin="0">
+                        <Text bold="300" size="1.2rem">
+                          <BsStarFill color="#43CA3B" /> {el.starAvr}
                         </Text>
-                        <Text margin="0" bold="200" size="1.4rem">
-                          {el.mountain}
+                        <Text bold="400" size="1.2rem" color="#43CA3B">
+                          {el.distance}km
                         </Text>
                       </Grid>
-                    </div>
-                  ))}
-            </HorizontalScroll>
-          </Grid>
+                    </Grid>
+                  </div>
+                ))}
+              </HorizontalScroll>
+            </Grid>
 
-          <Grid
-            // border="1px solid green"
-            margin="0 auto 50px auto"
-            height="238px"
-          >
-            <Text
-              width="350px"
-              height="24px"
-              margin="0 7px 24px 7px"
-              bold="600"
-              size="2rem"
-              lineHeight="24px"
-            >
-              👀 주변 산길
-            </Text>
-            <HorizontalScroll>
-              {around?.map((el, idx) => (
-                <div key={idx}>
+            <Grid height="220px">
+              <Grid maxWidth="472px" margin="0 0 24px 7px" height="25px" isFlex>
+                <Text
+                  width="350px"
+                  height="24px"
+                  bold="600"
+                  size="2rem"
+                  lineHeight="24px"
+                >
+                  📷 실시간 정복한 산길 인증샷
+                </Text>
+                <Grid
+                  margin="0 18px 0 0"
+                  fontSize="12px"
+                  fontWeight="300"
+                  width="48px"
+                  textAlign
+                  lineHeight="24px"
+                  hover
+                  isFlex
+                  _onClick={() => {
+                    navigate("/feed");
+                  }}
+                >
+                  <span>더보기</span>
+                  <Icon type="arrow" width="5px" height="8px" />
+                </Grid>
+              </Grid>
+              <HorizontalScroll>
+                {feedList?.map((el, idx) => (
+                  <div key={idx} style={{ margin: "10px 0 10px 0" }}>
+                    <Card width="150px" height="150px" margin="0 7px 0 7px">
+                      <Image
+                        width="150px"
+                        height="150px"
+                        borderRadius="10px"
+                        border="none"
+                        src={el.feedImgUrl}
+                      />
+                    </Card>
+                  </div>
+                ))}
+              </HorizontalScroll>
+            </Grid>
+            <Grid width="94.4%" height="238px" margin="40px auto 20px auto">
+              <Grid maxWidth="100%" margin="0 0 34px 0" height="25px" isFlex>
+                <Text
+                  width="350px"
+                  height="24px"
+                  bold="600"
+                  size="2rem"
+                  lineHeight="24px"
+                >
+                  📣 산길러 모여라~
+                </Text>
+                <Grid
+                  margin="0 18px 0 0"
+                  fontSize="12px"
+                  fontWeight="300"
+                  width="48px"
+                  textAlign
+                  lineHeight="24px"
+                  hover
+                  isFlex
+                  _onClick={() => {
+                    navigate("/party");
+                  }}
+                >
+                  <span>더보기</span>
+                  <Icon type="arrow" width="5px" height="8px" />
+                </Grid>
+              </Grid>
+              {party?.map((el, idx) => {
+                return (
                   <Card
-                    width="194px"
-                    height="120px"
-                    margin="10px 7px 8px 7px"
-                    bgImg={el.mountainImgUrl}
-                    bgSize="cover"
+                    key={idx}
+                    border="1px solid green"
+                    maxWidth="93.23%"
+                    height="86px"
+                    margin="0 auto 14px auto"
                   >
-                    <Icon
-                      type="like"
-                      width="18px"
-                      height="18px"
-                      margin="0 0 -103px 163px"
-                      fill={el.bookmark ? "#43ca3b" : "#c4c4c4"}
-                      _onClick={() => {
-                        bookmark(el.mountainId, "around");
-                      }}
-                    />
-                  </Card>
-                  <Grid
-                    hover
-                    width="195px"
-                    height="40px"
-                    margin="0 0 0 7px"
-                    _onClick={() => {
-                      goDetail(el.mountainId);
-                    }}
-                  >
-                    <Text margin="0" bold="600" size="1.4rem">
-                      {el.mountainName}
-                    </Text>
-
-                    <Grid height="20px" isFlex width="194px" margin="0">
-                      <Text bold="300" size="1.2rem">
-                        <BsStarFill color="#43CA3B" /> {el.starAvr}
+                    <Grid
+                      border="1px solid #43CA3B"
+                      width="42px"
+                      height="16px"
+                      lineHeight="12px"
+                      radius="14px"
+                      color="#43CA3B"
+                      fontSize="1.2rem"
+                      textAlign
+                      margin="7px 0 0 10px"
+                    >
+                      new
+                    </Grid>
+                    <Grid
+                      maxWidth="95%"
+                      height="16px"
+                      margin="5px auto 0 auto"
+                      isFlex
+                    >
+                      <Text bold="600" size="1.6rem">
+                        {el.title}
                       </Text>
-                      <Text bold="400" size="1.2rem" color="#43CA3B">
-                        {el.distance}km
+                      <Text size="1.2rem" bold="500">
+                        {el.curPeople}/{el.maxPeople}명
                       </Text>
                     </Grid>
-                  </Grid>
-                </div>
-              ))}
-            </HorizontalScroll>
-          </Grid>
-
-          <Grid height="220px">
-            <Grid maxWidth="472px" margin="0 0 24px 7px" height="25px" isFlex>
-              <Text
-                width="350px"
-                height="24px"
-                bold="600"
-                size="2rem"
-                lineHeight="24px"
-              >
-                📷 실시간 정복한 산길 인증샷
-              </Text>
-              <Grid
-                margin="0 18px 0 0"
-                fontSize="12px"
-                fontWeight="300"
-                width="48px"
-                textAlign
-                lineHeight="24px"
-                hover
-                isFlex
-                _onClick={() => {
-                  navigate("/feed");
-                }}
-              >
-                <span>더보기</span>
-                <Icon type="arrow" width="5px" height="8px" />
-              </Grid>
-            </Grid>
-            <HorizontalScroll>
-              {feedList?.map((el, idx) => (
-                <div key={idx} style={{ margin: "10px 0 10px 0" }}>
-                  <Card width="150px" height="150px" margin="0 7px 0 7px">
-                    <Image
-                      width="150px"
-                      height="150px"
-                      borderRadius="10px"
-                      border="none"
-                      src={el.feedImgUrl}
-                    />
+                    <Grid
+                      maxWidth="95%"
+                      height="16px"
+                      margin="10px auto 0 auto"
+                      isFlex
+                    >
+                      <Text bold="500" size="1.2rem">
+                        {el.partyDate}
+                      </Text>
+                      <Text
+                        size="1.2rem"
+                        bold="500"
+                        color="#C4C4C4"
+                        hover
+                        _onClick={() => navigate(`/partydetail/${el.partyId}`)}
+                      >
+                        자세한 내용 보기
+                      </Text>
+                    </Grid>
                   </Card>
-                </div>
-              ))}
-            </HorizontalScroll>
-          </Grid>
-          <Grid width="94.4%" height="238px" margin="40px auto 20px auto">
-            <Grid maxWidth="100%" margin="0 0 34px 0" height="25px" isFlex>
-              <Text
-                width="350px"
-                height="24px"
-                bold="600"
-                size="2rem"
-                lineHeight="24px"
-              >
-                📣 산길러 모여라~
-              </Text>
-              <Grid
-                margin="0 18px 0 0"
-                fontSize="12px"
-                fontWeight="300"
-                width="48px"
-                textAlign
-                lineHeight="24px"
-                hover
-                isFlex
-                _onClick={() => {
-                  navigate("/party");
-                }}
-              >
-                <span>더보기</span>
-                <Icon type="arrow" width="5px" height="8px" />
-              </Grid>
+                );
+              })}
             </Grid>
-            {party?.map((el, idx) => {
-              return (
-                <Card
-                  key={idx}
-                  border="1px solid green"
-                  width="386px"
-                  height="85px"
-                  padding="10px"
-                  margin="0 auto 14px auto"
-                  hover
-                  _onClick={() => navigate(`/partydetail/${el.partyId}`)}
+          </Grid>
+          <MenubarContainer>
+            <Grid height="88px" maxWidth="500px" margin="auto">
+              <TrackBtn>
+                <Button
+                  width="50px"
+                  height="50px"
+                  bgColor="#5CB16E"
+                  border="none"
+                  color="#fff"
+                  radius="100%"
+                  // position="fixed"
+                  // margin="-80px 0 0 350px"
+                  _onClick={() => navigate("/searchmountain")}
                 >
-                  <Grid height="20px" margin="0" flex="flex">
-                    <Icon type="partyMountain" width="14px" />
-                    <Text size="14px" margin="0 0 0 10px">
-                      {el.title}
-                    </Text>
-                  </Grid>
-                  <Grid height="20px" margin="0" flex="flex">
-                    <Icon type="partyDate" width="14px" />
-                    <Text size="14px" margin="0 0 0 10px">
-                      {el.partyDate}
-                    </Text>
-                  </Grid>
-                  <Grid height="20px" margin="0" flex="flex">
-                    <Icon type="partyPeople" width="14px" />
-                    <Text size="14px" margin="0 0 0 10px">
-                      {el.curPeople}/{el.maxPeople}
-                    </Text>
-                  </Grid>
-                </Card>
-              );
-            })}
-          </Grid>
-        </Grid>
-        <MenubarContainer>
-          <Grid height="88px" maxWidth="500px" margin="auto">
-            <TrackBtn>
-              <Button
-                width="50px"
-                height="50px"
-                bgColor="#5CB16E"
-                border="none"
-                color="#fff"
-                radius="100%"
-                // position="fixed"
-                // margin="-80px 0 0 350px"
-                _onClick={() => navigate("/searchmountain")}
-              >
-                <Icon type="climber" width="20px" height="32px" />
-              </Button>
-            </TrackBtn>
-            <Menubar menuColor={menuColor} />
-          </Grid>
-        </MenubarContainer>
-      </MainContainer>
-      {/* </Desktop> */}
+                  <Icon type="climber" width="20px" height="32px" />
+                </Button>
+              </TrackBtn>
+              <Menubar menuColor={menuColor} />
+            </Grid>
+          </MenubarContainer>
+        </MainContainer>
+      </Desktop>
     </>
   );
 };
@@ -725,6 +739,6 @@ const MenubarContainer = styled.div`
 const TrackBtn = styled.div`
   position: absolute;
   right: calc(50% - 220px);
-  bottom: 120px;
+  bottom: 110px;
 `;
 export default Main;

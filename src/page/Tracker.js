@@ -261,10 +261,10 @@ const Tracker = (props) => {
       </Mobile>
 
       <Desktop>
-        <Grid width="500px" margin="0 auto">
+        <Grid width="500px" margin="0 auto" height="100vh">
           <Header />
           <Grid height="64px" />
-          <Grid height="1016px" bg="#fff">
+          <Grid height="1254px" bg="#fff">
             <KakaoMap
               width="100%"
               height="70%"
