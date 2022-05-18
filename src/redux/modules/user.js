@@ -219,26 +219,26 @@ const myTrackingDB = () => {
 const myMountainDB = (mountainId) => {
   return function (dispatch, getState) {
 
-    // const fakeDB = {
-    //   completedList : [
-    //   {
-    //     completedId : 1,
-    //     mountain : "속리산",
-    //     totalDistance: 10.3,
-    //     totalTime: "4시간 20분 13초",
-    //     creatDate: "2022-05-22",
-    //   },
-    //   {
-    //     completedId : 3,
-    //     mountain : "화악산",
-    //     totalDistance: 20.3,
-    //     totalTime: "6시간 20분 13초",
-    //     creatDate: "2022-05-22",
-    //   },
-    // ]}
+    const fakeDB = {
+      completedList : [
+      {
+        completedId : 1,
+        mountain : "속리산",
+        totalDistance: 10.3,
+        totalTime: "4시간 20분 13초",
+        creatDate: "2022-05-22",
+      },
+      {
+        completedId : 3,
+        mountain : "화악산",
+        totalDistance: 20.3,
+        totalTime: "6시간 20분 13초",
+        creatDate: "2022-05-22",
+      },
+    ]}
 
-    // dispatch(myMountain(fakeDB));
-    // return;
+    dispatch(myMountain(fakeDB));
+    return;
 
     api
       .myMount(mountainId)
@@ -326,6 +326,7 @@ const myBookmarkDB = (lat, lng) => {
     
     //   dispatch(myBookmark(fakeDB));
     //   return;
+    console.log(lat, lng);
 
     api
       .myBookmark(lat, lng)
@@ -374,6 +375,7 @@ export default handleActions(
       }),
     [MY_BOOKMARK]: (state, action) =>
       produce(state, (draft) => {
+        console.log(action.payload);
         draft.mountList = action.payload.mountList;
       }),
     [MY_MOUNTAIN]: (state, action) =>
