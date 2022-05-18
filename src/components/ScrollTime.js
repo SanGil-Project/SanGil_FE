@@ -1,98 +1,92 @@
 import React, { useState, useRef } from 'react';
 import styled from "styled-components";
+import { useSelector, useDispatch } from 'react-redux';
+import { actionCreators as handleActions } from '../redux/modules/handle';
 
 import { Text, Grid } from "../elements/element";
 
 const ScrollTime = () => {
+  const dispatch = useDispatch();
 
   // const division = useRef(["오전", "오후"]);
-  // const time = useRef(new Date());
+  const time = useRef(new Date());
   // const curHour = useRef(time.current.getHours() + 1);
-  // const curMinute = useRef(time.current.getMinutes());
-  // const [hour, setHour] = useState(curHour.current);
-  // const [minute, setMinute] = useState(curMinute.current);
+  const curHour = useRef(time.current.getHours());
+  const curMinute = useRef(time.current.getMinutes());
+  const showMinute = parseInt(curMinute.current / 10) * 10 + 10;
+  const [selectTime, setSelectTime] = useState("오전");
+  const [selectHour, setSelectHour] = useState(curHour.current);
+  const [selectMinute, setSelectMinute] = useState(showMinute);
+
+  console.log(selectHour, selectMinute, selectTime)
+
   const division = ["오전", "오후"];
   const hour = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
   const minute = ["00", "10", "20", "30", "40", "50"]; 
 
-  const handleScroll = e => {
-    // const [scrollHeight, scrollTop, clientHeight] = document.documentElement;
-    // console.log(scrollHeight, scrollTop, clientHeight);
-    console.log('adadas');
-    console.log(e.target);
+  const select = (e, arrayName) => {
+    if (arrayName === "division") {
+      setSelectTime(e)
+      dispatch(handleActions.selectTimeDB(e, "division"))
+    } else if(arrayName === "hour") {
+      setSelectHour(e)
+      dispatch(handleActions.selectTimeDB(e, "hour"))
+    } else {
+      setSelectMinute(e)
+      dispatch(handleActions.selectTimeDB(e, "minute"))
+    }
   };
 
-  const makeScroll = (array, arrayName) => {
-    console.log(array);
+  // React.useEffect(() => {
+  //   if (selectTime) {
+  //     dispatch(handleActions.selectTimeDB(selectTime));
+  //   }
+  // }, [selectTime, ]);
+
+  console.log(selectTime, selectHour, selectMinute);
+
+  const makeDivisionScroll = () => {
     return (
-      <div className={arrayName} onScroll={handleScroll}>
-        {array.map(e => (
-          <Text margin="20px 0" size="24px">{e}</Text>
-        ))}
+      <div className="division">
+        {division.map(e => {
+          const selectT = selectTime === e ? "#43CA3B" : "#000";
+          return <Text color={selectT} margin="20px 0" size="24px" _onClick={()=>{select(e, "division")}}>{e}</Text>
+        })}
       </div>
     );
   };
 
-  // const handleScroll = (e) => {
-  //   console.log(e.target);
-  //   console.log(window.scrollTop());
-  //   const name = e.target.className;
-  //   if (name === "curHour") {
-  //     setHour(hour + 1);
-  //   } else if (name === "curMinute") {
-  //     setMinute(minute + 1);
-  //   }
-  // }
+  const makeHourScroll = () => {
+    return (
+      <div className="hour">
+        {hour.map(e => {
+          const selectH = selectHour === e ? "#43CA3B" : "#000";
+          return <Text color={selectH} margin="20px 0" size="24px" _onClick={()=>{select(e, "hour")}}>{e}</Text>
+        })}
+      </div>
+    );
+  };
 
-  // const baseScroll = (array, arrayName) => {
-  //   console.log(array);
-  //   return (
-  //     <div className={arrayName} onScroll={handleScroll}>
-  //       {array.map((e)=>{
-  //         return <div>{e}</div>
-  //       })}
-  //     </div>
-  //   );
-  // }
-  // const makeDivisionScroll = () => {
-  //   return (
-  //     <div className="division" onScroll={handleScroll}>
-  //       {division.current.map(e => (
-  //         <div>{e}</div>
-  //       ))}
-  //     </div>
-  //   );
-  // };
-  // const makeHourScroll = () => {
-  //   return (
-  //     <div className="curHour" onScroll={handleScroll}>
-  //       <div>{hour - 1}</div>
-  //       <div>{hour}</div>
-  //       <div>{hour + 1}</div>
-  //     </div>
-  //   );
-  // };
-  // const makeMinuteScroll = () => {
-  //   return (
-  //     <div className="curMinute" onScroll={handleScroll}>
-  //       <div>{minute - 1}</div>
-  //       <div>{minute}</div>
-  //       <div>{minute + 1}</div>
-  //     </div>
-  //   );
-  // };
+  const makeMinuteScroll = () => {
+    return (
+      <div className="minute">
+        {minute.map(e => {
+          const selectM = selectMinute === e ? "#43CA3B" : "#000";
+          return <Text color={selectM} margin="20px 0" size="24px" _onClick={()=>{select(e, "minute")}}>{e}</Text>
+        })}
+      </div>
+    );
+  };
+
 
   return (
     <React.Fragment>
       <Modal className="modal">
           <div className="section">
-            <div className="select-time" isFlex>
-              {makeScroll(division, 'division')}
-              {makeScroll(hour, 'hour')}
-              {makeScroll(minute, 'minute')}
-              {/* {makeDivisionScroll()}
+            <div className="select-time">
+              {makeDivisionScroll()}
               {makeHourScroll()}
-              {makeMinuteScroll()} */}
+              {makeMinuteScroll()}
             </div>
           </div>
         </Modal>
@@ -101,26 +95,41 @@ const ScrollTime = () => {
 }
 
 const Modal = styled.div`
-  background-color: orange;
+  // background-color: orange;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border: none;
+  border-top: 1px solid #ccc;
+  background-color: #fff;
   font-size: 24px;
   .select-time {
-    height: 100px;
-    width: 100%;
-    margin-bottom: 20px;
+    height: 200px;
     
     display: flex;
-    padding: 40px;
-    display: flex; 
+    padding: 40px 30px 30px;
     align-items: center; 
     justify-content: space-between;
+    width: auto;
 
     div {
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+
         height: 200px;
-        background-color: black;
+        padding: 10px;
+        width: auto;
+        // background-color: black;
+        box-sizing: border-box;
+        text-align: center;
+        margin: 10px;
         flex: 1;
         text-align: center;
         overflow-y: scroll;
-      }
+    }
+    .division {
+      justify-content: center;
+
     }
   }
 `;

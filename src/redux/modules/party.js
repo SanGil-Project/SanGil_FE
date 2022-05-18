@@ -181,9 +181,9 @@ export default handleActions(
       draft.curtParty.curPeople--;
     }),
     [DELETE_PARTY]: (state, action) => produce(state, (draft) => {
-        // draft.partyList = draft.partyList.filter(
-        //   (p) => p.partyId !== action.payload.partyList.partyId
-        // );
+        draft.partyList = draft.partyList.filter(
+          (p) => p.partyId !== action.payload.partyList.partyId
+        );
     }), 
   },
   initialState
