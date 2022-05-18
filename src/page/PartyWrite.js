@@ -28,8 +28,8 @@ import SearchModal from '../components/SearchModal';
 const PartyWrite = (props) => {
   const { partyId } = useParams();
   const is_edit = partyId ? true : false;
-  console.log(partyId);
   const partyItem = useSelector((state) => state?.party?.curtParty);
+  const selectTime = useSelector((state) => state?.handle?.selectTime);
 
   const menuColor = [false, true, false, false, false]; // 메뉴바 색
   const navigate = useNavigate();
@@ -63,9 +63,17 @@ const PartyWrite = (props) => {
     setDateOpen(false);
   };
   const saveTimeModal = () => {
-    setTimeValue("");
+    console.log(selectTime);
+    if (selectTime?.division === "오전") {
+      selectTime.hour / 10 === 0 ? setTimeValue(`0${selectTime.hour}:${selectTime.minute}`) : setTimeValue(`${selectTime.hour}:${selectTime.minute}`);
+    } else {
+      const sumHour = parseInt(selectTime.hour) + 12
+      setTimeValue(`${sumHour}:${selectTime.minute}`);
+    }
     setTimeOpen(false);
   };
+
+  console.log(timeValue);
   const formatDate = (d) => {
     const date = new Date(d);
     const monthIndex = date.getMonth() + 1;
@@ -73,7 +81,6 @@ const PartyWrite = (props) => {
     return `${year}년 ${`0${monthIndex}`.slice(-2)}월`;
   }
   
-
   const [isOpen, setIsOpen] = useState(false);
   const [complete, setcomplete] = useState(is_edit ? true : false);
 
@@ -597,7 +604,9 @@ const DateModal = styled.div`
   // transform: duration
   animation: ${props => props.modalOpen ? FadeIn : FadeOut} 0.5s ease-out alternate;
   .modal_container {
-    background-color: white;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #fff;
     width: 100%;
     max-width: 500px;
     // height: 70vh;
