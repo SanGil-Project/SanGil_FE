@@ -18,8 +18,6 @@ const ScrollTime = () => {
   const [selectHour, setSelectHour] = useState(curHour.current);
   const [selectMinute, setSelectMinute] = useState(showMinute);
 
-  console.log(selectHour, selectMinute, selectTime)
-
   const division = ["오전", "오후"];
   const hour = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
   const minute = ["00", "10", "20", "30", "40", "50"]; 

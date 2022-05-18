@@ -107,4 +107,9 @@ export const api = {
     }),
   attendParty: (partyId) => instance.post(`/api/party/attend/${partyId}`),
   delParty: (partyId) => instance.delete(`/api/party/${partyId}`),
+
+  // chat.js
+  addChatRoom: (partyId) => instance.post(`/api/addChatRoom/${partyId}`), // api 주소 연결 필요
+  getChatList: (chatRoomId) => instance.get(`/api/addChatRoom/${chatRoomId}`), // api 주소 연결 필요, 소켓통신에서 바로 채팅 전체리스트 받으면 필요없는 api
+  
 };

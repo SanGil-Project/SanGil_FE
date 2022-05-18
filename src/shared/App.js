@@ -49,7 +49,7 @@ function App() {
           <Route path="/mytrack/:completedId" element={<Mytrack />} />
           <Route path="/feed" element={<Feed />} />
           <Route path="/feedwrite" element={<FeedWrite />} />
-          <Route path="/chatroom/:partyid" element={<ChatRoom />} />
+          <Route path="/chatroom/:chatRoomId" element={<ChatRoom />} />
         </Routes>
       </Container>
     </BrowserRouter>

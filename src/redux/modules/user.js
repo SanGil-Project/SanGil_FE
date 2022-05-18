@@ -93,12 +93,12 @@ export const isLogInDB = (token) => {
   };
 };
 
-const nameCheckDB = (username) => {
+const nameCheckDB = (nickname) => {
   return function (dispatch, getState) {
-    console.log(username);
+    console.log(nickname);
 
     api
-      .nameCheck(username)
+      .nameCheck(nickname)
       .then((res) => {
         console.log("(nameCheck) 성공 후 데이터 ::", res);
         dispatch(nameCheck(res.data));
@@ -164,7 +164,7 @@ const changeTitleDB = (userTitle) => {
         const _user = {
           userId: userdata.userId,
           userImageUrl: userdata.userImageUrl,
-          username: userdata.username,
+          nickname: userdata.nickname,
           userTitle: userTitle,
         };
         dispatch(changeInfo(_user));
