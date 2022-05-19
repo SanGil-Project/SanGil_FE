@@ -9,6 +9,7 @@ import feed from "./modules/feed";
 import party from "./modules/party";
 import mountain from "./modules/mountain";
 import handle from "./modules/handle";
+import chat from "./modules/chat";
 
 export const history = createBrowserHistory();
 
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   party: party,
   mountain: mountain,
   handle: handle,
+  chat: chat,
   router: connectRouter(history),
 });
 

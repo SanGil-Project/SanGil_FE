@@ -22,27 +22,32 @@ import { Grid, Text, Icon, Image, Button } from "../elements/element";
 const Mypage = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userInfo = useSelector((state) => state?.user?.userInfo);
+  const token = sessionStorage.getItem("token");
+  const userInfo = useSelector((state) => state.user.userInfo);
   // const myTrackList = useSelector((state) => state?.user?.tracker);
-  const myTrackList = useSelector((state) => state?.user?.trackList?.completedList);
-  const selectMarker = useSelector((state) => state?.handle?.selectMarker?.id);
-  const completedList = useSelector((state) => state?.user?.myMountain?.completedList);
-  const myFeedList = useSelector((state) => state?.user?.feedList);
-  const myBookmarkList = useSelector((state) => state?.user?.mountList);
+  const myTrackList = useSelector((state) => state.user.trackList?.completedList);
+  const selectMarker = useSelector((state) => state.handle.selectMarker?.id);
+  const completedList = useSelector((state) => state.user.myMountain?.completedList);
+  const myFeedList = useSelector((state) => state.user.feedList);
+  const myBookmarkList = useSelector((state) => state.user.mountList);
   const menuColor = [false, false, false, false, true]; // 메뉴바 색
 
   React.useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        dispatch(userActions.myBookmarkDB(position.coords.latitude, position.coords.longitude));
-      });
+    if (userInfo && token) {
+      console.log("유저확인 완료!! ::", userInfo);
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          dispatch(userActions.myBookmarkDB(position.coords.latitude, position.coords.longitude));
+        });
+      }
+      dispatch(userActions.myTrackingDB());
+      dispatch(userActions.myFeedDB(1));
     }
-    dispatch(userActions.myTrackingDB());
-    dispatch(userActions.myFeedDB(1));
-  }, []);
+  }, [userInfo]);
 
   React.useEffect(() => {
     if (selectMarker) {
+
       dispatch(userActions.myMountainDB(selectMarker));
     }
   }, [selectMarker]);
@@ -148,8 +153,9 @@ const Mypage = (props) => {
                   ❤️ 정복해야할 산길
                 </Text>
                 <HorizontalScroll>
-                  {myBookmarkList?.mountainList?.map((cur, idx) => (
-                    <Grid key={idx} width="auto" margin="0 10px 0 0" _onClick={()=>{moveMountDetail(cur.mountainId)}} hover>
+                  {myBookmarkList?.map((cur, idx) => {
+                    // const distance = cur.distance.toFixed(2);
+                    return (<Grid key={idx} width="auto" margin="0 10px 0 0" _onClick={()=>{moveMountDetail(cur.mountainId)}} hover>
                       <Card
                         width="194px"
                         height="120px"
@@ -172,11 +178,11 @@ const Mypage = (props) => {
                           <Text bold="300" size="12px" margin="0 4px">{cur.starAvr}</Text>
                         </Grid>
                         <Text bold="500" size="12px" color="#43CA3B" margin="0">
-                          {cur.distance}
+                          {cur.distance}km
                         </Text>
                       </Grid>
-                    </Grid>
-                  ))}
+                    </Grid>)
+                  })}
                 </HorizontalScroll>
               </Grid>
             </Grid>
@@ -289,8 +295,9 @@ const Mypage = (props) => {
                   ❤️ 정복해야할 산길
                 </Text>
                 <HorizontalScroll>
-                  {myBookmarkList?.mountainList?.map((cur, idx) => (
-                    <Grid key={idx} width="auto" margin="0 10px 0 0" _onClick={()=>{moveMountDetail(cur.mountainId)}} hover>
+                  {myBookmarkList?.map((cur, idx) => {
+                    // const distance = cur.distance.toFixed(2);
+                    return (<Grid key={idx} width="auto" margin="0 10px 0 0" _onClick={()=>{moveMountDetail(cur.mountainId)}} hover>
                       <Card
                         width="194px"
                         height="120px"
@@ -313,11 +320,11 @@ const Mypage = (props) => {
                           <Text bold="300" size="12px" margin="0 4px">{cur.starAvr}</Text>
                         </Grid>
                         <Text bold="500" size="12px" color="#43CA3B" margin="0">
-                          {cur.distance}
+                          {cur.distance}km
                         </Text>
                       </Grid>
-                    </Grid>
-                  ))}
+                    </Grid>)
+                  })}
                 </HorizontalScroll>
               </Grid>
             </Grid>

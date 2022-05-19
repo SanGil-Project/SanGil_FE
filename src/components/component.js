@@ -15,6 +15,7 @@ import FeedCard from "./FeedCard";
 import ScrollTime from "./ScrollTime";
 import SearchTracking from "./SearchTracking";
 import EndTracking from "./EndTracking";
+import ChatInput from "./ChatInput";
 
 export {
   GoogleLogin,
@@ -34,4 +35,5 @@ export {
   ScrollTime,
   SearchTracking,
   EndTracking,
+  ChatInput,
 };

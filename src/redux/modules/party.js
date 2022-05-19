@@ -2,6 +2,8 @@ import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import { api } from "../../shared/api";
 
+import { actionCreators as chatActions } from './chat';
+
 const GET_PARTY = "GET_PARTY";
 const GET_ONE_PARTY = "GET_ONE_PARTY";
 const GET_MY_PARTY = "GET_MY_PARTY";
@@ -83,6 +85,7 @@ const addPartyDB = (party = {}) => {
       .then((res) => {
         console.log("(addParty) 성공 데이터 확인 ::", res);
         dispatch(addParty(res.data));
+        dispatch(chatActions.addChatRoomDB(party.title)); // 작성할때 해당 partyId 채팅방 만들기
       })
       .catch((err) => {
         console.log("(addParty) 실패 ::", err);
@@ -164,7 +167,7 @@ export default handleActions(
       draft.curtParty = action.payload.party;
     }),
     [ADD_PARTY]: (state, action) => produce(state, (draft) => {
-      draft.partyList.unshift(action.payload.party);
+      draft.list.partyList.unshift(action.payload.party);
     }),
     [EDIT_PARTY]: (state, action) => produce(state, (draft) => {
       

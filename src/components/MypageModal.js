@@ -12,7 +12,7 @@ const MypageModal = (props) => {
   const dispatch = useDispatch();
   const fileInput = React.useRef();
   const user = useSelector((state) => state?.user);
-  const titleList = useSelector((state) => state?.user?.titleList);
+  const titleList = useSelector((state) => state?.user?.titleList?.userTitleDtoList);
   const userInfo = user?.userInfo;
   const checkData = user?.nameCheck;
 
