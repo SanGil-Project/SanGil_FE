@@ -85,7 +85,7 @@ const addPartyDB = (party = {}) => {
       .then((res) => {
         console.log("(addParty) 성공 데이터 확인 ::", res);
         dispatch(addParty(res.data));
-        dispatch(chatActions.addChatRoomDB(party.title)); // 작성할때 해당 partyId 채팅방 만들기
+        dispatch(chatActions.addChatRoomDB(party.title, res.data.partyId)); // 작성할때 해당 partyId 채팅방 만들기
       })
       .catch((err) => {
         console.log("(addParty) 실패 ::", err);

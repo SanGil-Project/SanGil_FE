@@ -13,7 +13,7 @@ const addChatRoom = createAction(ADD_CHATROOM, (chatRoom) => ({ chatRoom }));
 const getChat = createAction(GET_CHAT, (chat) => ({ chat }));
 const sendChat = createAction(SEND_CHAT, (chat) => ({ chat }));
 
-const addChatRoomDB = (title) => {
+const addChatRoomDB = (title, partyId) => {
   return function (dispatch, getState) {
     const userInfo = getState().user.userInfo;
 
@@ -27,10 +27,10 @@ const addChatRoomDB = (title) => {
     // }
     // dispatch(addChatRoom(roomInfo));
     // return;
-    console.log("title ::", title);
+    console.log("title ::", title, partyId);
 
     api
-      .addChatRoom(title)
+      .addChatRoom(title, partyId)
       .then((res) => {
         console.log("(addChatRoom) 성공 데이터 확인 ::", res.data);
         const roomInfo = {

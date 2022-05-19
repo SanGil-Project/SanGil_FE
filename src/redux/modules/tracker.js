@@ -45,7 +45,7 @@ export const searchNameDB = (keyword, pageNum) => {
     axios
       .get(
         // `https://burgerrr.shop/api/mountain/search?keyword=${keyword}&pageNum=${pageNum}`,
-        `http://3.35.49.228/api/mountain/search?keyword=${keyword}&pageNum=${pageNum}`,
+        `http://3.36.75.57:8080/api/mountain/search?keyword=${keyword}&pageNum=${pageNum}`,
         {
           headers: {
             Authorization: sessionStorage.getItem("token"),
