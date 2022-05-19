@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import { api } from "../../shared/api";
+import axios from "axios";
 
 const LOGIN = "LOGIN";
 const LOGOUT = "LOGOUT";
@@ -33,11 +34,13 @@ const kakaoLoginDB = (code) => {
     api
       .kakaoLogin(code)
       .then((res) => {
+        console.log(res);
         const ACCESS_TOKEN = res.headers.authorization;
         sessionStorage.setItem("token", ACCESS_TOKEN); //세션에 저장
         dispatch(isLogInDB(ACCESS_TOKEN));
       })
       .catch((err) => {
+        console.log("카카오로그인 에러", err);
         console.log("카카오로그인 에러", err.response);
         alert("api는 가는 거겠죠?");
         // window.alert("로그인에 실패하였습니다.");
@@ -93,12 +96,12 @@ export const isLogInDB = (token) => {
   };
 };
 
-const nameCheckDB = (username) => {
+const nameCheckDB = (nickname) => {
   return function (dispatch, getState) {
-    console.log(username);
+    console.log(nickname);
 
     api
-      .nameCheck(username)
+      .nameCheck(nickname)
       .then((res) => {
         console.log("(nameCheck) 성공 후 데이터 ::", res);
         dispatch(nameCheck(res.data));
@@ -133,7 +136,7 @@ const changeImgDB = (file, image) => {
 };
 
 const changeNameDB = (nickname) => {
-  return function (dispatch, getState) {
+  return async function (dispatch, getState) {
     const userdata = getState().user.userInfo;
     api
       .changeName(nickname)
@@ -154,7 +157,7 @@ const changeNameDB = (nickname) => {
 };
 
 const changeTitleDB = (userTitle) => {
-  return function (dispatch, getState) {
+  return async function (dispatch, getState) {
     const userdata = getState().user.userInfo;
 
     api
@@ -164,7 +167,7 @@ const changeTitleDB = (userTitle) => {
         const _user = {
           userId: userdata.userId,
           userImageUrl: userdata.userImageUrl,
-          username: userdata.username,
+          nickname: userdata.nickname,
           userTitle: userTitle,
         };
         dispatch(changeInfo(_user));
@@ -176,34 +179,33 @@ const changeTitleDB = (userTitle) => {
 };
 
 const myTrackingDB = () => {
-  return function (dispatch, getState) {
+  return async function (dispatch, getState) {
 
 
-    const fakeDB = {
-      completedList : [
-      {
-        completedId : 1,
-        mountainId : 1,
-        mountain : "속리산",
-        lat : 36.56329698,
-        lng : 127.9172195,
-        totalDistance: 10.3,
-        totalTime: "4시간 20분 13초",
-      },
-      {
-        completedId : 3,
-        mountainId : 2,
-        mountain : "화악산",
-        lat : 37.8881266,
-        lng : 127.5492755,
-        totalDistance: 20.3,
-        totalTime: "6시간 20분 13초",
-      },
-    ]}
+    // const fakeDB = {
+    //   completedList : [
+    //   {
+    //     completedId : 1,
+    //     mountainId : 1,
+    //     mountain : "속리산",
+    //     lat : 36.56329698,
+    //     lng : 127.9172195,
+    //     totalDistance: 10.3,
+    //     totalTime: "4시간 20분 13초",
+    //   },
+    //   {
+    //     completedId : 3,
+    //     mountainId : 2,
+    //     mountain : "화악산",
+    //     lat : 37.8881266,
+    //     lng : 127.5492755,
+    //     totalDistance: 20.3,
+    //     totalTime: "6시간 20분 13초",
+    //   },
+    // ]}
 
-    dispatch(myTracking(fakeDB));
-    return;
-
+    // dispatch(myTracking(fakeDB));
+    // return;
     api
       .myTracking()
       .then((res) => {
@@ -253,7 +255,7 @@ const myMountainDB = (mountainId) => {
 };
 
 const myFeedDB = (pageNum) => {
-  return function (dispatch, getState) {
+  return async function (dispatch, getState) {
 
     // const fakeDB = {
     //   feedList : [
@@ -326,6 +328,7 @@ const myBookmarkDB = (lat, lng) => {
     
     //   dispatch(myBookmark(fakeDB));
     //   return;
+    console.log(lat, lng);
 
     api
       .myBookmark(lat, lng)
@@ -374,6 +377,7 @@ export default handleActions(
       }),
     [MY_BOOKMARK]: (state, action) =>
       produce(state, (draft) => {
+        console.log(action.payload);
         draft.mountList = action.payload.mountList;
       }),
     [MY_MOUNTAIN]: (state, action) =>

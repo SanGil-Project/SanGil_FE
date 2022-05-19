@@ -4,19 +4,11 @@ import { useNavigate, useParams } from "react-router";
 
 import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as partyActions } from '../redux/modules/party';
-import { actionCreators as mountActions } from '../redux/modules/mountain';
 
 import 'date-fns';
 import DatePicker from "react-datepicker";
 import ko from "date-fns/locale/ko";
 import "react-datepicker/dist/react-datepicker.css";
-
-// import DatePicker from 'react-mobile-datepicker';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-// import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
 
 import { Menubar, Header, ScrollTime } from '../components/component';
 import { Desktop, Mobile } from "../shared/responsive";
@@ -73,7 +65,6 @@ const PartyWrite = (props) => {
     setTimeOpen(false);
   };
 
-  console.log(timeValue);
   const formatDate = (d) => {
     const date = new Date(d);
     const monthIndex = date.getMonth() + 1;
@@ -124,7 +115,6 @@ const PartyWrite = (props) => {
         maxPeople : num,
         partyContent : partyContent,
       }
-      console.log(partyData);
       dispatch(partyActions.editPartyDB(partyId, partyData));
       window.alert("수정 완료!");
       navigate(`/party`);
@@ -140,7 +130,6 @@ const PartyWrite = (props) => {
       maxPeople : num,
       partyContent : partyContent,
     }
-    console.log(partyData);
     dispatch(partyActions.addPartyDB(partyData));
     window.alert("작성 완료!");
     navigate(`/party`);
@@ -253,25 +242,6 @@ const PartyWrite = (props) => {
                       </div>
                     </DateModal>
 
-                  {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <Stack component="form" noValidate spacing={1}>
-                        <TextField
-                        id="time"
-                        type="time"
-                        // defaultValue="07:30"
-
-                        onChange={inputTime}
-                        value={timeValue}
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        inputProps={{
-                          step: 600, // 5 min
-                        }}
-                        sx={{ width: 150 }}
-                      />
-                      </Stack>
-                    </LocalizationProvider> */}
                   </Grid>
                 </Button>
               </Grid>
@@ -464,25 +434,6 @@ const PartyWrite = (props) => {
                       </div>
                     </DateModal>
 
-                  {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <Stack component="form" noValidate spacing={1}>
-                        <TextField
-                        id="time"
-                        type="time"
-                        // defaultValue="07:30"
-
-                        onChange={inputTime}
-                        value={timeValue}
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        inputProps={{
-                          step: 600, // 5 min
-                        }}
-                        sx={{ width: 150 }}
-                      />
-                      </Stack>
-                    </LocalizationProvider> */}
                   </Grid>
                 </Button>
               </Grid>

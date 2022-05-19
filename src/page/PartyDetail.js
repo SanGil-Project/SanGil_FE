@@ -186,6 +186,7 @@ const PartyDetail = (props) => {
                 radius="8px"
                 _onClick={() => {
                   navigate(`/chatroom/${curtParty.partyId}`);
+                  // navigate(`/chatroom/${curtParty.chatRoomId}`);
                 }}
               >
                 <Text margin="0" size="18px" bold="600" align>
