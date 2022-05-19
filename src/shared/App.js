@@ -16,11 +16,8 @@ import {
   Search,
   SearchDetail,
   Tracker,
-  FeedDetail,
   PartyDetail,
   FeedWrite,
-  BeforeTracking,
-  EndTracking,
   PartyWrite,
   ChatRoom,
   Mytrack,
@@ -31,8 +28,8 @@ function App() {
     <BrowserRouter>
       <Container>
         <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/main" element={<Main />} />
+          <Route path="/" element={<Login />} />
           <Route path="/user/kakao/callback" element={<KakaoLogin />} />
           <Route path="/user/google/callback" element={<GoogleLogin />} />
           <Route path="/user/naver/callback" element={<NaverLogin />} />
@@ -43,9 +40,7 @@ function App() {
           <Route path="/partydetail/:partyId" element={<PartyDetail />} />
           <Route path="/search" element={<Search />} />
           <Route path="/searchdetail/:mountainId" element={<SearchDetail />} />
-          <Route path="/searchmountain" element={<BeforeTracking />} />
-          <Route path="/tracker/:name/:mountainId" element={<Tracker />} />
-          <Route path="/endtracking/:name" element={<EndTracking />} />
+          <Route path="/tracker" element={<Tracker />} />
           <Route path="/mytrack/:completedId" element={<Mytrack />} />
           <Route path="/feed" element={<Feed />} />
           <Route path="/feedwrite" element={<FeedWrite />} />
@@ -57,10 +52,9 @@ function App() {
 }
 
 const Container = styled.div`
-  background-color: #9EE59C;
-  width: 100vw,
+  background-color: #9ee59c;
+  width: 100vw;
   // height: 100vh,
-
 `;
 
 Modal.setAppElement("#root");

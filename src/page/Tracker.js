@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import KakaoMap from "../components/KakaoMap";
 import { Grid, Button, Text, Icon, Input } from "../elements/element";
-import { Header } from "../components/component";
+import { Header, SearchTracking, EndTracking } from "../components/component";
 import { Desktop, Mobile } from "../shared/responsive";
 import {
   startDB,
@@ -12,11 +12,15 @@ import {
 } from "../redux/modules/tracker";
 import { useDispatch, useSelector } from "react-redux";
 import StopWatch from "../components/StopWatch";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import _ from "lodash";
 
 const Tracker = (props) => {
-  const { name, mountainId } = useParams();
+  const [name, setName] = useState();
+  const [mountainId, setMountainId] = useState();
+  const [isOpen, setIsOpen] = useState(false);
+  const [completedId, setCompletedId] = useState();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const _distance = useSelector((state) => state.tracker.distance);
@@ -25,10 +29,9 @@ const Tracker = (props) => {
   );
 
   const [myLoca, setMyLoca] = useState({ lat: "", lng: "" });
-  const [completedId, setCompletedId] = useState();
   const [distance, setDistance] = useState({ distanceM: 0.0, distanceK: 0.0 });
   const [time, setTime] = useState({
-    stopwatch: { s: 0, m: 0, h: 0 },
+    stopwatch: { s: 0, m: 10, h: 0 },
     isStart: false,
   });
 
@@ -116,8 +119,7 @@ const Tracker = (props) => {
     acquireWakeLock();
     setTime({ ...time, isStart: true });
   };
-  console.log(`서버: ${_distance?.distanceK}`);
-  console.log(`프론트: ${distance?.distanceK}`);
+
   const endClimb = () => {
     if (
       time.stopwatch.s + time.stopwatch.m * 60 + time.stopwatch.h * 3600 <
@@ -132,16 +134,17 @@ const Tracker = (props) => {
         setDistance({ distanceM: 0.0, distanceK: 0.0 });
         setCompletedId();
         releaseWakeLock();
-        navigate("/", { replace: true });
+        navigate("/main", { replace: true });
       }
     } else {
-      if (window.confirm("겨우 이거하고 등산 완료?") === true) {
+      if (window.confirm("등산을 종료하시겠습니까?") === true) {
         dispatch(
           endClimbDB(completedId, {
             totalDistance: distance.distanceK,
             totalTime: `${time.stopwatch.h}시간 ${time.stopwatch.m}분 ${time.stopwatch.s}초`,
           })
         );
+        setIsOpen(true);
         setTime({
           stopwatch: { s: 0, m: 0, h: 0 },
           isStart: false,
@@ -149,9 +152,6 @@ const Tracker = (props) => {
         setDistance({ distanceM: 0.0, distanceK: 0.0 });
         setCompletedId();
         releaseWakeLock();
-        navigate(`/endtracking/${name}`, {
-          state: { time: time.stopwatch, distance: distance.distanceK },
-        });
       }
     }
   };
@@ -171,7 +171,7 @@ const Tracker = (props) => {
               polylinePath={polylinePath}
             />
             <Grid
-              width="412px"
+              width="100vw"
               bg="#fff"
               height="30%"
               padding="16px 0 0 0"
@@ -182,26 +182,33 @@ const Tracker = (props) => {
               </Text>
               <Grid
                 width="250px"
-                height="19px"
+                height="60px"
                 isFlex
                 margin="20px auto 0 auto"
               >
-                <Text width="100px" align="center" color="#C4C4C4">
-                  이동한 거리
-                </Text>
-                <Text width="100px" align="center" color="#C4C4C4">
-                  소요 시간
-                </Text>
-              </Grid>
-              <Grid width="260px" height="30px" isFlex margin="5px auto 0 auto">
-                <Text margin="0 0 0 30px">
-                  <span style={{ fontSize: "2.5rem" }}>
-                    {distance.distanceK}
-                  </span>
-                  km
-                </Text>
-                <Grid width="100px" textAlign lineHeight="25px">
-                  <StopWatch size="2.5rem" time={time} setTime={setTime} />
+                <Grid width="100px">
+                  <Text align="center" color="#C4C4C4" margin="0">
+                    이동한 거리
+                  </Text>
+                  <Text margin="0 auto" align="center">
+                    <span style={{ fontSize: "2.5rem" }}>
+                      {distance.distanceK}
+                    </span>
+                    km
+                  </Text>
+                </Grid>
+                <Grid width="120px">
+                  <Text margin="0" align="center" color="#C4C4C4">
+                    소요 시간
+                  </Text>
+                  <Grid
+                    width="100px"
+                    textAlign
+                    lineHeight="25px"
+                    margin="0 auto"
+                  >
+                    <StopWatch size="2.5rem" time={time} setTime={setTime} />
+                  </Grid>
                 </Grid>
               </Grid>
 
@@ -277,7 +284,7 @@ const Tracker = (props) => {
             <Grid
               width="414px"
               bg="#fff"
-              height="30%"
+              height="20%"
               padding="16px 0 0 0"
               margin="0 auto"
             >
@@ -286,31 +293,43 @@ const Tracker = (props) => {
               </Text>
               <Grid
                 width="250px"
-                height="19px"
+                height="60px"
                 isFlex
                 margin="20px auto 0 auto"
               >
-                {/* 이 부분 고칠 것 : 먼저 발견하신 분은 천누리에게 문의 */}
-                <Text width="100px" align="center" color="#C4C4C4">
-                  이동한 거리
-                </Text>
-                <Text width="100px" align="center" color="#C4C4C4">
-                  소요 시간
-                </Text>
-              </Grid>
-              <Grid width="260px" height="30px" isFlex margin="5px auto 0 auto">
-                <Text margin="0 0 0 30px">
-                  <span style={{ fontSize: "2.5rem" }}>
-                    {distance.distanceK}
-                  </span>
-                  km
-                </Text>
-                <Grid width="100px" textAlign lineHeight="25px">
-                  <StopWatch size="2.5rem" time={time} setTime={setTime} />
+                <Grid width="100px">
+                  <Text align="center" color="#C4C4C4" margin="0">
+                    이동한 거리
+                  </Text>
+                  <Text margin="0 auto" align="center">
+                    <span style={{ fontSize: "2.5rem" }}>
+                      {distance.distanceK}
+                    </span>
+                    km
+                  </Text>
+                </Grid>
+                <Grid width="120px">
+                  <Text margin="0" align="center" color="#C4C4C4">
+                    소요 시간
+                  </Text>
+                  <Grid
+                    width="100px"
+                    textAlign
+                    lineHeight="25px"
+                    margin="0 auto"
+                  >
+                    <StopWatch size="2.5rem" time={time} setTime={setTime} />
+                  </Grid>
                 </Grid>
               </Grid>
+              <Grid
+                width="260px"
+                height="30px"
+                isFlex
+                margin="5px auto 0 auto"
+              ></Grid>
 
-              <Grid width="342px" height="48px" margin="20px auto">
+              <Grid width="342px" height="48px" margin="auto">
                 {time.isStart ? (
                   <>
                     <Button
@@ -362,6 +381,20 @@ const Tracker = (props) => {
               </Grid>
             </Grid>
           </Grid>
+          <SearchTracking
+            name={name}
+            setName={setName}
+            setMountainId={setMountainId}
+          />
+          {isOpen ? (
+            <EndTracking
+              name={name}
+              isOpen={true}
+              setIsOpen={setIsOpen}
+              time={time.stopwatch}
+              distance={distance.distanceK}
+            />
+          ) : null}
         </Grid>
       </Desktop>
     </>

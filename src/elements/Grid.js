@@ -70,6 +70,7 @@ const Grid = (props) => {
     borderBottom,
     borderTop,
     color,
+    flex,
   };
 
   return (

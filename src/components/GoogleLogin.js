@@ -13,7 +13,7 @@ const GoogleLogin = (props) => {
       await dispatch(userActions.googleLoginDB(code));
     };
     googleLogin();
-    navigate("/", { replace: true });
+    navigate("/main", { replace: true });
   }, []);
 
   return <React.Fragment>연결 화면 테스트</React.Fragment>;

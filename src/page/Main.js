@@ -380,8 +380,7 @@ const Main = (props) => {
                 width="386px"
                 height="200px"
                 margin="34px auto 0 auto"
-                // _onClick={() => navigate(`/searchdetail/관악산`)}
-                bgImg={mountain && mountain[0].mountainImgUrl}
+                bgImg={mountain && mountain[0]?.mountainImgUrl}
                 bgSize="cover"
               >
                 <Icon
@@ -405,10 +404,10 @@ const Main = (props) => {
                   width="18px"
                   margin="0 0 -190px 355px"
                   fill={
-                    mountain && mountain[0].bookmark ? "#43ca3b" : "#c4c4c4"
+                    mountain && mountain[0]?.bookmark ? "#43ca3b" : "#c4c4c4"
                   }
                   _onClick={() => {
-                    bookmark(mountain[0].mountainId, "mountain");
+                    bookmark(mountain[0]?.mountainId, "mountain");
                   }}
                 />
               </Card>
@@ -417,16 +416,16 @@ const Main = (props) => {
                 maxWidth="386px"
                 margin="0 auto"
                 hover
-                isFlex
+                flex="flex"
                 _onClick={() => {
                   goDetail(mountain[0].mountainId);
                 }}
               >
-                <Text maxWidth="170px" bold="600" size="1.4rem">
-                  {mountain && mountain[0].mountainAddress}
+                <Text maxWidth="260px" bold="600" size="1.4rem">
+                  {mountain && mountain[0]?.mountainAddress}
                 </Text>
-                <Text width="240px" bold="200" size="1.4rem">
-                  {mountain && mountain[0].mountain}
+                <Text width="90px" bold="200" size="1.4rem" margin="0 10px">
+                  {mountain && mountain[0]?.mountain}
                 </Text>
               </Grid>
 
@@ -484,6 +483,7 @@ const Main = (props) => {
                             margin="0"
                             bold="600"
                             size="1.4rem"
+                            ellipsis="1"
                           >
                             {el.mountainAddress}
                           </Text>
@@ -702,7 +702,7 @@ const Main = (props) => {
                   radius="100%"
                   // position="fixed"
                   // margin="-80px 0 0 350px"
-                  _onClick={() => navigate("/searchmountain")}
+                  _onClick={() => navigate("/tracker")}
                 >
                   <Icon type="climber" width="20px" height="32px" />
                 </Button>

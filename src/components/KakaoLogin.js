@@ -16,7 +16,7 @@ const KakaoLogin = (props) => {
       await dispatch(userActions.kakaoLoginDB(code));
     };
     kakaoLogin();
-    navigate("/", { replace: true });
+    navigate("/main", { replace: true });
   }, []);
 
   return <React.Fragment>연결 화면 테스트</React.Fragment>;

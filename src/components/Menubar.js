@@ -11,7 +11,7 @@ const Menubar = (props) => {
 
   const userInfo = useSelector((state) => state?.user?.userInfo);
   const token = sessionStorage?.getItem("token");
-  const isLogin = (token && userInfo) ? true : false;
+  const isLogin = token && userInfo ? true : false;
 
   const textColor = menuColor.map((m) => {
     return m ? "#43CA3B" : "#C0C0C0";
@@ -74,7 +74,7 @@ const Menubar = (props) => {
           flexColumn
           hover
           _onClick={() => {
-            navigate("/");
+            navigate("/main");
           }}
         >
           <Icon

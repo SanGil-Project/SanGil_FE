@@ -14,8 +14,9 @@ export const setPath = createAction(SET_PATH, (path) => ({ path }));
 const getSearch = createAction(GETSEARCH, (data) => ({ data }));
 const distance = createAction(DISTANCE, (distance) => ({ distance }));
 const endClimb = createAction(ENDCLIMB, (comment) => ({ comment }));
-const getCompleted = createAction(GET_COMPLETED, (trackList) => ({ trackList }))
-
+const getCompleted = createAction(GET_COMPLETED, (trackList) => ({
+  trackList,
+}));
 
 export const startDB = (mountainId, setCompletedId) => {
   return function (dispatch, getState) {
@@ -52,6 +53,7 @@ export const searchNameDB = (keyword, pageNum) => {
         }
       )
       .then((res) => {
+        console.log(res.data);
         dispatch(getSearch(res.data));
       })
       .catch((err) => {
@@ -113,7 +115,7 @@ export const deleteDB = (completedId) => {
   return function (distpatch, getState) {
     axios
       // .delete(`https://burgerrr.shop/api/tracking/${completedId}`, {
-        .delete(`http://3.35.49.228/api/tracking/${completedId}`, {
+      .delete(`http://3.35.49.228/api/tracking/${completedId}`, {
         headers: {
           Authorization: sessionStorage.getItem("token"),
         },
@@ -127,10 +129,8 @@ export const deleteDB = (completedId) => {
   };
 };
 
-
 const getCompletedDB = (completedId) => {
   return function (dispatch, getState) {
-
     // const fakeDB = {
     //   userId : 1,
     //   username : "이재진",
@@ -177,7 +177,6 @@ const getCompletedDB = (completedId) => {
   };
 };
 
-
 const initialState = {
   polylinePath: { polylinePath: [] },
 };
@@ -201,10 +200,11 @@ export default handleActions(
       produce(state, (draft) => {
         draft.comment = action.payload.comment;
       }),
-    [GET_COMPLETED]: (state, action) => produce(state, (draft) => {
-      console.log(action.payload);
-      draft.myTrack = action.payload.trackList;
-    }),
+    [GET_COMPLETED]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(action.payload);
+        draft.myTrack = action.payload.trackList;
+      }),
   },
   initialState
 );

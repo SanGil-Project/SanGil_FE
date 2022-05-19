@@ -8,6 +8,7 @@
 - yarn add react-modal
 - connected-react-router
 - history
+- react-modal
 
 # 04 25 작업
 
@@ -159,6 +160,10 @@
   - 피드 페이지 무한스크롤(스크롤 탐지를 이용함)
     - 추후 목표: observer 탐지 방식으로 바꾸기
 
+- 0519
+  - 산 상세 페이지 댓글 페이징처리
+  - 산 상세 페이지 좋아요 기능 구현
+
 # Trouble shooting
 
 - 스마트폰으로 서비스를 이용할 때, 시간이 지나면 자동으로 화면이 어두워지는데, 이 때 gps와 스톱워치 둘다 작동하지 않는 문제 발생
@@ -171,4 +176,9 @@
   - 개선 예정
 
 - 피드 페이지: useCallback 안에서 feedList.totalPage가 undefined로 출력
+
   - 처음에 비동기로 불러오다보니 undefined로 저장이 되는 듯
+
+- 피드 페이지: 무한스크롤에서 useEffect로 같은 데이터가 두번 쌓인다
+
+- 산 상세 페이지: 댓글 남기면 전에 있던 별점 데이터가 새로운 별점 데이터에 남는다

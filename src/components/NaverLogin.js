@@ -15,7 +15,7 @@ const NaverLogin = (props) => {
       await dispatch(userActions.naverLoginDB(code, state));
     };
     naverLogin();
-    navigate("/", { replace: true });
+    navigate("/main", { replace: true });
   }, []);
 
   return <React.Fragment>연결 화면 테스트</React.Fragment>;
