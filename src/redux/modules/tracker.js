@@ -20,17 +20,8 @@ const getCompleted = createAction(GET_COMPLETED, (trackList) => ({
 
 export const startDB = (mountainId, setCompletedId) => {
   return function (dispatch, getState) {
-    axios
-      .post(
-        // `https://burgerrr.shop/api/tracking/${mountainId}`,
-        `http://3.35.49.228/api/tracking/${mountainId}`,
-        { send: 1 },
-        {
-          headers: {
-            Authorization: sessionStorage.getItem("token"),
-          },
-        }
-      )
+    api
+      .start(mountainId, setCompletedId)
       .then((res) => {
         setCompletedId(res.data.completedId);
       })
@@ -42,16 +33,8 @@ export const startDB = (mountainId, setCompletedId) => {
 
 export const searchNameDB = (keyword, pageNum) => {
   return function (dispatch, getState) {
-    axios
-      .get(
-        // `https://burgerrr.shop/api/mountain/search?keyword=${keyword}&pageNum=${pageNum}`,
-        `http://3.35.49.228/api/mountain/search?keyword=${keyword}&pageNum=${pageNum}`,
-        {
-          headers: {
-            Authorization: sessionStorage.getItem("token"),
-          },
-        }
-      )
+    api
+      .searchName(keyword, pageNum)
       .then((res) => {
         console.log(res.data);
         dispatch(getSearch(res.data));
@@ -64,17 +47,8 @@ export const searchNameDB = (keyword, pageNum) => {
 
 export const setPathDB = (completedId, loca) => {
   return function (dispatch, getState) {
-    axios
-      .post(
-        // `https://burgerrr.shop/api/tracking/mountain/${completedId}`,
-        `http://3.35.49.228/api/tracking/mountain/${completedId}`,
-        { lat: loca.lat, lng: loca.lng },
-        {
-          headers: {
-            Authorization: sessionStorage.getItem("token"),
-          },
-        }
-      )
+    api
+      .setPath(completedId, loca)
       .then((res) => {
         dispatch(distance(res.data));
       })
@@ -86,20 +60,8 @@ export const setPathDB = (completedId, loca) => {
 
 export const endClimbDB = (completedId, data) => {
   return function (dispatch, getState) {
-    axios
-      .put(
-        // `https://burgerrr.shop/api/tracking/${completedId}`,
-        `http://3.35.49.228/api/tracking/${completedId}`,
-        {
-          totalDistance: data.totalDistance,
-          totalTime: data.totalTime,
-        },
-        {
-          headers: {
-            Authorization: sessionStorage.getItem("token"),
-          },
-        }
-      )
+    api
+      .endClimb(completedId, data)
       .then((res) => {
         console.log(res);
         dispatch(endClimb(res.data));
@@ -113,13 +75,8 @@ export const endClimbDB = (completedId, data) => {
 export const deleteDB = (completedId) => {
   console.log(completedId);
   return function (distpatch, getState) {
-    axios
-      // .delete(`https://burgerrr.shop/api/tracking/${completedId}`, {
-      .delete(`http://3.35.49.228/api/tracking/${completedId}`, {
-        headers: {
-          Authorization: sessionStorage.getItem("token"),
-        },
-      })
+    api
+      .deleteDB(completedId)
       .then((res) => {
         console.log(res);
       })
@@ -132,33 +89,34 @@ export const deleteDB = (completedId) => {
 const getCompletedDB = (completedId) => {
   return function (dispatch, getState) {
     const fakeDB = {
-      userId : 1,
-      username : "이재진",
-      userTitle : "um.....홍길?",
-      userTitleImgUrl : "없음",
-      completedid : 1,
-      mountian : "지리산",
-      totalDistance : 10.3,
-      totalTime : "4시간 20분 13초",
-      creatDate : "2022-05-22",
+      userId: 1,
+      username: "이재진",
+      userTitle: "um.....홍길?",
+      userTitleImgUrl: "없음",
+      completedid: 1,
+      mountian: "지리산",
+      totalDistance: 10.3,
+      totalTime: "4시간 20분 13초",
+      creatDate: "2022-05-22",
       trackingList: [
-      {
-      lat:12.1234567,
-      lng:123.1234567,
-      },
-      {
-      lat:12.1234567,
-      lng:123.1234567,
-      },
-      {
-      lat:12.1234567,
-      lng:123.1234567,
-      },
-      {
-      lat:12.1234567,
-      lng:123.1234567,
-      }
-    ]};
+        {
+          lat: 12.1234567,
+          lng: 123.1234567,
+        },
+        {
+          lat: 12.1234567,
+          lng: 123.1234567,
+        },
+        {
+          lat: 12.1234567,
+          lng: 123.1234567,
+        },
+        {
+          lat: 12.1234567,
+          lng: 123.1234567,
+        },
+      ],
+    };
 
     dispatch(getCompleted(fakeDB));
     dispatch(setPath(fakeDB.trackingList));

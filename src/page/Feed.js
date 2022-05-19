@@ -50,10 +50,11 @@ const FeedDetail = () => {
       <Desktop>
         <FeedContainer>
           <Header />
-          <Grid overflowY="scroll" height="100vh">
-            <Grid height="94px"/>
+          <Grid padding="100px 0" overflowY="scroll" height="100vh">
             {feedList?.feedList?.map((el, idx) => (
-              <FeedCard el={el} key={idx} />
+              <Grid height="750px">
+                <FeedCard el={el} key={idx} />
+              </Grid>
             ))}
           </Grid>
           <Grid height="88px"></Grid>
