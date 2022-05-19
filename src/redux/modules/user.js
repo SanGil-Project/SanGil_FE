@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import { api } from "../../shared/api";
+import axios from "axios";
 
 const LOGIN = "LOGIN";
 const LOGOUT = "LOGOUT";
@@ -133,7 +134,7 @@ const changeImgDB = (file, image) => {
 };
 
 const changeNameDB = (nickname) => {
-  return function (dispatch, getState) {
+  return async function (dispatch, getState) {
     const userdata = getState().user.userInfo;
     api
       .changeName(nickname)
@@ -154,7 +155,7 @@ const changeNameDB = (nickname) => {
 };
 
 const changeTitleDB = (userTitle) => {
-  return function (dispatch, getState) {
+  return async function (dispatch, getState) {
     const userdata = getState().user.userInfo;
 
     api
@@ -176,34 +177,33 @@ const changeTitleDB = (userTitle) => {
 };
 
 const myTrackingDB = () => {
-  return function (dispatch, getState) {
+  return async function (dispatch, getState) {
 
 
-    const fakeDB = {
-      completedList : [
-      {
-        completedId : 1,
-        mountainId : 1,
-        mountain : "속리산",
-        lat : 36.56329698,
-        lng : 127.9172195,
-        totalDistance: 10.3,
-        totalTime: "4시간 20분 13초",
-      },
-      {
-        completedId : 3,
-        mountainId : 2,
-        mountain : "화악산",
-        lat : 37.8881266,
-        lng : 127.5492755,
-        totalDistance: 20.3,
-        totalTime: "6시간 20분 13초",
-      },
-    ]}
+    // const fakeDB = {
+    //   completedList : [
+    //   {
+    //     completedId : 1,
+    //     mountainId : 1,
+    //     mountain : "속리산",
+    //     lat : 36.56329698,
+    //     lng : 127.9172195,
+    //     totalDistance: 10.3,
+    //     totalTime: "4시간 20분 13초",
+    //   },
+    //   {
+    //     completedId : 3,
+    //     mountainId : 2,
+    //     mountain : "화악산",
+    //     lat : 37.8881266,
+    //     lng : 127.5492755,
+    //     totalDistance: 20.3,
+    //     totalTime: "6시간 20분 13초",
+    //   },
+    // ]}
 
-    dispatch(myTracking(fakeDB));
-    return;
-
+    // dispatch(myTracking(fakeDB));
+    // return;
     api
       .myTracking()
       .then((res) => {
@@ -219,26 +219,26 @@ const myTrackingDB = () => {
 const myMountainDB = (mountainId) => {
   return function (dispatch, getState) {
 
-    const fakeDB = {
-      completedList : [
-      {
-        completedId : 1,
-        mountain : "속리산",
-        totalDistance: 10.3,
-        totalTime: "4시간 20분 13초",
-        creatDate: "2022-05-22",
-      },
-      {
-        completedId : 3,
-        mountain : "화악산",
-        totalDistance: 20.3,
-        totalTime: "6시간 20분 13초",
-        creatDate: "2022-05-22",
-      },
-    ]}
+    // const fakeDB = {
+    //   completedList : [
+    //   {
+    //     completedId : 1,
+    //     mountain : "속리산",
+    //     totalDistance: 10.3,
+    //     totalTime: "4시간 20분 13초",
+    //     creatDate: "2022-05-22",
+    //   },
+    //   {
+    //     completedId : 3,
+    //     mountain : "화악산",
+    //     totalDistance: 20.3,
+    //     totalTime: "6시간 20분 13초",
+    //     creatDate: "2022-05-22",
+    //   },
+    // ]}
 
-    dispatch(myMountain(fakeDB));
-    return;
+    // dispatch(myMountain(fakeDB));
+    // return;
 
     api
       .myMount(mountainId)
@@ -253,7 +253,7 @@ const myMountainDB = (mountainId) => {
 };
 
 const myFeedDB = (pageNum) => {
-  return function (dispatch, getState) {
+  return async function (dispatch, getState) {
 
     // const fakeDB = {
     //   feedList : [

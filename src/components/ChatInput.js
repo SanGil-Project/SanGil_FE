@@ -16,7 +16,7 @@ const ChatInput = (props) => {
   const writer = _userInfo?.nickname;
   console.log(chatRoomId);
 
-  const sockJs = new SockJS("서버주소"); // 서버주소/ws-stomp
+  const sockJs = new SockJS("http://13.124.204.197:8080/ws-stomp"); // 서버주소/ws-stomp
   const stomp = Stomp.over(sockJs);
 
   const [chat, setChat] = React.useState("");
@@ -32,7 +32,7 @@ const ChatInput = (props) => {
         roomId: chatRoomId,
         message: chat,
         // message: chat.target.value,
-        writer: writer,
+        sender: writer,
         type: 'TALK',
       }
       if (chat === "") {

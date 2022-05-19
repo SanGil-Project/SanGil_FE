@@ -21,7 +21,7 @@ const ChatRoom = (props) => {
 
   console.log(chatRoomId, token, _userInfo);
 
-  const sockJs = new SockJS("서버주소"); // 서버주소/ws-stomp
+  const sockJs = new SockJS("http://13.124.204.197:8080/ws-stomp"); // 서버주소/ws-stomp
   const stomp = Stomp.over(sockJs);
 
   function ConnectSub(token) {
@@ -38,12 +38,12 @@ const ChatRoom = (props) => {
               // }else {
               //   dispatch(sockActions.getMessageDB(newMessage));
               // }
-              // dispatch(chatActions.getChatDB(content)); // 처음 연결시, 서버에서 받은 "content"에 지금까지 전체 채팅내용 올수 있따면..
-              dispatch(chatActions.getChatDB(chatRoomId)); // 아닐경우, api로 요청해야 하는 방식 
+              dispatch(chatActions.getChatDB(content)); // 처음 연결시, 서버에서 받은 "content"에 지금까지 전체 채팅내용 올수 있따면..
+              // dispatch(chatActions.getChatDB(chatRoomId)); // 아닐경우, api로 요청해야 하는 방식 
             }, { token: token }
           );
           stomp.send(
-            "/pub/chat/enter", { token: token }, JSON.stringify({
+            "/pub/chat/message", { token: token }, JSON.stringify({
               roomId: chatRoomId, writer: _userInfo.nickname, type: 'ENTER',})
           )
         });

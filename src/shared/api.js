@@ -1,7 +1,5 @@
 import axios from "axios";
 
-const token = sessionStorage.getItem("token");
-
 const instance = axios.create({
   baseURL: "http://3.35.49.228",
   // baseURL: "https://3.36.113.119",
@@ -11,11 +9,29 @@ const instance = axios.create({
   // baseURL: "https://ehjeong.shop",
 
   headers: {
-    Authorization: token,
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
   },
 });
+
+const sock = axios.create({
+  baseURL: "http://13.124.204.197:8080",
+  headers: {
+    "content-type": "application/json;charset=UTF-8",
+    accept: "application/json",
+  },
+});
+
+instance.interceptors.request.use(function (config) {
+  config.headers.Authorization = sessionStorage.getItem("token");
+  return config;
+});
+
+sock.interceptors.request.use(function (config) {
+  config.headers.Authorization = sessionStorage.getItem("token");
+  return config;
+});
+
 
 export const api = {
   // user.js - social login
@@ -109,7 +125,7 @@ export const api = {
   delParty: (partyId) => instance.delete(`/api/party/${partyId}`),
 
   // chat.js
-  addChatRoom: (partyId) => instance.post(`/api/addChatRoom/${partyId}`), // api 주소 연결 필요
-  getChatList: (chatRoomId) => instance.get(`/api/addChatRoom/${chatRoomId}`), // api 주소 연결 필요, 소켓통신에서 바로 채팅 전체리스트 받으면 필요없는 api
-  
+  addChatRoom: (title) => sock.post(`/chat/rooms?name=${title}`), // api 주소 연결 필요
+  getChatList: (chatRoomId) => instance.get(`/chat/rooms/${chatRoomId}`), // api 주소 연결 필요, 소켓통신에서 바로 채팅 전체리스트 받으면 필요없는 api
+
 };

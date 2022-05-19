@@ -22,25 +22,28 @@ import { Grid, Text, Icon, Image, Button } from "../elements/element";
 const Mypage = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userInfo = useSelector((state) => state?.user?.userInfo);
+  const token = sessionStorage.getItem("token");
+  const userInfo = useSelector((state) => state.user.userInfo);
   // const myTrackList = useSelector((state) => state?.user?.tracker);
-  const myTrackList = useSelector((state) => state?.user?.trackList?.completedList);
-  const selectMarker = useSelector((state) => state?.handle?.selectMarker?.id);
-  const completedList = useSelector((state) => state?.user?.myMountain?.completedList);
-  const myFeedList = useSelector((state) => state?.user?.feedList);
-  const myBookmarkList = useSelector((state) => state?.user?.mountList);
+  const myTrackList = useSelector((state) => state.user.trackList?.completedList);
+  const selectMarker = useSelector((state) => state.handle.selectMarker?.id);
+  const completedList = useSelector((state) => state.user.myMountain?.completedList);
+  const myFeedList = useSelector((state) => state.user.feedList);
+  const myBookmarkList = useSelector((state) => state.user.mountList);
   const menuColor = [false, false, false, false, true]; // 메뉴바 색
-  console.log(myBookmarkList);
 
   React.useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        dispatch(userActions.myBookmarkDB(position.coords.latitude, position.coords.longitude));
-      });
+    if (userInfo && token) {
+      console.log("유저확인 완료!! ::", userInfo);
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          dispatch(userActions.myBookmarkDB(position.coords.latitude, position.coords.longitude));
+        });
+      }
+      dispatch(userActions.myTrackingDB());
+      dispatch(userActions.myFeedDB(1));
     }
-    dispatch(userActions.myTrackingDB());
-    dispatch(userActions.myFeedDB(1));
-  }, []);
+  }, [userInfo]);
 
   React.useEffect(() => {
     if (selectMarker) {

@@ -13,29 +13,29 @@ const addChatRoom = createAction(ADD_CHATROOM, (chatRoom) => ({ chatRoom }));
 const getChat = createAction(GET_CHAT, (chat) => ({ chat }));
 const sendChat = createAction(SEND_CHAT, (chat) => ({ chat }));
 
-const addChatRoomDB = (partyId) => {
+const addChatRoomDB = (title) => {
   return function (dispatch, getState) {
     const userInfo = getState().user.userInfo;
 
     // console.log("room ::", room)
-    console.log("userInfo ::", userInfo)
-    console.log("partyId ::", partyId);
-    const fakeRoomId = 99;
-    const roomInfo = {
-      roomId: fakeRoomId,
-      partyId: partyId,
-      entrance: [userInfo.nickname],
-    }
-    dispatch(addChatRoom(roomInfo));
-    return;
+    // console.log("userInfo ::", userInfo)
+    // const fakeRoomId = 99;
+    // const roomInfo = {
+    //   roomId: fakeRoomId,
+    //   partyId: partyId,
+    //   entrance: [userInfo.nickname],
+    // }
+    // dispatch(addChatRoom(roomInfo));
+    // return;
+    console.log("title ::", title);
 
     api
-      .addChatRoom(partyId)
+      .addChatRoom(title)
       .then((res) => {
         console.log("(addChatRoom) 성공 데이터 확인 ::", res.data);
         const roomInfo = {
-          roomId: res.data.roomId,
-          partyId: partyId,
+          // roomId: res.data.roomId,
+          // partyId: partyId,
           entrance: [userInfo.nickname],
         }
         dispatch(addChatRoom(roomInfo));
