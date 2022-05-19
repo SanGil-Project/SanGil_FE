@@ -34,11 +34,13 @@ const kakaoLoginDB = (code) => {
     api
       .kakaoLogin(code)
       .then((res) => {
+        console.log(res);
         const ACCESS_TOKEN = res.headers.authorization;
         sessionStorage.setItem("token", ACCESS_TOKEN); //세션에 저장
         dispatch(isLogInDB(ACCESS_TOKEN));
       })
       .catch((err) => {
+        console.log("카카오로그인 에러", err);
         console.log("카카오로그인 에러", err.response);
         alert("api는 가는 거겠죠?");
         // window.alert("로그인에 실패하였습니다.");

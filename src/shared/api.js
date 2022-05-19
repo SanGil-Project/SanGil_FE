@@ -2,6 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({
   baseURL: "http://3.35.49.228",
+  // baseURL: "http://13.124.204.197",
   // baseURL: "https://3.36.113.119",
   // baseURL: "https://burgerrr.shop",
   // baseURL: "https://ehjeong.shop",
@@ -15,7 +16,7 @@ const instance = axios.create({
 });
 
 const sock = axios.create({
-  baseURL: "http://13.124.204.197:8080",
+  baseURL: "http://13.124.204.197",
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
