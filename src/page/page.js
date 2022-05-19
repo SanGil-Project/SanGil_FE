@@ -8,10 +8,7 @@ import Mypage from "./Mypage";
 import Search from "./Search";
 import SearchDetail from "./SearchDetail";
 import Tracker from "./Tracker";
-import FeedDetail from "./FeedDetail";
 import FeedWrite from "./FeedWrite";
-import BeforeTracking from "./BeforeTracking";
-import EndTracking from "./EndTracking";
 import ChatRoom from "./ChatRoom";
 import Mytrack from "./Mytrack";
 
@@ -25,11 +22,8 @@ export {
   SearchDetail,
   Tracker,
   Mytrack,
-  FeedDetail,
   PartyDetail,
   FeedWrite,
-  BeforeTracking,
-  EndTracking,
   PartyWrite,
   ChatRoom,
 };

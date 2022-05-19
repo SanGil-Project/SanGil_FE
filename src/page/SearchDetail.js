@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Grid, Text, Image, Input, Button } from "../elements/element";
+import { Grid, Text, Image, Input, Button, Icon } from "../elements/element";
 import {
   Header,
   CourseCard,
@@ -15,13 +15,12 @@ import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 
 const SearchDetail = () => {
-  const token = sessionStorage.getItem("token");
-  const userInfo = useSelector((state) => state.user.userInfo);
+  const [pageNum, setPageNum] = React.useState(1);
   const { mountainId } = useParams();
   const dispatch = useDispatch();
   const menuColor = [false, false, false, true, false]; // 메뉴바 색
   const [star, setStar] = React.useState([false, false, false, false, false]);
-  const [comment, setComment] = React.useState("");
+  const [comment, setComment] = React.useState();
   const [updateCmt, setUpdateCmt] = React.useState({
     content: "",
     mountainCommentId: 0,
@@ -49,6 +48,7 @@ const SearchDetail = () => {
         })
       );
       setComment("");
+      setPageNum(mountain?.commentDto.totalPage);
     } else {
       dispatch(
         mountAction.updateCmtDB({
@@ -61,9 +61,32 @@ const SearchDetail = () => {
     }
   };
 
+  const next = () => {
+    if (mountain?.commentDto.totalPage >= pageNum) {
+      setPageNum((prev) => prev + 1);
+    } else {
+      alert("마지막 댓글입니다");
+    }
+  };
+
+  const prev = () => {
+    if (mountain?.commentDto.currentPage !== 0) {
+      setPageNum((prev) => prev - 1);
+    }
+  };
+
+  const like = () => {
+    dispatch(mountAction.likeDB(mountainId));
+  };
+
   React.useEffect(() => {
-    dispatch(mountAction.getDetailDB(mountainId, 1));
-  }, []);
+    if (
+      !mountain?.commentDto.totalPage ||
+      mountain?.commentDto.totalPage >= pageNum
+    ) {
+      dispatch(mountAction.getDetailDB(mountainId, pageNum));
+    }
+  }, [pageNum]);
 
   return (
     <>
@@ -73,9 +96,24 @@ const SearchDetail = () => {
           <Grid height="74px" />
           <Grid overflowY="scroll" height="100vh">
             <Grid width="93.23%" height="48px" margin="0 auto" isFlex>
-              <Text bold="400" size="30px" lineHeight="48px" width="200px">
-                {mountain?.mountain}
-              </Text>
+              <Grid width="30.26%" margin="0" height="48px" flex="flex">
+                <Text
+                  margin="0"
+                  bold="400"
+                  size="30px"
+                  lineHeight="48px"
+                  maxWidth="100px"
+                >
+                  {mountain?.mountain}
+                </Text>
+                <Icon
+                  type="like"
+                  width="18px"
+                  margin="0 10px"
+                  _onClick={like}
+                  fill={mountain?.bookmark ? "#43ca3b" : "#c4c4c4"}
+                />
+              </Grid>
               <Grid
                 width="90px"
                 height="40px"
@@ -212,12 +250,66 @@ const SearchDetail = () => {
                 </Grid>
               )}
             </div>
-
-            {mountain?.commentDto.commentLists.map((el, idx) => {
-              return (
-                <Comment key={idx} data={el} setUpdateCmt={setUpdateCmt} />
-              );
-            })}
+            <div>
+              <Grid>
+                {mountain?.commentDto.commentLists.map((el, idx) => {
+                  return (
+                    <Comment
+                      key={idx}
+                      data={el}
+                      setUpdateCmt={setUpdateCmt}
+                      updateCmt={updateCmt.state}
+                    />
+                  );
+                })}
+                <Grid
+                  margin="0 auto"
+                  isFlex
+                  maxWidth={
+                    mountain?.commentDto.currentPage === 0 ||
+                    mountain?.commentDto.currentPage + 1 ===
+                      mountain?.commentDto.totalPage
+                      ? "40px"
+                      : "90px"
+                  }
+                >
+                  {mountain?.commentDto.currentPage !== 0 ? (
+                    <Button
+                      border="none"
+                      type="div"
+                      bgColor="#43ca3b"
+                      width="40px"
+                      fontSize="1.2rem"
+                      height="15px"
+                      color="#fff"
+                      radius="10px"
+                      hover
+                      _onClick={prev}
+                    >
+                      이전
+                    </Button>
+                  ) : null}
+                  {mountain?.commentDto.totalPage === 0 ||
+                  mountain?.commentDto.currentPage + 1 ===
+                    mountain?.commentDto.totalPage ? null : (
+                    <Button
+                      border="none"
+                      type="div"
+                      bgColor="#43ca3b"
+                      width="40px"
+                      fontSize="1.2rem"
+                      height="15px"
+                      color="#fff"
+                      radius="10px"
+                      hover
+                      _onClick={next}
+                    >
+                      다음
+                    </Button>
+                  )}
+                </Grid>
+              </Grid>
+            </div>
           </Grid>
 
           <Grid height="88px" />

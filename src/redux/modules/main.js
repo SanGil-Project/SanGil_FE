@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import axios from "axios";
+import { api } from "../../shared/api";
 
 const GETPARTY = "GETPARTY";
 const GETBEST = "GETBEST";
@@ -18,7 +19,6 @@ const initialState = {};
 
 export const aroundDB = (lat, lng) => {
   return function (dispatch, getState) {
-    console.log(lat, lng);
     axios
       // .get(`https://burgerrr.shop/api/main/nearby/1?lat=${lat}&lng=${lng}`, {
       .get(`http://3.35.49.228/api/main/nearby/1?lat=${lat}&lng=${lng}`, {

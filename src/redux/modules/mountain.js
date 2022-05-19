@@ -8,6 +8,7 @@ const GET_DETAIL = "GET_DEATIL";
 const ADD_COMMENT = "ADD_COMMENT";
 const DELETE_COMMENT = "DELETE_COMMENT";
 const UPDATE_COMMENT = "UPDATE_COMMENT";
+const DESC_BOOKMARK = "DESC_BOOKMARK";
 
 const getTopMnt = createAction(GET_TOP_MNT, (mountainList) => ({
   mountainList,
@@ -19,6 +20,9 @@ const deleteComment = createAction(DELETE_COMMENT, (commentId) => ({
 }));
 const updateCmt = createAction(UPDATE_COMMENT, (commentData) => ({
   commentData,
+}));
+const likeMountain = createAction(DESC_BOOKMARK, (likeStatus) => ({
+  likeStatus,
 }));
 
 const initialState = {};
@@ -42,7 +46,6 @@ const getDetailDB = (mountainId, pageNum) => {
     api
       .getDetail(mountainId, pageNum)
       .then((res) => {
-        console.log("(getDetail) 성공 데이터 확인 ::", res);
         dispatch(getDetail(res.data));
       })
       .catch((err) => {
@@ -56,7 +59,6 @@ const addCommentDB = (mountainId, commentData) => {
     api
       .addComment(mountainId, commentData)
       .then((res) => {
-        console.log(res.data);
         if (res.data.msg === "중복") {
           alert("해당 산의 댓글은 한번만 작성이 가능합니다");
           dispatch(addComment(res.data));
@@ -97,6 +99,19 @@ const updateCmtDB = (commentData) => {
   };
 };
 
+const likeDB = (mountainId) => {
+  return function (dispatch, getState) {
+    api
+      .like(mountainId)
+      .then((res) => {
+        dispatch(likeMountain(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
 export default handleActions(
   {
     [GET_TOP_MNT]: (state, action) =>
@@ -110,26 +125,18 @@ export default handleActions(
       }),
     [ADD_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        draft.mountainData.commentDto.commentLists.unshift(
-          action.payload.comment
-        );
+        console.log(action.payload.comment);
+        draft.mountainData.commentDto.commentLists.push(action.payload.comment);
       }),
     [DELETE_COMMENT]: (state, action) =>
       produce(state, (draft) => {
         const afterCmt = draft.mountainData.commentDto.commentLists.filter(
           (el, idx) => el.mountainCommentId !== action.payload.commentId
         );
-        draft.mountainData = {
-          ...draft.mountainData,
-          commentDto: {
-            ...draft.mountainData.commentDto,
-            commentLists: afterCmt,
-          },
-        };
+        draft.mountainData.commentDto.commentLists = afterCmt;
       }),
     [UPDATE_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.commentData);
         const idx = draft.mountainData.commentDto.commentLists.findIndex(
           (el, idx) =>
             el.mountainCommentId ===
@@ -137,6 +144,10 @@ export default handleActions(
         );
         draft.mountainData.commentDto.commentLists[idx].mountainComment =
           action.payload.commentData.mountainComment;
+      }),
+    [DESC_BOOKMARK]: (state, action) =>
+      produce(state, (draft) => {
+        draft.mountainData.bookmark = action.payload.likeStatus;
       }),
   },
   initialState
@@ -149,6 +160,7 @@ const actionCreators = {
   addCommentDB,
   deleteCmtDB,
   updateCmtDB,
+  likeDB,
 };
 
 export { actionCreators };

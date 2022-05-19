@@ -33,14 +33,14 @@ const FeedDetail = () => {
 
   React.useEffect(() => {
     if (!feedList.totalPage || feedList.totalPage >= pageNum) {
-      dispatch(getFeedDB(pageNum));
+      dispatch(getFeedDB(1));
     }
 
-    window.addEventListener("scroll", scroll);
-    return () => {
-      window.removeEventListener("scroll", scroll);
-    };
-  }, [pageNum]);
+    // window.addEventListener("scroll", scroll);
+    // return () => {
+    //   window.removeEventListener("scroll", scroll);
+    // };
+  }, []);
 
   return (
     <>
@@ -50,8 +50,8 @@ const FeedDetail = () => {
       <Desktop>
         <FeedContainer>
           <Header />
-          <Grid overflowY="scroll" _onScroll={scroll}>
-            <Grid height="94px"></Grid>
+          <Grid overflowY="scroll" height="100vh">
+            <Grid height="94px"/>
             {feedList?.feedList?.map((el, idx) => (
               <FeedCard el={el} key={idx} />
             ))}
@@ -116,7 +116,7 @@ const MenubarContainer = styled.div`
 `;
 
 const TrackBtn = styled.div`
-  position: absolute;
+  position: fixed;
   right: calc(50% - 220px);
   bottom: 120px;
 `;

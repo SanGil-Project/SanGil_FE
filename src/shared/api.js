@@ -35,6 +35,15 @@ sock.interceptors.request.use(function (config) {
 
 
 export const api = {
+  //main.js
+  around: (lat, lng) =>
+    instance.get(`/api/main/nearby/1?lat=${lat}&lng=${lng}`),
+  mainFeed: () => instance.get(`/api/main/feeds/1`),
+  mountains: () => instance.get(`/api/main/mountains`),
+  mainParty: () => instance.get(`/api/main/parties`),
+  mainBookmark: (mountainId, type) =>
+    instance.post(`/api/mountain/bookmark/${mountainId}`, { mountainId }),
+
   // user.js - social login
   kakaoLogin: (code) => instance.get(`/user/kakao/callback?code=${code}`),
   naverLogin: (code, state) =>
@@ -69,7 +78,7 @@ export const api = {
     instance.put("/api/mypages/profileUrl", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
-      }, 
+      },
     }),
   myTracking: () => instance.get("/api/mypages/tracking"),
   myTitle: () => instance.get("/api/mypages/userTitle"),
@@ -96,10 +105,13 @@ export const api = {
     instance.put(`/api/mountain/comment/${commentData.mountainCommentId}`, {
       mountainComment: commentData.mountainComment,
     }),
+  like: (mountainId) =>
+    instance.post(`/api/mountain/bookmark/${mountainId}`, { mountainId }),
 
   // trancker.js
-  getMytrack: (completedid) => instance.get(`/api/tracking/detail/${completedid}`),
-  
+  getMytrack: (completedid) =>
+    instance.get(`/api/tracking/detail/${completedid}`),
+
   // party.js
   getMyParty: () => instance.get("/api/plan"),
   getPartyList: (pageNum) => instance.get(`/api/parties/${pageNum}`),

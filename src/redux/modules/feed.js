@@ -4,11 +4,13 @@ import axios from "axios";
 import { arrayIncludes } from "@material-ui/pickers/_helpers/utils";
 
 const ADD_FEED = "ADD_FEED";
+const MORE_FEED = "MORE_FEED";
 const DELETE_FEED = "DELETE_FEED";
 const GET_FEED = "GET_FEED";
 const LIKE = "LIKE";
 
 const addFeed = createAction(ADD_FEED, (data) => ({ data }));
+const moreFeed = createAction(MORE_FEED, (feedList) => ({ feedList }));
 const deleteFeed = createAction(DELETE_FEED, (feedId) => ({ feedId }));
 const getFeed = createAction(GET_FEED, (feedList) => ({ feedList }));
 const likeFeed = createAction(LIKE, (data) => ({
@@ -50,7 +52,11 @@ export const getFeedDB = (pageNum) => {
       })
       .then((res) => {
         console.log(res.data);
-        dispatch(getFeed(res.data));
+        if (res.data.currentPage === 0) {
+          dispatch(getFeed(res.data));
+        } else {
+          dispatch(moreFeed(res.data));
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -112,6 +118,11 @@ export default handleActions(
         draft.feedList.feedList.unshift(action.payload.data);
       }),
     [GET_FEED]: (state, action) =>
+      produce(state, (draft) => {
+        const _feedList = action.payload.feedList;
+        draft.feedList = _feedList;
+      }),
+    [MORE_FEED]: (state, action) =>
       produce(state, (draft) => {
         const _feedList = action.payload.feedList;
         draft.feedList = {

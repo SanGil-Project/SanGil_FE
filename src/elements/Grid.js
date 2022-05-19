@@ -36,6 +36,7 @@ const Grid = (props) => {
     borderBottom,
     borderTop,
     _onScroll,
+    color,
   } = props;
   const styles = {
     bg,
@@ -68,6 +69,8 @@ const Grid = (props) => {
     bgSize,
     borderBottom,
     borderTop,
+    color,
+    flex,
   };
 
   return (
@@ -80,12 +83,14 @@ const Grid = (props) => {
 Grid.defaultProps = {
   width: "100%",
   height: "100%",
+  color: "black",
 };
 
 const Box = styled.div`
   box-sizing: border-box;
   width: ${(props) => `${props.width}`};
   height: ${(props) => `${props.height}`};
+  color: ${(props) => `${props.color}`};
   ${(props) => (props.maxWidth ? `max-width: ${props.maxWidth};` : null)}
   ${(props) => (props.minWidth ? `min-width: ${props.minWidth};` : null)}
   ${(props) => (props.maxHeight ? `max-height: ${props.maxHeight};` : null)}
