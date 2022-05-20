@@ -12,10 +12,6 @@ const Header = () => {
   const token = sessionStorage?.getItem("token");
   const dispatch = useDispatch();
 
-  const logIn = () => {
-    navigate("/");
-  };
-
   React.useEffect(() => {
     if (token) {
       dispatch(isLogInDB(token));

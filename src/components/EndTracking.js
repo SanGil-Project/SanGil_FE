@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 
 const EndTracking = (props) => {
   const { name, isOpen, setIsOpen, time, distance } = props;
-  console.log(name);
   const commentCheck = useSelector((state) => state.tracker.comment);
   const navigate = useNavigate();
   const nextTime = () => {
@@ -58,43 +57,78 @@ const EndTracking = (props) => {
         <Text size="1.4rem" align="center" bold="600">
           대충 화이팅 한다는 멘트
         </Text>
-        <Grid maxWidth="320px" height="157px" margin="10px auto 0 auto">
+        <Grid maxWidth="85.3%" height="157px" margin="10px auto 0 auto">
           <Image
-            width="320px"
+            width="100%"
             height="157px"
             objectFit="cover"
             margin="0 auto"
             src="http://cdn.iconsumer.or.kr/news/photo/202007/12408_15753_1231.jpg"
           />
         </Grid>
-        <Grid width="210px" margin="20px 0 0 95px" height="24px" isFlex>
-          <Text>총 거리</Text>
-          <Text>소요 시간</Text>
-        </Grid>
-        <Grid width="242px" margin="20px 0 0 98px" height="24px" isFlex>
-          <Text bold="500">
-            <span style={{ fontWeight: "600", fontSize: "25px" }}>
-              {distance}
-            </span>
-            km
-          </Text>
-          <Text bold="500">
-            <span style={{ fontWeight: "600", fontSize: "25px" }}>
-              {time.h}
-            </span>
-            시간{" "}
-            <span style={{ fontWeight: "600", fontSize: "25px" }}>
-              {time.m}
-            </span>
-            분{" "}
-            <span style={{ fontWeight: "600", fontSize: "25px" }}>
-              {time.s}
-            </span>
-            초
-          </Text>
+        <Grid width="78.3%" margin="20px auto 0 auto" height="75px" isFlex>
+          <Grid width="100px">
+            <Text margin="0" align="center">
+              총 거리
+            </Text>
+            <Text bold="500" align="center">
+              <span
+                style={{
+                  fontWeight: "600",
+                  fontSize: "25px",
+                  color: "#43CA3B",
+                }}
+              >
+                {distance}
+              </span>
+              {` km`}
+            </Text>
+          </Grid>
+          <Grid width="180px">
+            <Text margin="0" align="center">
+              소요 시간
+            </Text>
+            <Text bold="500" align="center">
+              <span
+                style={{
+                  fontWeight: "600",
+                  fontSize: "25px",
+                  color: "#43CA3B",
+                }}
+              >
+                {time.h}
+              </span>
+              시간{" "}
+              <span
+                style={{
+                  fontWeight: "600",
+                  fontSize: "25px",
+                  color: "#43CA3B",
+                }}
+              >
+                {time.m}
+              </span>
+              분{" "}
+              <span
+                style={{
+                  fontWeight: "600",
+                  fontSize: "25px",
+                  color: "#43CA3B",
+                }}
+              >
+                {time.s}
+              </span>
+              초
+            </Text>
+          </Grid>
         </Grid>
         <Text size="14px" align="center">
-          {name}의 난이도는 어떤가요?
+          <span
+            style={{ color: "#43CA3B", fontWeight: "600", fontSize: "1.4rem" }}
+          >
+            {name}
+          </span>
+          의 난이도는 어떤가요?
         </Text>
         <Text size="14px" align="center" margin="-16px 0 0 0">
           리뷰 남기기를 통해 리뷰를 남겨주세요!

@@ -22,7 +22,12 @@ const FeedCard = (props) => {
   };
   return (
     <DescContainer>
-      <Grid height="50px" maxWidth="86%" margin="0 auto 10px auto" isFlex>
+      <Grid
+        height="50px"
+        maxWidth="86%"
+        margin="0 auto 10px auto"
+        isFlex
+      >
         <Grid maxWidth="204px" isFlex>
           <Image
             width="40px"

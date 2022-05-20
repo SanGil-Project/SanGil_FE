@@ -19,13 +19,8 @@ const initialState = {};
 
 export const aroundDB = (lat, lng) => {
   return function (dispatch, getState) {
-    axios
-      // .get(`https://burgerrr.shop/api/main/nearby/1?lat=${lat}&lng=${lng}`, {
-      .get(`http://3.35.49.228/api/main/nearby/1?lat=${lat}&lng=${lng}`, {
-        headers: {
-          Authorization: sessionStorage.getItem("token"),
-        },
-      })
+    api
+      .around(lat, lng)
       .then((res) => {
         dispatch(getAround(res.data));
       })
@@ -37,13 +32,8 @@ export const aroundDB = (lat, lng) => {
 
 export const feedDB = (token) => {
   return function (dispatch, getState) {
-    axios
-      // .get("https://burgerrr.shop/api/main/feeds/1", {
-      .get("http://3.35.49.228/api/main/feeds/1", {
-        headers: {
-          Authorization: sessionStorage.getItem("token"),
-        },
-      })
+    api
+      .mainFeed()
       .then((res) => {
         dispatch(getFeed(res.data));
       })
@@ -55,13 +45,8 @@ export const feedDB = (token) => {
 
 export const mountainsDB = () => {
   return function (dispatch, getState) {
-    axios
-      // .get("https://burgerrr.shop/api/main/mountains", {
-      .get("http://3.35.49.228/api/main/mountains", {
-        headers: {
-          Authorization: sessionStorage.getItem("token"),
-        },
-      })
+    api
+      .mountains()
       .then((res) => {
         dispatch(getBest(res.data));
       })
@@ -73,13 +58,8 @@ export const mountainsDB = () => {
 
 export const partyDB = () => {
   return function (dispatch, getState) {
-    axios
-      // .get("https://burgerrr.shop/api/main/parties", {
-      .get("http://3.35.49.228/api/main/parties", {
-        headers: {
-          Authorization: sessionStorage.getItem("token"),
-        },
-      })
+    api
+      .mainParty()
       .then((res) => {
         dispatch(getParty(res.data));
       })
@@ -91,19 +71,8 @@ export const partyDB = () => {
 
 export const bookmarkDB = (mountainId, type) => {
   return function (dispatch, getState) {
-    axios
-      .post(
-        // `https://burgerrr.shop/api/mountain/bookmark/${mountainId}`,
-        `http://3.35.49.228/api/mountain/bookmark/${mountainId}`,
-        {
-          mountainId: mountainId,
-        },
-        {
-          headers: {
-            Authorization: sessionStorage.getItem("token"),
-          },
-        }
-      )
+    api
+      .mainBookmark(mountainId, type)
       .then((res) => {
         dispatch(bookmark({ like: res.data, mountainId, type }));
       })

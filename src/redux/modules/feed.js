@@ -1,7 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import axios from "axios";
-import { arrayIncludes } from "@material-ui/pickers/_helpers/utils";
+import { api } from "../../shared/api";
 
 const ADD_FEED = "ADD_FEED";
 const MORE_FEED = "MORE_FEED";
@@ -43,13 +43,8 @@ export const addFeedDB = (feed) => {
 
 export const getFeedDB = (pageNum) => {
   return function (dispatch, getState) {
-    axios
-      // .get("https://burgerrr.shop/api/main/feeds/1", {
-      .get(`http://3.35.49.228/api/main/feeds/${pageNum}`, {
-        headers: {
-          Authorization: sessionStorage.getItem("token"),
-        },
-      })
+    api
+      .getFeedDB(pageNum)
       .then((res) => {
         console.log(res.data);
         if (res.data.currentPage === 0) {
