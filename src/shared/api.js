@@ -2,6 +2,8 @@ import axios from "axios";
 
 const instance = axios.create({
   baseURL: "http://3.36.75.57:8080",
+  // baseURL: "http://54.180.100.79:8080",
+  // baseURL: "http://3.35.49.228",
   // baseURL: "http://13.124.204.197",
   // baseURL: "https://3.36.113.119",
   // baseURL: "https://burgerrr.shop",
@@ -159,6 +161,6 @@ export const api = {
   delParty: (partyId) => instance.delete(`/api/party/${partyId}`),
 
   // chat.js
-  addChatRoom: (title) => sock.post(`/chat/rooms?name=${title}`), // api 주소 연결 필요
+  addChatRoom: (title) => instance.post(`/chat/rooms?name=${title}`), // api 주소 연결 필요
   getChatList: (chatRoomId) => instance.get(`/chat/rooms/${chatRoomId}`), // api 주소 연결 필요, 소켓통신에서 바로 채팅 전체리스트 받으면 필요없는 api
 };

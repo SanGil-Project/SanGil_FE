@@ -51,7 +51,7 @@ const Party = (props) => {
                 return (
                   <Grid
                     key={idx}
-                    bg="#fff"
+                    bg="#FAFAFA"
                     shadow="1px 3px 10px rgba(69, 69, 69, 0.2)"
                     radius="16px"
                     height="230px"
@@ -131,21 +131,13 @@ const Party = (props) => {
             <Grid height="88px" maxWidth="500px" margin="auto">
 
               <CreatPartyBtn>
-                <Button
-                  bgColor="#43CA3B"
-                  border="none"
-                  width="105px"
-                  height="45px"
-                  radius="16px"
-                  shadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+                <Grid 
+                  flexRow bg="#43CA3B" width="60px" height="60px" radius="100%" shadow="0px 3px 4px rgba(0, 0, 0, 0.15)" 
                   _onClick={() => {
                     navigate(`/partywrite`);
-                  }}
-                >
-                  <Text margin="0" align size="14px" color="#fff">
-                    모임 만들기
-                  </Text>
-                </Button>
+                  }}>
+                  <Icon type="partyAdd" width="37px" height="25px" margin="0 auto"/>
+                </Grid>
               </CreatPartyBtn>
               <Menubar menuColor={menuColor} />
             </Grid>
@@ -300,8 +292,8 @@ const CreatPartyBtn = styled.div`
   
   position: fixed;
   // position: absolute;
-  left: calc(50% + 130px);
-  bottom: 110px;
+  left: calc(50% + 175.5px);
+  bottom: 113.5px;
   // right: 5%;
   // z-index: 9;
 `;
