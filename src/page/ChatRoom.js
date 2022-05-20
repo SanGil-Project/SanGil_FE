@@ -24,11 +24,11 @@ const ChatRoom = (props) => {
   const sockJs = new SockJS("http://3.36.75.57:8080/ws-stomp"); // 서버주소/ws-stomp
   const stomp = Stomp.over(sockJs);
 
-  function ConnectSub(token) {
+  function ConnectSub() {
     try {
-      console.log("처음");
-      stomp.connect({ token: token }, () => {
-        console.log("중간");
+      console.log("STOMP Start");
+      stomp.connect({}, () => {
+        console.log("STOMP Connection");
         stomp.subscribe(`/chat/rooms/${chatRoomId}`,
             (res) => {
               console.log("subscribe callback ::", res);
@@ -70,7 +70,7 @@ const ChatRoom = (props) => {
 
   React.useEffect(() => {
     console.log(token);
-    ConnectSub(token);
+    ConnectSub();
     return () => {
       DisConnectUnsub();
     };
@@ -143,7 +143,7 @@ const ChatRoom = (props) => {
           </Grid>
         </ChatWrap>
         <ChatInputWrap>
-          {/* <ChatInput chatRoomId={chatRoomId}/> */}
+          <ChatInput chatRoomId={chatRoomId}/>
         </ChatInputWrap>
 
         <MenubarContainer>

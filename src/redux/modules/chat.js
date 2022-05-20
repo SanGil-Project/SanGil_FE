@@ -30,7 +30,7 @@ const addChatRoomDB = (title, partyId) => {
     console.log("title ::", title, partyId);
 
     api
-      .addChatRoom(title, partyId)
+      .addChatRoom(title)
       .then((res) => {
         console.log("(addChatRoom) 성공 데이터 확인 ::", res.data);
         const roomInfo = {

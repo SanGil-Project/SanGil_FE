@@ -34,6 +34,7 @@ const ChatInput = (props) => {
         sender: writer,
         type: 'TALK',
       }
+      console.log(chatData);
       if (chat === "") {
         return;
       }
