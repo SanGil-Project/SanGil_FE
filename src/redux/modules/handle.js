@@ -11,8 +11,8 @@ const selectTime = createAction(SELECT_TIME, (selectTime) => ({ selectTime }));
 const initialState = {
   selectTime: {
     division: "오전",
-    hour: null,
-    minute: null,
+    hour: "1",
+    minute: "00",
   },
 };
 

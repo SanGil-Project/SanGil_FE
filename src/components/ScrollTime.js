@@ -15,8 +15,9 @@ const ScrollTime = () => {
   const curMinute = useRef(time.current.getMinutes());
   const showMinute = parseInt(curMinute.current / 10) * 10 + 10;
   const [selectTime, setSelectTime] = useState("오전");
-  const [selectHour, setSelectHour] = useState(curHour.current);
-  const [selectMinute, setSelectMinute] = useState(showMinute);
+  const [selectHour, setSelectHour] = useState("1");
+  const [selectMinute, setSelectMinute] = useState("00");
+  console.log(selectTime, selectHour, selectMinute )
 
   const division = ["오전", "오후"];
   const hour = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];

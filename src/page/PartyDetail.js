@@ -61,7 +61,6 @@ const PartyDetail = (props) => {
             <Grid padding="64px 0 8px" bg="#F2F3F6" height="auto">
               <Grid isFlex padding="13px 14px" borderBottom="1px solid #DEDEDE"  bg="#fff" height="auto">
                 <Grid flexRow margin="0">
-                  {/* <Mainprofile> */}
                   <Image
                     type="circle"
                     width="32px"
@@ -69,7 +68,6 @@ const PartyDetail = (props) => {
                     margin="0 14px 0 0"
                     src={img}
                   />
-                  {/* </Mainprofile> */}
                   <Grid>
                     <Text margin="0" size="12px" bold="500">
                       [{curtParty?.userTitle}] {curtParty?.nickname}
@@ -78,17 +76,12 @@ const PartyDetail = (props) => {
                 </Grid>
                 {myMode && 
                 <Grid width="auto" margin="0" flexRow>
-                  <Button 
-                    width="auto" height="auto" padding="5px" margin="0 5px" 
-                    _onClick={()=>{
-                      navigate(`/partywrite/${curtParty.partyId}`);}}>
-                    <Text margin="0">수정</Text>
-                  </Button>
-                  <Button 
-                    width="auto" height="auto" padding="5px" 
-                    _onClick={()=>{deleteParty(curtParty.partyId)}}>
-                    <Text margin="0">삭제</Text>
-                  </Button>
+                  <Grid _onClick={()=>{navigate(`/partywrite/${curtParty.partyId}`);}}>
+                   <Icon type="partyEdit" width="31px" height="31px" margin="auto"/>
+                  </Grid>
+                  <Grid _onClick={()=>{deleteParty(curtParty.partyId)}}>
+                    <Icon type="partyDelete" width="31px" height="31px" margin="auto"/>
+                  </Grid>
                 </Grid>}
               </Grid>
               <Grid padding="20px 14px" margin="0 0 8px" height="auto" flexColumn  bg="#fff">
@@ -170,7 +163,10 @@ const PartyDetail = (props) => {
                         </Grid>
                       </Grid>
                       {isCheif && 
-                        <Icon type="partyChief" width="24px" height="25px" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} />
+                        <Image
+                          src={"https://user-images.githubusercontent.com/91959791/169491140-498a7ef5-5a76-4301-8771-d13449d3b92e.png"} 
+                          width="31px"
+                          height="31px" />
                       }
                       </Grid>
                   );
@@ -225,7 +221,6 @@ const PartyDetail = (props) => {
             <Grid padding="64px 0 8px" bg="#F2F3F6" height="auto">
               <Grid isFlex padding="13px 14px" borderBottom="1px solid #DEDEDE"  bg="#fff" height="auto">
                 <Grid flexRow margin="0">
-                  {/* <Mainprofile> */}
                   <Image
                     type="circle"
                     width="32px"
@@ -233,7 +228,6 @@ const PartyDetail = (props) => {
                     margin="0 14px 0 0"
                     src={img}
                   />
-                  {/* </Mainprofile> */}
                   <Grid>
                     <Text margin="0" size="12px" bold="500">
                       [{curtParty?.userTitle}] {curtParty?.nickname}
@@ -242,17 +236,12 @@ const PartyDetail = (props) => {
                 </Grid>
                 {myMode && 
                 <Grid width="auto" margin="0" flexRow>
-                  <Button 
-                    width="auto" height="auto" padding="5px" margin="0 5px" 
-                    _onClick={()=>{
-                      navigate(`/partywrite/${curtParty.partyId}`);}}>
-                    <Text margin="0">수정</Text>
-                  </Button>
-                  <Button 
-                    width="auto" height="auto" padding="5px" 
-                    _onClick={()=>{deleteParty(curtParty.partyId)}}>
-                    <Text margin="0">삭제</Text>
-                  </Button>
+                  <Grid _onClick={()=>{navigate(`/partywrite/${curtParty.partyId}`);}}>
+                   <Icon type="partyEdit" width="31px" height="31px" margin="auto"/>
+                  </Grid>
+                  <Grid _onClick={()=>{deleteParty(curtParty.partyId)}}>
+                    <Icon type="partyDelete" width="31px" height="31px" margin="auto"/>
+                  </Grid>
                 </Grid>}
               </Grid>
               <Grid padding="20px 14px" margin="0 0 8px" height="auto" flexColumn  bg="#fff">
@@ -334,7 +323,10 @@ const PartyDetail = (props) => {
                         </Grid>
                       </Grid>
                       {isCheif && 
-                        <Icon type="partyChief" width="24px" height="25px" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} />
+                        <Image
+                          src={"https://user-images.githubusercontent.com/91959791/169491140-498a7ef5-5a76-4301-8771-d13449d3b92e.png"} 
+                          width="31px"
+                          height="31px" />
                       }
                       </Grid>
                   );
@@ -350,6 +342,7 @@ const PartyDetail = (props) => {
                 radius="8px"
                 _onClick={() => {
                   navigate(`/chatroom/${curtParty.partyId}`);
+                  // navigate(`/chatroom/${curtParty.chatRoomId}`);
                 }}
               >
                 <Text margin="0" size="18px" bold="600" align>

@@ -28,6 +28,8 @@ const Input = (props) => {
     disabled,
     dir,
     hover,
+    textAlign,
+    color,
   } = props;
 
   const styles = {
@@ -44,6 +46,8 @@ const Input = (props) => {
     gridWidth,
     dir,
     hover,
+    textAlign,
+    color,
   };
 
   if (multiLine) {
@@ -146,10 +150,12 @@ const InfoInput = styled.input`
   max-width: ${(props) => `${props.maxWidth}`};
   height: ${(props) => `${props.height}`};
   ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
+  ${(props) => (props.color ? `color: ${props.color};` : null)}
   ${(props) => (props.radius ? `border-radius: ${props.radius};` : null)}
   ${(props) => (props.bg ? `background-color: ${props.bg};` : null)}
   ${(props) => (props.display ? `display: ${props.display};` : null)}
   ${(props) => props.hover ? `&:hover { cursor: pointer; };` : null}
+  ${(props) => props.textAlign ? `text-align: ${props.textAlign};` : null}
 `;
 
 const ElTextarea = styled.textarea`
