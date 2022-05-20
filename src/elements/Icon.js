@@ -32,6 +32,27 @@ const Icon = (props) => {
   const menuColor = page ? "#43CA3B" : "#C0C0C0";
   const fillOpa = fillOpacity==="false" ? false : fillOpacity ;
 
+  if (type === "partyDelete") {
+    return (
+      <MenuIcon {...styles} viewBox="0 0 31 31" fill="none">
+      <path 
+        d="M10.2705 25.1047H21.5205V10.1047H10.2705V25.1047ZM7.45801 7.60474V5.72974H11.6455L12.8955 4.47974H18.8955L20.1455 5.72974H24.333V7.60474H7.45801ZM10.2705 26.9797C9.77051 26.9797 9.33301 26.7922 8.95801 26.4172C8.58301 26.0422 8.39551 25.6047 8.39551 25.1047V8.22974H23.3955V25.1047C23.3955 25.6047 23.208 26.0422 22.833 26.4172C22.458 26.7922 22.0205 26.9797 21.5205 26.9797H10.2705ZM10.2705 25.1047H21.5205H10.2705Z" 
+        fill="#131313"/>      
+      </MenuIcon>
+    );
+  }
+
+  if (type === "partyEdit") {
+    return (
+      <MenuIcon {...styles} viewBox="0 0 31 31" fill="none">
+        <path 
+          d="M5.89551 25.7297H12.5622L25.8955 12.3964L19.2288 5.72974L5.89551 19.0631V25.7297Z" 
+          stroke="#131313" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path 
+          d="M15.2305 9.72974L21.8971 16.3964" stroke="#131313" stroke-width="2"/>
+      </MenuIcon>
+    );
+  }
 
   if (type === "partyAdd") {
     return (

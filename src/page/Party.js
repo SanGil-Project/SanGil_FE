@@ -30,7 +30,7 @@ const Party = (props) => {
   const dateString = year + '-' + month  + '-' + day;
   const hours = ('0' + today.current.getHours()).slice(-2); 
   const minutes = ('0' + today.current.getMinutes()).slice(-2);
-  let isCompleted = Array(partyList.length).fill(false);
+  let isCompleted = Array(partyList?.length).fill(false);
 
 
   React.useEffect(() => {
