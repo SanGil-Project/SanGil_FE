@@ -33,21 +33,8 @@ export const startDB = (mountainId, setCompletedId) => {
 
 export const searchNameDB = (keyword, pageNum) => {
   return function (dispatch, getState) {
-<<<<<<< HEAD
-    axios
-      .get(
-        // `https://burgerrr.shop/api/mountain/search?keyword=${keyword}&pageNum=${pageNum}`,
-        `http://3.36.75.57:8080/api/mountain/search?keyword=${keyword}&pageNum=${pageNum}`,
-        {
-          headers: {
-            Authorization: sessionStorage.getItem("token"),
-          },
-        }
-      )
-=======
     api
       .searchName(keyword, pageNum)
->>>>>>> 1e5122267895b838da14b8f08200eb45a638e918
       .then((res) => {
         console.log(res.data);
         dispatch(getSearch(res.data));
