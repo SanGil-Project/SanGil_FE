@@ -32,7 +32,7 @@ const PartyWrite = (props) => {
   const [dateValue, setDateValue] = React.useState(is_edit ? partyItem?.partyDate : "선택");
   const [timeValue, setTimeValue] = React.useState(is_edit ? partyItem?.partyTime :"선택");
   const [numberValue, setNumberValue] = React.useState(is_edit ? partyItem?.maxPeople : null);
-  const [mountValue, setMountValue] = React.useState(is_edit ? partyItem?.mountain :"");
+  const [mountValue, setMountValue] = React.useState(is_edit ? partyItem?.mountain :"선택");
   const [mountAddValue, setMountAddValue] = React.useState(is_edit ? partyItem?.address :"");
 
   const [startDate, setStartDate] = useState(new Date());
@@ -93,13 +93,17 @@ const PartyWrite = (props) => {
     setMountAddValue(data.mountainAddress);
   }
 
-  // if (partyName !== "" && mountValue !=="" && mountAddValue !=="" && dateValue !=="" && timeValue !=="" && numberValue !=="" && partyContent !=="") {
-  //   setcomplete(true);
-  // }
-
   const addParty = () => {
-    if (partyName === "" || mountValue==="" || mountAddValue==="" || dateValue==="" || timeValue==="" || numberValue==="" || partyContent==="") {
-      window.alert("입력되지 않은 부분이 있습니다!");
+    if (numberValue <= 0) {
+      window.alert("인원수는 자연수로만 입력해주세요!")
+      return;
+    }
+    if (numberValue % 1 !== 0) {
+      window.alert("인원수는 소수를 포함할 수 없어요!!")
+      return;
+    }
+    if (partyName === "" || mountValue==="선택" || mountAddValue==="" || dateValue==="선택" || timeValue==="선택" || numberValue==="" || partyContent==="") {
+      (numberValue==="") ? window.alert("인원수는 0을 제외한 숫자로만 입력해주세요!") : window.alert("입력되지 않은 부분이 있습니다!");
       return;
     }
     if (is_edit) {
@@ -163,12 +167,12 @@ const PartyWrite = (props) => {
                 _onChange={inputContent}/>
             </Grid>
             <Grid margin="28px 0">
-              <Grid isFlex margin="10px 0">
+              <Grid isFlex margin="24px 0">
                 <Text margin="0" size="16px" bold="600">날짜</Text>
-                <Button width="auto" border="none">
                   {/* <Grid flexRow _onClick={handleClick}> */}
                   <Grid flexRow width="auto">
-                    <Grid 
+                    <Grid
+                      hover
                       flexRow
                       _onClick={()=>{setDateOpen(!dateOpen);}} >
                       <Text margin="0 6px" width="auto" size="16px" color="#989898">{dateValue}</Text>
@@ -211,13 +215,11 @@ const PartyWrite = (props) => {
                       </div>
                     </DateModal>
                   </Grid>
-                </Button>
               </Grid>
               <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
-              <Grid isFlex margin="10px 0">
+              <Grid isFlex margin="24px 0">
                 <Text margin="0" size="16px" bold="600">시간</Text>
-                <Button width="auto" border="none">
-                  <Grid flexRow>
+                  <Grid flexRow width="auto">
                     <Grid 
                       flexRow
                       _onClick={()=>{setTimeOpen(!timeOpen);}} >
@@ -241,58 +243,32 @@ const PartyWrite = (props) => {
                     </DateModal>
 
                   </Grid>
-                </Button>
               </Grid>
               <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
-              <Grid isFlex margin="10px 0">
+              <Grid isFlex margin="24px 0">
                 <Text margin="0" size="16px" bold="600">인원</Text>
-                <Button width="auto" border="none">
-                  <Grid flexRow>
-
-                    <Input 
-                      dir="rtl"
-                      // type="number"
-                      width="150px" border="1px solid #BBBBBB" radius="8px" padding="16px 6px" border="none"
-                      placeholder="인원수 입력"
-                      value={numberValue}
-                      _onChange={inputNumber}/>
-                    {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text>
-                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} /> */}
-                  </Grid>
-                </Button>
+                <Grid flexRow width="auto">
+                  <Input 
+                    type="number"
+                    color="#989898"
+                    textAlign="right" border="none" radius="8px" padding="0"
+                    placeholder="숫자만 입력해주세요"
+                    value={numberValue}
+                    _onChange={inputNumber}/>
+                </Grid>
               </Grid>
               <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
-              <Grid isFlex margin="10px 0">
+              <Grid isFlex margin="24px 0">
                 <Text margin="0" size="16px" bold="600">위치</Text>
                 {is_edit ? (
-                <Button width="auto" border="none" _onClick={()=>{window.alert("산정보는 수정이 불가능합니다!")}} >
-                  <Grid flexRow>
-                    <Input 
-                      dir="rtl"
-                      width="auto" bg="#eee" border="none" radius="8px" padding="16px 6px" margin="0 10px"
-                      placeholder="선택"
-                      disabled
-                      value={mountValue}
-                      is_submit/>
-                      {/* _onChange={inputMount}/> */}
-                    {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text> */}
-                    <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
-                  </Grid>
-                </Button>) : (
-                // <Button width="auto" border="none">
+                  <Grid flexRow width="auto" hover _onClick={()=>{window.alert("산정보는 수정이 불가능합니다!")}} >
+                      <Text margin="0 6px" width="auto" size="16px" color="#989898">{mountValue}</Text>
+                      <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
+                  </Grid>) : (
                   <Grid flexRow _onClick={()=>{setIsOpen(true)}} hover width="auto">
-                    <Input 
-                      hover
-                      dir="rtl"
-                      width="auto" border="none" radius="8px" padding="16px 0" margin="0 6px"
-                      placeholder="선택"
-                      value={mountValue}
-                      is_submit/>
-                      {/* _onChange={inputMount}/> */}
-                    {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text> */}
+                    <Text margin="0 6px" width="auto" size="16px" color="#989898">{mountValue}</Text>
                     <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
                   </Grid>
-                // </Button>
                 )}
               </Grid>
               
@@ -355,12 +331,12 @@ const PartyWrite = (props) => {
                 _onChange={inputContent}/>
             </Grid>
             <Grid margin="28px 0">
-              <Grid isFlex margin="10px 0">
+              <Grid isFlex margin="24px 0">
                 <Text margin="0" size="16px" bold="600">날짜</Text>
-                <Button width="auto" border="none">
                   {/* <Grid flexRow _onClick={handleClick}> */}
                   <Grid flexRow width="auto">
-                    <Grid 
+                    <Grid
+                      hover
                       flexRow
                       _onClick={()=>{setDateOpen(!dateOpen);}} >
                       <Text margin="0 6px" width="auto" size="16px" color="#989898">{dateValue}</Text>
@@ -403,13 +379,11 @@ const PartyWrite = (props) => {
                       </div>
                     </DateModal>
                   </Grid>
-                </Button>
               </Grid>
               <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
-              <Grid isFlex margin="10px 0">
+              <Grid isFlex margin="24px 0">
                 <Text margin="0" size="16px" bold="600">시간</Text>
-                <Button width="auto" border="none">
-                  <Grid flexRow>
+                  <Grid flexRow width="auto">
                     <Grid 
                       flexRow
                       _onClick={()=>{setTimeOpen(!timeOpen);}} >
@@ -433,58 +407,32 @@ const PartyWrite = (props) => {
                     </DateModal>
 
                   </Grid>
-                </Button>
               </Grid>
               <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
-              <Grid isFlex margin="10px 0">
+              <Grid isFlex margin="24px 0">
                 <Text margin="0" size="16px" bold="600">인원</Text>
-                <Button width="auto" border="none">
-                  <Grid flexRow>
-
-                    <Input 
-                      dir="rtl"
-                      // type="number"
-                      width="150px" border="1px solid #BBBBBB" radius="8px" padding="16px 6px" border="none"
-                      placeholder="인원수 입력"
-                      value={numberValue}
-                      _onChange={inputNumber}/>
-                    {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text>
-                    <Icon type="detailBtn" width="7px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} /> */}
-                  </Grid>
-                </Button>
+                <Grid flexRow width="auto">
+                  <Input 
+                    type="number"
+                    color="#989898"
+                    textAlign="right" border="none" radius="8px" padding="0"
+                    placeholder="숫자만 입력해주세요"
+                    value={numberValue}
+                    _onChange={inputNumber}/>
+                </Grid>
               </Grid>
               <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
-              <Grid isFlex margin="10px 0">
+              <Grid isFlex margin="24px 0">
                 <Text margin="0" size="16px" bold="600">위치</Text>
                 {is_edit ? (
-                <Button width="auto" border="none" _onClick={()=>{window.alert("산정보는 수정이 불가능합니다!")}} >
-                  <Grid flexRow>
-                    <Input 
-                      dir="rtl"
-                      width="auto" bg="#eee" border="none" radius="8px" padding="16px 6px" margin="0 10px"
-                      placeholder="선택"
-                      disabled
-                      value={mountValue}
-                      is_submit/>
-                      {/* _onChange={inputMount}/> */}
-                    {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text> */}
-                    <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
-                  </Grid>
-                </Button>) : (
-                // <Button width="auto" border="none">
+                  <Grid flexRow width="auto" hover _onClick={()=>{window.alert("산정보는 수정이 불가능합니다!")}} >
+                      <Text margin="0 6px" width="auto" size="16px" color="#989898">{mountValue}</Text>
+                      <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
+                  </Grid>) : (
                   <Grid flexRow _onClick={()=>{setIsOpen(true)}} hover width="auto">
-                    <Input 
-                      hover
-                      dir="rtl"
-                      width="auto" border="none" radius="8px" padding="16px 0" margin="0 6px"
-                      placeholder="선택"
-                      value={mountValue}
-                      is_submit/>
-                      {/* _onChange={inputMount}/> */}
-                    {/* <Text margin="0 6px 0 0" bold="500" color="#989898">선택</Text> */}
+                    <Text margin="0 6px" width="auto" size="16px" color="#989898">{mountValue}</Text>
                     <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
                   </Grid>
-                // </Button>
                 )}
               </Grid>
               
@@ -517,7 +465,6 @@ const PartyWrite = (props) => {
         </MenubarContainer>
 
       </PartyContainer>
-        
     </Desktop>
   </React.Fragment>
   );
@@ -648,6 +595,13 @@ const PartyWrap = styled.div`
   top: 64px;
   height:100%
   overflow-y: auto;
+  input[type="number"]::-webkit-outer-spin-button, 
+  input[type="number"]::-webkit-inner-spin-button { 
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
+    appearance: none; 
+  }
+
 `;
 
 const MenubarContainer = styled.div`
