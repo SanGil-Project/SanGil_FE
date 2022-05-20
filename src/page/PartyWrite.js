@@ -50,12 +50,10 @@ const PartyWrite = (props) => {
     const day = ('0' + startDate.getDate()).slice(-2);
 
     const dateString = year + '-' + month  + '-' + day;
-    // console.log(dateString, year, month, day);
     setDateValue(dateString);
     setDateOpen(false);
   };
   const saveTimeModal = () => {
-    console.log(selectTime);
     if (selectTime?.division === "오전") {
       selectTime.hour / 10 === 0 ? setTimeValue(`0${selectTime.hour}:${selectTime.minute}`) : setTimeValue(`${selectTime.hour}:${selectTime.minute}`);
     } else {
