@@ -37,7 +37,10 @@ const PartyWrite = (props) => {
 
   const [startDate, setStartDate] = useState(new Date());
   const [dateOpen, setDateOpen] = useState(false);
+  const [dateHandle, setDateHandle] = useState(false);
   const [timeOpen, setTimeOpen] = useState(false);
+  const [timeHandle, setTimeHandle] = useState(false);
+  
   const handleDateModal = () => {
     setDateOpen(false);
   };
@@ -174,10 +177,11 @@ const PartyWrite = (props) => {
                     <Grid
                       hover
                       flexRow
-                      _onClick={()=>{setDateOpen(!dateOpen);}} >
+                      _onClick={()=>{setDateOpen(!dateOpen); setDateHandle(true);}} >
                       <Text margin="0 6px" width="auto" size="16px" color="#989898">{dateValue}</Text>
                       <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
                     </Grid>
+                    { dateHandle && 
                     <DateModal className="dateModal" modalOpen={dateOpen}>
                       <div className="modal_container">
                       <DatePicker 
@@ -213,7 +217,7 @@ const PartyWrite = (props) => {
                         </Button>
                       </Grid>
                       </div>
-                    </DateModal>
+                    </DateModal>}
                   </Grid>
               </Grid>
               <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
@@ -221,11 +225,13 @@ const PartyWrite = (props) => {
                 <Text margin="0" size="16px" bold="600">시간</Text>
                   <Grid flexRow width="auto">
                     <Grid 
+                      hover
                       flexRow
-                      _onClick={()=>{setTimeOpen(!timeOpen);}} >
+                      _onClick={()=>{setTimeOpen(!timeOpen); setTimeHandle(true);}} >
                       <Text margin="0 6px" width="auto" size="16px" color="#989898">{timeValue}</Text>
                       <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
                     </Grid>
+                    { timeHandle && 
                     <DateModal className="dateModal" modalOpen={timeOpen}>
                       <div className="modal_container">
                         <Grid>
@@ -240,7 +246,7 @@ const PartyWrite = (props) => {
                           </Button>
                         </Grid>
                       </div>
-                    </DateModal>
+                    </DateModal>}
 
                   </Grid>
               </Grid>
@@ -338,10 +344,11 @@ const PartyWrite = (props) => {
                     <Grid
                       hover
                       flexRow
-                      _onClick={()=>{setDateOpen(!dateOpen);}} >
+                      _onClick={()=>{setDateOpen(!dateOpen); setDateHandle(true);}} >
                       <Text margin="0 6px" width="auto" size="16px" color="#989898">{dateValue}</Text>
                       <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
                     </Grid>
+                    { dateHandle && 
                     <DateModal className="dateModal" modalOpen={dateOpen}>
                       <div className="modal_container">
                       <DatePicker 
@@ -377,7 +384,7 @@ const PartyWrite = (props) => {
                         </Button>
                       </Grid>
                       </div>
-                    </DateModal>
+                    </DateModal>}
                   </Grid>
               </Grid>
               <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
@@ -385,11 +392,13 @@ const PartyWrite = (props) => {
                 <Text margin="0" size="16px" bold="600">시간</Text>
                   <Grid flexRow width="auto">
                     <Grid 
+                      hover
                       flexRow
-                      _onClick={()=>{setTimeOpen(!timeOpen);}} >
+                      _onClick={()=>{setTimeOpen(!timeOpen); setTimeHandle(true);}} >
                       <Text margin="0 6px" width="auto" size="16px" color="#989898">{timeValue}</Text>
                       <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
                     </Grid>
+                    { timeHandle && 
                     <DateModal className="dateModal" modalOpen={timeOpen}>
                       <div className="modal_container">
                         <Grid>
@@ -404,7 +413,7 @@ const PartyWrite = (props) => {
                           </Button>
                         </Grid>
                       </div>
-                    </DateModal>
+                    </DateModal>}
 
                   </Grid>
               </Grid>
