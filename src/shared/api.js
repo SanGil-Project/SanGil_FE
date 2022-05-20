@@ -35,7 +35,6 @@ sock.interceptors.request.use(function (config) {
   return config;
 });
 
-
 export const api = {
   //main.js
   around: (lat, lng) =>
@@ -45,6 +44,30 @@ export const api = {
   mainParty: () => instance.get(`/api/main/parties`),
   mainBookmark: (mountainId, type) =>
     instance.post(`/api/mountain/bookmark/${mountainId}`, { mountainId }),
+
+  //tracker.js
+  start: (mountainId, setCompletedId) =>
+    instance.post(`/api/tracking/${mountainId}`, { send: 1 }),
+  searchName: (keyword, pageNum) =>
+    instance.get(`/api/mountain/search?keyword=${keyword}&pageNum=${pageNum}`),
+  setPath: (completedId, loca) =>
+    instance.post(`/api/tracking/mountain/${completedId}`, {
+      lat: loca.lat,
+      lng: loca.lng,
+    }),
+  endClimb: (completedId, data) => (
+    `/api/tracking/${completedId}`,
+    {
+      totalDistance: data.totalDistance,
+      totalTime: data.totalTime,
+    }
+  ),
+  deleteDB: (completedId) => instance.get(`/api/tracking/${completedId}`),
+  getMytrack: (completedid) =>
+    instance.get(`/api/tracking/detail/${completedid}`),
+
+  //feed.js
+  getFeedDB: (pageNum) => instance.get(`/api/main/feeds/${pageNum}`),
 
   // user.js - social login
   kakaoLogin: (code) => instance.get(`/user/kakao/callback?code=${code}`),
@@ -111,8 +134,6 @@ export const api = {
     instance.post(`/api/mountain/bookmark/${mountainId}`, { mountainId }),
 
   // trancker.js
-  getMytrack: (completedid) =>
-    instance.get(`/api/tracking/detail/${completedid}`),
 
   // party.js
   getMyParty: () => instance.get("/api/plan"),
@@ -142,5 +163,4 @@ export const api = {
   // chat.js
   addChatRoom: (title) => instance.post(`/chat/rooms?name=${title}`), // api 주소 연결 필요
   getChatList: (chatRoomId) => instance.get(`/chat/rooms/${chatRoomId}`), // api 주소 연결 필요, 소켓통신에서 바로 채팅 전체리스트 받으면 필요없는 api
-
 };
