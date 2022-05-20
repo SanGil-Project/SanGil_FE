@@ -18,7 +18,6 @@ const Party = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const today = useRef(new Date());
-  const today2 = new Date();
 
   const partydata = useSelector((state) => state?.party?.list);
   const partyList = partydata?.partyList

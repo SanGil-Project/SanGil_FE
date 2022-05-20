@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled, {keyframes} from "styled-components";
 import { useNavigate, useParams } from "react-router";
 
@@ -26,6 +26,13 @@ const PartyWrite = (props) => {
   const menuColor = [false, true, false, false, false]; // 메뉴바 색
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const today = useRef(new Date());
+  const year = today.current.getFullYear();
+  const month = ('0' + (today.current.getMonth() + 1)).slice(-2);
+  const day = ('0' + today.current.getDate()).slice(-2);
+  const dateString = year + '-' + month  + '-' + day;
+  const hours = ('0' + today.current.getHours()).slice(-2); 
+  const minutes = ('0' + today.current.getMinutes()).slice(-2);
 
   const [partyName, setPartyName] = React.useState(is_edit ? partyItem?.title :"");
   const [partyContent, setPartyContent] = React.useState(is_edit ? partyItem?.partyContent :"");
@@ -102,11 +109,26 @@ const PartyWrite = (props) => {
       return;
     }
     if (numberValue % 1 !== 0) {
-      window.alert("인원수는 소수를 포함할 수 없어요!!")
+      window.alert("인원수는 소수를 포함할 수 없어요!!");
       return;
     }
     if (partyName === "" || mountValue==="선택" || mountAddValue==="" || dateValue==="선택" || timeValue==="선택" || numberValue==="" || partyContent==="") {
       (numberValue==="") ? window.alert("인원수는 0을 제외한 숫자로만 입력해주세요!") : window.alert("입력되지 않은 부분이 있습니다!");
+      return;
+    }
+    if (dateValue === dateString) {
+      const tempT = timeValue.split(":");
+      if (parseInt(tempT[0]) === parseInt(hours)) {
+        if (parseInt(tempT[1]) <= parseInt(minutes)) {
+          window.alert("선택된 시간은 이미 지났습니다!!")
+          return;
+        }
+      } else if (parseInt(tempT[0]) < parseInt(hours)) {
+        window.alert("선택된 날짜는 이미 지났습니다!!")
+        return;
+      }
+    } else if (dateValue < dateString) {
+      window.alert("선택된 날짜는 이미 지났습니다!!")
       return;
     }
     if (is_edit) {
