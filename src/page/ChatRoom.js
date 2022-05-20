@@ -21,13 +21,15 @@ const ChatRoom = (props) => {
 
   console.log(chatRoomId, token, _userInfo);
 
-  const sockJs = new SockJS("http://13.124.204.197:8080/ws-stomp"); // 서버주소/ws-stomp
+  const sockJs = new SockJS("http://3.36.75.57:8080/ws-stomp"); // 서버주소/ws-stomp
   const stomp = Stomp.over(sockJs);
 
-  function ConnectSub(token) {
+  function ConnectSub() {
     try {
-      stomp.connect({ token: token }, () => {
-        stomp.subscribe(`/sub/chat/rooms/${chatRoomId}`,
+      console.log("STOMP Start");
+      stomp.connect({}, () => {
+        console.log("STOMP Connection");
+        stomp.subscribe(`/chat/rooms/${chatRoomId}`,
             (res) => {
               console.log("subscribe callback ::", res);
               const content = JSON.parse(res.body);
@@ -67,7 +69,8 @@ const ChatRoom = (props) => {
   }
 
   React.useEffect(() => {
-    ConnectSub(token);
+    console.log(token);
+    ConnectSub();
     return () => {
       DisConnectUnsub();
     };

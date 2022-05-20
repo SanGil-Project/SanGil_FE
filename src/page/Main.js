@@ -29,7 +29,6 @@ const Main = (props) => {
   const feedList = useSelector((state) => state.main.feedList?.feedList);
   const around = useSelector((state) => state.main.around?.nearbyMountainDtos);
   const party = useSelector((state) => state.main.parties?.parties);
-  console.log(party);
   const mountain = useSelector((state) => state.main?.mountains);
 
   const goDetail = (mountainId) => {

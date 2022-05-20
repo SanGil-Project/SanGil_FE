@@ -6,6 +6,8 @@ import Stomp from 'stompjs';
 import { actionCreators as chatActions } from '../redux/modules/chat';
 import { Grid, Text, Button, Input } from '../elements/element';
 
+const sockJs = new SockJS("http://3.36.75.57:8080/ws-stomp"); // 서버주소/ws-stomp
+const stomp = Stomp.over(sockJs);
 
 const ChatInput = (props) => {
   const dispatch = useDispatch();
@@ -15,9 +17,6 @@ const ChatInput = (props) => {
   const { chatRoomId } = props;
   const writer = _userInfo?.nickname;
   console.log(chatRoomId);
-
-  const sockJs = new SockJS("http://13.124.204.197:8080/ws-stomp"); // 서버주소/ws-stomp
-  const stomp = Stomp.over(sockJs);
 
   const [chat, setChat] = React.useState("");
 
@@ -35,6 +34,7 @@ const ChatInput = (props) => {
         sender: writer,
         type: 'TALK',
       }
+      console.log(chatData);
       if (chat === "") {
         return;
       }
