@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from 'react';
 import styled from "styled-components";
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -17,9 +17,21 @@ const Party = (props) => {
   const menuColor = [false, true, false, false, false]; // 메뉴바 색
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const today = useRef(new Date());
+  const today2 = new Date();
 
   const partydata = useSelector((state) => state?.party?.list);
   const partyList = partydata?.partyList
+
+  // 날짜가 지난 파티 완료처리 해주기
+  const year = today.current.getFullYear();
+  const month = ('0' + (today.current.getMonth() + 1)).slice(-2);
+  const day = ('0' + today.current.getDate()).slice(-2);
+  const dateString = year + '-' + month  + '-' + day;
+  const hours = ('0' + today.current.getHours()).slice(-2); 
+  const minutes = ('0' + today.current.getMinutes()).slice(-2);
+  let isCompleted = Array(partyList.length).fill(false);
+
 
   React.useEffect(() => {
     dispatch(partyActions.getPartyDB(1));
@@ -28,8 +40,9 @@ const Party = (props) => {
     // }
   }, []);
 
-  const moveDetail = (partyId, completed) => {
-    if (!completed) {
+  const moveDetail = (partyId, completed, check) => {
+    console.log(check);
+    if (!completed || check) {
       window.alert("마감된 모임입니다!");
     } else {
       navigate(`/partydetail/${partyId}`);
@@ -44,10 +57,31 @@ const Party = (props) => {
           <PartyWrap>
             <Grid padding="96px 14px 100px">
               {partyList?.map((p, idx) => {
-                const btnBg = p.completed ? "#43CA3B" : "#E6E6E6";
-                const btnColor = p.completed ? "#fff" : "#000";
-                const btnText = p.completed ? "모집내용확인" : "마감 되었어요😢";
+                let btnBg = p.completed ? "#43CA3B" : "#E6E6E6";
+                let btnColor = p.completed ? "#fff" : "#000";
+                let btnText = p.completed ? "모집내용확인" : "마감 되었어요😢";
                 const curPeople = p.curPeople ? p.curPeople : 0;
+                if (p.partyDate === dateString) {
+                  const tempT = p.partyTime.split(":");
+                  if (parseInt(tempT[0]) === parseInt(hours)) {
+                    if (parseInt(tempT[1]) <= parseInt(minutes)) {
+                      btnBg = "#E6E6E6";
+                      btnColor = "#000";
+                      btnText = "마감 되었어요😢";
+                      isCompleted[idx] = true;
+                    }
+                  } else if (parseInt(tempT[0]) < parseInt(hours)) {
+                    btnBg = "#E6E6E6";
+                    btnColor = "#000";
+                    btnText = "마감 되었어요😢";
+                    isCompleted[idx] = true;
+                  }
+                } else if (p.partyDate < dateString) {
+                  btnBg = "#E6E6E6";
+                  btnColor = "#000";
+                  btnText = "마감 되었어요😢";
+                  isCompleted[idx] = true;
+                }
                 return (
                   <Grid
                     key={idx}
@@ -113,7 +147,7 @@ const Party = (props) => {
                         height="48px"
                         margin="20px 0 0"
                         _onClick={() => {
-                          moveDetail(p.partyId, p.completed);
+                          moveDetail(p.partyId, p.completed, isCompleted[idx]);
                         }}
                       >
                         <Text margin="0" align color={btnColor}>
