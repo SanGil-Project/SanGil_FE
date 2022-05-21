@@ -4,6 +4,7 @@ import { useNavigate, useLocation, useParams } from "react-router";
 
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as partyActions } from "../redux/modules/party";
+import { actionCreators as chatActions } from "../redux/modules/chat";
 
 import { Menubar, Header } from "../components/component";
 import { Desktop, Mobile } from "../shared/responsive";
@@ -46,6 +47,11 @@ const PartyDetail = (props) => {
     }
     dispatch(partyActions.attendPartyDB(partyId));
   };
+
+  const enterChatRoom = (partyId) => {
+    dispatch(chatActions.enterChatDB(partyId));
+    navigate(`/chatroom/${partyId}`);
+  }
 
   const deleteParty = (partyId) => {
     dispatch(partyActions.deletePartyDB(partyId));
@@ -180,7 +186,7 @@ const PartyDetail = (props) => {
                 height="48px"
                 margin="0 17px 0 0"
                 radius="8px"
-                _onClick={() => {
+                _onClick={() => {enterChatRoom(curtParty.partyId)
                   navigate(`/chatroom/${curtParty.partyId}`);
                   // navigate(`/chatroom/${curtParty.chatRoomId}`);
                 }}

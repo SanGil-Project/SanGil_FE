@@ -11,6 +11,7 @@ import {
   Login,
   Main,
   Mypage,
+  MypageEdit,
   Feed,
   Party,
   Search,
@@ -41,6 +42,7 @@ function App() {
           <Route path="/user/google/callback" element={<GoogleLogin />} />
           <Route path="/user/naver/callback" element={<NaverLogin />} />
           <Route path="/mypage" element={<Mypage />} />
+          <Route path="/mypageEdit" element={<MypageEdit />} />
           <Route path="/party" exact element={<Party />} />
           <Route path="/partywrite" exact element={<PartyWrite />} />
           <Route path="/partywrite/:partyId" exact element={<PartyWrite />} />
@@ -57,6 +59,8 @@ function App() {
     </BrowserRouter>
   );
 }
+
+
 
 const Container = styled.div`
   background-color: #9ee59c;
