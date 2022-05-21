@@ -83,6 +83,7 @@ const Mypage = (props) => {
       lng : 127.9172195,
       totalDistance: 10.3,
       totalTime: "4시간 20분 13초",
+      creatDate: "2022-02-04",
     },
     {
       completedId : 3,
@@ -92,6 +93,7 @@ const Mypage = (props) => {
       lng : 127.5492755,
       totalDistance: 20.3,
       totalTime: "6시간 20분 13초",
+      creatDate: "2022-02-04",
     },
   ]}
 
@@ -141,20 +143,28 @@ const Mypage = (props) => {
                 <HorizontalScroll>
                   {fakeDB.completedList?.map((cur, idx) => {
                     return (
-                    <Grid bg="white" key={idx}  width="156px" height="76px" padding="12px" radius="12px" margin="0 10px 20px 0" _onClick={()=>{moveMytrack(cur.completedId)}} hover>
+                    <Grid bg="white" key={idx}  width="auto" height="auto" padding="12px" radius="12px" margin="0 10px 20px 0" _onClick={()=>{moveMytrack(cur.completedId)}} hover>
                         <Grid height="auto" isFlex>
                           <Text margin="0" bold="600" size="14px">{cur.mountain}</Text>
                           <Grid width="auto" border="1px solid #43CA3B" radius="4px" padding="1px 4px">
-                            <Text margin="0" size="6px" color="#43CA3B">{cur.creatDate}</Text>
+                            <Text margin="0" size="6px" bold="400" color="#43CA3B">{cur.creatDate}</Text>
                           </Grid>
                         </Grid>
-                        <Grid flexRow justify="left" margin="12px 0 4px" height="auto">
-                          <Text margin="0 18px 0 0" size="12px" bold="500" color="#C4C4C4">총 거리</Text>
-                          <Text margin="0" size="12px" bold="500" color="#C4C4C4">소요 시간</Text>
-                        </Grid>
-                        <Grid flexRow justify="left" height="auto">
-                          <Text margin="0 18px 0 0" size="12px" bold="500">{cur.totalDistance}</Text>
-                          <Text margin="0" size="12px" bold="500">{cur.totalTime}</Text>
+                        <Grid flexRow alignItems="flex-start" margin="12px 0 0">
+                          <Grid flexColumn height="auto" alignItems="flex-start" margin="0 18px 0 0" >
+                            <Text margin="0 0 4px" size="12px" bold="500" color="#C4C4C4">총 거리</Text>
+                            <Grid flexRow alignItems="baseline">
+                              <Text margin="0" size="14px" bold="600" color="#43CA3B">{cur.totalDistance}</Text>
+                              <Text margin="0" size="8px" bold="500">km</Text>
+                            </Grid>
+                          </Grid>
+                          <Grid flexColumn height="auto" alignItems="flex-start">
+                            <Text margin="0 0 4px" size="12px" bold="500" color="#C4C4C4">소요 시간</Text>
+                            <Grid flexRow alignItems="baseline">
+                              <Text margin="0" size="14px" bold="600" color="#43CA3B" nowrap>{cur.totalTime}</Text>
+                              {/* <Text margin="0" size="8px" bold="500">시간</Text> */}
+                            </Grid>
+                          </Grid>
                         </Grid>
                     </Grid>
                     );}

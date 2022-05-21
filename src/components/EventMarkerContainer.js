@@ -96,7 +96,6 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
         style = {{display: "none"}}
         position={{lat: content.lat, lng: content.lng}} // 마커를 표시할 위치
         onClick={(marker) => {markerClick(marker)}} // 해당 좌표로 지동 이동시키기
-        // onClick={(marker) => map.panTo(marker.getPosition())} // 해당 좌표로 지동 이동시키기
         onMouseOver={() => setIsVisible(true)}
         onMouseOut={() => setIsVisible(false)}
       >
