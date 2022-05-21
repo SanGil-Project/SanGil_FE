@@ -5,6 +5,7 @@ import { api } from "../../shared/api";
 const ADD_CHATROOM = "ADD_CHATROOM";
 const GET_CHAT = "GET_CHAT";
 const SEND_CHAT = "SEND_CHAT";
+const ENTER_CHAT = "ENTER_CHAT";
 
 const initialState = {
 }
@@ -12,6 +13,7 @@ const initialState = {
 const addChatRoom = createAction(ADD_CHATROOM, (chatRoom) => ({ chatRoom }));
 const getChat = createAction(GET_CHAT, (chat) => ({ chat }));
 const sendChat = createAction(SEND_CHAT, (chat) => ({ chat }));
+const enterChat = createAction(ENTER_CHAT, (chatRoom) => ({ chatRoom }));
 
 const addChatRoomDB = (title, partyId) => {
   return function (dispatch, getState) {
@@ -30,7 +32,7 @@ const addChatRoomDB = (title, partyId) => {
     console.log("title ::", title, partyId);
 
     api
-      .addChatRoom(title)
+      .addChatRoom(title, partyId)
       .then((res) => {
         console.log("(addChatRoom) 성공 데이터 확인 ::", res.data);
         const roomInfo = {
@@ -47,6 +49,22 @@ const addChatRoomDB = (title, partyId) => {
   };
 };
 
+const enterChatDB = (chatRoomId) => {
+  return function (dispatch, getState) {
+    console.log("chatRoomId :: ", typeof chatRoomId , chatRoomId);
+    // const 
+    api
+      .enterChatRoom(chatRoomId)
+      .then((res) => {
+        console.log("(enterChatRoom) 성공 데이터 확인 ::", res.data);
+        // dispatch(getChat(res.data));
+      })
+      .catch((err) => {
+        console.log("(enterChatRoom) 실패 ::", err);
+      });
+  }
+}
+
 const getChatDB = (chatRoomId) => {
   return function (dispatch, getState) {
     console.log("chatRoomId :: ", chatRoomId);
@@ -56,7 +74,7 @@ const getChatDB = (chatRoomId) => {
     // dispatch(getChat(content));
 
     api
-      .getChatList(chatRoomId)
+      .enterChatRoom(chatRoomId)
       .then((res) => {
         console.log("(getChatList) 성공 데이터 확인 ::", res.data);
         dispatch(getChat(res.data));
@@ -89,6 +107,7 @@ const actionCreators = {
   addChatRoomDB,
   getChatDB,
   sendChat,
+  enterChatDB,
 };
 
 export { actionCreators };

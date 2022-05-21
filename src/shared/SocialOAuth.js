@@ -1,4 +1,5 @@
 const CLIENT_ID = "7e0e932177f25c237ca90728893d9a21";
+// const REDIRECT_URI = "https://yesleee.shop/user/kakao/callback";
 const REDIRECT_URI = "http://localhost:3000/user/kakao/callback";
 // const REDIRECT_URI = "https://산길.com/user/kakao/callback";
 // const REDIRECT_URI = "https://kopite.shop/user/kakao/callback";
