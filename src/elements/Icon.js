@@ -47,9 +47,9 @@ const Icon = (props) => {
       <MenuIcon {...styles} viewBox="0 0 31 31" fill="none">
         <path 
           d="M5.89551 25.7297H12.5622L25.8955 12.3964L19.2288 5.72974L5.89551 19.0631V25.7297Z" 
-          stroke="#131313" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          stroke="#131313" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         <path 
-          d="M15.2305 9.72974L21.8971 16.3964" stroke="#131313" stroke-width="2"/>
+          d="M15.2305 9.72974L21.8971 16.3964" stroke="#131313" strokeWidth="2"/>
       </MenuIcon>
     );
   }
