@@ -239,7 +239,30 @@ const Mypage = (props) => {
           <Header />
           <MypageWrap>
             <Grid bg="#F5FCF4" padding="96px 25px 23px" height="auto">
-              <MypageModal />
+              <Grid flexRow>
+                <Mainprofile>
+                  <Image
+                    type="circle"
+                    width="80px"
+                    height="80px"
+                    margin="0 10px 0 0"
+                    src={img}/>
+                  <Editbtn>
+                    <Icon type="profileEdit" width="21px" height="21px" margin="0 auto" _onClick={()=> {navigate("/mypageEdit")}}/>
+                  </Editbtn>
+                </Mainprofile>
+                <Grid>
+                  <Text margin="0" size="14px" bold="400">{userInfo?.userTitle}</Text>
+                  <Grid isFlex margin="10px 0 0">
+                    <Text margin="0" size="20px" bold="600" color="#43CA3B">{userInfo?.nickname}</Text>
+                    <Button 
+                      padding= "6px 8px" width="auto" height="auto" border="1px solid #43CA3B" radius="4px"
+                      _onClick={()=>{alert("로그아웃?")}}>
+                      <Text size="12px" bold="500" color="#43CA3B" align margin="0">로그아웃</Text>
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
             </Grid>
             <Grid
               padding="27px 14px 0"

@@ -6,6 +6,7 @@ import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 
 import { actionCreators as chatActions } from '../redux/modules/chat';
+import { actionCreators as handleActions } from "../redux/modules/handle";
 import { Menubar, Header, ChatInput } from '../components/component';
 import { Desktop, Mobile } from "../shared/responsive";
 
@@ -72,6 +73,7 @@ const ChatRoom = (props) => {
 
   React.useEffect(() => {
     // console.log(token);
+    dispatch(handleActions.isPagename(`${chatRoomId}번 채팅방`));
     ConnectSub(token);
     return () => {
       DisConnectUnsub();

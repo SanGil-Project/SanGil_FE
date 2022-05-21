@@ -5,6 +5,7 @@ import { useNavigate, useLocation, useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as partyActions } from "../redux/modules/party";
 import { actionCreators as chatActions } from "../redux/modules/chat";
+import { actionCreators as handleActions } from "../redux/modules/handle";
 
 import { Menubar, Header } from "../components/component";
 import { Desktop, Mobile } from "../shared/responsive";
@@ -21,7 +22,7 @@ const PartyDetail = (props) => {
   const menuColor = [false, true, false, false, false]; // 메뉴바 색
 
   React.useEffect(() => {
-    console.log(partyId);
+    dispatch(handleActions.isPagename(" "));
     dispatch(partyActions.getOnePartyDB(partyId));
   }, []);
 

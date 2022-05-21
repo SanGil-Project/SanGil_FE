@@ -5,6 +5,7 @@ import _ from "lodash";
 
 import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
+import { actionCreators as handleActions } from "../redux/modules/handle";
 
 import { Desktop, Mobile } from "../shared/responsive";
 import { Header } from "../components/component";
@@ -19,6 +20,7 @@ const MypageEdit = (props) => {
   const checkData = user?.nameCheck;
 
   React.useEffect(() => {
+    dispatch(handleActions.isPagename("내 정보 수정"));
     dispatch(userActions.myTitleDB());
   }, []);
 
@@ -187,12 +189,12 @@ const MypageEdit = (props) => {
               <Grid flexRow padding="10px 0 42px">
                 <UserName>
                   <Grid flexRow width="auto">
-                    <Grid width="4px" height="23px" bg="#43CA3B"></Grid>
+                    <Grid width="4px" height="23px" bg={checkBarColor}></Grid>
                     <Input gridWidth="140px" size="14px" width="140px" padding="4.5px 0 4.5px 8px" margin="0" border="none" bg="transparent" defaultValue={userInfo?.nickname} _onChange={changeNickname}/>
                   </Grid>
                   <Text margin="0 10px" bold="500" size="10px" color="#c4c4c4" width="auto"> {nameCount}/10</Text>
                 </UserName>
-                <Button width="auto" height="23px" padding="4.5px 10px" bgColor="#43CA3B" radius="4px" border="none">
+                <Button width="auto" height="23px" padding="4.5px 10px" bgColor={checkBtnColor} radius="4px" border="none" _onClick={changeName}>
                   <Text margin="0" color="#fff" align size="12px" bold="600">변경</Text>
                 </Button>
                 {/* {checkType ? 

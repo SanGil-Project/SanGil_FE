@@ -9,6 +9,7 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.user?.userInfo);
+  const isPagename = useSelector((state) => state.handle?.isPagename);
   const token = sessionStorage?.getItem("token");
   const dispatch = useDispatch();
 
@@ -18,16 +19,20 @@ const Header = () => {
     }
   }, []);
 
+  const url = location.pathname
+  const mainpage = ["/main", "/mypage", "/feed", "/party", "/search"];
+  const noBack = mainpage.includes(url)
+
   return (
     <>
-      <Mobile>
+      {/* <Mobile>
         <Grid
-          width="100vw"
+          maxWidth="500px"
           height="64px"
           bg="#FFFFFF"
           position="fixed"
           zindex="1000"
-          borderBottom="2px solid #F5F5F5"
+          borderBottom="1px solid #DEDEDE"
         >
           <Grid margin="0 0 0 39.25%" maxWidth="55%" isFlex>
             <Grid
@@ -45,70 +50,21 @@ const Header = () => {
                 src="https://user-images.githubusercontent.com/91959791/168339851-d18da908-8213-49a7-a365-9cad6a0e862e.png"
               />
             </Grid>
-            {userInfo?.userImageUrl && userInfo.userImageUrl !== "없음" ? (
-              <Image
-                type="circle"
-                width="40px"
-                height="40px"
-                src={userInfo.userImageUrl}
-              />
-            ) : (
-              <Icon width="40px" height="40px" />
-            )}
           </Grid>
         </Grid>
       </Mobile>
 
-      <Desktop>
+      <Desktop> */}
         <Grid
           maxWidth="500px"
           height="64px"
           bg="#FFFFFF"
           position="fixed"
           zindex="100"
-          borderBottom="2px solid #F5F5F5"
+          borderBottom="1px solid #DEDEDE"
         >
           <Grid width="460px" margin="0 auto" isFlex>
-            {location.pathname !== "/main" ? (
-              <>
-                <Text
-                  width="35px"
-                  height="50px"
-                  lineHeight="40px"
-                  size="50px"
-                  hover
-                  _onClick={() => navigate(-1)}
-                >{`<`}</Text>
-                <Grid maxWidth="280px" isFlex>
-                  <Grid
-                    maxWidth="89px"
-                    height="34px"
-                    lineHeight="34px"
-                    bg="#fff"
-                    fontSize="1.6rem"
-                    textAlign
-                  >
-                    <Image
-                      width="auto"
-                      height="auto"
-                      margin="5px 0 0"
-                      src="https://user-images.githubusercontent.com/91959791/168339851-d18da908-8213-49a7-a365-9cad6a0e862e.png"
-                    />
-                  </Grid>
-                  {userInfo?.userImageUrl &&
-                  userInfo.userImageUrl !== "없음" ? (
-                    <Image
-                      type="circle"
-                      width="40px"
-                      height="40px"
-                      src={userInfo.userImageUrl}
-                    />
-                  ) : (
-                    <Icon width="40px" height="40px" />
-                  )}
-                </Grid>
-              </>
-            ) : (
+            {noBack ? (
               <>
                 <Grid maxWidth="280px" margin="0 0 0 39.2%" isFlex>
                   <Grid
@@ -126,23 +82,37 @@ const Header = () => {
                       src="https://user-images.githubusercontent.com/91959791/168339851-d18da908-8213-49a7-a365-9cad6a0e862e.png"
                     />
                   </Grid>
-                  {userInfo?.userImageUrl &&
-                  userInfo.userImageUrl !== "없음" ? (
-                    <Image
-                      type="circle"
-                      width="40px"
-                      height="40px"
-                      src={userInfo.userImageUrl}
-                    />
-                  ) : (
-                    <Icon width="40px" height="40px" />
-                  )}
+                </Grid>
+              </>
+            ) : (
+              <>
+                <Grid width="auto" height="auto" _onClick={() => navigate(-1)}>
+                  <Icon type="headerBack" width="12px" height="20px" margin="0 auto" />
+                </Grid>
+                <Grid maxWidth="280px" isFlex>
+                  <Grid
+                    maxWidth="89px"
+                    height="34px"
+                    lineHeight="34px"
+                    bg="#fff"
+                    fontSize="1.6rem"
+                    textAlign
+                  >
+                    {isPagename ? 
+                      <Text margin="0" size="18px" bold="600">{isPagename}</Text> : 
+                      <Image
+                        width="auto"
+                        height="auto"
+                        margin="5px 0 0"
+                        src="https://user-images.githubusercontent.com/91959791/168339851-d18da908-8213-49a7-a365-9cad6a0e862e.png"
+                      />}
+                  </Grid>
                 </Grid>
               </>
             )}
           </Grid>
         </Grid>
-      </Desktop>
+      {/* </Desktop> */}
     </>
   );
 };

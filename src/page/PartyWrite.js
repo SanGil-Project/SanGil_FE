@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router";
 
 import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as partyActions } from '../redux/modules/party';
+import { actionCreators as handleActions } from "../redux/modules/handle";
 
 import 'date-fns';
 import DatePicker from "react-datepicker";
@@ -48,6 +49,11 @@ const PartyWrite = (props) => {
   const [timeOpen, setTimeOpen] = useState(false);
   const [timeHandle, setTimeHandle] = useState(false);
   
+  React.useEffect(() => {
+    const pagename = is_edit ? "등산 모임 수정하기" : "등산 모임 만들기";
+    dispatch(handleActions.isPagename(pagename));
+  }, []); 
+
   const handleDateModal = () => {
     setDateOpen(false);
   };
