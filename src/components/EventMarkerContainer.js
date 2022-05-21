@@ -12,8 +12,10 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
   const navigate = useNavigate();
   const map = useMap();
   const [isVisible, setIsVisible] = useState(false)
+  const [isOver, setIsOver] = useState(false)
   // const [selectedMarker, setSeleteMarker] = useState()
-  const markerClick = (marker) => {
+  const markerClick = () => {
+    console.log("누름")
     onClick();
     setIsVisible(!isVisible);
     // map.panTo(marker.getPosition());
@@ -24,19 +26,51 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
     dispatch(handleActions.selectMarkerDB(completedId, idx));
     navigate(`/mytrack/${completedId}`);
   }
+  // 마커 이미지 hover, click 상황에따라 변경
+  let markerImg = isOver ?  
+    "https://user-images.githubusercontent.com/91959791/169664489-10a08071-905f-4a44-9a14-ae065704ced5.png" :
+    "https://user-images.githubusercontent.com/91959791/169664175-5428595a-2e8e-4c76-b738-596aba4f070a.png";
 
+  let markerW = isOver ? 32 : 18;
+  let markerH = isOver ? 46 : 26;
+  let offsetX = isOver ? 16 : 9;
+  let offsetY = isOver ? 46 : 26;
+
+  if (isClicked) {
+    markerImg = "https://user-images.githubusercontent.com/91959791/169664489-10a08071-905f-4a44-9a14-ae065704ced5.png";
+    markerW = 32;
+    markerH = 46;
+    offsetX = 16;
+    offsetY = 46;
+  }
+
+  
   if (content.totalTime) {
     return (
       <React.Fragment>
         <MapMarker
           position={{lat: content.lat, lng: content.lng}} // 마커를 표시할 위치
-          onClick={(marker) => {markerClick(marker)}} // 해당 좌표로 지동 이동시키기
-          // onMouseOver={() => setIsVisible(true)}
-          // onMouseOut={() => setIsVisible(false)}
+          // onClick={(marker) => {markerClick(marker)}} 
+          onClick={markerClick} 
+          onMouseOver={() => setIsOver(true)}
+          onMouseOut={() => setIsOver(false)}
+          image={{
+            src: markerImg,
+            size: {
+              width: markerW,
+              height: markerH,
+            },
+            options: {
+              offset: {
+                x: offsetX,
+                y: offsetY,
+              }
+            }
+          }}
         >
           {/* {isVisible && */}
           {isClicked && isVisible &&
-          <CustomOverlayMap index={index} position={{lat: content.lat, lng: content.lng}} yAnchor={1.45} zIndex={1}>
+          <CustomOverlayMap index={index} position={{lat: content.lat, lng: content.lng}} yAnchor={1.56} zIndex={1}>
             <MymarkerInfo>
               <Grid padding="9px 13px" _onClick={()=>{select(content.completedId, index)}} hover>
                 <Text margin="5px 0" bold="600" size="14px">{content.mountain}</Text>

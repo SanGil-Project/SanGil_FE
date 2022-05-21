@@ -72,6 +72,29 @@ const Mypage = (props) => {
     navigate("/", { replace: true });
   }
 
+
+  const fakeDB = {
+    completedList : [
+    {
+      completedId : 1,
+      mountainId : 1,
+      mountain : "속리산",
+      lat : 36.56329698,
+      lng : 127.9172195,
+      totalDistance: 10.3,
+      totalTime: "4시간 20분 13초",
+    },
+    {
+      completedId : 3,
+      mountainId : 2,
+      mountain : "화악산",
+      lat : 37.8881266,
+      lng : 127.5492755,
+      totalDistance: 20.3,
+      totalTime: "6시간 20분 13초",
+    },
+  ]}
+
   return (
     <React.Fragment>
       <Mobile>
@@ -116,7 +139,7 @@ const Mypage = (props) => {
                 🚩 정복한 산길
               </Text>
                 <HorizontalScroll>
-                  {completedList?.map((cur, idx) => {
+                  {fakeDB.completedList?.map((cur, idx) => {
                     return (
                     <Grid bg="white" key={idx}  width="156px" height="76px" padding="12px" radius="12px" margin="0 10px 20px 0" _onClick={()=>{moveMytrack(cur.completedId)}} hover>
                         <Grid height="auto" isFlex>
@@ -137,7 +160,7 @@ const Mypage = (props) => {
                     );}
                   )}
                 </HorizontalScroll>
-              <FullMap zoomable={false} data={myTrackList} />{" "}
+              <FullMap zoomable={false} data={fakeDB.completedList} />{" "}
             </Grid>
             <Grid padding="35px 14px 25px" height="auto">
               <Text bold="600" size="20px" margin="0 0 24px" align="left">
