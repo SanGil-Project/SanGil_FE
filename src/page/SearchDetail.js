@@ -10,7 +10,7 @@ import {
 } from "../components/component";
 import { Desktop, Mobile } from "../shared/responsive";
 import { actionCreators as mountAction } from "../redux/modules/mountain";
-import _, { update } from "lodash";
+import _ from "lodash";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -26,10 +26,15 @@ const SearchDetail = () => {
     mountainCommentId: 0,
     state: true,
   });
-  const [selected, setSelected] = React.useState(false);
+  const [selected, setSelected] = React.useState({ idx: 0, state: false });
   const mountain = useSelector((state) => state.mountain.mountainData);
+
   const show = (i) => {
-    setSelected(i);
+    if (selected.state === false) {
+      setSelected({ idx: i, state: true });
+    } else {
+      setSelected({ idx: i, state: false });
+    }
   };
 
   const cmt = React.useCallback(
@@ -171,7 +176,11 @@ const SearchDetail = () => {
                         {el.courseTime} 코스
                       </Text>
                     </Grid>
-                    {selected === idx ? <CourseCard data={el} /> : ""}
+                    {selected.idx === idx && selected.state ? (
+                      <CourseCard data={el} />
+                    ) : (
+                      ""
+                    )}
                   </Grid>
                 </div>
               ))}

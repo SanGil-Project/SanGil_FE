@@ -24,6 +24,13 @@ import {
 } from "../page/page";
 
 function App() {
+  if ("serviceWorker" in navigator) {
+    console.log("너있니");
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("../service-worker.js");
+    });
+  }
+
   return (
     <BrowserRouter>
       <Container>
