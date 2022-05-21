@@ -6,6 +6,7 @@ import _ from "lodash";
 import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
 
+import { Desktop, Mobile } from "../shared/responsive";
 import { Header } from "../components/component";
 import { Grid, Text, Icon, Image, Button, Input } from '../elements/element';
 
@@ -108,55 +109,119 @@ const MypageEdit = (props) => {
   
   return (
     <React.Fragment>
-      <MypageContainer>
-        <Header />
-        <Grid padding="69px 43px 23px" height="auto">
-          <Grid flexColumn height="auto" padding="5px 0">
-            <UserProfile>
-              <Label className="input_file_button" htmlFor="input_image">
-                <Image
-                  hover
-                  type="circle"
-                  width="100px"
-                  height="100px"
-                  src={preview ? preview : userInfo?.userImageUrl !== "없음" ? userInfo?.userImageUrl : defalutsrc}/>
-              </Label>
-              <input id='input_image' type="file" ref={fileInput} onChange={selectFile} style={{display:"none"}}/>
-            </UserProfile>
-            <Grid flexRow padding="10px 0 53px">
-              <UserName>
-                <Grid width="4px" height="23px" bg="#43CA3B"></Grid>
-                <Input gridWidth="130px" size="14px" width="130px" padding="0" margin="0" border="none" bg="transparent" defaultValue={userInfo?.nickname} _onChange={changeNickname}/>
-                <Text margin="0 0 0 10px" bold="500" size="10px" color="#c4c4c4"> {nameCount}/10</Text>
-              </UserName>
-              {checkType ? 
-              <Icon type="checkBtn" width="24px" height="24px" margin="0 auto" check="#6F6F6F" checkColor={checkColor} _onClick={changeName}/> : 
-              <Icon type="errorBtn" width="24px" height="24px" margin="0 auto" _onClick={changeName}/>}
+      <Mobile>
+        <MypageContainer>
+          <Header />
+          <Grid padding="69px 43px 23px" height="auto">
+            <Grid flexColumn height="auto" padding="5px 0">
+              <UserProfile>
+                <Label className="input_file_button" htmlFor="input_image">
+                  <Image
+                    hover
+                    type="circle"
+                    width="100px"
+                    height="100px"
+                    src={preview ? preview : userInfo?.userImageUrl !== "없음" ? userInfo?.userImageUrl : defalutsrc}/>
+                </Label>
+                <input id='input_image' type="file" ref={fileInput} onChange={selectFile} style={{display:"none"}}/>
+              </UserProfile>
+              <Grid flexRow padding="10px 0 42px">
+                <UserName>
+                  <Grid flexRow width="auto">
+                    <Grid width="4px" height="23px" bg="#43CA3B"></Grid>
+                    <Input gridWidth="140px" size="14px" width="140px" padding="4.5px 0 4.5px 8px" margin="0" border="none" bg="transparent" defaultValue={userInfo?.nickname} _onChange={changeNickname}/>
+                  </Grid>
+                  <Text margin="0 10px" bold="500" size="10px" color="#c4c4c4" width="auto"> {nameCount}/10</Text>
+                </UserName>
+                <Button width="auto" height="23px" padding="4.5px 10px" bgColor="#43CA3B" radius="4px" border="none">
+                  <Text margin="0" color="#fff" align size="12px" bold="600">변경</Text>
+                </Button>
+                {/* {checkType ? 
+                <Icon type="checkBtn" width="24px" height="24px" margin="0 auto" check="#6F6F6F" checkColor={checkColor} _onClick={changeName}/> : 
+                <Icon type="errorBtn" width="24px" height="24px" margin="0 auto" _onClick={changeName}/>} */}
+              </Grid>
+            </Grid>
+            <Grid height="auto" padding="0 0 20px 0">
+              <TitleList>
+                {userTitleList?.map((t, idx) => {
+                  const pick = (userInfo?.userTitle === t.userTitle) ? true : false;
+                  const img = (t.userTitleImgUrl === "없음") ? "https://user-images.githubusercontent.com/91959791/169658309-a910c67d-7ae2-4895-b6be-a155dcfaf5bb.png" : t.userTitleImgUrl;
+                  return (
+                    <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} width="100px" height="164px">
+                      <TitleItem key={idx} title={t.userTitle} img={img} pick={pick} done/>
+                    </Grid> 
+                  );
+                  
+                })}
+                {noTitleList?.map((t, idx) => {
+                  return (
+                    <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} width="100px" height="164px">
+                      <TitleItem key={idx} title={t.userTitle} img={img}/>
+                    </Grid>
+                  );
+                })}
+              </TitleList>
             </Grid>
           </Grid>
-          <Grid height="auto" padding="0 0 20px 0">
-            <TitleList>
-              {userTitleList?.map((t, idx) => {
-                const pick = (userInfo?.userTitle === t.userTitle) ? true : false;
-                const img = (t.userTitleImgUrl === "없음") ? "https://user-images.githubusercontent.com/91959791/168312178-a06a5ceb-490f-4844-ab17-b8888de30e68.png" : t.userTitleImgUrl;
-                return (
-                  <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} width="auto" height="130px">
-                    <TitleItem key={idx} title={t.userTitle} img={img} pick={pick} done/>
-                  </Grid> 
-                );
-                
-              })}
-              {noTitleList?.map((t, idx) => {
-                return (
-                  <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} width="auto" height="130px">
-                    <TitleItem key={idx} title={t.userTitle} img={img}/>
+        </MypageContainer>
+      </Mobile>
+      
+      <Desktop>
+        <MypageContainer>
+          <Header />
+          <Grid padding="69px 43px 23px" height="auto">
+            <Grid flexColumn height="auto" padding="5px 0">
+              <UserProfile>
+                <Label className="input_file_button" htmlFor="input_image">
+                  <Image
+                    hover
+                    type="circle"
+                    width="100px"
+                    height="100px"
+                    src={preview ? preview : userInfo?.userImageUrl !== "없음" ? userInfo?.userImageUrl : defalutsrc}/>
+                </Label>
+                <input id='input_image' type="file" ref={fileInput} onChange={selectFile} style={{display:"none"}}/>
+              </UserProfile>
+              <Grid flexRow padding="10px 0 42px">
+                <UserName>
+                  <Grid flexRow width="auto">
+                    <Grid width="4px" height="23px" bg="#43CA3B"></Grid>
+                    <Input gridWidth="140px" size="14px" width="140px" padding="4.5px 0 4.5px 8px" margin="0" border="none" bg="transparent" defaultValue={userInfo?.nickname} _onChange={changeNickname}/>
                   </Grid>
-                );
-              })}
-            </TitleList>
+                  <Text margin="0 10px" bold="500" size="10px" color="#c4c4c4" width="auto"> {nameCount}/10</Text>
+                </UserName>
+                <Button width="auto" height="23px" padding="4.5px 10px" bgColor="#43CA3B" radius="4px" border="none">
+                  <Text margin="0" color="#fff" align size="12px" bold="600">변경</Text>
+                </Button>
+                {/* {checkType ? 
+                <Icon type="checkBtn" width="24px" height="24px" margin="0 auto" check="#6F6F6F" checkColor={checkColor} _onClick={changeName}/> : 
+                <Icon type="errorBtn" width="24px" height="24px" margin="0 auto" _onClick={changeName}/>} */}
+              </Grid>
+            </Grid>
+            <Grid height="auto" padding="0 0 20px 0">
+              <TitleList>
+                {userTitleList?.map((t, idx) => {
+                  const pick = (userInfo?.userTitle === t.userTitle) ? true : false;
+                  const img = (t.userTitleImgUrl === "없음") ? "https://user-images.githubusercontent.com/91959791/169658309-a910c67d-7ae2-4895-b6be-a155dcfaf5bb.png" : t.userTitleImgUrl;
+                  return (
+                    <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} width="100px" height="164px">
+                      <TitleItem key={idx} title={t.userTitle} img={img} pick={pick} done/>
+                    </Grid> 
+                  );
+                  
+                })}
+                {noTitleList?.map((t, idx) => {
+                  return (
+                    <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} width="100px" height="164px">
+                      <TitleItem key={idx} title={t.userTitle} img={img}/>
+                    </Grid>
+                  );
+                })}
+              </TitleList>
+            </Grid>
           </Grid>
-        </Grid>
-      </MypageContainer>
+        </MypageContainer>
+      </Desktop>
     </React.Fragment>
   );
 }
@@ -166,27 +231,17 @@ const MypageContainer = styled.div`
   height: 100vh;
   max-width: 500px;
   margin: auto;
-  background-color: #000;
-`;
-
-const Mainprofile = styled.div`
-  position: relative;
-`;
-
-const Editbtn = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  cursor: pointer;
+  background-color: #fff;
 `;
 
 const UserName = styled.div`
   display: flex;  
   align-items:center;
+  justify-content: space-between;
   background: #F1F1F1;
-  // padding: 4.5px 10px 4.5px 10px;
-  margin: 0 5px 0 0;
+  margin: 0 6px 0 0;
   width: 188px;
+  height: 23px;
   box-sizing: border-box;
 `;
 
@@ -227,24 +282,24 @@ const TitleItem = (props) => {
     return (
       <React.Fragment>
         {pick ? 
-          (<Grid flexColumn width="70px" margin="0 12px 0 0" radius="4px" hover justify="flex-start">
+          (<Grid flexColumn width="100px" margin="0 14px 0 0" radius="4px" hover justify="flex-start">
               <Image
-                width="70px"
-                height="70px"
-                bg="#fff"
+                width="100px"
+                height="100px"
+                bg="#000"
                 border="2px solid #43CA3B"
-                borderRadius="64px"
+                borderRadius="100%"
                 src={img}/>
-              <Text width="70px" margin="5px 0 0 0" size="10px" bold="600" align="center" color="#43CA3B">{title}</Text>
+              <Text width="100px" margin="5px 0 0 0" size="10px" bold="600" align="center" color="#43CA3B">{title}</Text>
             </Grid>) : 
-          (<Grid flexColumn width="70px" margin="0 12px 0 0" radius="4px" hover justify="flex-start">
+          (<Grid flexColumn width="100px" margin="0 14px 0 0" radius="4px" hover justify="flex-start">
               <Image
-                width="70px"
-                height="70px" 
-                bg="#fff"
-                borderRadius="64px"
+                width="100px"
+                height="100px" 
+                bg="#000"
+                borderRadius="100%"
                 src={img}/>
-              <Text width="70px" margin="5px 0 0 0" size="10px" bold="300" align="center">{title}</Text>
+              <Text width="100px" margin="5px 0 0 0" size="10px" bold="300" align="center">{title}</Text>
             </Grid>)}
       </React.Fragment>
     );
@@ -252,12 +307,12 @@ const TitleItem = (props) => {
 
   return (
     <React.Fragment>
-      <Grid flexColumn width="70px" margin="0 12px 0 0" radius="4px" justify="flex-start">
-        <Grid width="70px"
-          height="70px" 
+      <Grid flexColumn width="100px" margin="0 14px 0 0" radius="4px" justify="flex-start">
+        <Grid width="100px"
+          height="100px" 
           bg="#C4C4C4"
-          radius="64px"></Grid>
-        <Text width="70px" margin="5px 0 0 0" size="10px" bold="300" color="#D2D2D2" align="center">{title}</Text>
+          radius="100%"></Grid>
+        <Text width="100px" margin="5px 0 0 0" size="10px" bold="300" color="#D2D2D2" align="center">{title}</Text>
       </Grid>
     </React.Fragment>
   );
