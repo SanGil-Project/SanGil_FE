@@ -4,7 +4,7 @@ import { api } from "../../shared/api";
 import axios from "axios";
 
 const LOGIN = "LOGIN";
-const LOGOUT = "LOGOUT";
+const LOG_OUT = "LOG_OUT";
 const ISLOGIN = "ISLOGIN";
 const MY_TRACK = "MY_TRACK";
 const MY_MOUNTAIN = "MY_MOUNTAIN";
@@ -15,7 +15,7 @@ const NAMECHECK = "NAMECHECK";
 const CHANGE_INFO = "CHANGE_INFO";
 
 const logIn = createAction(LOGIN, (userInfo) => ({ userInfo }));
-const logOut = createAction(LOGOUT, (userInfo) => ({ userInfo }));
+const logOut = createAction(LOG_OUT, () => ({}));
 const isLogin = createAction(ISLOGIN, (token) => ({ token }));
 const myTracking = createAction(MY_TRACK, (trackList) => ({ trackList }));
 const myMountain = createAction(MY_MOUNTAIN, (mountainList) => ({ mountainList }));
@@ -356,13 +356,22 @@ const myTitleDB = () => {
   };
 };
 
+const logOutDB = () => {
+  return function (dispatch, getState) {
+    sessionStorage.clear();
+    dispatch(logOut());
+  };
+};
+
 export default handleActions(
   {
     [ISLOGIN]: (state, action) =>
       produce(state, (draft) => {
         draft.userInfo = action.payload.token;
       }),
-    [LOGOUT]: (state, action) => produce(state, (draft) => {}),
+    [LOG_OUT]: (state, action) => produce(state, (draft) => {
+      draft.userInfo = null;
+    }),
     [MY_TRACK]: (state, action) =>
       produce(state, (draft) => {
         draft.trackList = action.payload.trackList;
@@ -416,4 +425,5 @@ export const actionCreators = {
   changeImgDB,
   myFeedDB,
   myMountainDB,
+  logOutDB,
 };
