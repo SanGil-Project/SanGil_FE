@@ -122,7 +122,14 @@ const MypageModal = (props) => {
           </Mainprofile>
           <Grid>
             <Text margin="0" size="14px" bold="400">{userInfo?.userTitle}</Text>
-            <Text margin="8px 0 13px" size="20px" bold="600" color="#43CA3B">{userInfo?.nickname}</Text>
+            <Grid isFlex margin="10px 0 0">
+              <Text margin="0" size="20px" bold="600" color="#43CA3B">{userInfo?.nickname}</Text>
+              <Button 
+                padding= "6px 8px" width="auto" height="auto" border="1px solid #43CA3B" radius="4px"
+                _onClick={()=>{alert("로그아웃?")}}>
+                <Text size="12px" bold="500" color="#43CA3B" align margin="0">로그아웃</Text>
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
         <Modal isOpen={modalIsOpen} 
