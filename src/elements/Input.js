@@ -69,7 +69,7 @@ const Input = (props) => {
 
   if (defaultValue) {
     return (
-      <Grid alignItems="center" flexRow>
+      <Grid maxWidth={gridWidth} alignItems="center" flexRow>
         {label && <div>{label}</div>}
         <InfoInput
           {...styles}

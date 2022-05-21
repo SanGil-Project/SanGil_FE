@@ -5,6 +5,7 @@ import Party from "./Party";
 import PartyDetail from "./PartyDetail";
 import PartyWrite from "./PartyWrite";
 import Mypage from "./Mypage";
+import MypageEdit from "./MypageEdit";
 import Search from "./Search";
 import SearchDetail from "./SearchDetail";
 import Tracker from "./Tracker";
@@ -18,6 +19,7 @@ export {
   Feed,
   Party,
   Mypage,
+  MypageEdit,
   Search,
   SearchDetail,
   Tracker,
