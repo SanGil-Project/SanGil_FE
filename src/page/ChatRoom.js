@@ -225,7 +225,7 @@ const ChatContainer = styled.div`
 
   background-color: #fff;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   max-width: 500px;
   margin: auto;
   overflow: hidden;
