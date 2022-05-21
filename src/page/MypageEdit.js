@@ -71,17 +71,19 @@ const MypageEdit = (props) => {
     setNickname(e.target.value)
   };
 
-  const checkColor = checkData ? "#61D161" : "#6F6F6F";
+  const checkBtnColor = checkData ? "#43CA3B" : "#C4C4C4"; // 닉네임 변경 가능(초록) : 변경 불가(회색)
+  let checkBarColor = checkData ? "#43CA3B" : "#C4C4C4"; // 닉네임 변경 가능(초록) : 변경 불가(회색)
   let checkType = true;
   const defalutsrc = "https://user-images.githubusercontent.com/91959791/168119302-948f0dcf-8165-47af-8b6b-2f90f74aca06.png";
 
-  if (!checkData) {
-    if (userInfo?.nickname === nickname || !nickname) {
+  if (!checkData) { // 중복이거나, 값이 없을때(닉네임그대로)
+    if (userInfo?.nickname === nickname || !nickname) { // 닉네임이 그대로거나 값이 없거나
       checkType = true;
-    } else {
+    } else {  // 중복
       checkType = false;
+      checkBarColor = "#FF1C1C"; // 변경 불가 중에 중복은 빨간색
     }
-  } else {
+  } else {  // 가능
     checkType = true;
   }
 
@@ -128,12 +130,12 @@ const MypageEdit = (props) => {
               <Grid flexRow padding="10px 0 42px">
                 <UserName>
                   <Grid flexRow width="auto">
-                    <Grid width="4px" height="23px" bg="#43CA3B"></Grid>
+                    <Grid width="4px" height="23px" bg={checkBarColor}></Grid>
                     <Input gridWidth="140px" size="14px" width="140px" padding="4.5px 0 4.5px 8px" margin="0" border="none" bg="transparent" defaultValue={userInfo?.nickname} _onChange={changeNickname}/>
                   </Grid>
                   <Text margin="0 10px" bold="500" size="10px" color="#c4c4c4" width="auto"> {nameCount}/10</Text>
                 </UserName>
-                <Button width="auto" height="23px" padding="4.5px 10px" bgColor="#43CA3B" radius="4px" border="none">
+                <Button width="auto" height="23px" padding="4.5px 10px" bgColor={checkBtnColor} radius="4px" border="none" _onClick={changeName}>
                   <Text margin="0" color="#fff" align size="12px" bold="600">변경</Text>
                 </Button>
                 {/* {checkType ? 
@@ -165,7 +167,7 @@ const MypageEdit = (props) => {
           </Grid>
         </MypageContainer>
       </Mobile>
-      
+
       <Desktop>
         <MypageContainer>
           <Header />
@@ -290,7 +292,7 @@ const TitleItem = (props) => {
                 border="2px solid #43CA3B"
                 borderRadius="100%"
                 src={img}/>
-              <Text width="100px" margin="5px 0 0 0" size="10px" bold="600" align="center" color="#43CA3B">{title}</Text>
+              <Text width="100px" margin="5px 0 0 0" size="14px" bold="600" align="center" color="#43CA3B">{title}</Text>
             </Grid>) : 
           (<Grid flexColumn width="100px" margin="0 14px 0 0" radius="4px" hover justify="flex-start">
               <Image
@@ -299,7 +301,7 @@ const TitleItem = (props) => {
                 bg="#000"
                 borderRadius="100%"
                 src={img}/>
-              <Text width="100px" margin="5px 0 0 0" size="10px" bold="300" align="center">{title}</Text>
+              <Text width="100px" margin="5px 0 0 0" size="14px" bold="500" align="center">{title}</Text>
             </Grid>)}
       </React.Fragment>
     );
@@ -312,7 +314,7 @@ const TitleItem = (props) => {
           height="100px" 
           bg="#C4C4C4"
           radius="100%"></Grid>
-        <Text width="100px" margin="5px 0 0 0" size="10px" bold="300" color="#D2D2D2" align="center">{title}</Text>
+        <Text width="100px" margin="5px 0 0 0" size="14px" bold="500" color="#D2D2D2" align="center">{title}</Text>
       </Grid>
     </React.Fragment>
   );
