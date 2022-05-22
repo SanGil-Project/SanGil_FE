@@ -14,6 +14,10 @@ const AlertModal = (props) => {
     onClose(false);
     return checkFunction(true);
   }
+  const checkBtn = () => {
+    onClose(false);
+  }
+  console.log(contents);
 
   if (type === "choice") {
     return (
@@ -46,7 +50,7 @@ const AlertModal = (props) => {
               <Text margin="0" color="#131313" bold="600" size="18px">{contents}</Text>
             </Grid>
             <Grid flexRow height="auto" padding="10px 20px">
-              <Button _onClick={okBtn} width="60%" radius="4px" border="none" bgColor="#43CA3B">
+              <Button _onClick={checkBtn} width="60%" radius="4px" border="none" bgColor="#43CA3B">
                 <Text margin="0 auto" align color="white" bold="600" size="16px">확인</Text>
               </Button>
             </Grid>

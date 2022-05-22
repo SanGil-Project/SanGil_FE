@@ -8,7 +8,7 @@ import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as handleActions } from "../redux/modules/handle";
 
 import { Desktop, Mobile } from "../shared/responsive";
-import { Header } from "../components/component";
+import { Header, AlertModal } from "../components/component";
 import { Grid, Text, Icon, Image, Button, Input } from '../elements/element';
 
 const MypageEdit = (props) => {
@@ -28,12 +28,13 @@ const MypageEdit = (props) => {
   const userTitleList = titleList?.filter((p) => p.have === true);
   const noTitleList = titleList?.filter((p) => p.have === false);
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [nameCount, setNameCount] = useState(userInfo?.nickname?.length);
   const [nickname, setNickname] = useState(userInfo?.nickname);
   const [_userTitle, set_userTitle] = useState(userInfo?.userTitle);
 
   const [preview, setPreview] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState("");
 
   const selectFile = (e) => {
 
@@ -46,19 +47,6 @@ const MypageEdit = (props) => {
       dispatch(userActions.changeImgDB(file, reader.result));
     };
   };
-
-  // const changeNickname = _.debounce((e) => {
-  //   // 현 글자수 보여주기
-  //   setNameCount(e.target.value.length);
-  //   //  글자수 10자로 제한
-  //   if (e.target.value.length > 10) {
-  //     e.target.value = e.target.value.substr(0, 10);
-  //     setNickname(e.target.value.substr(0, 10));
-  //     // 10이상은 10으로 고정 (11 안나오게)
-  //     setNameCount(10);
-  //   }
-  //   setNickname(e.target.value)
-  // }, 1000);
 
   const changeNickname = (e) => {
     // 현 글자수 보여주기
@@ -97,10 +85,13 @@ const MypageEdit = (props) => {
 
   const changeName = () => {
     if (!checkData) {
-      checkType ? window.alert("변경사항이 없습니다") : window.alert("중복된 닉네임입니다");
+      setModalContent(checkType ? "변경사항이 없습니다 😭" : "중복된 닉네임입니다 😭");
+      setModalOpen(true)
       return; 
     }
     dispatch(userActions.changeNameDB(nickname));
+    setModalContent("닉네임 변경 완료!");
+    setModalOpen(true)
   }
 
   const selectTitle = (curTitle) => {
@@ -116,7 +107,13 @@ const MypageEdit = (props) => {
       <Mobile>
         <MypageContainer>
           <Header />
-          <Grid padding="69px 43px 23px" height="auto">
+          { modalOpen && 
+            <AlertModal 
+              type="check"
+              onClose={setModalOpen} 
+              modalState={modalOpen}
+              contents={modalContent}/> }
+          <Grid padding="69px 36px 10px" height="auto">
             <Grid flexColumn height="auto" padding="5px 0">
               <UserProfile>
                 <Label className="input_file_button" htmlFor="input_image">
@@ -140,26 +137,22 @@ const MypageEdit = (props) => {
                 <Button width="auto" height="23px" padding="4.5px 10px" bgColor={checkBtnColor} radius="4px" border="none" _onClick={changeName}>
                   <Text margin="0" color="#fff" align size="12px" bold="600">변경</Text>
                 </Button>
-                {/* {checkType ? 
-                <Icon type="checkBtn" width="24px" height="24px" margin="0 auto" check="#6F6F6F" checkColor={checkColor} _onClick={changeName}/> : 
-                <Icon type="errorBtn" width="24px" height="24px" margin="0 auto" _onClick={changeName}/>} */}
               </Grid>
             </Grid>
-            <Grid height="auto" padding="0 0 20px 0">
+            <Grid height="auto" padding="0">
               <TitleList>
                 {userTitleList?.map((t, idx) => {
                   const pick = (userInfo?.userTitle === t.userTitle) ? true : false;
                   const img = (t.userTitleImgUrl === "없음") ? "https://user-images.githubusercontent.com/91959791/169658309-a910c67d-7ae2-4895-b6be-a155dcfaf5bb.png" : t.userTitleImgUrl;
                   return (
-                    <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} width="100px" height="164px">
+                    <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} margin="0 7px" width="100px" height="164px">
                       <TitleItem key={idx} title={t.userTitle} img={img} pick={pick} done/>
                     </Grid> 
                   );
-                  
                 })}
                 {noTitleList?.map((t, idx) => {
                   return (
-                    <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} width="100px" height="164px">
+                    <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} margin="0 7px" width="100px" height="164px">
                       <TitleItem key={idx} title={t.userTitle} img={img}/>
                     </Grid>
                   );
@@ -208,7 +201,7 @@ const MypageEdit = (props) => {
                   const pick = (userInfo?.userTitle === t.userTitle) ? true : false;
                   const img = (t.userTitleImgUrl === "없음") ? "https://user-images.githubusercontent.com/91959791/169658309-a910c67d-7ae2-4895-b6be-a155dcfaf5bb.png" : t.userTitleImgUrl;
                   return (
-                    <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} width="100px" height="164px">
+                    <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} width="100px" margin="0 14px 0 0" height="164px">
                       <TitleItem key={idx} title={t.userTitle} img={img} pick={pick} done/>
                     </Grid> 
                   );
@@ -257,7 +250,6 @@ const TitleList = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 30px;
 `;
 
 
@@ -286,7 +278,7 @@ const TitleItem = (props) => {
     return (
       <React.Fragment>
         {pick ? 
-          (<Grid flexColumn width="100px" margin="0 14px 0 0" radius="4px" hover justify="flex-start">
+          (<Grid flexColumn width="100px" radius="4px" hover justify="flex-start">
               <Image
                 width="100px"
                 height="100px"
@@ -296,14 +288,14 @@ const TitleItem = (props) => {
                 src={img}/>
               <Text width="100px" margin="5px 0 0 0" size="14px" bold="600" align="center" color="#43CA3B">{title}</Text>
             </Grid>) : 
-          (<Grid flexColumn width="100px" margin="0 14px 0 0" radius="4px" hover justify="flex-start">
+          (<Grid flexColumn width="100px" radius="4px" hover justify="flex-start">
               <Image
                 width="100px"
                 height="100px" 
                 bg="#000"
                 borderRadius="100%"
                 src={img}/>
-              <Text width="100px" margin="5px 0 0 0" size="14px" bold="500" align="center">{title}</Text>
+              <Text width="100px" margin="5px 0 0 0" size="14px" bold="500" align="center" color="#919191">{title}</Text>
             </Grid>)}
       </React.Fragment>
     );
@@ -311,10 +303,11 @@ const TitleItem = (props) => {
 
   return (
     <React.Fragment>
-      <Grid flexColumn width="100px" margin="0 14px 0 0" radius="4px" justify="flex-start">
-        <Grid width="100px"
+      <Grid flexColumn width="100px" radius="4px" justify="flex-start">
+        <Grid 
+          width="100px"
           height="100px" 
-          bg="#C4C4C4"
+          bg="#D2D2D2"
           radius="100%"></Grid>
         <Text width="100px" margin="5px 0 0 0" size="14px" bold="500" color="#D2D2D2" align="center">{title}</Text>
       </Grid>
