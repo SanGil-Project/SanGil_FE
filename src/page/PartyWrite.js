@@ -108,6 +108,12 @@ const PartyWrite = (props) => {
     setMountValue(data.mountain);
     setMountAddValue(data.mountainAddress);
   }
+  let btnColor = "#E6E6E6";
+  let btnTextColor = "#000";
+  if (partyName !== "" && dateValue !== "선택" && timeValue !== "선택" && numberValue && partyContent !== "") {
+    btnColor = "#43CA3B";
+    btnTextColor = "#fff";
+  }
 
   const addParty = () => {
     if (numberValue <= 0) {
@@ -310,14 +316,14 @@ const PartyWrite = (props) => {
             <Grid>
             {complete ? 
             <Button 
-              bgColor="#43CA3B" border="none" height="48px" margin="20px 0" radius="8px" 
+              bgColor={btnColor} border="none" height="48px" margin="20px 0" radius="8px" 
               _onClick={addParty}>
-              <Text color="#fff" margin="0" size="18px" bold="600" align>{is_edit ? "수정 완료" : "작성 완료"}</Text>
+              <Text color={btnTextColor} margin="0" size="18px" bold="600" align>{is_edit ? "수정 완료" : "작성 완료"}</Text>
             </Button> : 
             <Button 
-              bgColor="#E6E6E6" border="none" height="48px" margin="20px 0" radius="8px" 
+              bgColor={btnColor} border="none" height="48px" margin="20px 0" radius="8px" 
               _onClick={addParty}>
-              <Text margin="0" size="18px" bold="600" align>{is_edit ? "수정 완료" : "작성 완료"}</Text>
+              <Text color={btnTextColor} margin="0" size="18px" bold="600" align>{is_edit ? "수정 완료" : "작성 완료"}</Text>
             </Button>}
 
             </Grid>
