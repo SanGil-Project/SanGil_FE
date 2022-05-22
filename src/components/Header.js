@@ -86,7 +86,7 @@ const Header = () => {
               </>
             ) : (
               <>
-                <Grid width="auto" height="auto" _onClick={() => navigate(-1)}>
+                <Grid width="auto" height="auto" _onClick={() => navigate(-1)} hover>
                   <Icon type="headerBack" width="12px" height="20px" margin="0 auto" />
                 </Grid>
                 <Grid
