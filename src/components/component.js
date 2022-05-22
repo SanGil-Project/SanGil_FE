@@ -16,6 +16,7 @@ import ScrollTime from "./ScrollTime";
 import SearchTracking from "./SearchTracking";
 import EndTracking from "./EndTracking";
 import ChatInput from "./ChatInput";
+import AlertModal from "./AlertModal";
 
 export {
   GoogleLogin,
@@ -36,4 +37,5 @@ export {
   SearchTracking,
   EndTracking,
   ChatInput,
+  AlertModal,
 };

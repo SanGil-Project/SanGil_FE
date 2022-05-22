@@ -436,7 +436,7 @@ const PartyWrite = (props) => {
                     { timeHandle && 
                     <DateModal className="dateModal" modalOpen={timeOpen}>
                       <div className="modal_container">
-                        <Grid>
+                        <Grid height="auto">
                           <ScrollTime/>
                         </Grid>
                         <Grid flexRow height="auto" padding="10px 20px">
