@@ -32,6 +32,16 @@ const Icon = (props) => {
   const menuColor = page ? "#43CA3B" : "#C0C0C0";
   const fillOpa = fillOpacity==="false" ? false : fillOpacity ;
 
+  if (type === "headerBack") {
+    return (
+      <MenuIcon {...styles} viewBox="0 0 12 20" fill="none">
+        <path 
+          d="M10 20L0 10L10 0L11.4 1.425L2.825 10L11.4 18.575L10 20Z" 
+          fill="black"/>
+      </MenuIcon>
+    );
+  }
+
   if (type === "partyDelete") {
     return (
       <MenuIcon {...styles} viewBox="0 0 31 31" fill="none">

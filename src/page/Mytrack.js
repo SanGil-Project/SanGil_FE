@@ -5,6 +5,7 @@ import { Grid, Text } from "../elements/element";
 import { Header } from "../components/component";
 import { Desktop, Mobile } from "../shared/responsive";
 import { actionCreators as trackActions } from "../redux/modules/tracker";
+import { actionCreators as handleActions } from "../redux/modules/handle";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 
@@ -17,6 +18,7 @@ const Mytrack = (props) => {
 
   React.useEffect(() => {
     if (completedId) {
+      dispatch(handleActions.isPagename(" "));
       dispatch(trackActions.getCompletedDB(completedId));
     }
   }, []);

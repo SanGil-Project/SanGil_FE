@@ -60,12 +60,13 @@ const FeedDetail = () => {
           <Grid height="88px"></Grid>
           <TrackBtn>
             <Button
-              width="50px"
-              height="50px"
-              bgColor="#5CB16E"
+              width="60px"
+              height="60px"
+              bgColor="#43CA3B"
               border="none"
               color="#fff"
               radius="100%"
+              shadow="0px 3px 4px rgba(0, 0, 0, 0.15)"
               // position="fixed"
               // margin="-80px 0 0 350px"
               _onClick={() => navigate("/feedwrite")}
@@ -118,8 +119,8 @@ const MenubarContainer = styled.div`
 
 const TrackBtn = styled.div`
   position: fixed;
-  right: calc(50% - 220px);
-  bottom: 120px;
+  right: calc(50% - 236px);
+  bottom: 113px;
 `;
 
 const AddFeed = styled.svg`

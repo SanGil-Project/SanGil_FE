@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router";
 
 import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as partyActions } from '../redux/modules/party';
+import { actionCreators as handleActions } from "../redux/modules/handle";
 
 import 'date-fns';
 import DatePicker from "react-datepicker";
@@ -48,6 +49,11 @@ const PartyWrite = (props) => {
   const [timeOpen, setTimeOpen] = useState(false);
   const [timeHandle, setTimeHandle] = useState(false);
   
+  React.useEffect(() => {
+    const pagename = is_edit ? "등산 모임 수정하기" : "등산 모임 만들기";
+    dispatch(handleActions.isPagename(pagename));
+  }, []); 
+
   const handleDateModal = () => {
     setDateOpen(false);
   };
@@ -101,6 +107,12 @@ const PartyWrite = (props) => {
   const selectMnt = (data) => {
     setMountValue(data.mountain);
     setMountAddValue(data.mountainAddress);
+  }
+  let btnColor = "#E6E6E6";
+  let btnTextColor = "#000";
+  if (partyName !== "" && dateValue !== "선택" && timeValue !== "선택" && numberValue && partyContent !== "") {
+    btnColor = "#43CA3B";
+    btnTextColor = "#fff";
   }
 
   const addParty = () => {
@@ -304,14 +316,14 @@ const PartyWrite = (props) => {
             <Grid>
             {complete ? 
             <Button 
-              bgColor="#43CA3B" border="none" height="48px" margin="20px 0" radius="8px" 
+              bgColor={btnColor} border="none" height="48px" margin="20px 0" radius="8px" 
               _onClick={addParty}>
-              <Text color="#fff" margin="0" size="18px" bold="600" align>{is_edit ? "수정 완료" : "작성 완료"}</Text>
+              <Text color={btnTextColor} margin="0" size="18px" bold="600" align>{is_edit ? "수정 완료" : "작성 완료"}</Text>
             </Button> : 
             <Button 
-              bgColor="#E6E6E6" border="none" height="48px" margin="20px 0" radius="8px" 
+              bgColor={btnColor} border="none" height="48px" margin="20px 0" radius="8px" 
               _onClick={addParty}>
-              <Text margin="0" size="18px" bold="600" align>{is_edit ? "수정 완료" : "작성 완료"}</Text>
+              <Text color={btnTextColor} margin="0" size="18px" bold="600" align>{is_edit ? "수정 완료" : "작성 완료"}</Text>
             </Button>}
 
             </Grid>
