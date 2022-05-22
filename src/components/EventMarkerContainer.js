@@ -31,10 +31,10 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
     "https://user-images.githubusercontent.com/91959791/169664489-10a08071-905f-4a44-9a14-ae065704ced5.png" :
     "https://user-images.githubusercontent.com/91959791/169664175-5428595a-2e8e-4c76-b738-596aba4f070a.png";
 
-  let markerW = isOver ? 32 : 18;
-  let markerH = isOver ? 46 : 26;
-  let offsetX = isOver ? 16 : 9;
-  let offsetY = isOver ? 46 : 26;
+  let markerW = isOver ? 32 : 28;
+  let markerH = isOver ? 46 : 40;
+  let offsetX = isOver ? 16 : 14;
+  let offsetY = isOver ? 46 : 40;
 
   if (isClicked) {
     markerImg = "https://user-images.githubusercontent.com/91959791/169664489-10a08071-905f-4a44-9a14-ae065704ced5.png";
@@ -95,13 +95,26 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
       <MapMarker
         style = {{display: "none"}}
         position={{lat: content.lat, lng: content.lng}} // 마커를 표시할 위치
-        onClick={(marker) => {markerClick(marker)}} // 해당 좌표로 지동 이동시키기
-        onMouseOver={() => setIsVisible(true)}
-        onMouseOut={() => setIsVisible(false)}
+        onClick={markerClick}
+        onMouseOver={() => {setIsVisible(true); setIsOver(true);}}
+        onMouseOut={() => {setIsVisible(false); setIsOver(false);}}
+        image={{
+          src: markerImg,
+          size: {
+            width: markerW,
+            height: markerH,
+          },
+          options: {
+            offset: {
+              x: offsetX,
+              y: offsetY,
+            }
+          }
+        }}
       >
         { isVisible &&
         // {isClicked && isVisible &&
-        <CustomOverlayMap index={index} position={{lat: content.lat, lng: content.lng}} yAnchor={1.18} zIndex={1}>
+        <CustomOverlayMap index={index} position={{lat: content.lat, lng: content.lng}} yAnchor={1.2} zIndex={1}>
           <MarkerInfo>
             <Image src={content.mountainImgUrl} type="rectangle"/>
             <Grid padding="5px 10px 10px">
