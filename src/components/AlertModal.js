@@ -4,7 +4,7 @@ import { Grid, Text, Icon, Image, Button } from "../elements/element";
 
 const AlertModal = (props) => {
 
-  const { onClose, modalState, checkFunction, contents } = props;
+  const { type, onClose, modalState, checkFunction, contents } = props;
 
   const cancelBtn = () => {
     onClose(false);
@@ -15,25 +15,47 @@ const AlertModal = (props) => {
     return checkFunction(true);
   }
 
-  return (
-    <React.Fragment>
-      <Modal className="dateModal" modalState={modalState}>
-        <div className="modal_container">
-          <Grid flexColumn margin="0 0 57px">
-            <Text margin="0" color="#131313" bold="600" size="18px">{contents}</Text>
-          </Grid>
-          <Grid flexRow height="auto" padding="10px 20px">
-            <Button _onClick={cancelBtn} margin="0 10px 0 0" radius="8px" border="none" bgColor="#E6E6E6">
-              <Text margin="0 auto" align bold="700">취소</Text>
-            </Button>
-            <Button _onClick={okBtn} radius="8px" border="none" bgColor="#43CA3B">
-              <Text margin="0 auto" align color="white" bold="700">확인</Text>
-            </Button>
-          </Grid>
-        </div>
-      </Modal>
-    </React.Fragment>
-  );
+  if (type === "choice") {
+    return (
+      <React.Fragment>
+        <Modal className="dateModal" modalState={modalState}>
+          <div className="modal_container">
+            <Grid flexColumn margin="0 0 57px">
+              <Text margin="0" color="#131313" bold="600" size="18px">{contents}</Text>
+            </Grid>
+            <Grid flexRow height="auto" padding="10px 20px">
+              <Button _onClick={cancelBtn} margin="0 10px 0 0" radius="4px" border="none" bgColor="#E6E6E6">
+                <Text margin="0 auto" align bold="400" size="16px">취소</Text>
+              </Button>
+              <Button _onClick={okBtn} radius="4px" border="none" bgColor="#43CA3B">
+                <Text margin="0 auto" align color="white" bold="600" size="16px">확인</Text>
+              </Button>
+            </Grid>
+          </div>
+        </Modal>
+      </React.Fragment>
+    );
+  }
+
+  if (type === "check") {
+    return (
+      <React.Fragment>
+        <Modal className="dateModal" modalState={modalState}>
+          <div className="modal_container">
+            <Grid flexColumn margin="0 0 57px">
+              <Text margin="0" color="#131313" bold="600" size="18px">{contents}</Text>
+            </Grid>
+            <Grid flexRow height="auto" padding="10px 20px">
+              <Button _onClick={okBtn} width="60%" radius="4px" border="none" bgColor="#43CA3B">
+                <Text margin="0 auto" align color="white" bold="600" size="16px">확인</Text>
+              </Button>
+            </Grid>
+          </div>
+        </Modal>
+      </React.Fragment>
+    );
+  }
+
 }
 
 const FadeIn = keyframes`
