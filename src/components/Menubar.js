@@ -19,7 +19,7 @@ const Menubar = (props) => {
 
   return (
     <React.Fragment>
-      <Grid isFlex bg="#fff" borderTop="2px solid #F5F5F5">
+      <Grid isFlex bg="#fff" borderTop="1px solid #DEDEDE">
         <Grid
           flexColumn
           hover

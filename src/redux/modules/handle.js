@@ -2,9 +2,11 @@ import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import { api } from "../../shared/api";
 
+const IS_PAGENAME = "IS_PAGENAME";
 const SELECT_MARKER = "SELECT_MARKER";
-const SELECT_TIME = "SELECT_TIME"
+const SELECT_TIME = "SELECT_TIME";
 
+const isPagename = createAction(IS_PAGENAME, (pagename) => ({ pagename }));
 const selectMarker = createAction(SELECT_MARKER, (selectData) => ({ selectData }));
 const selectTime = createAction(SELECT_TIME, (selectTime) => ({ selectTime }));
 
@@ -54,6 +56,9 @@ const selectTimeDB = (time = null, type) => {
 
 export default handleActions(
   {
+    [IS_PAGENAME]: (state, action) => produce(state, (draft) => {
+      draft.isPagename = action.payload.pagename;
+    }), 
     [SELECT_MARKER]: (state, action) => produce(state, (draft) => {
       draft.selectMarker = action.payload.selectData;
     }),
@@ -66,6 +71,7 @@ export default handleActions(
 );
 
 const actionCreators = {
+  isPagename,
   selectMarkerDB,
   selectTimeDB
 };

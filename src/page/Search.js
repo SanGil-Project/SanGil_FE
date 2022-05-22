@@ -155,9 +155,9 @@ const Search = (props) => {
             <Grid height="88px" maxWidth="500px" margin="auto">
               <TrackBtn>
                 <Button
-                  width="50px"
-                  height="50px"
-                  bgColor="#5CB16E"
+                  width="60px"
+                  height="60px"
+                  bgColor="#43CA3B"
                   border="none"
                   color="#fff"
                   radius="100%"
@@ -263,9 +263,9 @@ const Search = (props) => {
             <Grid height="88px" maxWidth="500px" margin="auto">
               <TrackBtn>
                 <Button
-                  width="50px"
-                  height="50px"
-                  bgColor="#5CB16E"
+                  width="60px"
+                  height="60px"
+                  bgColor="#43CA3B"
                   border="none"
                   color="#fff"
                   radius="100%"
@@ -320,9 +320,9 @@ const MenubarContainer = styled.div`
 `;
 
 const TrackBtn = styled.div`
-  position: absolute;
-  right: calc(50% - 220px);
-  bottom: 110px;
+  position: fixed;
+  right: calc(50% - 236px);
+  bottom: 113px;
 `;
 
 
