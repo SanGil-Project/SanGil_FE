@@ -24,61 +24,62 @@ const ChatRoom = (props) => {
 
   // const sockJs = new SockJS("http://13.125.232.76:8080/ws-stomp"); // 서버주소/ws-stomp
   // const sockJs = new SockJS("http://52.79.228.126:8080/ws-stomp"); // 서버주소/ws-stomp
-  // const stomp = Stomp.over(sockJs);
+  const sockJs = new SockJS("http://15.164.232.187:8080/ws-stomp"); // 서버주소/ws-stomp
+  const stomp = Stomp.over(sockJs);
 
-  // function ConnectSub(token) {
-  //   try {
-  //     console.log("STOMP Start");
-  //     stomp.connect({token: token}, () => {
-  //       console.log("STOMP Connection");
-  //       stomp.subscribe(`/chat/rooms/${chatRoomId}`,
-  //           (res) => {
-  //             console.log("subscribe callback ::", res);
-  //             const content = JSON.parse(res.body);
-  //             console.log("받은 메세지 ::", content);
-  //             // const writer = content.writer;
-  //             // if (content.length === 1){
-  //             //   dispatch(sockActions.sendMessage(newMessage));
-  //             // }else {
-  //             //   dispatch(sockActions.getMessageDB(newMessage));
-  //             // }
-  //             // dispatch(chatActions.getChatDB(content)); // 처음 연결시, 서버에서 받은 "content"에 지금까지 전체 채팅내용 올수 있따면..
-  //             dispatch(chatActions.getChatDB(chatRoomId)); // 아닐경우, api로 요청해야 하는 방식 
-  //           }, { token: token }
-  //         );
-  //         dispatch(chatActions.getChatDB(chatRoomId));
-  //         stomp.send(
-  //           "/pub/chat/message", { token: token }, JSON.stringify({
-  //             roomId: parseInt(chatRoomId), sender: _userInfo.nickname, type: 'ENTER',})
-  //         )
-  //       });
-  //   } catch (err) {
-  //     console.log("connect, subscribe error!! ::", err.response);
-  //   }
-  // }
+  function ConnectSub(token) {
+    try {
+      console.log("STOMP Start");
+      stomp.connect({}, () => {
+        console.log("STOMP Connection");
+        stomp.subscribe(`/chat/rooms/${chatRoomId}`,
+            (res) => {
+              console.log("subscribe callback ::", res);
+              const content = JSON.parse(res.body);
+              console.log("받은 메세지 ::", content);
+              // const writer = content.writer;
+              // if (content.length === 1){
+              //   dispatch(sockActions.sendMessage(newMessage));
+              // }else {
+              //   dispatch(sockActions.getMessageDB(newMessage));
+              // }
+              // dispatch(chatActions.getChatDB(content)); // 처음 연결시, 서버에서 받은 "content"에 지금까지 전체 채팅내용 올수 있따면..
+              dispatch(chatActions.getChatDB(chatRoomId)); // 아닐경우, api로 요청해야 하는 방식 
+            }, { token: token }
+          );
+          dispatch(chatActions.getChatDB(chatRoomId));
+          stomp.send(
+            "/pub/chat/message", { token: token }, JSON.stringify({
+              roomId: chatRoomId, sender: _userInfo.nickname, type: 'ENTER',})
+          )
+        });
+    } catch (err) {
+      console.log("connect, subscribe error!! ::", err.response);
+    }
+  }
 
-  // function DisConnectUnsub() {
-  //   try {
-  //     stomp.disconnect({
-  //       Headers: {
-  //       Authorization: token,
-  //     }}, () => {
-  //       stomp.unsubscribe(`/sub/chat/rooms/${chatRoomId}`);
-  //       }, { token: token }
-  //     );
-  //   } catch (err) {
-  //     console.log("disconnect error!! ::", err);
-  //   }
-  // }
+  function DisConnectUnsub() {
+    try {
+      stomp.disconnect({
+        Headers: {
+        Authorization: token,
+      }}, () => {
+        stomp.unsubscribe(`/sub/chat/rooms/${chatRoomId}`);
+        }, { token: token }
+      );
+    } catch (err) {
+      console.log("disconnect error!! ::", err);
+    }
+  }
 
-  // React.useEffect(() => {
-  //   // console.log(token);
-  //   dispatch(handleActions.isPagename(`${chatRoomId}번 채팅방`));
-  //   ConnectSub(token);
-  //   return () => {
-  //     DisConnectUnsub();
-  //   };
-  // }, []); 
+  React.useEffect(() => {
+    // console.log(token);
+    dispatch(handleActions.isPagename(`${chatRoomId}번 채팅방`));
+    ConnectSub(token);
+    return () => {
+      DisConnectUnsub();
+    };
+  }, []); 
 
 
   const userInfo = {
@@ -147,7 +148,7 @@ const ChatRoom = (props) => {
           </Grid>
         </ChatWrap>
         <ChatInputWrap>
-          {/* <ChatInput chatRoomId={chatRoomId}/> */}
+          <ChatInput chatRoomId={chatRoomId}/>
         </ChatInputWrap>
 
         <MenubarContainer>

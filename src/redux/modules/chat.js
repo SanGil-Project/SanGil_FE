@@ -56,8 +56,9 @@ const enterChatDB = (chatRoomId) => {
     api
       .enterChatRoom(chatRoomId)
       .then((res) => {
-        console.log("(enterChatRoom) 성공 데이터 확인 ::", res.data);
-        // dispatch(getChat(res.data));
+        console.log("(enterChatRoom) 성공 데이터 원본 ::", res);
+        console.log("(enterChatRoom) 성공 데이터 디테일 ::", res.data);
+        dispatch(getChat(res.data));
       })
       .catch((err) => {
         console.log("(enterChatRoom) 실패 ::", err);
@@ -72,6 +73,7 @@ const getChatDB = (chatRoomId) => {
     // 인자 : chatRoomId -> content
     // console.log("content :: ", content);
     // dispatch(getChat(content));
+    return;
 
     api
       .enterChatRoom(chatRoomId)

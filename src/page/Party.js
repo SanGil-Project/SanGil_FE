@@ -316,7 +316,7 @@ const PartyContainer = styled.div`
   height: 100vh;
   max-width: 500px;
   margin: auto;
-  overflow: hidden;
+  overflow: scroll;
 `;
 
 const PartyWrap = styled.div`
