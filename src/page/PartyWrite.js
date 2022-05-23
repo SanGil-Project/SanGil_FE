@@ -176,7 +176,6 @@ const PartyWrite = (props) => {
       dispatch(partyActions.editPartyDB(partyId, partyData));
       setModalContent("수정 완료!");
       setModalOpen(true);
-      navigate(`/party`);
       return;
     }
     const num = parseInt(numberValue);
@@ -192,7 +191,12 @@ const PartyWrite = (props) => {
     dispatch(partyActions.addPartyDB(partyData));
     setModalContent("작성 완료!");
     setModalOpen(true);
-    navigate(`/party`);
+  }
+
+  const movePage = (check) => {
+    if (check) {
+      navigate(`/party`, { replace: true });
+    }
   }
 
   return (
@@ -205,7 +209,8 @@ const PartyWrite = (props) => {
             type="check"
             onClose={setModalOpen} 
             modalState={modalOpen}
-            contents={modalContent}/> }
+            contents={modalContent}
+            checkFunction={movePage}/> }
         <PartyWrap>
           <Grid padding="96px 14px 100px">
             <Grid>
@@ -328,7 +333,13 @@ const PartyWrite = (props) => {
               <Grid isFlex margin="24px 0">
                 <Text margin="0" size="16px" bold="600">위치</Text>
                 {is_edit ? (
-                  <Grid flexRow width="auto" hover _onClick={()=>{window.alert("산정보는 수정이 불가능합니다!")}} >
+                  <Grid 
+                    flexRow 
+                    width="auto" 
+                    hover 
+                    _onClick={()=>{
+                      setModalContent("산정보는 수정이 불가능합니다!");
+                      setModalOpen(true);}}>
                       <Text margin="0 6px" width="auto" size="16px" color="#989898">{mountValue}</Text>
                       <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
                   </Grid>) : (
