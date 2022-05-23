@@ -16,6 +16,7 @@ import {
   Card,
   Header,
   MypageModal,
+  AlertModal,
 } from "../components/component";
 import { Grid, Text, Icon, Image, Button } from "../elements/element";
 
@@ -33,6 +34,7 @@ const Mypage = (props) => {
   const menuColor = [false, false, false, false, true]; // 메뉴바 색
   const img = (userInfo?.userImageUrl !== "없음") ? userInfo?.userImageUrl : "https://user-images.githubusercontent.com/91959791/168119302-948f0dcf-8165-47af-8b6b-2f90f74aca06.png";
   
+  const [modalOpen, setModalOpen] = useState(false);
 
   React.useEffect(() => {
     if (userInfo && token) {
@@ -67,9 +69,11 @@ const Mypage = (props) => {
     navigate(`/searchdetail/${mountainId}`);
   }
 
-  const logOut = () => {
-    dispatch(userActions.logOutDB());
-    navigate("/", { replace: true });
+  const logOut = (check) => {
+    if (check) {
+      dispatch(userActions.logOutDB());
+      navigate("/", { replace: true });
+    }
   }
 
 
@@ -102,6 +106,13 @@ const Mypage = (props) => {
       <Mobile>
         <MypageContainer>
           <Header />
+          { modalOpen && 
+            <AlertModal 
+              type="choice"
+              onClose={setModalOpen} 
+              modalState={modalOpen} 
+              checkFunction={logOut}
+              contents="로그아웃 하실건가요? 😭"/> }
           <MypageWrap>
             <Grid bg="#F5FCF4" padding="96px 25px 23px" height="auto">
               <Grid flexRow>
@@ -122,7 +133,7 @@ const Mypage = (props) => {
                     <Text margin="0" size="20px" bold="600" color="#43CA3B">{userInfo?.nickname}</Text>
                     <Button 
                       padding= "6px 8px" width="auto" height="auto" border="1px solid #43CA3B" radius="4px"
-                      _onClick={logOut}>
+                      _onClick={()=>{setModalOpen(true)}}>
                       <Text size="12px" bold="500" color="#43CA3B" align margin="0">로그아웃</Text>
                     </Button>
                   </Grid>
@@ -141,7 +152,7 @@ const Mypage = (props) => {
                 🚩 정복한 산길
               </Text>
                 <HorizontalScroll>
-                  {fakeDB.completedList?.map((cur, idx) => {
+                  {completedList?.map((cur, idx) => {
                     return (
                     <Grid bg="white" key={idx}  width="auto" height="auto" padding="12px" radius="12px" margin="0 10px 20px 0" _onClick={()=>{moveMytrack(cur.completedId)}} hover>
                         <Grid height="auto" isFlex>
@@ -170,7 +181,7 @@ const Mypage = (props) => {
                     );}
                   )}
                 </HorizontalScroll>
-              <FullMap zoomable={false} data={fakeDB.completedList} />{" "}
+              <FullMap zoomable={false} data={completedList} />{" "}
             </Grid>
             <Grid padding="35px 14px 25px" height="auto">
               <Text bold="600" size="20px" margin="0 0 24px" align="left">
@@ -250,7 +261,6 @@ const Mypage = (props) => {
               </Grid>
             </Grid>
           </MypageWrap>
-
           <MenubarContainer>
             <Grid height="88px" maxWidth="500px" margin="auto">
               <TrackBtn>
@@ -276,6 +286,13 @@ const Mypage = (props) => {
       <Desktop>
         <MypageContainer>
           <Header />
+          { modalOpen && 
+            <AlertModal 
+              type="choice"
+              onClose={setModalOpen} 
+              modalState={modalOpen} 
+              checkFunction={logOut}
+              contents="로그아웃 하실건가요? 😭"/> }
           <MypageWrap>
             <Grid bg="#F5FCF4" padding="96px 25px 23px" height="auto">
               <Grid flexRow>
@@ -296,7 +313,7 @@ const Mypage = (props) => {
                     <Text margin="0" size="20px" bold="600" color="#43CA3B">{userInfo?.nickname}</Text>
                     <Button 
                       padding= "6px 8px" width="auto" height="auto" border="1px solid #43CA3B" radius="4px"
-                      _onClick={logOut}>
+                      _onClick={()=>{setModalOpen(true)}}>
                       <Text size="12px" bold="500" color="#43CA3B" align margin="0">로그아웃</Text>
                     </Button>
                   </Grid>
@@ -317,26 +334,34 @@ const Mypage = (props) => {
                 <HorizontalScroll>
                   {completedList?.map((cur, idx) => {
                     return (
-                    <Grid bg="white" key={idx}  width="156px" height="76px" padding="12px" radius="12px" margin="0 10px 20px 0" _onClick={()=>{moveMytrack(cur.completedId)}} hover>
+                    <Grid bg="white" key={idx}  width="auto" height="auto" padding="12px" radius="12px" margin="0 10px 20px 0" _onClick={()=>{moveMytrack(cur.completedId)}} hover>
                         <Grid height="auto" isFlex>
                           <Text margin="0" bold="600" size="14px">{cur.mountain}</Text>
                           <Grid width="auto" border="1px solid #43CA3B" radius="4px" padding="1px 4px">
-                            <Text margin="0" size="6px" color="#43CA3B">{cur.creatDate}</Text>
+                            <Text margin="0" size="6px" bold="400" color="#43CA3B">{cur.creatDate}</Text>
                           </Grid>
                         </Grid>
-                        <Grid flexRow justify="left" margin="12px 0 4px" height="auto">
-                          <Text margin="0 18px 0 0" size="12px" bold="500" color="#C4C4C4">총 거리</Text>
-                          <Text margin="0" size="12px" bold="500" color="#C4C4C4">소요 시간</Text>
-                        </Grid>
-                        <Grid flexRow justify="left" height="auto">
-                          <Text margin="0 18px 0 0" size="12px" bold="500">{cur.totalDistance}</Text>
-                          <Text margin="0" size="12px" bold="500">{cur.totalTime}</Text>
+                        <Grid flexRow alignItems="flex-start" margin="12px 0 0">
+                          <Grid flexColumn height="auto" alignItems="flex-start" margin="0 18px 0 0" >
+                            <Text margin="0 0 4px" size="12px" bold="500" color="#C4C4C4">총 거리</Text>
+                            <Grid flexRow alignItems="baseline">
+                              <Text margin="0" size="14px" bold="600" color="#43CA3B">{cur.totalDistance}</Text>
+                              <Text margin="0" size="8px" bold="500">km</Text>
+                            </Grid>
+                          </Grid>
+                          <Grid flexColumn height="auto" alignItems="flex-start">
+                            <Text margin="0 0 4px" size="12px" bold="500" color="#C4C4C4">소요 시간</Text>
+                            <Grid flexRow alignItems="baseline">
+                              <Text margin="0" size="14px" bold="600" color="#43CA3B" nowrap>{cur.totalTime}</Text>
+                              {/* <Text margin="0" size="8px" bold="500">시간</Text> */}
+                            </Grid>
+                          </Grid>
                         </Grid>
                     </Grid>
                     );}
                   )}
                 </HorizontalScroll>
-              <FullMap zoomable={false} data={myTrackList} />{" "}
+              <FullMap zoomable={false} data={completedList} />{" "}
             </Grid>
             <Grid padding="35px 14px 25px" height="auto">
               <Text bold="600" size="20px" margin="0 0 24px" align="left">
@@ -416,7 +441,6 @@ const Mypage = (props) => {
               </Grid>
             </Grid>
           </MypageWrap>
-
           <MenubarContainer>
             <Grid height="88px" maxWidth="500px" margin="auto">
               <TrackBtn>

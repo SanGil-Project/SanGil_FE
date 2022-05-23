@@ -30,28 +30,28 @@ const initialState = {};
 const getTopMntDB = () => {
   return function (dispatch, getState) {
 
-    const fakeDB = [
-      {
-        mountainId : 1,
-        mountain : "관악산,",
-        mountainAddress : "서울 관악구",
-        mountainImageUrl : "없음",
-        starAvr: 3,
-        lat : 36.56329698,
-        lng : 127.9172195,
-        },
-        {
-        mountainId : 10,
-        mountain : "북한산",
-        mountainAddress : "서울 은평구",
-        mountainImageUrl : "없음",
-        starAvr: 3,
-        lat : 37.8881266,
-        lng : 127.5492755,
-        }
-    ]
-    dispatch(getTopMnt(fakeDB));
-    return;
+    // const fakeDB = [
+    //   {
+    //     mountainId : 1,
+    //     mountain : "관악산,",
+    //     mountainAddress : "서울 관악구",
+    //     mountainImageUrl : "없음",
+    //     starAvr: 3,
+    //     lat : 36.56329698,
+    //     lng : 127.9172195,
+    //     },
+    //     {
+    //     mountainId : 10,
+    //     mountain : "북한산",
+    //     mountainAddress : "서울 은평구",
+    //     mountainImageUrl : "없음",
+    //     starAvr: 3,
+    //     lat : 37.8881266,
+    //     lng : 127.5492755,
+    //     }
+    // ]
+    // dispatch(getTopMnt(fakeDB));
+    // return;
     api
       .getTopList()
       .then((res) => {

@@ -6,16 +6,17 @@ const REDIRECT_URI = "http://localhost:3000/user/kakao/callback";
 
 const GOOGLE_CLIENT_ID =
   "418085046130-194eqk6jjjmn32gnfiv6g331ooh985de.apps.googleusercontent.com";
-// const GOOGLE_REDIRECT_URI = "http://localhost:3000/user/google/callback";
 // const GOOGLE_REDIRECT_URI = "https://xn--wk0b636a.com/user/google/callback";
 // const GOOGLE_REDIRECT_URI = "https://kopite.shop/user/google/callback";
-const GOOGLE_REDIRECT_URI = "http://localhost:3000/user/google/callback";
+const GOOGLE_REDIRECT_URI = "https://yesleee.shop/user/google/callback";
+// const GOOGLE_REDIRECT_URI = "http://localhost:3000/user/google/callback";
 
 const NAVER_CLIENT_ID = "oq32J_8jgLtjcSRvYUO4";
 const NAVER_CLIENT_SECRET = "dc6LwAfBEL";
 // const NAVER_REDIRECT_URI = "http://localhost:3000/user/naver/callback";
 // const NAVER_REDIRECT_URI = "https://산길.com/user/naver/callback";
-const NAVER_REDIRECT_URI = "https://kopite.shop/user/naver/callback";
+// const NAVER_REDIRECT_URI = "https://kopite.shop/user/naver/callback";
+const NAVER_REDIRECT_URI = "https://yesleee.shop/user/naver/callback";
 
 const randomString = () => {
   const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";

@@ -182,30 +182,30 @@ const myTrackingDB = () => {
   return async function (dispatch, getState) {
 
 
-    const fakeDB = {
-      completedList : [
-      {
-        completedId : 1,
-        mountainId : 1,
-        mountain : "속리산",
-        lat : 36.56329698,
-        lng : 127.9172195,
-        totalDistance: 10.3,
-        totalTime: "4시간 20분 13초",
-      },
-      {
-        completedId : 3,
-        mountainId : 2,
-        mountain : "화악산",
-        lat : 37.8881266,
-        lng : 127.5492755,
-        totalDistance: 20.3,
-        totalTime: "6시간 20분 13초",
-      },
-    ]}
+    // const fakeDB = {
+    //   completedList : [
+    //   {
+    //     completedId : 1,
+    //     mountainId : 1,
+    //     mountain : "속리산",
+    //     lat : 36.56329698,
+    //     lng : 127.9172195,
+    //     totalDistance: 10.3,
+    //     totalTime: "4시간 20분 13초",
+    //   },
+    //   {
+    //     completedId : 3,
+    //     mountainId : 2,
+    //     mountain : "화악산",
+    //     lat : 37.8881266,
+    //     lng : 127.5492755,
+    //     totalDistance: 20.3,
+    //     totalTime: "6시간 20분 13초",
+    //   },
+    // ]}
 
-    dispatch(myTracking(fakeDB));
-    return;
+    // dispatch(myTracking(fakeDB));
+    // return;
     api
       .myTracking()
       .then((res) => {
