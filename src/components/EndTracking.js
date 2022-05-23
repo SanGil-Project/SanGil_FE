@@ -2,11 +2,20 @@ import React from "react";
 import Modal from "react-modal";
 import { Grid, Text, Image, Button } from "../elements/element";
 
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 
 const EndTracking = (props) => {
-  const { name, isOpen, setIsOpen, time, distance } = props;
+  const {
+    name,
+    isOpen,
+    setIsOpen,
+    time,
+    setTime,
+    setDistance,
+    distance,
+    mountainId,
+  } = props;
   const commentCheck = useSelector((state) => state.tracker.comment);
   const navigate = useNavigate();
   const nextTime = () => {
@@ -14,11 +23,21 @@ const EndTracking = (props) => {
   };
 
   const goReview = () => {
-    navigate(`/searchdetail/${name}`);
+    navigate(`/searchdetail/${mountainId}`);
+    setTime({
+      stopwatch: { s: 0, m: 0, h: 0 },
+      isStart: false,
+    });
+    setDistance({ distanceM: 0.0, distanceK: 0.0 });
     setIsOpen(false);
   };
   const goFeed = () => {
     navigate(`/feed`, { replace: true });
+    setTime({
+      stopwatch: { s: 0, m: 0, h: 0 },
+      isStart: false,
+    });
+    setDistance({ distanceM: 0.0, distanceK: 0.0 });
     setIsOpen(false);
   };
 

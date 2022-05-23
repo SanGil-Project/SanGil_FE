@@ -27,54 +27,7 @@ const Comment = (props) => {
 
   return (
     <>
-      <Mobile>
-        <div>
-          <Grid margin="25px auto">
-            <Grid
-              width="93.23%"
-              height="0"
-              border="1px solid #DEDEDE"
-              margin="5px auto"
-            />
-            <Grid
-              maxWidth="93.23%"
-              margin="23px auto 0 auto"
-              height="18px"
-              isFlex
-            >
-              <div>
-                <Grid height="18px" lineHeight="18px" isFlex>
-                  <Star
-                    type="showStar"
-                    width="77px"
-                    starMargin="0 1px"
-                    showIndex={data.star}
-                  />
-                  <Text
-                    maxWidth="57%"
-                    height="18px"
-                    lineHeight="18px"
-                    size="1.4rem"
-                  >
-                    [data.userTitle] {data.username}
-                  </Text>
-                </Grid>
-              </div>
-              <Text bold="500" size="1.4rem" lineHeight="18px">
-                2022.05.03
-              </Text>
-            </Grid>
-            <Grid maxWidth="93.23%" margin="12px 0 0 14px" height="18px" isFlex>
-              <div>
-                <Text size="1.8rem" bold="500" height="18px" lineHeight="18px">
-                  타다가 천국행
-                </Text>
-              </div>
-              <Grid border="1px solid red" width="44px" isFlex></Grid>
-            </Grid>
-          </Grid>
-        </div>
-      </Mobile>
+      <Mobile></Mobile>
 
       <Desktop>
         <div>
@@ -116,7 +69,6 @@ const Comment = (props) => {
               <Grid width="64px" isFlex>
                 {data.userId === userInfo.userId ? (
                   <>
-                    {" "}
                     <Button
                       fontSize="1.2rem"
                       type="div"

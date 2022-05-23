@@ -1,8 +1,9 @@
 import React from "react";
 import { Grid, Text } from "../elements/element";
+import styled from "styled-components";
 
 const StopWatch = (props) => {
-  const { time, setTime, size } = props;
+  const { time, setTime, size, color } = props;
   const curTime = React.useRef();
 
   React.useEffect(() => {
@@ -32,21 +33,35 @@ const StopWatch = (props) => {
   return (
     <div>
       <Grid>
-        <span style={{ fontSize: size }}>{`${
-          time.stopwatch.h < 10
-            ? `0${time.stopwatch.h}:`
-            : `${time.stopwatch.h}:`
-        }`}</span>
-        <span style={{ fontSize: size }}>{`${
-          time.stopwatch.m < 10 ? `0` + time.stopwatch.m : time.stopwatch.m
-        }:`}</span>
-
-        <span style={{ fontSize: size }}>{`${
-          time.stopwatch.s < 10 ? `0` + time.stopwatch.s : time.stopwatch.s
-        }`}</span>
+        <span style={{ fontSize: size, color }}>
+          {`${
+            time.stopwatch.h < 10
+              ? `0${time.stopwatch.h}`
+              : `${time.stopwatch.h}`
+          }`}
+        </span>
+        <Letter>시간</Letter>
+        {` `}
+        <span style={{ fontSize: size, color }}>
+          {`${
+            time.stopwatch.m < 10 ? `0` + time.stopwatch.m : time.stopwatch.m
+          }`}
+        </span>
+        <Letter>분</Letter>
+        {` `}
+        <span style={{ fontSize: size, color }}>
+          {`${
+            time.stopwatch.s < 10 ? `0` + time.stopwatch.s : time.stopwatch.s
+          }`}
+        </span>
+        <Letter>초</Letter>
       </Grid>
     </div>
   );
 };
+
+const Letter = styled.span`
+  fontsize: 1.4rem;
+`;
 
 export default StopWatch;

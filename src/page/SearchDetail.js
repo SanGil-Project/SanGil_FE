@@ -20,13 +20,6 @@ const SearchDetail = () => {
   const { mountainId } = useParams();
   const dispatch = useDispatch();
   const menuColor = [false, false, false, true, false]; // 메뉴바 색
-  const [star, setStar] = React.useState([false, false, false, false, false]);
-  const [comment, setComment] = React.useState();
-  const [updateCmt, setUpdateCmt] = React.useState({
-    content: "",
-    mountainCommentId: 0,
-    state: true,
-  });
   const [selected, setSelected] = React.useState({ idx: 0, state: false });
   const mountain = useSelector((state) => state.mountain.mountainData);
 
@@ -37,50 +30,6 @@ const SearchDetail = () => {
       setSelected({ idx: i, state: false });
     }
   };
-
-  const cmt = React.useCallback(
-    _.debounce((e) => {
-      setComment(e.target.value);
-    }, 500),
-    [comment]
-  );
-
-  const sendComment = () => {
-    if (updateCmt.state) {
-      dispatch(
-        mountAction.addCommentDB(mountainId, {
-          mountainComment: comment,
-          star: star.filter(Boolean).length,
-        })
-      );
-      setComment("");
-      setPageNum(mountain?.commentDto.totalPage);
-    } else {
-      dispatch(
-        mountAction.updateCmtDB({
-          mountainCommentId: updateCmt.mountainCommentId,
-          mountainComment: comment,
-        })
-      );
-      setUpdateCmt({ content: "", state: true, mountainCommentId: 0 });
-      setComment("");
-    }
-  };
-
-  const next = () => {
-    if (mountain?.commentDto.totalPage >= pageNum) {
-      setPageNum((prev) => prev + 1);
-    } else {
-      alert("마지막 댓글입니다");
-    }
-  };
-
-  const prev = () => {
-    if (mountain?.commentDto.currentPage !== 0) {
-      setPageNum((prev) => prev - 1);
-    }
-  };
-
   const like = () => {
     dispatch(mountAction.likeDB(mountainId));
   };
@@ -102,14 +51,13 @@ const SearchDetail = () => {
     <>
       <Desktop>
         <DetailContainer>
-          <Header />
           <Grid overflowY="scroll" height="100vh" padding="74px 0 0 0">
             <Grid width="93.23%" height="48px" margin="0 auto" isFlex>
               <Grid width="30.26%" margin="0" height="48px" flex="flex">
                 <Text
                   margin="0"
-                  bold="400"
-                  size="30px"
+                  bold="600"
+                  size="20px"
                   lineHeight="48px"
                   maxWidth="100px"
                 >
@@ -123,22 +71,26 @@ const SearchDetail = () => {
                   fill={mountain?.bookmark ? "#43ca3b" : "#c4c4c4"}
                 />
               </Grid>
-              {/* <Grid
-                width="90px"
-                height="40px"
-                margin="4px 0"
-                fontSize="1.6rem"
-                textAlign
-                lineHeight="40px"
-                bg="#C4C4C4"
-              >
-                날씨
-              </Grid> */}
             </Grid>
-            <Grid width="93.23%" height="20px" margin="24.5px auto 0 auto">
+            <Grid width="93.23%" height="20px" margin="0 auto" isFlex>
               <Text margin="0" height="18px" size="1.8rem" lineHeight="18px">
-                위치: {mountain?.mountainAddress}
+                {mountain?.mountainAddress}
               </Text>
+
+              <Grid height="20px" width="100px" isFlex>
+                <Grid width="44px" isFlex _onClick={goCmt}>
+                  <Icon width="20px" height="20px" type="comment" />
+                  <Text size="1.4rem" bold="400">
+                    ({mountain?.commentDto.commentLists.length})
+                  </Text>
+                </Grid>
+                <Grid width="50px" isFlex>
+                  <Icon width="20px" height="20px" type="star" />
+                  <Text size="1.4rem" bold="400">
+                    ({mountain?.starAvr})
+                  </Text>
+                </Grid>
+              </Grid>
             </Grid>
             <Grid width="93.23%" height="26.57%" margin="25px auto 20px auto">
               <Image
@@ -173,8 +125,9 @@ const SearchDetail = () => {
                         size="1.8rem"
                         bold="600"
                         lineHeight="18px"
+                        color="#43ca3b"
                       >
-                        코스 {idx + 1}
+                        코스{idx + 1}
                       </Text>
                       <Text size="1.8rem" height="18px" lineHeight="18px">
                         {el.courseTime} 코스
@@ -197,145 +150,20 @@ const SearchDetail = () => {
               border="4px solid #F2F3F6"
               margin="0 auto"
             />
-
-            {/* <Grid height="30px" width="140px" margin="20px 0 0 15px" isFlex>
-              <Grid width="60px" isFlex>
-                <Icon width="20px" height="20px" type="star" />
-                <Text>({mountain?.starAvr})</Text>
-              </Grid>
-              <Grid width="50px" isFlex hover _onClick={goCmt}>
-                <Icon width="20px" height="20px" type="comment" />
-                <Text>({mountain?.commentDto.commentLists.length})</Text>
-              </Grid>
-            </Grid> */}
-            <div>
-              {updateCmt.state ? (
-                <Grid width="93.23%" margin="23px auto 0 auto" isFlex>
-                  <Grid
-                    border="1px solid #C4C4C4"
-                    maxWidth="330px"
-                    height="50px"
-                    margin="0 0 0 7px"
-                    radius="12px"
-                    isFlex
-                  >
-                    <Input
-                      gridWidth="230px"
-                      border="none"
-                      margin="1px 0"
-                      height="46px"
-                      placeholder="댓글과 별점을 남겨보세요!"
-                      _onChange={cmt}
-                    />
-                    <Star
-                      width="77px"
-                      height="18px"
-                      lineHeight="18px"
-                      starMargin="0 1px"
-                      setStar={setStar}
-                    />
-                  </Grid>
-                  <Button
-                    border="none"
-                    maxWidth="50px"
-                    height="50px"
-                    margin="0 1px"
-                    _onClick={sendComment}
-                  >
-                    등록
-                  </Button>
-                </Grid>
-              ) : (
-                <Grid width="93.23%" margin="23px auto 0 auto" isFlex>
-                  <Grid
-                    border="1px solid #C4C4C4"
-                    maxWidth="330px"
-                    height="50px"
-                    margin="0 0 0 7px"
-                    radius="12px"
-                    isFlex
-                  >
-                    <Input
-                      gridWidth="230px"
-                      border="none"
-                      margin="1px 100px 0 0"
-                      height="46px"
-                      defaultValue={updateCmt.content}
-                      _onChange={cmt}
-                    />
-                  </Grid>
-                  <Button
-                    border="none"
-                    maxWidth="50px"
-                    height="50px"
-                    margin="0 1px"
-                    _onClick={sendComment}
-                  >
-                    수정
-                  </Button>
-                </Grid>
-              )}
-            </div>
-            <div>
-              <Grid>
-                {mountain?.commentDto.commentLists.map((el, idx) => {
-                  return (
-                    <Comment
-                      key={idx}
-                      data={el}
-                      setUpdateCmt={setUpdateCmt}
-                      updateCmt={updateCmt.state}
-                    />
-                  );
-                })}
-                <Grid
-                  margin="0 auto"
-                  isFlex
-                  maxWidth={
-                    mountain?.commentDto.currentPage === 0 ||
-                    mountain?.commentDto.currentPage + 1 ===
-                      mountain?.commentDto.totalPage
-                      ? "40px"
-                      : "90px"
-                  }
-                >
-                  {mountain?.commentDto.currentPage !== 0 ? (
-                    <Button
-                      border="none"
-                      type="div"
-                      bgColor="#43ca3b"
-                      width="40px"
-                      fontSize="1.2rem"
-                      height="15px"
-                      color="#fff"
-                      radius="10px"
-                      hover
-                      _onClick={prev}
-                    >
-                      이전
-                    </Button>
-                  ) : null}
-                  {mountain?.commentDto.totalPage === 0 ||
-                  mountain?.commentDto.currentPage + 1 ===
-                    mountain?.commentDto.totalPage ? null : (
-                    <Button
-                      border="none"
-                      type="div"
-                      bgColor="#43ca3b"
-                      width="40px"
-                      fontSize="1.2rem"
-                      height="15px"
-                      color="#fff"
-                      radius="10px"
-                      hover
-                      _onClick={next}
-                    >
-                      다음
-                    </Button>
-                  )}
-                </Grid>
-              </Grid>
-            </div>
+            <Grid width="340px" height="48px" margin="15px auto">
+              <Button
+                type="div"
+                border="none"
+                bgColor="#43CA3B"
+                color="#fff"
+                width="100%"
+                height="48px"
+                radius="4px"
+                _onClick={goCmt}
+              >
+                댓글 보러가기
+              </Button>
+            </Grid>
           </Grid>
           <MenubarContainer>
             <Grid height="88px" maxWidth="500px" margin="auto">

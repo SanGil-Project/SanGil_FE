@@ -33,14 +33,14 @@ const FeedDetail = () => {
 
   React.useEffect(() => {
     if (!feedList.totalPage || feedList.totalPage >= pageNum) {
-      dispatch(getFeedDB(1));
+      dispatch(getFeedDB(pageNum));
     }
 
-    // window.addEventListener("scroll", scroll);
-    // return () => {
-    //   window.removeEventListener("scroll", scroll);
-    // };
-  }, []);
+    window.addEventListener("scroll", scroll);
+    return () => {
+      window.removeEventListener("scroll", scroll);
+    };
+  }, [pageNum]);
 
   return (
     <>
