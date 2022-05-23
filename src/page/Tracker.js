@@ -140,15 +140,14 @@ const Tracker = (props) => {
         dispatch(
           endClimbDB(completedId, {
             totalDistance: distance.distanceK,
-            totalTime: `${time.stopwatch.h}시간 ${time.stopwatch.m}분 ${time.stopwatch.s}초`,
+            totalTime: `${time.stopwatch.h}:${time.stopwatch.m}:${time.stopwatch.s}`,
           })
         );
         setIsOpen(true);
         setTime({
-          stopwatch: { s: 0, m: 0, h: 0 },
+          ...time,
           isStart: false,
         });
-        setDistance({ distanceM: 0.0, distanceK: 0.0 });
         setCompletedId();
         releaseWakeLock();
       }
@@ -287,37 +286,34 @@ const Tracker = (props) => {
               padding="16px 0 0 0"
               margin="0 auto"
             >
-              <Text align="center" size="2rem" bold="600" margin="0 0 19px 0">
-                {name}
-              </Text>
               <Grid
-                width="250px"
+                width="342px"
                 height="60px"
                 isFlex
                 margin="20px auto 0 auto"
               >
                 <Grid width="100px">
-                  <Text align="center" color="#C4C4C4" margin="0">
+                  <Text color="#C4C4C4" margin="0">
                     이동한 거리
                   </Text>
-                  <Text margin="0 auto" align="center">
-                    <span style={{ fontSize: "2.5rem" }}>
+                  <Text margin="7px 0 0 0">
+                    <span style={{ fontSize: "2.5rem", color: "#43ca3b" }}>
                       {distance.distanceK}
                     </span>
                     km
                   </Text>
                 </Grid>
-                <Grid width="120px">
-                  <Text margin="0" align="center" color="#C4C4C4">
+                <Grid width="180px">
+                  <Text margin="0" color="#C4C4C4">
                     소요 시간
                   </Text>
-                  <Grid
-                    width="100px"
-                    textAlign
-                    lineHeight="25px"
-                    margin="0 auto"
-                  >
-                    <StopWatch size="2.5rem" time={time} setTime={setTime} />
+                  <Grid width="220px" height="25px" margin="7px 0 0 0">
+                    <StopWatch
+                      size="2.5rem"
+                      time={time}
+                      setTime={setTime}
+                      color="#43ca3b"
+                    />
                   </Grid>
                 </Grid>
               </Grid>
@@ -344,7 +340,8 @@ const Tracker = (props) => {
                       잠시 쉬기
                     </Button>
                     <Button
-                      bgColor="black"
+                      border="none"
+                      bgColor="#43CA3B"
                       color="#fff"
                       width="166px"
                       height="48px"
@@ -356,7 +353,8 @@ const Tracker = (props) => {
                   </>
                 ) : !completedId ? (
                   <Button
-                    bgColor="black"
+                    border="none"
+                    bgColor="#43CA3B"
                     color="#fff"
                     width="100%"
                     height="48px"
@@ -391,7 +389,10 @@ const Tracker = (props) => {
               isOpen={true}
               setIsOpen={setIsOpen}
               time={time.stopwatch}
+              setTime={setTime}
+              setDistance={setDistance}
               distance={distance.distanceK}
+              mountainId={mountainId}
             />
           ) : null}
         </Grid>

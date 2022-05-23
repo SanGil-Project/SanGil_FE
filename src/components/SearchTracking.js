@@ -37,10 +37,10 @@ const SearchTracking = (props) => {
       right: 0,
       bottom: 0,
       backgroundColor: "rgba(000, 000, 000, 0.45)",
-      zIndex: 101,
+      zIndex: 10000,
     },
     content: {
-      display: "flex",
+      display: "fixed",
       justifyContent: "center",
       background: "#fff",
       overflow: "auto",
@@ -85,21 +85,21 @@ const SearchTracking = (props) => {
               <Grid
                 key={idx}
                 height="52px"
-                margin="9px 0"
                 isFlex
                 hover
                 _onClick={() => select(el)}
               >
                 <Grid
-                  border="1px solid lightgreen"
+                  border="2px solid #43CA3B"
                   bg="#fff"
-                  maxWidth="136px"
-                  height="38px"
+                  maxWidth="82px"
+                  height="30px"
                   textAlign="center"
-                  fontSize="1.8rem"
-                  lineHeight="38px"
+                  fontSize="1.4rem"
+                  lineHeight="25px"
                   radius="30px"
                   margin="7px 0 7px 10px"
+                  color="#43CA3B"
                 >
                   {searchData[idx].mountain}
                 </Grid>
@@ -110,7 +110,7 @@ const SearchTracking = (props) => {
                     margin="0 0 0 10px"
                     textOverflow="ellipsis"
                     size="1.6rem"
-                    lineHeight="23px"
+                    lineHeight="20px"
                   >
                     {searchData[idx].mountainAddress}
                   </Text>

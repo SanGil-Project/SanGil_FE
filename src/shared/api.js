@@ -56,13 +56,11 @@ export const api = {
       lat: loca.lat,
       lng: loca.lng,
     }),
-  endClimb: (completedId, data) => (
-    `/api/tracking/${completedId}`,
-    {
+  endClimb: (completedId, data) =>
+    instance.put(`/api/tracking/${completedId}`, {
       totalDistance: data.totalDistance,
       totalTime: data.totalTime,
-    }
-  ),
+    }),
   deleteDB: (completedId) => instance.get(`/api/tracking/${completedId}`),
   getMytrack: (completedid) =>
     instance.get(`/api/tracking/detail/${completedid}`),
@@ -133,8 +131,6 @@ export const api = {
     }),
   like: (mountainId) =>
     instance.post(`/api/mountain/bookmark/${mountainId}`, { mountainId }),
-
-  // trancker.js
 
   // party.js
   getMyParty: () => instance.get("/api/plan"),
