@@ -24,7 +24,7 @@ const ChatRoom = (props) => {
 
   // const sockJs = new SockJS("http://13.125.232.76:8080/ws-stomp"); // 서버주소/ws-stomp
   // const sockJs = new SockJS("http://52.79.228.126:8080/ws-stomp"); // 서버주소/ws-stomp
-  const sockJs = new SockJS("http://3.37.128.96:8080/ws-stomp"); // 서버주소/ws-stomp
+  const sockJs = new SockJS("http://15.164.232.187:8080/ws-stomp"); // 서버주소/ws-stomp
   const stomp = Stomp.over(sockJs);
 
   function ConnectSub(token) {
@@ -50,7 +50,7 @@ const ChatRoom = (props) => {
           dispatch(chatActions.getChatDB(chatRoomId));
           stomp.send(
             "/pub/chat/message", { token: token }, JSON.stringify({
-              roomId: parseInt(chatRoomId), sender: _userInfo.nickname, type: 'ENTER',})
+              roomId: chatRoomId, sender: _userInfo.nickname, type: 'ENTER',})
           )
         });
     } catch (err) {
