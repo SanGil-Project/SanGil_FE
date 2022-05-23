@@ -166,7 +166,13 @@ const MypageEdit = (props) => {
       <Desktop>
         <MypageContainer>
           <Header />
-          <Grid padding="69px 43px 23px" height="auto">
+          { modalOpen && 
+            <AlertModal 
+              type="check"
+              onClose={setModalOpen} 
+              modalState={modalOpen}
+              contents={modalContent}/> }
+          <Grid padding="69px 36px 10px" height="auto">
             <Grid flexColumn height="auto" padding="5px 0">
               <UserProfile>
                 <Label className="input_file_button" htmlFor="input_image">
@@ -190,26 +196,22 @@ const MypageEdit = (props) => {
                 <Button width="auto" height="23px" padding="4.5px 10px" bgColor={checkBtnColor} radius="4px" border="none" _onClick={changeName}>
                   <Text margin="0" color="#fff" align size="12px" bold="600">변경</Text>
                 </Button>
-                {/* {checkType ? 
-                <Icon type="checkBtn" width="24px" height="24px" margin="0 auto" check="#6F6F6F" checkColor={checkColor} _onClick={changeName}/> : 
-                <Icon type="errorBtn" width="24px" height="24px" margin="0 auto" _onClick={changeName}/>} */}
               </Grid>
             </Grid>
-            <Grid height="auto" padding="0 0 20px 0">
+            <Grid height="auto" padding="0">
               <TitleList>
                 {userTitleList?.map((t, idx) => {
                   const pick = (userInfo?.userTitle === t.userTitle) ? true : false;
                   const img = (t.userTitleImgUrl === "없음") ? "https://user-images.githubusercontent.com/91959791/169658309-a910c67d-7ae2-4895-b6be-a155dcfaf5bb.png" : t.userTitleImgUrl;
                   return (
-                    <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} width="100px" margin="0 14px 0 0" height="164px">
+                    <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} margin="0 7px" width="100px" height="164px">
                       <TitleItem key={idx} title={t.userTitle} img={img} pick={pick} done/>
                     </Grid> 
                   );
-                  
                 })}
                 {noTitleList?.map((t, idx) => {
                   return (
-                    <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} width="100px" height="164px">
+                    <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} margin="0 7px" width="100px" height="164px">
                       <TitleItem key={idx} title={t.userTitle} img={img}/>
                     </Grid>
                   );

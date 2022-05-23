@@ -111,7 +111,7 @@ const PartyWrite = (props) => {
 
   let btnColor = "#E6E6E6";
   let btnTextColor = "#000";
-  if (partyName !== "" && dateValue !== "선택" && timeValue !== "선택" && numberValue && partyContent !== "") {
+  if (partyName !== "" && mountValue !=="선택" && dateValue !== "선택" && timeValue !== "선택" && numberValue && partyContent !== "") {
     btnColor = "#43CA3B";
     btnTextColor = "#fff";
   }
