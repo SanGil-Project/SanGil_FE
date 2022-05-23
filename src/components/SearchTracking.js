@@ -1,5 +1,6 @@
 import React from "react";
-import Modal from "react-modal";
+import styled,{keyframes} from "styled-components";
+// import Modal from "react-modal";
 import { Grid, Icon, Input, Text } from "../elements/element";
 import { useNavigate } from "react-router";
 import { searchNameDB } from "../redux/modules/tracker";
@@ -29,37 +30,38 @@ const SearchTracking = (props) => {
     }
   }, [name]);
 
-  const style = {
-    overlay: {
-      position: "fixed",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: "rgba(000, 000, 000, 0.45)",
-      zIndex: 10000,
-    },
-    content: {
-      display: "fixed",
-      justifyContent: "center",
-      background: "#fff",
-      overflow: "auto",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      WebkitOverflowScrolling: "touch",
-      borderRadius: "14px",
-      outline: "none",
-      zIndex: 10,
-      maxWidth: "375px",
-      height: "447px",
-      margin: "220px auto 0 auto",
-    },
-  };
+  // const style = {
+  //   overlay: {
+  //     position: "fixed",
+  //     top: 0,
+  //     left: 0,
+  //     right: 0,
+  //     bottom: 0,
+  //     backgroundColor: "rgba(000, 000, 000, 0.45)",
+  //     zIndex: 10000,
+  //   },
+  //   content: {
+  //     display: "fixed",
+  //     justifyContent: "center",
+  //     background: "#fff",
+  //     overflow: "auto",
+  //     top: 0,
+  //     left: 0,
+  //     right: 0,
+  //     bottom: 0,
+  //     WebkitOverflowScrolling: "touch",
+  //     borderRadius: "14px",
+  //     outline: "none",
+  //     zIndex: 10,
+  //     maxWidth: "375px",
+  //     height: "447px",
+  //     margin: "220px auto 0 auto",
+  //   },
+  // };
 
   return (
-    <Modal isOpen={isOpen} style={style}>
+    // <Modal isOpen={isOpen} style={style}>
+    <Modal>
       <Grid>
         <Grid
           border="1px solid black"
@@ -122,5 +124,50 @@ const SearchTracking = (props) => {
     </Modal>
   );
 };
+
+const FadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
+const FadeOut = keyframes`
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
+const Modal = styled.div`
+  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  height: 100vh;
+  padding: 25vh 20px;
+  box-sizing: border-box;
+
+  animation: ${(props) => (props.modalState ? FadeIn : FadeOut)} 0.2s ease-out
+    alternate;
+  .modal_container {
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 1px 3px 10px rgba(69, 69, 69, 0.2);
+    padding: 73px 26px 52px;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0 auto;
+  }
+`;
 
 export default SearchTracking;
