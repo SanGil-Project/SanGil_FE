@@ -13,7 +13,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import StopWatch from "../components/StopWatch";
 import { useNavigate } from "react-router";
-import _ from "lodash";
 
 const Tracker = (props) => {
   const [name, setName] = useState();
@@ -100,7 +99,7 @@ const Tracker = (props) => {
           { enableHighAccuracy: true }
         );
       }
-    }, 5000);
+    }, 3000);
     return () => clearTimeout(path.current);
   }, [myLoca]);
 
