@@ -15,9 +15,12 @@ const AlertModal = (props) => {
     return checkFunction(true);
   }
   const checkBtn = () => {
+    if (checkFunction) {
+      onClose(false);
+      return checkFunction(true);
+    }
     onClose(false);
   }
-  console.log(contents);
 
   if (type === "choice") {
     return (

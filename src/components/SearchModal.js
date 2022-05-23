@@ -31,28 +31,49 @@ const SearchModal = (props) => {
 
   return (
     <SearchModalContainer>
-      <Grid>         
+      <Grid>
+        <Grid isFlex>
+          <Grid
+            height="55px"
+            padding="15px 13px" 
+            border="1px solid #D2D2D2"
+            radius="12px"
+            bg="#fff"
+            isFlex
+          >
+            <Icon type="searchIcon" width="30px" height="37px" margin="0 auto" />
+            <Input
+              width="100%" border="none" padding="0" margin="0 5.5px"
+              size="1.6rem"
+              placeholder="산의 이름을 입력해주세요."
+              _onChange={getName}
+            ></Input>
+          </Grid>    
+          <Button margin="0 7px 0 19px" padding="0" border="none" width="auto" _onClick={()=>{onClose(false);}}>
+            <Text margin="0" color="#6F6F6F">취소</Text>
+          </Button> 
+        </Grid>    
         <Grid>
           {searchData
             ? searchData.map((el, idx) => (
                 <Grid
                   key={idx}
-                  margin="18px 10px"
+                  margin="21px 0 0"
                   isFlex
                   hover
                   _onClick={() => {selectMt(el)}}
                 >
                   <Grid
-                    border="1px solid #636363"
+                    flexRow
+                    border="2px solid #43CA3B"
                     bg="#fff"
                     width="auto"
                     height="38px"
-                    textAlign="center"
                     radius="30px"
-                    padding="10px 20px"
-                    margin="0 16px 0 0"
+                    padding="6px 15px"
+                    margin="0 10px 0 0"
                   >
-                    <Text margin="0" width="auto">{searchData[idx].mountain}</Text>
+                    <Text margin="0" width="auto" size="14px" bold="600" color="#43CA3B">{searchData[idx].mountain}</Text>
                   </Grid>
                   <Grid height="23px">
                     <Text
@@ -68,23 +89,6 @@ const SearchModal = (props) => {
               ))
             : null}
         </Grid>
-        <Grid
-          height="55px"
-          padding="15px 13px" 
-          border="1px solid #636363"
-          radius="40px"
-          bg="#fff"
-          isFlex
-        >
-          <Icon type="searchIcon" width="30px" height="37px" margin="0 auto" />
-          <Input
-            width="100%" border="none" padding="0" margin="0 5.5px"
-            size="1.6rem"
-            placeholder="어떤 산을 찾고 계신가요?"
-            _onChange={getName}
-          ></Input>
-          <Button border="none" width="50px" _onClick={()=>{onClose(false);}}>취소</Button>
-        </Grid>
       </Grid>
 
     </SearchModalContainer>
@@ -92,10 +96,7 @@ const SearchModal = (props) => {
 };
 
 const SearchModalContainer = styled.div`
-  border-top-right-radius: 40px;
-  border-top-left-radius: 40px;
-  background-color: #eee;
-  padding: 10px
+  padding: 16px 16px 25px;
 `;
 
 export default SearchModal;

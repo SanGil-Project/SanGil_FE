@@ -11,7 +11,7 @@ import DatePicker from "react-datepicker";
 import ko from "date-fns/locale/ko";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { Menubar, Header, ScrollTime } from '../components/component';
+import { Menubar, Header, ScrollTime, AlertModal } from '../components/component';
 import { Desktop, Mobile } from "../shared/responsive";
 
 import { Grid, Text, Icon, Button, Input, Image } from '../elements/element';
@@ -40,7 +40,7 @@ const PartyWrite = (props) => {
   const [dateValue, setDateValue] = React.useState(is_edit ? partyItem?.partyDate : "선택");
   const [timeValue, setTimeValue] = React.useState(is_edit ? partyItem?.partyTime :"선택");
   const [numberValue, setNumberValue] = React.useState(is_edit ? partyItem?.maxPeople : null);
-  const [mountValue, setMountValue] = React.useState(is_edit ? partyItem?.mountain :"선택");
+  const [mountValue, setMountValue] = React.useState(is_edit ? partyItem?.mountain :"검색");
   const [mountAddValue, setMountAddValue] = React.useState(is_edit ? partyItem?.address :"");
 
   const [startDate, setStartDate] = useState(new Date());
@@ -48,6 +48,8 @@ const PartyWrite = (props) => {
   const [dateHandle, setDateHandle] = useState(false);
   const [timeOpen, setTimeOpen] = useState(false);
   const [timeHandle, setTimeHandle] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchHandle, setSearchHandle] = useState(false);
   
   React.useEffect(() => {
     const pagename = is_edit ? "등산 모임 수정하기" : "등산 모임 만들기";
@@ -59,6 +61,9 @@ const PartyWrite = (props) => {
   };
   const handleTimeModal = () => {
     setTimeOpen(false);
+  };
+  const handleSearchModal = () => {
+    setSearchOpen(false);
   };
   const saveDateModal = () => {
     const year = startDate.getFullYear();
@@ -88,6 +93,8 @@ const PartyWrite = (props) => {
   
   const [isOpen, setIsOpen] = useState(false);
   const [complete, setcomplete] = useState(is_edit ? true : false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState("");
 
   const inputName = (e) => {
     setPartyName(e.target.value);
@@ -111,37 +118,48 @@ const PartyWrite = (props) => {
 
   let btnColor = "#E6E6E6";
   let btnTextColor = "#000";
-  if (partyName !== "" && mountValue !=="선택" && dateValue !== "선택" && timeValue !== "선택" && numberValue && partyContent !== "") {
+  if (partyName !== "" && mountValue !=="검색" && dateValue !== "선택" && timeValue !== "선택" && numberValue && partyContent !== "") {
     btnColor = "#43CA3B";
     btnTextColor = "#fff";
   }
 
   const addParty = () => {
+    if (partyName === "" || mountValue==="검색" || mountAddValue==="" || dateValue==="선택" || timeValue==="선택" || numberValue==="" || partyContent==="") {
+      setModalContent("입력되지 않은 부분이 있습니다!");
+      setModalOpen(true)
+      return;
+    }
     if (numberValue <= 0) {
-      window.alert("인원수는 자연수로만 입력해주세요!")
+      setModalContent("인원수는 자연수로만 입력해주세요!")
+      setModalOpen(true)
       return;
     }
     if (numberValue % 1 !== 0) {
-      window.alert("인원수는 소수를 포함할 수 없어요!!");
+      setModalContent("인원수는 소수를 포함할 수 없어요!!");
+      setModalOpen(true)
       return;
     }
-    if (partyName === "" || mountValue==="선택" || mountAddValue==="" || dateValue==="선택" || timeValue==="선택" || numberValue==="" || partyContent==="") {
-      (numberValue==="") ? window.alert("인원수는 0을 제외한 숫자로만 입력해주세요!") : window.alert("입력되지 않은 부분이 있습니다!");
-      return;
-    }
+    // if (partyName === "" || mountValue==="검색" || mountAddValue==="" || dateValue==="선택" || timeValue==="선택" || numberValue==="" || partyContent==="") {
+    //   (numberValue==="") ? setModalContent("인원수는 0을 제외한 숫자로만 입력해주세요!") : setModalContent("입력되지 않은 부분이 있습니다!");
+    //   setModalOpen(true)
+    //   return;
+    // }
     if (dateValue === dateString) {
       const tempT = timeValue.split(":");
       if (parseInt(tempT[0]) === parseInt(hours)) {
         if (parseInt(tempT[1]) <= parseInt(minutes)) {
-          window.alert("선택된 시간은 이미 지났습니다!!")
+          setModalContent("선택된 시간은 이미 지났습니다!!");
+          setModalOpen(true);
           return;
         }
       } else if (parseInt(tempT[0]) < parseInt(hours)) {
-        window.alert("선택된 날짜는 이미 지났습니다!!")
+        setModalContent("선택된 시간은 이미 지났습니다!!");
+        setModalOpen(true);
         return;
       }
     } else if (dateValue < dateString) {
-      window.alert("선택된 날짜는 이미 지났습니다!!")
+      setModalContent("선택된 날짜는 이미 지났습니다!!");
+      setModalOpen(true);
       return;
     }
     if (is_edit) {
@@ -156,8 +174,8 @@ const PartyWrite = (props) => {
         partyContent : partyContent,
       }
       dispatch(partyActions.editPartyDB(partyId, partyData));
-      window.alert("수정 완료!");
-      navigate(`/party`);
+      setModalContent("수정 완료!");
+      setModalOpen(true);
       return;
     }
     const num = parseInt(numberValue);
@@ -171,8 +189,14 @@ const PartyWrite = (props) => {
       partyContent : partyContent,
     }
     dispatch(partyActions.addPartyDB(partyData));
-    window.alert("작성 완료!");
-    navigate(`/party`);
+    setModalContent("작성 완료!");
+    setModalOpen(true);
+  }
+
+  const movePage = (check) => {
+    if (check) {
+      navigate(`/party`, { replace: true });
+    }
   }
 
   return (
@@ -180,6 +204,13 @@ const PartyWrite = (props) => {
       <Mobile>
       <PartyContainer>
         <Header />
+        { modalOpen && 
+          <AlertModal 
+            type="check"
+            onClose={setModalOpen} 
+            modalState={modalOpen}
+            contents={modalContent}
+            checkFunction={movePage}/> }
         <PartyWrap>
           <Grid padding="96px 14px 100px">
             <Grid>
@@ -302,15 +333,41 @@ const PartyWrite = (props) => {
               <Grid isFlex margin="24px 0">
                 <Text margin="0" size="16px" bold="600">위치</Text>
                 {is_edit ? (
-                  <Grid flexRow width="auto" hover _onClick={()=>{window.alert("산정보는 수정이 불가능합니다!")}} >
+                  <Grid 
+                    flexRow 
+                    width="auto" 
+                    hover 
+                    _onClick={()=>{
+                      setModalContent("산정보는 수정이 불가능합니다!");
+                      setModalOpen(true);}}>
                       <Text margin="0 6px" width="auto" size="16px" color="#989898">{mountValue}</Text>
                       <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
                   </Grid>) : (
-                  <Grid flexRow _onClick={()=>{setIsOpen(true)}} hover width="auto">
+                  <Grid 
+                    flexRow 
+                    _onClick={()=>{setSearchOpen(!searchOpen); setSearchHandle(true);}}
+                    hover 
+                    width="auto">
                     <Text margin="0 6px" width="auto" size="16px" color="#989898">{mountValue}</Text>
                     <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
                   </Grid>
                 )}
+                { searchHandle && 
+                  <DateModal className="dateModal" modalOpen={searchOpen}>
+                    <div className="modal_container">
+                      <Grid height="auto">  
+                        <SearchModal selectMnt={selectMnt} onClose={setSearchOpen}/>
+                      </Grid>
+                      {/* <Grid flexRow height="auto" padding="10px 20px">
+                        <Button _onClick={handleSearchModal} margin="0 10px 0 0" radius="8px" border="none" bgColor="#E6E6E6">
+                          <Text margin="0 auto" align bold="700">취소</Text>
+                        </Button>
+                        <Button _onClick={saveTimeModal} radius="8px" border="none" bgColor="#43CA3B">
+                          <Text margin="0 auto" align color="white" bold="700">확인</Text>
+                        </Button>
+                      </Grid> */}
+                    </div>
+                  </DateModal>}
               </Grid>
               
             </Grid>
@@ -331,10 +388,10 @@ const PartyWrite = (props) => {
           </Grid>
 
         </PartyWrap>
-        {isOpen && 
+        {/* {isOpen && 
         <ModalContainer>
           <SearchModal onClose={setIsOpen} selectMnt={selectMnt}/>
-        </ModalContainer>}
+        </ModalContainer>} */}
         <MenubarContainer>
           <Grid height="88px" maxWidth="500px" margin="auto">
             <Menubar menuColor={menuColor}/>
@@ -347,6 +404,12 @@ const PartyWrite = (props) => {
     <Desktop>
       <PartyContainer>
         <Header />
+        { modalOpen && 
+          <AlertModal 
+            type="check"
+            onClose={setModalOpen} 
+            modalState={modalOpen}
+            contents={modalContent}/> }
         <PartyWrap>
           <Grid padding="96px 14px 100px">
             <Grid>
@@ -473,11 +536,31 @@ const PartyWrite = (props) => {
                       <Text margin="0 6px" width="auto" size="16px" color="#989898">{mountValue}</Text>
                       <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
                   </Grid>) : (
-                  <Grid flexRow _onClick={()=>{setIsOpen(true)}} hover width="auto">
+                  <Grid 
+                    flexRow 
+                    _onClick={()=>{setSearchOpen(!searchOpen); setSearchHandle(true);}}
+                    hover 
+                    width="auto">
                     <Text margin="0 6px" width="auto" size="16px" color="#989898">{mountValue}</Text>
                     <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
                   </Grid>
                 )}
+                { searchHandle && 
+                  <DateModal className="dateModal" modalOpen={searchOpen}>
+                    <div className="modal_container">
+                      <Grid height="auto">  
+                        <SearchModal selectMnt={selectMnt} onClose={setSearchOpen}/>
+                      </Grid>
+                      {/* <Grid flexRow height="auto" padding="10px 20px">
+                        <Button _onClick={handleSearchModal} margin="0 10px 0 0" radius="8px" border="none" bgColor="#E6E6E6">
+                          <Text margin="0 auto" align bold="700">취소</Text>
+                        </Button>
+                        <Button _onClick={saveTimeModal} radius="8px" border="none" bgColor="#43CA3B">
+                          <Text margin="0 auto" align color="white" bold="700">확인</Text>
+                        </Button>
+                      </Grid> */}
+                    </div>
+                  </DateModal>}
               </Grid>
               
             </Grid>
@@ -498,10 +581,10 @@ const PartyWrite = (props) => {
           </Grid>
 
         </PartyWrap>
-        {isOpen && 
+        {/* {isOpen && 
         <ModalContainer>
           <SearchModal onClose={setIsOpen} selectMnt={selectMnt}/>
-        </ModalContainer>}
+        </ModalContainer>} */}
         <MenubarContainer>
           <Grid height="88px" maxWidth="500px" margin="auto">
             <Menubar menuColor={menuColor}/>
