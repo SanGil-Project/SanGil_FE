@@ -169,37 +169,11 @@ const Login = (props) => {
                     hover
                   >
                     <Grid margin="0 0 0 18px" width="250px" isFlex>
-                      <Naver
-                        viewBox="0 0 27 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xlink="http://www.w3.org/1999/xlink"
-                      >
-                        <rect
-                          width="26.7692"
-                          height="24"
-                          fill="url(#pattern0)"
-                        />
-                        <defs>
-                          <pattern
-                            id="pattern0"
-                            patternContentUnits="objectBoundingBox"
-                            width="1"
-                            height="1"
-                          >
-                            <use
-                              href="#image0_577_7089"
-                              transform="translate(0 -0.0019231) scale(0.02 0.0223077)"
-                            />
-                          </pattern>
-                          <image
-                            id="image0_577_7089"
-                            width="50"
-                            height="45"
-                            href="data:image/png;base64,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"
-                          />
-                        </defs>
-                      </Naver>
+                      <Image
+                        width="27px"
+                        height="24px"
+                        src={require("../assets/images/naverLogo.png")}
+                      />
                       <Text bold="600" size="1.6rem" color="#fff">
                         네이버 아이디로 로그인
                       </Text>
@@ -254,11 +228,6 @@ const A = styled.a`
 const Kakao = styled.svg`
   width: 24px;
   height: 22px;
-`;
-
-const Naver = styled.svg`
-  width: 27px;
-  height: 24px;
 `;
 
 <svg

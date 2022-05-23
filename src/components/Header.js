@@ -19,15 +19,14 @@ const Header = () => {
     }
   }, []);
 
-  const url = location.pathname
+  const url = location.pathname;
   const mainpage = ["/main", "/mypage", "/feed", "/party", "/search"];
-  const noBack = mainpage.includes(url)
+  const noBack = mainpage.includes(url);
 
   return (
     <>
       {/* <Mobile>
         <Grid
-          maxWidth="500px"
           height="64px"
           bg="#FFFFFF"
           position="fixed"
@@ -52,63 +51,72 @@ const Header = () => {
             </Grid>
           </Grid>
         </Grid>
-      </Mobile>
+      </Mobile> */}
 
-      <Desktop> */}
-        <Grid
-          maxWidth="500px"
-          height="64px"
-          bg="#FFFFFF"
-          position="fixed"
-          zindex="100"
-          borderBottom="1px solid #DEDEDE"
-        >
-          <Grid width="460px" margin="0 auto" isFlex>
-            {noBack ? (
-              <>
-                <Grid maxWidth="280px" margin="0 0 0 39.2%" isFlex>
-                  <Grid
-                    maxWidth="89px"
-                    height="34px"
-                    lineHeight="34px"
-                    bg="#fff"
-                    fontSize="1.6rem"
-                    textAlign
-                  >
-                    <Image
-                      width="auto"
-                      height="auto"
-                      margin="5px 0 0"
-                      src="https://user-images.githubusercontent.com/91959791/168339851-d18da908-8213-49a7-a365-9cad6a0e862e.png"
-                    />
-                  </Grid>
-                </Grid>
-              </>
-            ) : (
-              <>
-                <Grid width="auto" height="auto" _onClick={() => navigate(-1)} hover>
-                  <Icon type="headerBack" width="12px" height="20px" margin="0 auto" />
-                </Grid>
+      {/* <Desktop> */}
+      <Grid
+        maxWidth="500px"
+        height="64px"
+        bg="#FFFFFF"
+        position="fixed"
+        zindex="100"
+        borderBottom="1px solid #DEDEDE"
+      >
+        <Grid width="460px" margin="0 auto" isFlex>
+          {noBack ? (
+            <>
+              <Grid maxWidth="280px" margin="0 0 0 39.2%" isFlex>
                 <Grid
-                  flexRow
+                  maxWidth="89px"
+                  height="34px"
+                  lineHeight="34px"
                   bg="#fff"
                   fontSize="1.6rem"
-                  margin="0 5px 0 0"
+                  textAlign
                 >
-                  {isPagename ? 
-                    <Text margin="0" size="18px" bold="600">{isPagename}</Text> : 
-                    <Image
-                      width="auto"
-                      height="auto"
-                      margin="5px 0 0"
-                      src="https://user-images.githubusercontent.com/91959791/168339851-d18da908-8213-49a7-a365-9cad6a0e862e.png"
-                    />}
+                  <Image
+                    width="auto"
+                    height="auto"
+                    margin="5px 0 0"
+                    src="https://user-images.githubusercontent.com/91959791/168339851-d18da908-8213-49a7-a365-9cad6a0e862e.png"
+                  />
                 </Grid>
-                <Grid width="12px" height="20px"></Grid>
-              </>
-            )}
-          </Grid>
+              </Grid>
+            </>
+          ) : (
+            <>
+              <Grid
+                width="auto"
+                height="auto"
+                _onClick={() => navigate(-1)}
+                hover
+              >
+                <Icon
+                  type="headerBack"
+                  width="12px"
+                  height="20px"
+                  margin="0 auto"
+                />
+              </Grid>
+              <Grid flexRow bg="#fff" fontSize="1.6rem" margin="0 5px 0 0">
+                {isPagename ? (
+                  <Text margin="0" size="18px" bold="600">
+                    {isPagename}
+                  </Text>
+                ) : (
+                  <Image
+                    width="auto"
+                    height="auto"
+                    margin="5px 0 0"
+                    src="https://user-images.githubusercontent.com/91959791/168339851-d18da908-8213-49a7-a365-9cad6a0e862e.png"
+                  />
+                )}
+              </Grid>
+              <Grid width="12px" height="20px"></Grid>
+            </>
+          )}
         </Grid>
+      </Grid>
       {/* </Desktop> */}
     </>
   );

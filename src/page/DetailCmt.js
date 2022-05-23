@@ -80,18 +80,84 @@ const DetailCmt = () => {
         <DetailContainer>
           <Header />
           <Grid height="64px" />
+          <Grid height="60px" margin="10px auto">
+            {updateCmt.state ? (
+              <Grid width="93.23%" margin="0 auto" isFlex>
+                <Grid
+                  border="1px solid #C4C4C4"
+                  maxWidth="330px"
+                  height="50px"
+                  margin="0 0 0 7px"
+                  radius="12px"
+                  isFlex
+                >
+                  <Input
+                    gridWidth="230px"
+                    border="none"
+                    margin="1px 0"
+                    height="46px"
+                    placeholder="댓글과 별점을 남겨보세요!"
+                    _onChange={cmt}
+                  />
+                  <Star
+                    width="77px"
+                    height="18px"
+                    lineHeight="18px"
+                    starMargin="0 1px"
+                    setStar={setStar}
+                  />
+                </Grid>
+                <Button
+                  border="none"
+                  maxWidth="50px"
+                  height="50px"
+                  margin="0 1px"
+                  _onClick={sendComment}
+                >
+                  등록
+                </Button>
+              </Grid>
+            ) : (
+              <Grid width="93.23%" margin="0 auto" isFlex>
+                <Grid
+                  border="1px solid #C4C4C4"
+                  maxWidth="330px"
+                  height="50px"
+                  margin="0 0 0 7px"
+                  radius="12px"
+                  isFlex
+                >
+                  <Input
+                    gridWidth="230px"
+                    border="none"
+                    margin="0"
+                    height="46px"
+                    defaultValue={updateCmt.content}
+                    _onChange={cmt}
+                  />
+                </Grid>
+                <Button
+                  border="none"
+                  maxWidth="50px"
+                  height="50px"
+                  margin="0 1px"
+                  _onClick={sendComment}
+                >
+                  수정
+                </Button>
+              </Grid>
+            )}
+          </Grid>
           <div>
             <Grid>
-              {mountain?.commentDto.commentLists.map((el, idx) => {
-                return (
-                  <Comment
-                    key={idx}
-                    data={el}
-                    setUpdateCmt={setUpdateCmt}
-                    updateCmt={updateCmt.state}
-                  />
-                );
-              })}
+              {mountain?.commentDto.commentLists.map((el, idx) => (
+                <Comment
+                  key={idx}
+                  data={el}
+                  setUpdateCmt={setUpdateCmt}
+                  updateCmt={updateCmt.state}
+                />
+              ))}
               <Grid
                 margin="0 auto"
                 isFlex
@@ -140,74 +206,7 @@ const DetailCmt = () => {
               </Grid>
             </Grid>
           </div>
-          <Grid height="60px">
-            {updateCmt.state ? (
-              <Grid width="93.23%" margin="0 auto" isFlex>
-                <Grid
-                  border="1px solid #C4C4C4"
-                  maxWidth="330px"
-                  height="50px"
-                  margin="0 0 0 7px"
-                  radius="12px"
-                  isFlex
-                >
-                  <Input
-                    gridWidth="230px"
-                    border="none"
-                    margin="1px 0"
-                    height="46px"
-                    placeholder="댓글과 별점을 남겨보세요!"
-                    _onChange={cmt}
-                  />
-                  <Star
-                    width="77px"
-                    height="18px"
-                    lineHeight="18px"
-                    starMargin="0 1px"
-                    setStar={setStar}
-                  />
-                </Grid>
-                <Button
-                  border="none"
-                  maxWidth="50px"
-                  height="50px"
-                  margin="0 1px"
-                  _onClick={sendComment}
-                >
-                  등록
-                </Button>
-              </Grid>
-            ) : (
-              <Grid width="93.23%" margin="23px auto 0 auto" isFlex>
-                <Grid
-                  border="1px solid #C4C4C4"
-                  maxWidth="330px"
-                  height="50px"
-                  margin="0 0 0 7px"
-                  radius="12px"
-                  isFlex
-                >
-                  <Input
-                    gridWidth="230px"
-                    border="none"
-                    margin="1px 100px 0 0"
-                    height="46px"
-                    defaultValue={updateCmt.content}
-                    _onChange={cmt}
-                  />
-                </Grid>
-                <Button
-                  border="none"
-                  maxWidth="50px"
-                  height="50px"
-                  margin="0 1px"
-                  _onClick={sendComment}
-                >
-                  수정
-                </Button>
-              </Grid>
-            )}
-          </Grid>
+
           <MenubarContainer>
             <Grid height="88px" maxWidth="500px" margin="auto">
               <Menubar menuColor={menuColor} />
