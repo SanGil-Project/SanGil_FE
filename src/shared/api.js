@@ -2,9 +2,9 @@ import axios from "axios";
 
 const instance = axios.create({
   // URL: "https://ehjeong.shop",
-  baseURL: "http://13.125.232.76:8080", // 로컬 - 상준님
+  baseURL: "http://52.79.228.126",
   // baseURL: "http://15.164.102.106:8080", // 로컬 - 재진님
-  // baseURL: "https://burgerrr.shop", // yesleee.shop - 상준님
+  // baseURL: "https://www.ehjeong.shop",
   // baseURL: "https://jinnn.shop", // yesleee.shop - 재진님
   // baseURL: "https://13.125.166.173", // yesleee.shop - 재진님
   // baseURL: "https://산길.com",

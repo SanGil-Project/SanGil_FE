@@ -5,20 +5,19 @@ import { Desktop, Mobile } from "../shared/responsive";
 
 const CourseCard = (props) => {
   const { data } = props;
-  console.log(data);
   return (
     <>
       <Desktop>
         <Grid
           padding="1px 0 0 0"
           width="100%"
-          height="210px"
-          margin="18px auto 0 auto"
+          height="180px"
+          margin="0 auto 0 auto"
           radius="12px"
         >
           <Grid margin="20px 0 0 0" height="70px" isFlex>
             <Grid
-              border="0.5px solid #ADADAD"
+              border="0.5px solid #43CA3B"
               width="50px"
               height="26px"
               lineHeight="26px"
@@ -29,11 +28,13 @@ const CourseCard = (props) => {
             >
               코스
             </Grid>
-            <Text width="84%" margin="0 0 0 8px">{data.course}</Text>
+            <Text width="84%" margin="0 0 0 8px">
+              {data.course}
+            </Text>
           </Grid>
           <Grid height="70px" isFlex>
             <Grid
-              border="0.5px solid #ADADAD"
+              border="0.5px solid #43CA3B"
               width="80px"
               height="26px"
               lineHeight="26px"

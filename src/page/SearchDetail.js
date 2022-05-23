@@ -27,7 +27,7 @@ const SearchDetail = () => {
     state: true,
   });
   const [selected, setSelected] = React.useState({ idx: 0, state: false });
-  const mountain = useSelector((state) => state.mountain.mountainData);
+  // const mountain = useSelector((state) => state.mountain.mountainData);
 
   const show = (i) => {
     if (selected.state === false) {
@@ -84,14 +84,27 @@ const SearchDetail = () => {
     dispatch(mountAction.likeDB(mountainId));
   };
 
-  React.useEffect(() => {
-    if (
-      !mountain?.commentDto.totalPage ||
-      mountain?.commentDto.totalPage >= pageNum
-    ) {
-      dispatch(mountAction.getDetailDB(mountainId, pageNum));
-    }
-  }, [pageNum]);
+  // React.useEffect(() => {
+  //   if (
+  //     !mountain?.commentDto.totalPage ||
+  //     mountain?.commentDto.totalPage >= pageNum
+  //   ) {
+  //     dispatch(mountAction.getDetailDB(mountainId, pageNum));
+  //   }
+  // }, [pageNum]);
+
+  const mountain = {
+    courseLists: [
+      {
+        courseTime: "4시간",
+        course: "호랑이-펭귄-사자-토끼-고양이-강아지-천누리",
+      },
+      {
+        courseTime: "4시간 40분",
+        course: "호랑이-펭귄-사자-토끼-고양이-강아지-천누리",
+      },
+    ],
+  };
 
   return (
     <>
@@ -145,37 +158,40 @@ const SearchDetail = () => {
                 borderRadius="12px"
               />
             </Grid>
+
             {mountain &&
               mountain.courseLists.map((el, idx) => (
                 <div key={idx}>
                   <Grid width="93.23%" margin="0 auto">
                     <Grid height="8px" border="4px solid #F2F3F6"></Grid>
                     <Grid
-                      width="52%"
+                      bg={
+                        selected.idx === idx && selected.state
+                          ? "#FFFFFF"
+                          : "#F5FCF4"
+                      }
                       height="42px"
                       hover
-                      isFlex
+                      flex="flex"
                       _onClick={() => show(idx)}
                     >
                       <Text
                         width="60px"
                         height="18px"
-                        margin="11px auto 11px 25px"
+                        margin="11px 15px 11px 25px"
                         size="1.8rem"
                         bold="600"
                         lineHeight="18px"
                       >
                         코스 {idx + 1}
                       </Text>
-                      <Text
-                        margin="0 auto"
-                        size="1.8rem"
-                        height="18px"
-                        lineHeight="18px"
-                      >
+                      <Text size="1.8rem" height="18px" lineHeight="18px">
                         {el.courseTime} 코스
                       </Text>
                     </Grid>
+                    {selected.idx === idx && selected.state ? (
+                      <Grid height="1px" border="0.5px solid #F2F3F6"></Grid>
+                    ) : null}
                     {selected.idx === idx && selected.state ? (
                       <CourseCard data={el} />
                     ) : (
@@ -260,7 +276,7 @@ const SearchDetail = () => {
               )}
             </div>
             <div>
-              <Grid>
+              {/* <Grid>
                 {mountain?.commentDto.commentLists.map((el, idx) => {
                   return (
                     <Comment
@@ -317,7 +333,7 @@ const SearchDetail = () => {
                     </Button>
                   )}
                 </Grid>
-              </Grid>
+              </Grid> */}
             </div>
           </Grid>
 
