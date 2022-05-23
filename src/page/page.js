@@ -12,6 +12,7 @@ import Tracker from "./Tracker";
 import FeedWrite from "./FeedWrite";
 import ChatRoom from "./ChatRoom";
 import Mytrack from "./Mytrack";
+import DetailCmt from "./DetailCmt";
 
 export {
   Login,
@@ -28,4 +29,5 @@ export {
   FeedWrite,
   PartyWrite,
   ChatRoom,
+  DetailCmt,
 };

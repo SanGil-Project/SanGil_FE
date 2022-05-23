@@ -27,7 +27,7 @@ const sock = axios.create({
 instance.interceptors.request.use(function (config) {
   const token = sessionStorage.getItem("token");
   if (token) {
-    config.headers.Authorization = sessionStorage.getItem("token");  
+    config.headers.Authorization = sessionStorage.getItem("token");
   }
   return config;
 });
@@ -163,7 +163,8 @@ export const api = {
   delParty: (partyId) => instance.delete(`/api/party/${partyId}`),
 
   // chat.js
-  addChatRoom: (title, partyId) => instance.post(`/chat/rooms?name=${title}&partyId=${partyId}`), // api 주소 연결 필요
+  addChatRoom: (title, partyId) =>
+    instance.post(`/chat/rooms?name=${title}&partyId=${partyId}`), // api 주소 연결 필요
   enterChatRoom: (chatRoomId) => instance.get(`/chat/rooms/${chatRoomId}`),
   // getChatList: (chatRoomId) => instance.get(`/chat/rooms/${chatRoomId}`), // api 주소 연결 필요, 소켓통신에서 바로 채팅 전체리스트 받으면 필요없는 api
 };

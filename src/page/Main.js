@@ -364,16 +364,24 @@ const Main = (props) => {
           <Header />
           <Grid padding="7px" overflowY="scroll">
             <Grid height="453px" margin="90px auto 75px auto">
-              <Text
-                width="380px"
-                height="24px"
-                margin="0 0 0 7px"
-                bold="600"
-                size="2rem"
-                lineHeight="24px"
-              >
-                🌲 좋아요 순 10
-              </Text>
+              <Grid margin="0 7px" height="24px" flex="flex">
+                <Image
+                  width="24px"
+                  height="24px"
+                  src={require("../assets/images/Mountain.png")}
+                />
+                <Text
+                  width="380px"
+                  height="24px"
+                  margin="0 0 0 7px"
+                  bold="600"
+                  size="2rem"
+                  lineHeight="24px"
+                >
+                  좋아요 순 10
+                </Text>
+              </Grid>
+
               <Card
                 border="2px solid #B3B3B3"
                 width="386px"
@@ -500,16 +508,23 @@ const Main = (props) => {
               margin="0 auto 50px auto"
               height="238px"
             >
-              <Text
-                width="350px"
-                height="24px"
-                margin="0 7px 24px 7px"
-                bold="600"
-                size="2rem"
-                lineHeight="24px"
-              >
-                👀 주변 산길
-              </Text>
+              <Grid margin="0 7px" height="24px" flex="flex">
+                <Image
+                  width="24px"
+                  height="24px"
+                  src={require("../assets/images/Eyes.png")}
+                />
+                <Text
+                  margin="0 0 0 10px"
+                  width="350px"
+                  height="24px"
+                  bold="600"
+                  size="2rem"
+                  lineHeight="24px"
+                >
+                  주변 산길
+                </Text>
+              </Grid>
               <HorizontalScroll>
                 {around?.map((el, idx) => (
                   <div key={idx}>
@@ -604,15 +619,24 @@ const Main = (props) => {
             </Grid>
             <Grid width="94.4%" height="238px" margin="40px auto 20px auto">
               <Grid maxWidth="100%" margin="0 0 34px 0" height="25px" isFlex>
-                <Text
-                  width="350px"
-                  height="24px"
-                  bold="600"
-                  size="2rem"
-                  lineHeight="24px"
-                >
-                  📣 산길러 모여라~
-                </Text>
+                <Grid flex="flex">
+                  <Image
+                    width="24px"
+                    height="24px"
+                    src={require("../assets/images/Megaphone.png")}
+                  />
+                  <Text
+                    margin="0 0 0 10px"
+                    width="350px"
+                    height="24px"
+                    bold="600"
+                    size="2rem"
+                    lineHeight="24px"
+                  >
+                    산길러 모여라~
+                  </Text>
+                </Grid>
+
                 <Grid
                   margin="0 18px 0 0"
                   fontSize="12px"

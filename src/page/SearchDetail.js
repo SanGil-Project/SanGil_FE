@@ -10,11 +10,12 @@ import {
 } from "../components/component";
 import { Desktop, Mobile } from "../shared/responsive";
 import { actionCreators as mountAction } from "../redux/modules/mountain";
-import _, { update } from "lodash";
-import { useParams } from "react-router";
+import _ from "lodash";
+import { useNavigate, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 
 const SearchDetail = () => {
+  const navigate = useNavigate();
   const [pageNum, setPageNum] = React.useState(1);
   const { mountainId } = useParams();
   const dispatch = useDispatch();
@@ -26,10 +27,15 @@ const SearchDetail = () => {
     mountainCommentId: 0,
     state: true,
   });
-  const [selected, setSelected] = React.useState(false);
+  const [selected, setSelected] = React.useState({ idx: 0, state: false });
   const mountain = useSelector((state) => state.mountain.mountainData);
+
   const show = (i) => {
-    setSelected(i);
+    if (selected.state === false) {
+      setSelected({ idx: i, state: true });
+    } else {
+      setSelected({ idx: i, state: false });
+    }
   };
 
   const cmt = React.useCallback(
@@ -79,6 +85,10 @@ const SearchDetail = () => {
     dispatch(mountAction.likeDB(mountainId));
   };
 
+  const goCmt = () => {
+    navigate(`/detailcomment/${mountainId}`);
+  };
+
   React.useEffect(() => {
     if (
       !mountain?.commentDto.totalPage ||
@@ -93,8 +103,7 @@ const SearchDetail = () => {
       <Desktop>
         <DetailContainer>
           <Header />
-          <Grid height="74px" />
-          <Grid overflowY="scroll" height="100vh">
+          <Grid overflowY="scroll" height="100vh" padding="74px 0 0 0">
             <Grid width="93.23%" height="48px" margin="0 auto" isFlex>
               <Grid width="30.26%" margin="0" height="48px" flex="flex">
                 <Text
@@ -114,7 +123,7 @@ const SearchDetail = () => {
                   fill={mountain?.bookmark ? "#43ca3b" : "#c4c4c4"}
                 />
               </Grid>
-              <Grid
+              {/* <Grid
                 width="90px"
                 height="40px"
                 margin="4px 0"
@@ -124,7 +133,7 @@ const SearchDetail = () => {
                 bg="#C4C4C4"
               >
                 날씨
-              </Grid>
+              </Grid> */}
             </Grid>
             <Grid width="93.23%" height="20px" margin="24.5px auto 0 auto">
               <Text margin="0" height="18px" size="1.8rem" lineHeight="18px">
@@ -140,49 +149,66 @@ const SearchDetail = () => {
                 borderRadius="12px"
               />
             </Grid>
+
             {mountain &&
               mountain.courseLists.map((el, idx) => (
                 <div key={idx}>
                   <Grid width="93.23%" margin="0 auto">
                     <Grid height="8px" border="4px solid #F2F3F6"></Grid>
                     <Grid
-                      width="52%"
+                      bg={
+                        selected.idx === idx && selected.state
+                          ? "#FFFFFF"
+                          : "#F5FCF4"
+                      }
                       height="42px"
                       hover
-                      isFlex
+                      flex="flex"
                       _onClick={() => show(idx)}
                     >
                       <Text
                         width="60px"
                         height="18px"
-                        margin="11px auto 11px 25px"
+                        margin="11px 15px 11px 25px"
                         size="1.8rem"
                         bold="600"
                         lineHeight="18px"
                       >
                         코스 {idx + 1}
                       </Text>
-                      <Text
-                        margin="0 auto"
-                        size="1.8rem"
-                        height="18px"
-                        lineHeight="18px"
-                      >
+                      <Text size="1.8rem" height="18px" lineHeight="18px">
                         {el.courseTime} 코스
                       </Text>
                     </Grid>
-                    {selected === idx ? <CourseCard data={el} /> : ""}
+                    {selected.idx === idx && selected.state ? (
+                      <Grid height="1px" border="0.5px solid #F2F3F6"></Grid>
+                    ) : null}
+                    {selected.idx === idx && selected.state ? (
+                      <CourseCard data={el} />
+                    ) : (
+                      ""
+                    )}
                   </Grid>
                 </div>
               ))}
+            <Grid
+              width="93.23%"
+              height="8px"
+              border="4px solid #F2F3F6"
+              margin="0 auto"
+            />
 
+            {/* <Grid height="30px" width="140px" margin="20px 0 0 15px" isFlex>
+              <Grid width="60px" isFlex>
+                <Icon width="20px" height="20px" type="star" />
+                <Text>({mountain?.starAvr})</Text>
+              </Grid>
+              <Grid width="50px" isFlex hover _onClick={goCmt}>
+                <Icon width="20px" height="20px" type="comment" />
+                <Text>({mountain?.commentDto.commentLists.length})</Text>
+              </Grid>
+            </Grid> */}
             <div>
-              <Grid
-                width="93.23%"
-                height="8px"
-                border="4px solid #F2F3F6"
-                margin="0 auto"
-              />
               {updateCmt.state ? (
                 <Grid width="93.23%" margin="23px auto 0 auto" isFlex>
                   <Grid
@@ -311,8 +337,6 @@ const SearchDetail = () => {
               </Grid>
             </div>
           </Grid>
-
-          <Grid height="88px" />
           <MenubarContainer>
             <Grid height="88px" maxWidth="500px" margin="auto">
               <Menubar menuColor={menuColor} />

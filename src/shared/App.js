@@ -25,6 +25,13 @@ import {
 } from "../page/page";
 
 function App() {
+  if ("serviceWorker" in navigator) {
+    console.log("너있니");
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("../service-worker.js");
+    });
+  }
+
   return (
     <BrowserRouter>
       <Container>
@@ -52,8 +59,6 @@ function App() {
     </BrowserRouter>
   );
 }
-
-
 
 const Container = styled.div`
   background-color: #9ee59c;
