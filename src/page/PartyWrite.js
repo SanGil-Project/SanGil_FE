@@ -108,9 +108,10 @@ const PartyWrite = (props) => {
     setMountValue(data.mountain);
     setMountAddValue(data.mountainAddress);
   }
+
   let btnColor = "#E6E6E6";
   let btnTextColor = "#000";
-  if (partyName !== "" && dateValue !== "선택" && timeValue !== "선택" && numberValue && partyContent !== "") {
+  if (partyName !== "" && mountValue !=="선택" && dateValue !== "선택" && timeValue !== "선택" && numberValue && partyContent !== "") {
     btnColor = "#43CA3B";
     btnTextColor = "#fff";
   }
@@ -268,7 +269,7 @@ const PartyWrite = (props) => {
                     { timeHandle && 
                     <DateModal className="dateModal" modalOpen={timeOpen}>
                       <div className="modal_container">
-                        <Grid>
+                        <Grid height="auto">
                           <ScrollTime/>
                         </Grid>
                         <Grid flexRow height="auto" padding="10px 20px">
@@ -435,7 +436,7 @@ const PartyWrite = (props) => {
                     { timeHandle && 
                     <DateModal className="dateModal" modalOpen={timeOpen}>
                       <div className="modal_container">
-                        <Grid>
+                        <Grid height="auto">
                           <ScrollTime/>
                         </Grid>
                         <Grid flexRow height="auto" padding="10px 20px">
@@ -483,14 +484,14 @@ const PartyWrite = (props) => {
             <Grid>
             {complete ? 
             <Button 
-              bgColor="#43CA3B" border="none" height="48px" margin="20px 0" radius="8px" 
+              bgColor={btnColor} border="none" height="48px" margin="20px 0" radius="8px" 
               _onClick={addParty}>
-              <Text color="#fff" margin="0" size="18px" bold="600" align>{is_edit ? "수정 완료" : "작성 완료"}</Text>
+              <Text color={btnTextColor} margin="0" size="18px" bold="600" align>{is_edit ? "수정 완료" : "작성 완료"}</Text>
             </Button> : 
             <Button 
-              bgColor="#E6E6E6" border="none" height="48px" margin="20px 0" radius="8px" 
+              bgColor={btnColor} border="none" height="48px" margin="20px 0" radius="8px" 
               _onClick={addParty}>
-              <Text margin="0" size="18px" bold="600" align>{is_edit ? "수정 완료" : "작성 완료"}</Text>
+              <Text color={btnTextColor} margin="0" size="18px" bold="600" align>{is_edit ? "수정 완료" : "작성 완료"}</Text>
             </Button>}
 
             </Grid>
@@ -516,31 +517,46 @@ const PartyWrite = (props) => {
 const FadeIn = keyframes`
   0% {
     bottom: -100%;
+    background-color: transparent;
+  }
+  85% {
+    background-color: transparent;
   }
   100% {
     bottom: 88px;
+    background-color: rgba(0, 0, 0, 0.6);
   }
 `;
 
 const FadeOut = keyframes`
   0% {
     bottom: 88px;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+  15% {
+    background-color: transparent;
   }
   100% {
     bottom: -100%;
+    background-color: transparent;
   }
 `;
 
 const DateModal = styled.div`
+  background-color: rgba(0, 0, 0, 0.6);
   position: fixed;
   bottom: ${props => props.modalOpen ? '88px' : '-100%'};
   left: 0;
   right: 0;
   z-index: 100px;
-  height: auto;
-  // transform: translate(-50%, -50%);
-  // transition: all;
-  // transform: duration
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  
   animation: ${props => props.modalOpen ? FadeIn : FadeOut} 0.5s ease-out alternate;
   .modal_container {
     border-top-left-radius: 20px;
@@ -548,10 +564,7 @@ const DateModal = styled.div`
     background-color: #fff;
     width: 100%;
     max-width: 500px;
-    // height: 70vh;
-    margin: auto;
-    // height: 50vh;
-    // overflow-y: scroll;
+    margin: 0 auto;
   }
   .react-datepicker {
     border-top-left-radius: 20px;
@@ -561,8 +574,6 @@ const DateModal = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    // background-color: orange;
-    // justify-content: center;
   }
   .react-datepicker__header {
     border-top-left-radius: 20px;
@@ -572,13 +583,11 @@ const DateModal = styled.div`
     width: 100%;
     max-width: 500px;
     margin: auto;
-    // background-color: orange;
     border: none;
     font-size: 2.5rem;
   }
   .react-datepicker__month {
     margin: .4em 1em;
-    // background-color: orange;
   }
   .react-datepicker__day-name {
     font-size: 1.6rem;
@@ -605,7 +614,6 @@ const DateModal = styled.div`
     font-weight: 500;
   }
   .react-datepicker__day--selected {
-    // background: #2E1C8B;
     color: #43CA3B;
     border: none;
     background-color: transparent;
