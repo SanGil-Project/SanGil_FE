@@ -98,6 +98,7 @@ const getOnePartyDB = (partyId = null) => {
 
 const addPartyDB = (party = {}) => {
   return function (dispatch, getState) {
+    console.log(party);
     api
       .addParty(party)
       .then((res) => {

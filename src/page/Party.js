@@ -252,6 +252,16 @@ const Party = (props) => {
           <MenubarContainer>
             <Grid height="88px" maxWidth="500px" margin="auto">
 
+              <UpBtn>
+                  <Grid 
+                    className
+                    flexRow bg="#fff" width="60px" height="60px" radius="100%" shadow="0px 3px 4px rgba(0, 0, 0, 0.15)" 
+                    _onClick={() => {
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}>
+                    <Icon type="upBtn" width="24px" height="24px" margin="0 auto"/>
+                  </Grid>
+              </UpBtn>
               <CreatPartyBtn>
                 <Grid 
                   flexRow bg="#43CA3B" width="60px" height="60px" radius="100%" shadow="0px 3px 4px rgba(0, 0, 0, 0.15)" 
@@ -438,7 +448,17 @@ const CreatPartyBtn = styled.div`
   position: fixed;
   // position: absolute;
   left: calc(50% + 175.5px);
-  bottom: 113.5px;
+  bottom: 113px;
+  // right: 5%;
+  // z-index: 9;
+`;
+
+const UpBtn = styled.div`
+  
+  position: fixed;
+  // position: absolute;
+  left: calc(50% + 175.5px);
+  bottom: 197px;
   // right: 5%;
   // z-index: 9;
 `;

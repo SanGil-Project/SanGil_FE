@@ -7,7 +7,8 @@ import { actionCreators as chatActions } from '../redux/modules/chat';
 import { Grid, Text, Button, Input } from '../elements/element';
 
 // const sockJs = new SockJS("http://15.164.232.187:8080/ws-stomp"); // 서버주소/ws-stomp
-// const stomp = Stomp.over(sockJs);
+const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 서버주소/ws-stomp
+const stomp = Stomp.over(sockJs);
 
 const ChatInput = (props) => {
   const dispatch = useDispatch();
@@ -23,45 +24,45 @@ const ChatInput = (props) => {
     setChat(e.target.value);
   };
 
-//   const onSend = async () => {
-//     try {
-//       const chatData = {
-//         roomId: chatRoomId,
-//         message: chat,
-//         // message: chat.target.value,
-//         sender: writer,
-//         type: 'TALK',
-//       }
-//       console.log(chatData);
-//       if (chat === "") {
-//         console.log(chatData);
-//         return;
-//       }
-//       waitForConnection(stomp, function () {
-//         stomp.send(
-//           "/pub/chat/message", { token: token }, JSON.stringify(chatData)
-//         );
-//         console.log(stomp.ws.readyState);
-//         console.log(chatData);
-//         // dispatch(chatActions.sendChat(chatData));
-//         setChat("");
-//       });
-//     } catch (err) {
-//       console.log(err);
-//       console.log(stomp.ws.readyState);
-//     }
-//   }
+  const onSend = async () => {
+    try {
+      const chatData = {
+        roomId: chatRoomId,
+        message: chat,
+        // message: chat.target.value,
+        sender: writer,
+        type: 'TALK',
+      }
+      console.log(chatData);
+      if (chat === "") {
+        console.log(chatData);
+        return;
+      }
+      waitForConnection(stomp, function () {
+        stomp.send(
+          "/pub/chat/message", { token: token }, JSON.stringify(chatData)
+        );
+        console.log(stomp.ws.readyState);
+        console.log(chatData);
+        // dispatch(chatActions.sendChat(chatData));
+        setChat("");
+      });
+    } catch (err) {
+      console.log(err);
+      console.log(stomp.ws.readyState);
+    }
+  }
 
-//   function waitForConnection(stomp, callback) {
-//     setTimeout(
-//       function () {
-//         if (stomp.ws.readyState == 1) {
-//           callback();
-//         } else {
-//           console.log(stomp.ws.readyState);
-//           waitForConnection(stomp, callback);
-//     }}, 1);
-//   }
+  function waitForConnection(stomp, callback) {
+    setTimeout(
+      function () {
+        if (stomp.ws.readyState == 1) {
+          callback();
+        } else {
+          console.log(stomp.ws.readyState);
+          waitForConnection(stomp, callback);
+    }}, 1);
+  }
 
   return (
     <React.Fragment>
@@ -80,13 +81,13 @@ const ChatInput = (props) => {
           placeholder="메시지를 입력하세요."
           _onChange={onChange}
           value={chat}
-          // onSubmit={onSend}
+          onSubmit={onSend}
           is_submit
         />
-        {/* <Button border="none" width="auto" _onClick={onSend}> */}
+        <Button border="none" width="auto" _onClick={onSend}>
         {/* <Button border="none" width="auto"> */}
           <Text size="16px" bold="500" margin="0" color="#959595">등록</Text>
-        {/* </Button> */}
+        </Button>
       </Grid>
     </React.Fragment>
   );
