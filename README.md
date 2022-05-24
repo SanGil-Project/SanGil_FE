@@ -9,6 +9,7 @@
 - connected-react-router
 - history
 - react-modal
+- browser-image-compression
 
 # 04 25 작업
 
@@ -130,8 +131,8 @@
 # 05 19
 
 - 트래킹 전후 페이지 삭제 후, 모달로 작성
--   - 산 상세 페이지 댓글 페이징처리
-  - 산 상세 페이지 좋아요 기능 구현
+- - 산 상세 페이지 댓글 페이징처리
+- 산 상세 페이지 좋아요 기능 구현
 
 # Trouble shooting
 
@@ -143,12 +144,6 @@
 - 트래킹 페이지에서 처음 렌더링 시 useEffect가 호출되고, 다음 의존성 배열의 인자가 호출되면서 렌더링이 처음에만 2번 되는 것 같다
 
   - 개선 예정
-
-- 피드 페이지: useCallback 안에서 feedList.totalPage가 undefined로 출력
-
-  - 처음에 비동기로 불러오다보니 undefined로 저장이 되는 듯
-
-- 피드 페이지: 무한스크롤에서 useEffect로 같은 데이터가 두번 쌓인다
 
 - 산 상세 페이지: 댓글 남기면 전에 있던 별점 데이터가 새로운 별점 데이터에 남는다
 

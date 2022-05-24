@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://15.164.232.187:8080", // 로컬 - 상준님
+  baseURL: "http://3.35.16.204:8080", // 로컬 - 상준님
   // baseURL: "http://52.79.228.126:8080", // 로컬 - 의현님
   // baseURL: "http://15.164.102.106:8080", // 로컬 - 재진님
   // baseURL: "https://burgerrr.shop", // yesleee.shop - 상준님
@@ -68,7 +68,9 @@ export const api = {
 
   //feed.js
   getFeedDB: (pageNum) => instance.get(`/api/main/feeds/${pageNum}`),
-
+  deleteFeed:(feedId)=>instance.delete(`/api/feeds/delete/${feedId}`),
+  feedLike:(feedId)=>instance.post(`/api/feeds/good/${feedId}`,{feedId}),
+  
   // user.js - social login
   kakaoLogin: (code) => instance.get(`/user/kakao/callback?code=${code}`),
   naverLogin: (code, state) =>

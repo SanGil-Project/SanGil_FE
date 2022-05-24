@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import KakaoMap from "../components/KakaoMap";
 import { Grid, Button, Text, Icon, Input } from "../elements/element";
 import { Header, SearchTracking, EndTracking } from "../components/component";
-import { Desktop, Mobile } from "../shared/responsive";
 import {
   startDB,
   endClimbDB,
@@ -17,9 +16,9 @@ import { useNavigate } from "react-router";
 const Tracker = (props) => {
   const [name, setName] = useState();
   const [mountainId, setMountainId] = useState();
-  const [isOpen, setIsOpen] = useState(false);
+  const [endOpen, setEndOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(true);
   const [completedId, setCompletedId] = useState();
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const _distance = useSelector((state) => state.tracker.distance);
@@ -30,7 +29,7 @@ const Tracker = (props) => {
   const [myLoca, setMyLoca] = useState({ lat: "", lng: "" });
   const [distance, setDistance] = useState({ distanceM: 0.0, distanceK: 0.0 });
   const [time, setTime] = useState({
-    stopwatch: { s: 0, m: 0, h: 0 },
+    stopwatch: { s: 0, m: 10, h: 0 },
     isStart: false,
   });
 
@@ -74,6 +73,7 @@ const Tracker = (props) => {
   }, []);
 
   useEffect(() => {
+    // 왜 setTimeout을 썼는지 고민할 것
     path.current = setTimeout(() => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -143,7 +143,7 @@ const Tracker = (props) => {
             totalTime: `${time.stopwatch.h}:${time.stopwatch.m}:${time.stopwatch.s}`,
           })
         );
-        setIsOpen(true);
+        setEndOpen(true);
         setTime({
           ...time,
           isStart: false,
@@ -156,247 +156,132 @@ const Tracker = (props) => {
 
   return (
     <>
-      <Mobile>
-        <Grid width="100vw" margin="0 auto">
-          <Grid height="100vh">
-            <KakaoMap
-              width="100%"
-              height="70%"
-              level="3"
-              margin="0"
-              zoomable={false}
-              myLoca={myLoca}
-              polylinePath={polylinePath}
-            />
-            <Grid
-              width="100vw"
-              bg="#fff"
-              height="30%"
-              padding="16px 0 0 0"
-              margin="0 auto"
-            >
-              <Text align="center" size="2rem" bold="600" margin="0 0 19px 0">
-                {name}
+      <Header />
+      <Grid height="100vh" bg="#fff" padding="64px 0 0 0">
+        <KakaoMap
+          width="100%"
+          height="70%"
+          level="3"
+          margin="0"
+          zoomable={false}
+          myLoca={myLoca}
+          polylinePath={polylinePath}
+        />
+        <Grid
+          width="414px"
+          bg="#fff"
+          height="20%"
+          padding="16px 0 0 0"
+          margin="0 auto"
+        >
+          <Grid width="342px" height="60px" isFlex margin="20px auto 0 auto">
+            <Grid width="100px">
+              <Text color="#C4C4C4" margin="0">
+                이동한 거리
               </Text>
-              <Grid
-                width="250px"
-                height="60px"
-                isFlex
-                margin="20px auto 0 auto"
-              >
-                <Grid width="100px">
-                  <Text align="center" color="#C4C4C4" margin="0">
-                    이동한 거리
-                  </Text>
-                  <Text margin="0 auto" align="center">
-                    <span style={{ fontSize: "2.5rem" }}>
-                      {distance.distanceK}
-                    </span>
-                    km
-                  </Text>
-                </Grid>
-                <Grid width="120px">
-                  <Text margin="0" align="center" color="#C4C4C4">
-                    소요 시간
-                  </Text>
-                  <Grid
-                    width="100px"
-                    textAlign
-                    lineHeight="25px"
-                    margin="0 auto"
-                  >
-                    <StopWatch size="2.5rem" time={time} setTime={setTime} />
-                  </Grid>
-                </Grid>
-              </Grid>
-
-              <Grid width="342px" height="48px" margin="20px auto">
-                {time.isStart ? (
-                  <>
-                    <Button
-                      border="none"
-                      bgColor="#6F6F6F"
-                      color="#fff"
-                      width="166px"
-                      height="48px"
-                      radius="12px"
-                      margin="0 5px"
-                      _onClick={pause}
-                    >
-                      잠시 쉬기
-                    </Button>
-                    <Button
-                      bgColor="black"
-                      color="#fff"
-                      width="166px"
-                      height="48px"
-                      radius="12px"
-                      _onClick={endClimb}
-                    >
-                      등산 완료
-                    </Button>
-                  </>
-                ) : !completedId ? (
-                  <Button
-                    bgColor="black"
-                    color="#fff"
-                    width="100%"
-                    height="48px"
-                    radius="12px"
-                    _onClick={start}
-                  >
-                    등산 시작
-                  </Button>
-                ) : (
-                  <Button
-                    bgColor="black"
-                    color="#fff"
-                    width="100%"
-                    height="48px"
-                    radius="12px"
-                    _onClick={reStart}
-                  >
-                    다시 출발
-                  </Button>
-                )}
+              <Text margin="7px 0 0 0">
+                <span style={{ fontSize: "2.5rem", color: "#43ca3b" }}>
+                  {distance.distanceK}
+                </span>
+                km
+              </Text>
+            </Grid>
+            <Grid width="180px">
+              <Text margin="0" color="#C4C4C4">
+                소요 시간
+              </Text>
+              <Grid width="220px" height="25px" margin="7px 0 0 0">
+                <StopWatch
+                  size="2.5rem"
+                  time={time}
+                  setTime={setTime}
+                  color="#43ca3b"
+                />
               </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      </Mobile>
+          <Grid
+            width="260px"
+            height="30px"
+            isFlex
+            margin="5px auto 0 auto"
+          ></Grid>
 
-      <Desktop>
-        <Grid width="500px" margin="0 auto" height="100vh">
-          <Header />
-          <Grid height="64px" />
-          <Grid height="1254px" bg="#fff">
-            <KakaoMap
-              width="100%"
-              height="70%"
-              level="3"
-              margin="0"
-              zoomable={false}
-              myLoca={myLoca}
-              polylinePath={polylinePath}
-            />
-            <Grid
-              width="414px"
-              bg="#fff"
-              height="20%"
-              padding="16px 0 0 0"
-              margin="0 auto"
-            >
-              <Grid
-                width="342px"
-                height="60px"
-                isFlex
-                margin="20px auto 0 auto"
+          <Grid width="342px" height="48px" margin="auto">
+            {time.isStart ? (
+              <>
+                <Button
+                  border="none"
+                  bgColor="#6F6F6F"
+                  color="#fff"
+                  width="166px"
+                  height="48px"
+                  radius="12px"
+                  margin="0 5px"
+                  _onClick={pause}
+                >
+                  잠시 쉬기
+                </Button>
+                <Button
+                  border="none"
+                  bgColor="#43CA3B"
+                  color="#fff"
+                  width="166px"
+                  height="48px"
+                  radius="12px"
+                  _onClick={endClimb}
+                >
+                  등산 완료
+                </Button>
+              </>
+            ) : !completedId ? (
+              <Button
+                border="none"
+                bgColor="#43CA3B"
+                color="#fff"
+                width="100%"
+                height="48px"
+                radius="12px"
+                _onClick={start}
               >
-                <Grid width="100px">
-                  <Text color="#C4C4C4" margin="0">
-                    이동한 거리
-                  </Text>
-                  <Text margin="7px 0 0 0">
-                    <span style={{ fontSize: "2.5rem", color: "#43ca3b" }}>
-                      {distance.distanceK}
-                    </span>
-                    km
-                  </Text>
-                </Grid>
-                <Grid width="180px">
-                  <Text margin="0" color="#C4C4C4">
-                    소요 시간
-                  </Text>
-                  <Grid width="220px" height="25px" margin="7px 0 0 0">
-                    <StopWatch
-                      size="2.5rem"
-                      time={time}
-                      setTime={setTime}
-                      color="#43ca3b"
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid
-                width="260px"
-                height="30px"
-                isFlex
-                margin="5px auto 0 auto"
-              ></Grid>
-
-              <Grid width="342px" height="48px" margin="auto">
-                {time.isStart ? (
-                  <>
-                    <Button
-                      border="none"
-                      bgColor="#6F6F6F"
-                      color="#fff"
-                      width="166px"
-                      height="48px"
-                      radius="12px"
-                      margin="0 5px"
-                      _onClick={pause}
-                    >
-                      잠시 쉬기
-                    </Button>
-                    <Button
-                      border="none"
-                      bgColor="#43CA3B"
-                      color="#fff"
-                      width="166px"
-                      height="48px"
-                      radius="12px"
-                      _onClick={endClimb}
-                    >
-                      등산 완료
-                    </Button>
-                  </>
-                ) : !completedId ? (
-                  <Button
-                    border="none"
-                    bgColor="#43CA3B"
-                    color="#fff"
-                    width="100%"
-                    height="48px"
-                    radius="12px"
-                    _onClick={start}
-                  >
-                    등산 시작
-                  </Button>
-                ) : (
-                  <Button
-                    bgColor="black"
-                    color="#fff"
-                    width="100%"
-                    height="48px"
-                    radius="12px"
-                    _onClick={reStart}
-                  >
-                    다시 출발
-                  </Button>
-                )}
-              </Grid>
-            </Grid>
+                등산 시작
+              </Button>
+            ) : (
+              <Button
+                bgColor="black"
+                color="#fff"
+                width="100%"
+                height="48px"
+                radius="12px"
+                _onClick={reStart}
+              >
+                다시 출발
+              </Button>
+            )}
           </Grid>
-          <SearchTracking
-            name={name}
-            setName={setName}
-            setMountainId={setMountainId}
-          />
-          {isOpen ? (
-            <EndTracking
-              name={name}
-              isOpen={true}
-              setIsOpen={setIsOpen}
-              time={time.stopwatch}
-              setTime={setTime}
-              setDistance={setDistance}
-              distance={distance.distanceK}
-              mountainId={mountainId}
-            />
-          ) : null}
         </Grid>
-      </Desktop>
+      </Grid>
+      {searchOpen ? (
+        <SearchTracking
+          name={name}
+          setName={setName}
+          setMountainId={setMountainId}
+          searchOpen={searchOpen}
+          setSearchOpen={setSearchOpen}
+        />
+      ) : null}
+      {endOpen ? (
+        <EndTracking
+          name={name}
+          endOpen={true}
+          setEndOpen={setEndOpen}
+          time={time.stopwatch}
+          setTime={setTime}
+          setDistance={setDistance}
+          distance={distance.distanceK}
+          mountainId={mountainId}
+        />
+      ) : null}
     </>
   );
 };
