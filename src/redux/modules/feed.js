@@ -25,6 +25,7 @@ export const addFeedDB = (feed) => {
   frm.append("feedContent", feed.feedContent);
   return function (dispatch, getState) {
     axios
+      // .post("https://ehjeong.shop/api/feeds/write", frm, {
       .post("http://3.35.16.204:8080/api/feeds/write", frm, {
         headers: {
           Authorization: sessionStorage.getItem("token"),

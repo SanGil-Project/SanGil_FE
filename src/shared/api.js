@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "https://jinnn.shop", // 로컬 - 상준님
+  baseURL: "http://3.35.16.204:8080", // 로컬 - 상준님
   // baseURL: "http://52.79.228.126:8080", // 로컬 - 의현님
   // baseURL: "http://15.164.102.106:8080", // 로컬 - 재진님
   // baseURL: "https://burgerrr.shop", // yesleee.shop - 상준님
@@ -47,6 +47,16 @@ export const api = {
   mainBookmark: (mountainId, type) =>
     instance.post(`/api/mountain/bookmark/${mountainId}`, { mountainId }),
 
+  //feedCmt.js
+  getCmt: (feedId, pageNum) =>
+    instance.get(`/feeds/comment/${feedId}/${pageNum}`),
+  addFeedCmt: (feedId, feedComment) =>
+    instance.post(`/feeds/comment/${feedId}`, { feedComment }),
+  updateFeedCmt: (feedCommentId, feedComment) =>
+    instance.put(`/feeds/comment/${feedCommentId}`, { feedComment }),
+  deleteFeedCmt: (feedCommentId) =>
+    instance.delete(`/feeds/comment/${feedCommentId}`),
+
   //tracker.js
   start: (mountainId, setCompletedId) =>
     instance.post(`/api/tracking/${mountainId}`, { send: 1 }),
@@ -67,7 +77,7 @@ export const api = {
     instance.get(`/api/tracking/detail/${completedid}`),
 
   //feed.js
-  getFeedDB: (pageNum) => instance.get(`/api/main/feeds/${pageNum}`),
+  getFeedDB: (pageNum) => instance.get(`/feeds/${pageNum}`),
   deleteFeed: (feedId) => instance.delete(`/api/feeds/delete/${feedId}`),
   feedLike: (feedId) => instance.post(`/api/feeds/good/${feedId}`, { feedId }),
 

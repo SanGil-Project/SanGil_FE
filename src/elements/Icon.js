@@ -16,6 +16,7 @@ const Icon = (props) => {
     position,
     hover,
     fillOpacity,
+    border,
   } = props;
 
   const styles = {
@@ -28,6 +29,7 @@ const Icon = (props) => {
     position,
     hover,
     fillOpacity,
+    border,
   };
   const menuColor = page ? "#43CA3B" : "#C0C0C0";
   const fillOpa = fillOpacity === "false" ? false : fillOpacity;
@@ -733,12 +735,13 @@ const Rank = styled.svg`
 `;
 
 const Vector = styled.svg`
+  border: 1px solid black;
+  border-radius: 100%;
   width: ${(props) => `${props.width}`};
   max-width: ${(props) => `${props.maxWidth}`};
   height: ${(props) => `${props.height}`};
-  max-height:${(props) => `${props.maxHeight}`}
-  ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
-  border-radius: 100%;
+  max-height: ${(props) => `${props.maxHeight}`}
+    ${(props) => (props.margin ? `margin: ${props.margin};` : null)};
 `;
 
 const Arrow = styled.svg`

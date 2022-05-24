@@ -7,6 +7,7 @@ import {
   Card,
   Header,
   Menubar,
+  Banner,
 } from "../components/component";
 import {
   partyDB,
@@ -15,7 +16,6 @@ import {
   aroundDB,
   bookmarkDB,
 } from "../redux/modules/main";
-import { Desktop, Mobile } from "../shared/responsive";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
@@ -59,6 +59,14 @@ const Main = (props) => {
       <MainContainer>
         <Header />
         <Grid padding="74px 7px 0 7px" overflowY="scroll">
+          <Grid
+            border="1px solid red"
+            width="93.23%"
+            height="100px"
+            margin="20px auto"
+          >
+            <Banner />
+          </Grid>
           <Grid height="453px" margin="10px auto 75px auto">
             <Grid margin="0 7px" height="24px" flex="flex">
               <Image

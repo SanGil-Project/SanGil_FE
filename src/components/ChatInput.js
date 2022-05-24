@@ -6,7 +6,7 @@ import Stomp from "stompjs";
 import { actionCreators as chatActions } from "../redux/modules/chat";
 import { Grid, Text, Button, Input } from "../elements/element";
 
-const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 서버주소/ws-stomp
+const sockJs = new SockJS("https://ehjeong.shop/ws-stomp"); // 서버주소/ws-stomp
 const stomp = Stomp.over(sockJs);
 
 const ChatInput = (props) => {
