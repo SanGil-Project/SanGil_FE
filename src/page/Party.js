@@ -146,32 +146,23 @@ const Party = (props) => {
             <Grid padding="160px 14px 100px">
               {partyList?.map((p, idx) => {
                 const cardImg = p.completed ? 
-                  "https://user-images.githubusercontent.com/91959791/170047867-6794743f-7174-4208-b425-2f7456617d45.png" : 
-                  "https://user-images.githubusercontent.com/91959791/170047969-5020a76c-9306-4ba0-afdf-e200fbc33a39.png";
-                let btnBg = p.completed ? "#43CA3B" : "#959595";
-                let textColor = p.completed ? "#000" : "#D9D9D9";
-                let btnText = p.completed ? "모집내용확인" : "마감 되었어요😢";
+                  "https://user-images.githubusercontent.com/91959791/170146663-47e7a0ce-6db5-40f3-ad7e-c078779ed87f.png" : 
+                  "https://user-images.githubusercontent.com/91959791/170146585-0d85e1a8-f60b-4b76-b634-dbc8f6a73d64.png";
+                const btnBg = p.completed ? "#43CA3B" : "#959595";
+                const textColor = p.completed ? "#000" : "#D9D9D9";
+                const btnText = p.completed ? "모집내용확인" : "마감 되었어요😢";
                 const curPeople = p.curPeople ? p.curPeople : 0;
                 if (p.partyDate === dateString) {
                   const tempT = p.partyTime.split(":");
                   if (parseInt(tempT[0]) === parseInt(hours)) {
                     if (parseInt(tempT[1]) <= parseInt(minutes)) {
-                      btnBg = "#E6E6E6";
-                      textColor = "#D9D9D9";
-                      btnText = "마감 되었어요😢";
-                      isCompleted[idx] = true;
+                      return;
                     }
                   } else if (parseInt(tempT[0]) < parseInt(hours)) {
-                    btnBg = "#E6E6E6";
-                    textColor = "#D9D9D9";
-                    btnText = "마감 되었어요😢";
-                    isCompleted[idx] = true;
+                    return;
                   }
                 } else if (p.partyDate < dateString) {
-                  btnBg = "#E6E6E6";
-                  textColor = "#D9D9D9";
-                  btnText = "마감 되었어요😢";
-                  isCompleted[idx] = true;
+                  return;
                 }
                 return (
                   <Grid
