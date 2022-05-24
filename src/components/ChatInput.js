@@ -40,7 +40,7 @@ const ChatInput = (props) => {
       }
       waitForConnection(stomp, function () {
         stomp.send(
-          "/pub/chat/message", { token: token }, JSON.stringify(chatData)
+          "/sub/chat/message", { token: token }, JSON.stringify(chatData)
         );
         console.log(stomp.ws.readyState);
         console.log(chatData);

@@ -101,7 +101,7 @@ const Search = (props) => {
                 </Button>
               </Grid>
             </SearchInput>
-            <Grid padding="160px 14px 11.5px" height="auto" bg="#fff" margin="0 0 8px">
+            <Grid padding="160px 14px 11.5px" height="auto" bg="#fff" margin="0">
               {!searchData && (
                 <Text bold="600" size="20px" margin="0 0 12px" align="left">
                   ⛰ 100대 명산 중 10개의 산을 랜덤으로 확인해보세요
@@ -109,16 +109,19 @@ const Search = (props) => {
               )}
               <FullMap data={data}/>
             </Grid>
-            <Grid padding="0 0 100px" height="auto">
+            <Grid padding="14px 14px 100px" height="auto">
               {data?.map((d, idx) => {
                 const star = d.starAvr==="n" ? "0" : d.starAvr;
                 return (
                   <div key={idx} ref={el => (listRef.current[idx] = el)}>
                   <Grid
                     bg="#fff"
-                    padding="23px 25px"
-                    margin="0 0 8px"
+                    shadow= "0px 1px 4px rgba(0, 0, 0, 0.1)"
+                    padding="20px 12px"
+                    margin="0 0 14px"
                     height="144px"
+                    radius="10px"
+                    border={selectMarker === idx ? "2px solid #43CA3B" : null}
                     flexColumn
                     alignItems="left"
                     hover
@@ -290,7 +293,7 @@ const SearchContainer = styled.div`
   height: 100%;
   max-width: 500px;
   margin: auto;
-  overflow: hidden;
+  overflow: scroll;
 `;
 
 const SearchWrap = styled.div`
