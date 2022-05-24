@@ -2,10 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from "styled-components";
 
 import { useSelector, useDispatch } from 'react-redux';
-import { actionCreators as partyActions } from '../redux/modules/party';
 import { actionCreators as userActions } from "../redux/modules/user";
 
-import { Desktop, Mobile } from "../shared/responsive";
 import {
   Menubar,
   Header,
@@ -65,7 +63,6 @@ const MyFeed = (props) => {
 
   return (
     <React.Fragment>
-      <Mobile>
         <FeedContainer>
           <Header />
           <FeedWrap>
@@ -92,7 +89,6 @@ const MyFeed = (props) => {
             </Grid>
           </MenubarContainer>
         </FeedContainer>
-      </Mobile>
     </React.Fragment>
   );
 };

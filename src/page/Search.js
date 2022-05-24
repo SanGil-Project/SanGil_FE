@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { actionCreators as mountActions } from "../redux/modules/mountain";
 import { searchNameDB } from "../redux/modules/tracker";
-import { Desktop, Mobile } from "../shared/responsive";
 import {
   Section,
   Menubar,
@@ -12,6 +11,7 @@ import {
   HorizontalScroll,
   Card,
   Header,
+  AlertModal,
 } from "../components/component";
 import { Grid, Text, Icon, Button, Input } from "../elements/element";
 import { useNavigate } from "react-router";
@@ -28,8 +28,12 @@ const Search = (props) => {
   const selectMarker = useSelector((state) => state?.handle?.selectMarker?.index);
   const listRef = useRef([]);
 
+  const [input, setInput] = React.useState("");
   const [searchKeyword, setSearchKeyword] = React.useState("");
   const [curtPage, setCurtPage] = useState(curtPageDB);
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState("");
 
   React.useEffect(() => {
     dispatch(mountActions.getTopMntDB());
@@ -50,33 +54,33 @@ const Search = (props) => {
       // setCurtPage(curtPageDB+1)
       return;
     }
-  }, [curtPage]);
+  }, [curtPage, searchKeyword]);
 
   const onChange = (e) => {
-    setSearchKeyword(e.target.value);
+    setInput(e.target.value);
+    console.log(input)
   };
   const search = () => {
-    if (searchKeyword === "") {
-      window.alert("검색어를 입력해주세요!");
+    if (input === "") {
+      setModalContent("검색어를 입력해주세요!");
+      setModalOpen(true)
       return;
     }
     // dispatch(searchNameDB(searchKeyword, 1));
     setCurtPage(1)
-    // setSearchKeyword("");
+    setSearchKeyword(input);
   };
   const prevPage = () => {
     if(curtPage > 1) {
       setCurtPage((pre) => pre - 1)
       return;
     }
-    console.log("첫페이지에여!!!!")
   }
   const nextPage = () => {
     if(curtPage < totPageDB) {
       setCurtPage((pre) => pre + 1)
       return;
     }
-    console.log("마지막!!!!!")
 
   }
 
@@ -91,9 +95,14 @@ const Search = (props) => {
 
   return (
     <React.Fragment>
-      <Mobile>
         <SearchContainer>
           <Header />
+          { modalOpen && 
+            <AlertModal 
+              type="check"
+              onClose={setModalOpen} 
+              modalState={modalOpen}
+              contents={modalContent}/> }
           <SearchWrap>
             <SearchInput>
             {/* <SearchInput padding="82px 14px 18px" bg="#fff"> */}
@@ -119,7 +128,8 @@ const Search = (props) => {
                   margin="0 5.5px"
                   placeholder="어떤 산을 찾고 계신가요?"
                   _onChange={onChange}
-                  value={searchKeyword}
+                  value={input}
+                  // value={searchKeyword}
                   onSubmit={search}
                   is_submit
                 />
@@ -148,7 +158,7 @@ const Search = (props) => {
                       <Icon type="goPrev" width="48px" height="48px" margin="0 auto"/>
                     </Grid>
                     <Grid width="100%" flexRow>
-                      <Text margin="0 5px 0 0" bold="700" size="16px" color="#43CA3B">{curtPage}</Text>
+                      <Text margin="0 5px 0 0" bold="700" size="16px" color="#43CA3B">{totPageDB ? curtPage : 0}</Text>
                       <Text margin="0" bold="500" size="14px">/ {totPageDB}</Text>
                     </Grid>
                     <Grid width="auto" _onClick={nextPage}>
@@ -225,143 +235,7 @@ const Search = (props) => {
             </Grid>
           </MenubarContainer>
         </SearchContainer>
-      </Mobile>
       
-      <Desktop>
-        <SearchContainer>
-          <Header />
-          <SearchWrap>
-            <SearchInput>
-            {/* <SearchInput padding="82px 14px 18px" bg="#fff"> */}
-              <Grid
-                bg="#F2F3F6"
-                height="50px"
-                border="1px solid #F2F3F6"
-                radius="12px"
-                padding="15px 13px"
-                flexRow
-              >
-                <Icon
-                  type="searchIcon"
-                  width="37px"
-                  height="37px"
-                  margin="0 auto"
-                />
-                <Input
-                  bg="#F2F3F6"
-                  width="100%"
-                  border="none"
-                  padding="0"
-                  margin="0 5.5px"
-                  placeholder="어떤 산을 찾고 계신가요?"
-                  _onChange={onChange}
-                  value={searchKeyword}
-                  onSubmit={search}
-                  is_submit
-                />
-                <Button border="none" width="50px" _onClick={cancel}>
-                  <Text size="16px" bold="500" margin="0" color="#959595">취소</Text>
-                </Button>
-              </Grid>
-            </SearchInput>
-            <Grid padding="160px 14px 11.5px" height="auto" bg="#fff" margin="0">
-              {!searchData && (
-                <Text bold="600" size="20px" margin="0 0 12px" align="left">
-                  ⛰ 100대 명산 중 10개의 산을 랜덤으로 확인해보세요
-                </Text>
-              )}
-              {/* <FullMap data={data}/> */}
-              { searchData ? 
-                <>
-                  <Grid padding="0 26px">
-                    <FullMap data={data} size="500px" padding/>
-                  </Grid>
-                  <Grid isFlex> 
-                    <Grid width="auto" _onClick={()=>{setCurtPage(1)}}>
-                      <Icon type="goFirst" width="48px" height="48px" margin="0 auto"/>
-                    </Grid>
-                    <Grid width="auto" _onClick={prevPage}>
-                      <Icon type="goPrev" width="48px" height="48px" margin="0 auto"/>
-                    </Grid>
-                    <Grid width="100%" flexRow>
-                      <Text margin="0 5px 0 0" bold="700" size="16px" color="#43CA3B">{curtPage}</Text>
-                      <Text margin="0" bold="500" size="14px">/ {totPageDB}</Text>
-                    </Grid>
-                    <Grid width="auto" _onClick={nextPage}>
-                      <Icon type="goNext" width="48px" height="48px" margin="0 auto"/>
-                    </Grid>
-                    <Grid width="auto" _onClick={()=>{setCurtPage(totPageDB)}}>
-                      <Icon type="goLast" width="48px" height="48px" margin="0 auto"/>
-                    </Grid>
-                  </Grid>
-                </> : 
-                <FullMap data={data} size="665px"/>}
-            </Grid>
-            <Grid padding="14px 14px 100px" height="auto">
-              {data?.map((d, idx) => {
-                const star = d.starAvr==="n" ? "0" : d.starAvr;
-                return (
-                  <div key={idx} ref={el => (listRef.current[idx] = el)}>
-                  <Grid
-                    bg="#fff"
-                    shadow= "0px 1px 4px rgba(0, 0, 0, 0.1)"
-                    padding="20px 12px"
-                    margin="0 0 14px"
-                    height="144px"
-                    radius="10px"
-                    border={selectMarker === idx ? "2px solid #43CA3B" : null}
-                    flexColumn
-                    alignItems="left"
-                    hover
-                    _onClick={()=>{goDetail(d.mountainId)}}
-                  > 
-                    <Grid padding="0 0 24px" flexRow justify="left">
-                      <Icon type="searchMnt" width="24px" height="18px" margin="0 auto"/>
-                      <div key={idx} ref={el => (listRef.current[idx] = el)}>
-                      <Text margin="0 10px" size="18px" bold="500" nowrap>
-                        {d.mountain}
-                      </Text>
-                      </div>
-                    </Grid>
-                    <Grid padding="0 0 24px" flexRow justify="left">
-                      <Icon type="searchAddr" width="24px" height="21px" margin="0 auto"/>
-                      <Text margin="0 10px" size="18px" bold="500" nowrap>
-                        {d.mountainAddress}
-                      </Text>
-                    </Grid>
-                    <Grid flexRow justify="left">
-                      <Icon type="searchStar" width="24px" height="21px" margin="0 auto"/>
-                      <Text margin="0 10px" size="18px" bold="500" nowrap>
-                        ({star})
-                      </Text>
-                    </Grid>
-                  </Grid>
-                  </div>
-                );
-              })}
-            </Grid>
-          </SearchWrap>
-
-          <MenubarContainer>
-            <Grid height="88px" maxWidth="500px" margin="auto">
-              <TrackBtn>
-                <Button
-                  width="60px"
-                  height="60px"
-                  bgColor="#43CA3B"
-                  border="none"
-                  color="#fff"
-                  radius="100%"
-                  _onClick={() => navigate("/searchmountain")}
-                >
-                  <Icon type="climber" width="20px" height="32px" />
-                </Button>
-              </TrackBtn>
-              <Menubar menuColor={menuColor} />
-            </Grid>
-          </MenubarContainer>
-        </SearchContainer>
-      </Desktop>
     </React.Fragment>
   );
 };

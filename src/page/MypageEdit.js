@@ -104,7 +104,6 @@ const MypageEdit = (props) => {
   
   return (
     <React.Fragment>
-      <Mobile>
         <MypageContainer>
           <Header />
           { modalOpen && 
@@ -161,66 +160,7 @@ const MypageEdit = (props) => {
             </Grid>
           </Grid>
         </MypageContainer>
-      </Mobile>
 
-      <Desktop>
-        <MypageContainer>
-          <Header />
-          { modalOpen && 
-            <AlertModal 
-              type="check"
-              onClose={setModalOpen} 
-              modalState={modalOpen}
-              contents={modalContent}/> }
-          <Grid padding="69px 36px 10px" height="auto">
-            <Grid flexColumn height="auto" padding="5px 0">
-              <UserProfile>
-                <Label className="input_file_button" htmlFor="input_image">
-                  <Image
-                    hover
-                    type="circle"
-                    width="100px"
-                    height="100px"
-                    src={preview ? preview : userInfo?.userImageUrl !== "없음" ? userInfo?.userImageUrl : defalutsrc}/>
-                </Label>
-                <input id='input_image' type="file" ref={fileInput} onChange={selectFile} style={{display:"none"}}/>
-              </UserProfile>
-              <Grid flexRow padding="10px 0 42px">
-                <UserName>
-                  <Grid flexRow width="auto">
-                    <Grid width="4px" height="23px" bg={checkBarColor}></Grid>
-                    <Input gridWidth="140px" size="14px" width="140px" padding="4.5px 0 4.5px 8px" margin="0" border="none" bg="transparent" defaultValue={userInfo?.nickname} _onChange={changeNickname}/>
-                  </Grid>
-                  <Text margin="0 10px" bold="500" size="10px" color="#c4c4c4" width="auto"> {nameCount}/10</Text>
-                </UserName>
-                <Button width="auto" height="23px" padding="4.5px 10px" bgColor={checkBtnColor} radius="4px" border="none" _onClick={changeName}>
-                  <Text margin="0" color="#fff" align size="12px" bold="600">변경</Text>
-                </Button>
-              </Grid>
-            </Grid>
-            <Grid height="auto" padding="0">
-              <TitleList>
-                {userTitleList?.map((t, idx) => {
-                  const pick = (userInfo?.userTitle === t.userTitle) ? true : false;
-                  const img = (t.userTitleImgUrl === "없음") ? "https://user-images.githubusercontent.com/91959791/169658309-a910c67d-7ae2-4895-b6be-a155dcfaf5bb.png" : t.userTitleImgUrl;
-                  return (
-                    <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} margin="0 7px" width="100px" height="164px">
-                      <TitleItem key={idx} title={t.userTitle} img={img} pick={pick} done/>
-                    </Grid> 
-                  );
-                })}
-                {noTitleList?.map((t, idx) => {
-                  return (
-                    <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} margin="0 7px" width="100px" height="164px">
-                      <TitleItem key={idx} title={t.userTitle} img={img}/>
-                    </Grid>
-                  );
-                })}
-              </TitleList>
-            </Grid>
-          </Grid>
-        </MypageContainer>
-      </Desktop>
     </React.Fragment>
   );
 }
