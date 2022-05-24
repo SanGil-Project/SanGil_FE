@@ -84,6 +84,7 @@ const Btn = styled.button`
   ${(props) => (props.position ? `position: ${props.position};` : null)}
   ${(props) => (props.zIndex ? `z-index: ${props.zIndex};` : null)}
   ${(props) => (props.shadow ? `box-shadow: ${props.shadow};` : null)}
+  text-align: center;
   &:hover {
     cursor: pointer;
   }

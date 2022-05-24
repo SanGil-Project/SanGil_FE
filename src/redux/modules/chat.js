@@ -53,6 +53,7 @@ const enterChatDB = (chatRoomId) => {
   return function (dispatch, getState) {
     console.log("chatRoomId :: ", typeof chatRoomId , chatRoomId);
     // const 
+    return;
     api
       .enterChatRoom(chatRoomId)
       .then((res) => {

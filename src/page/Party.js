@@ -96,11 +96,12 @@ const Party = (props) => {
 
   const moveDetail = (partyId, completed, check) => {
     console.log(check);
-    if (!completed || check) {
-      window.alert("마감된 모임입니다!");
-    } else {
-      navigate(`/partydetail/${partyId}`);
-    }
+    navigate(`/partydetail/${partyId}`);
+    // if (!completed || check) {
+    //   window.alert("마감된 모임입니다!");
+    // } else {
+    //   navigate(`/partydetail/${partyId}`);
+    // }
   }
 
   return (
@@ -117,6 +118,7 @@ const Party = (props) => {
                 border="1px solid #F2F3F6"
                 radius="12px"
                 padding="15px 13px"
+                margin="0 6px 0 0"
                 flexRow
               >
                 <Icon
@@ -137,15 +139,18 @@ const Party = (props) => {
                   onSubmit={search}
                   is_submit
                 />
-                <Button border="none" width="50px" _onClick={cancel}>
-                  <Text size="16px" bold="500" margin="0" color="#959595">취소</Text>
-                </Button>
               </Grid>
+              <Button border="none" width="auto" _onClick={cancel} padding="15px 10px">
+                <Text size="16px" bold="500" margin="0 auto" color="#959595">취소</Text>
+              </Button>
             </SearchInput>
             <Grid padding="160px 14px 100px">
               {partyList?.map((p, idx) => {
-                let btnBg = p.completed ? "#43CA3B" : "#E6E6E6";
-                let btnColor = p.completed ? "#fff" : "#000";
+                const cardImg = p.completed ? 
+                  "https://user-images.githubusercontent.com/91959791/170047867-6794743f-7174-4208-b425-2f7456617d45.png" : 
+                  "https://user-images.githubusercontent.com/91959791/170047969-5020a76c-9306-4ba0-afdf-e200fbc33a39.png";
+                let btnBg = p.completed ? "#43CA3B" : "#959595";
+                let textColor = p.completed ? "#000" : "#D9D9D9";
                 let btnText = p.completed ? "모집내용확인" : "마감 되었어요😢";
                 const curPeople = p.curPeople ? p.curPeople : 0;
                 if (p.partyDate === dateString) {
@@ -153,35 +158,38 @@ const Party = (props) => {
                   if (parseInt(tempT[0]) === parseInt(hours)) {
                     if (parseInt(tempT[1]) <= parseInt(minutes)) {
                       btnBg = "#E6E6E6";
-                      btnColor = "#000";
+                      textColor = "#D9D9D9";
                       btnText = "마감 되었어요😢";
                       isCompleted[idx] = true;
                     }
                   } else if (parseInt(tempT[0]) < parseInt(hours)) {
                     btnBg = "#E6E6E6";
-                    btnColor = "#000";
+                    textColor = "#D9D9D9";
                     btnText = "마감 되었어요😢";
                     isCompleted[idx] = true;
                   }
                 } else if (p.partyDate < dateString) {
                   btnBg = "#E6E6E6";
-                  btnColor = "#000";
+                  textColor = "#D9D9D9";
                   btnText = "마감 되었어요😢";
                   isCompleted[idx] = true;
                 }
                 return (
                   <Grid
                     key={idx}
-                    bg="#FAFAFA"
+                    // bg="#FAFAFA"
                     shadow="1px 3px 10px rgba(69, 69, 69, 0.2)"
                     radius="16px"
+                    width="auto"
                     height="230px"
                     padding="17px 16px"
                     margin="0 0 24px"
                     flexColumn
+                    bgImg={cardImg}
+                    bgSize="cover"
                   >
                     <Grid alignItems="left" height="auto">
-                      <Text margin="0 0 18px" bold="500">
+                      <Text margin="0 0 18px" bold="500" color={textColor}>
                         {p.title}
                       </Text>
                       <Grid flexRow justify="left" padding="0 0 10px" height="auto">
@@ -191,9 +199,10 @@ const Party = (props) => {
                             width="18px"
                             height="17px"
                             margin="0 auto"
+                            fill={textColor}
                           />
                         </Grid>
-                        <Text margin="0 12px" bold="500" size="14px" height="auto">
+                        <Text margin="0 12px" bold="500" size="14px" height="auto" color={textColor}>
                           {p.mountain} ({p.address})
                         </Text>
                       </Grid>
@@ -204,9 +213,10 @@ const Party = (props) => {
                             width="15px"
                             height="17px"
                             margin="0 auto"
+                            fill={textColor}
                           />
                         </Grid>
-                        <Text margin="0 12px" bold="500" size="14px">
+                        <Text margin="0 12px" bold="500" size="14px" color={textColor}>
                           {p.partyDate} (시간 {p.partyTime})
                         </Text>
                       </Grid>
@@ -217,9 +227,10 @@ const Party = (props) => {
                             width="16px"
                             height="16px"
                             margin="0 auto"
+                            fill={textColor}
                           />
                         </Grid>
-                        <Text margin="0 12px" bold="500" size="14px">
+                        <Text margin="0 12px" bold="500" size="14px" color={textColor}>
                           {curPeople}/{p.maxPeople}명
                         </Text>
                       </Grid>
@@ -229,7 +240,7 @@ const Party = (props) => {
                         type="div"
                         bgColor={btnBg}
                         border="none"
-                        radius="8px"
+                        radius="4px"
                         width="170px"
                         height="48px"
                         margin="20px 0 0"
@@ -237,7 +248,7 @@ const Party = (props) => {
                           moveDetail(p.partyId, p.completed, isCompleted[idx]);
                         }}
                       >
-                        <Text margin="0" align color={btnColor}>
+                        <Text margin="0" align color="#fff">
                           {btnText}
                         </Text>
                       </Button>
@@ -425,13 +436,17 @@ const PartyWrap = styled.div`
   overflow-y: auto;
 `;
 const SearchInput = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items:center;
   position: fixed;
   top: 64px;
   z-index: 10;
   width: 100%;
   max-width: 500px;
   box-sizing: border-box;
-  padding: 20px 14px 27px;
+  padding: 20px 14px 24px;
   background-color: #fff;
 `;
 

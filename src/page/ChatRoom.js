@@ -33,7 +33,7 @@ const ChatRoom = (props) => {
       console.log("STOMP Start");
       stomp.connect({}, () => {
         console.log("STOMP Connection");
-        stomp.subscribe(`/chat/rooms/${chatRoomId}`,
+        stomp.subscribe(`/sub/chat/rooms/${chatRoomId}`,
             (res) => {
               console.log("subscribe callback ::", res);
               const content = JSON.parse(res.body);
@@ -50,7 +50,7 @@ const ChatRoom = (props) => {
           );
           dispatch(chatActions.getChatDB(chatRoomId));
           stomp.send(
-            "/pub/chat/message", { token: token }, JSON.stringify({
+            "/sub/chat/message", { token: token }, JSON.stringify({
               roomId: chatRoomId, sender: _userInfo.nickname, type: 'ENTER',})
           )
         });
