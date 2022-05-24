@@ -31,6 +31,7 @@ const Party = (props) => {
   const minutes = ('0' + today.current.getMinutes()).slice(-2);
   let isCompleted = Array(partyList?.length).fill(false);
 
+  const [searchKeyword, setSearchKeyword] = React.useState("");
 
   React.useEffect(() => {
     dispatch(partyActions.getPartyDB(1));
@@ -38,6 +39,23 @@ const Party = (props) => {
     //   dispatch(partyActions.getPartyDB(1));
     // }
   }, []);
+
+  const onChange = (e) => {
+    setSearchKeyword(e.target.value);
+  };
+  const search = () => {
+    if (searchKeyword === "") {
+      window.alert("검색어를 입력해주세요!");
+      return;
+    }
+    console.log(searchKeyword);
+    // dispatch(searchNameDB(searchKeyword, 1));
+    // setSearchKeyword("");
+  };
+
+  const cancel = () => {
+    setSearchKeyword("")
+  }
 
   const moveDetail = (partyId, completed, check) => {
     console.log(check);
@@ -54,7 +72,40 @@ const Party = (props) => {
         <PartyContainer>
           <Header />
           <PartyWrap>
-            <Grid padding="96px 14px 100px">
+            <SearchInput>
+            {/* <SearchInput padding="82px 14px 18px" bg="#fff"> */}
+              <Grid
+                bg="#F2F3F6"
+                height="50px"
+                border="1px solid #F2F3F6"
+                radius="12px"
+                padding="15px 13px"
+                flexRow
+              >
+                <Icon
+                  type="searchIcon"
+                  width="37px"
+                  height="37px"
+                  margin="0 auto"
+                />
+                <Input
+                  bg="#F2F3F6"
+                  width="100%"
+                  border="none"
+                  padding="0"
+                  margin="0 5.5px"
+                  placeholder="검색 키워드 : 산이름, 지명, 모임제목"
+                  _onChange={onChange}
+                  value={searchKeyword}
+                  onSubmit={search}
+                  is_submit
+                />
+                <Button border="none" width="50px" _onClick={cancel}>
+                  <Text size="16px" bold="500" margin="0" color="#959595">취소</Text>
+                </Button>
+              </Grid>
+            </SearchInput>
+            <Grid padding="160px 14px 100px">
               {partyList?.map((p, idx) => {
                 let btnBg = p.completed ? "#43CA3B" : "#E6E6E6";
                 let btnColor = p.completed ? "#fff" : "#000";
@@ -324,6 +375,16 @@ const PartyWrap = styled.div`
   top: 64px;
   height:100%
   overflow-y: auto;
+`;
+const SearchInput = styled.div`
+  position: fixed;
+  top: 64px;
+  z-index: 10;
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+  padding: 20px 14px 27px;
+  background-color: #fff;
 `;
 
 const MenubarContainer = styled.div`
