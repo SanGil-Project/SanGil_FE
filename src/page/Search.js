@@ -107,12 +107,32 @@ const Search = (props) => {
                   ⛰ 100대 명산 중 10개의 산을 랜덤으로 확인해보세요
                 </Text>
               )}
-              <FullMap data={data}/>
-              {/* { searchData ? 
-                <Grid padding="0 26px 15px">
-                  <FullMap data={data} size="500px"/>
-                </Grid> : 
-                <FullMap data={data}/>} */}
+              {/* <FullMap data={data}/> */}
+              { searchData ? 
+                <>
+                  <Grid padding="0 26px">
+                    <FullMap data={data} size="500px" padding/>
+                  </Grid>
+                  <Grid isFlex> 
+                    <Grid width="auto">
+                      <Icon type="goFirst" width="48px" height="48px" margin="0 auto"/>
+                    </Grid>
+                    <Grid width="auto">
+                      <Icon type="goPrev" width="48px" height="48px" margin="0 auto"/>
+                    </Grid>
+                    <Grid width="100%" flexRow>
+                      <Text margin="0 5px 0 0" bold="700" size="16px" color="#43CA3B">10</Text>
+                      <Text margin="0" bold="500" size="14px">/ 10</Text>
+                    </Grid>
+                    <Grid width="auto">
+                      <Icon type="goNext" width="48px" height="48px" margin="0 auto"/>
+                    </Grid>
+                    <Grid width="auto">
+                      <Icon type="goLast" width="48px" height="48px" margin="0 auto"/>
+                    </Grid>
+                  </Grid>
+                </> : 
+                <FullMap data={data} size="665px"/>}
             </Grid>
             <Grid padding="14px 14px 100px" height="auto">
               {data?.map((d, idx) => {

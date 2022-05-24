@@ -4,8 +4,8 @@ const instance = axios.create({
   // baseURL: "http://3.35.16.204:8080", // 로컬 - 상준님
   // baseURL: "http://15.164.232.187:8080", // 로컬 - 상준님
   // baseURL: "http://52.79.228.126:8080", // 로컬 - 의현님
-  // baseURL: "http://15.164.102.106:8080", // 로컬 - 재진님
-  baseURL: "https://jinnn.shop", // 배포용 - 재진님
+  baseURL: "http://15.164.102.106:8080", // 로컬 - 재진님
+  // baseURL: "https://jinnn.shop", // 배포용 - 재진님
   // baseURL: "https://burgerrr.shop", // yesleee.shop - 상준님
   // baseURL: "https://ehjeong.shop", // yesleee.shop - 의현님
   // baseURL: "https://jinnn.shop", // yesleee.shop - 재진님

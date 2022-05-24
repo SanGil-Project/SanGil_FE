@@ -5,16 +5,16 @@ import { Grid, Icon, Text } from "../elements/element";
 import KakaoMap from "./KakaoMap";
 
 const FullMap = (props) => {
-  const { data, getIndex, zoomable, size } = props;
+  const { data, getIndex, zoomable, size, padding } = props;
   console.log(size);
 
   return (
     <>
-      <MapContainer>
+      <MapContainer padding={padding}>
         <MapBox>
           <KakaoMap
             width="100%"
-            height="665px"
+            height={size}
             maxWidth="772px"
             level="13"
             full
@@ -33,7 +33,7 @@ const MapContainer = styled.div`
   width: 100%;
   height: 0;
   overflow: hidden;
-  padding-bottom: 141%;
+  padding-bottom: ${(props) => (props.padding ? "121%" : "141%")};
 `;
 
 const MapBox = styled.div`
