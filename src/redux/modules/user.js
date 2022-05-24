@@ -254,41 +254,23 @@ const myMountainDB = (mountainId) => {
   };
 };
 
-const myFeedDB = (pageNum) => {
+const myFeedDB = (pageNum = null) => {
   return async function (dispatch, getState) {
 
-    // const fakeDB = {
-    //   feedList : [
-    //   {
-    //   userId : 1,
-    //   username : "jsjune",
-    //   userImageUrl : "없음",
-    //   feedImageUrl : "https://user-images.githubusercontent.com/91959791/168317315-e860569b-0325-4f92-b0dd-cc951b063dca.jpeg",
-    //   feedContent : "feedContent",
-    //   createdAt: "11:00",
-    //   goodCnt: 5,
-    //   goodStatus:false,
-    //   },
-    //   {
-    //   userId : 2,
-    //   username : "jsjune",
-    //   userImageUrl : "없음",
-    //   feedImageUrl : "https://user-images.githubusercontent.com/91959791/168317315-e860569b-0325-4f92-b0dd-cc951b063dca.jpeg",
-    //   feedContent : "feedContent",
-    //   createdAt : "11:00",
-    //   goodCnt : 5,
-    //   goodStatus :true,
-    //   }
-    //   ],
-    //   totalPage: 3,
-    //   currentPage: 1,
-    //   };
-    
-    // dispatch(myFeed(fakeDB));
-    // return;
-
+    if (pageNum) {
+      api
+        .myFeedList(pageNum)
+        .then((res) => {
+          console.log("(myFeedList) 성공 후 데이터 ::", res);
+          dispatch(myFeed(res.data));
+        })
+        .catch((err) => {
+          console.log("(myFeedList) 실패 ::", err);
+        });
+      return;
+    }
     api
-      .myFeed(pageNum)
+      .myFeed()
       .then((res) => {
         console.log("(myFeed) 성공 후 데이터 ::", res);
         dispatch(myFeed(res.data));
@@ -355,10 +337,19 @@ export default handleActions(
       produce(state, (draft) => {
         draft.titleList = action.payload.titleList;
       }),
-    [MY_FEED]: (state, action) =>
-      produce(state, (draft) => {
+    [MY_FEED]: (state, action) => produce(state, (draft) => {
+      if (action.payload.feedList.currentPage) {
+        if (action.payload.feedList.currentPage === 0) {
+          draft.feedList = action.payload.feedList;
+        } else {
+          draft.feedList.feedList.push(...action.payload.feedList.feedList);
+          draft.feedList.currentPage = action.payload.feedList.currentPage;
+        }
+      } else {
         draft.feedList = action.payload.feedList;
-      }),
+      }
+
+    }),
     [MY_BOOKMARK]: (state, action) => produce(state, (draft) => {
       if (action.payload.mountList.currentPage === 0) {
         draft.bookmarkList = action.payload.mountList;
@@ -366,7 +357,7 @@ export default handleActions(
         draft.bookmarkList.bookMarkResponseDtos.push(...action.payload.mountList.bookMarkResponseDtos);
         draft.bookmarkList.currentPage = action.payload.mountList.currentPage;
       }
-      }),
+    }),
     [MY_MOUNTAIN]: (state, action) =>
       produce(state, (draft) => {
         console.log(action.payload)

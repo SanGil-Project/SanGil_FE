@@ -111,7 +111,9 @@ export const api = {
     }),
   myTracking: () => instance.get("/api/mypages/tracking"),
   myTitle: () => instance.get("/api/mypages/userTitle"),
-  myFeed: (pageNum) => instance.get(`/api/myfeeds/${pageNum}`),
+  myFeed: () => instance.get("/mypages/myfeeds"),
+  myFeedList: (pageNum) => instance.get(`/api/myfeeds/${pageNum}`),
+
   myMount: (mountainId) => instance.get(`/api/mypages/tracking/${mountainId}`),
   myBookmark: (pageNum, lat, lng) =>
     instance.get(`/api/mypages/bookmark/${pageNum}?lat=${lat}&lng=${lng}`),

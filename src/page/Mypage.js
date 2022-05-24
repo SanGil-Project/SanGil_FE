@@ -47,7 +47,7 @@ const Mypage = (props) => {
       //   });
       // }
       dispatch(userActions.myTrackingDB());
-      dispatch(userActions.myFeedDB(1));
+      dispatch(userActions.myFeedDB());
     }
   }, [userInfo]);
 
@@ -195,22 +195,44 @@ const Mypage = (props) => {
               <FullMap zoomable={false} data={completedList} size="665px"/>{" "}
             </Grid>
             <Grid padding="35px 14px 25px" height="auto">
-              <Grid flexRow justify="left" margin="0 0 24px" >
-                <Image
-                  width="24px"
-                  height="24px"
-                  src={require("../assets/images/Feed.png")}
-                  margin="0 5px 0 0"
-                />
-                <Text bold="600" size="20px" margin="0" align="left">
-                  나의 피드 모아보기
-                </Text>
+              <Grid isFlex margin="0 0 24px">
+                
+                <Grid flexRow justify="left" >
+                  <Image
+                    width="24px"
+                    height="24px"
+                    src={require("../assets/images/Feed.png")}
+                    margin="0 5px 0 0"
+                  />
+                  <Text bold="600" size="20px" margin="0" align="left">
+                    나의 피드 모아보기
+                  </Text>
+                </Grid>
+                <Grid
+                  margin="0 18px 0 0"
+                  width="auto"
+                  textAlign
+                  hover
+                  isFlex
+                  _onClick={() => {
+                    navigate("/myfeed");
+                  }}
+                >
+                  <Text margin="0 11px" size="12px" bold="300" color="#000">더보기</Text>
+                  <Icon type="arrow" width="5px" height="8px" />
+                </Grid>
               </Grid>
                 <HorizontalScroll>
-                  {myFeedList?.feedList?.map((cur, idx) => {
+                  {myFeedList?.map((cur, idx) => {
                     const good = cur.goodStatus ? "false" : "0.2"
                     return (
-                    <Grid key={idx} width="auto" margin="0 10px 0 0" _onClick={()=>{moveFeedDetail(cur.feedId)}} hover>
+                    <Grid 
+                      hover
+                      key={idx} 
+                      width="auto" 
+                      margin="0 10px 0 0" 
+                      // _onClick={()=>{moveFeedDetail(cur.feedId)}}
+                      >
                       <Card width="150px" height="150px" margin="0" shadow="0px 1px 4px rgba(0, 0, 0, 0.1)">
                         <Image
                           width="150px"

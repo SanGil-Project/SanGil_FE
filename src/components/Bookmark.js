@@ -59,19 +59,6 @@ const Bookmark = (props) => {
     }
   }, [curPage]);
 
-
-  // React.useEffect(() => {
-  //   console.log(curPage, searchKeyword);
-  //   if (searchKeyword !== "") {
-  //     dispatch(partyActions.getKeywordPartyDB(curPage, searchKeyword));
-  //     return;
-  //   }
-  //   dispatch(partyActions.getPartyDB(curPage));
-  // }, [curPage]);
-
-  // 완료되지 않은 모임만 보여주기
-  // const plans = myPartyList?.filter((p) => p.msg === "true");
-
   return (
     <React.Fragment>
       <Grid padding="0 0 50px">

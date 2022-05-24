@@ -37,6 +37,7 @@ const Grid = (props) => {
     borderTop,
     _onScroll,
     color,
+    wrap,
   } = props;
   const styles = {
     bg,
@@ -71,6 +72,7 @@ const Grid = (props) => {
     borderTop,
     color,
     flex,
+    wrap,
   };
 
   return (
@@ -122,6 +124,7 @@ const Box = styled.div`
   ${(props) => (props.position ? `position: ${props.position};` : null)}
   ${(props) => (props.zindex ? `z-index: ${props.zindex};` : null)}
   ${(props) => (props.overflowY ? `overflow-y: ${props.overflowY};` : null)}
+  ${(props) => (props.wrap ? `flex-wrap: ${props.wrap};` : null)}
   &::-webkit-scrollbar {
     display: none;
   }

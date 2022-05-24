@@ -25,6 +25,7 @@ import {
   Mytrack,
   DetailCmt,
   FeedCmt,
+  MyFeed,
 } from "../page/page";
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
               <Route path="/user/naver/callback" element={<NaverLogin />} />
               <Route path="/mypage" element={<Mypage />} />
               <Route path="/mypageEdit" element={<MypageEdit />} />
+              <Route path="/myfeed" element={<MyFeed />} />
               <Route path="/party" exact element={<Party />} />
               <Route path="/partywrite" exact element={<PartyWrite />} />
               <Route
