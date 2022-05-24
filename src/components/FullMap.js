@@ -5,7 +5,8 @@ import { Grid, Icon, Text } from "../elements/element";
 import KakaoMap from "./KakaoMap";
 
 const FullMap = (props) => {
-  const { data, getIndex, zoomable } = props;
+  const { data, getIndex, zoomable, size } = props;
+  console.log(size);
 
   return (
     <>

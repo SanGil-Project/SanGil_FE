@@ -19,16 +19,6 @@ const addChatRoomDB = (title, partyId) => {
   return function (dispatch, getState) {
     const userInfo = getState().user.userInfo;
 
-    // console.log("room ::", room)
-    // console.log("userInfo ::", userInfo)
-    // const fakeRoomId = 99;
-    // const roomInfo = {
-    //   roomId: fakeRoomId,
-    //   partyId: partyId,
-    //   entrance: [userInfo.nickname],
-    // }
-    // dispatch(addChatRoom(roomInfo));
-    // return;
     console.log("title ::", title, partyId);
 
     api
@@ -53,6 +43,7 @@ const enterChatDB = (chatRoomId) => {
   return function (dispatch, getState) {
     console.log("chatRoomId :: ", typeof chatRoomId , chatRoomId);
     // const 
+    return;
     api
       .enterChatRoom(chatRoomId)
       .then((res) => {
@@ -66,24 +57,22 @@ const enterChatDB = (chatRoomId) => {
   }
 }
 
-const getChatDB = (chatRoomId) => {
+const getChatDB = (content) => {
   return function (dispatch, getState) {
-    console.log("chatRoomId :: ", chatRoomId);
-    // 서버에서 받은 "content"에 지금까지 전체 채팅내용 올수 있따면.. api 요청할 필요 없음, 바로 리덕스에 저장하고 보여주기
-    // 인자 : chatRoomId -> content
-    // console.log("content :: ", content);
-    // dispatch(getChat(content));
+    console.log("content :: ", content);
+    
+    dispatch(getChat(content));
     return;
 
-    api
-      .enterChatRoom(chatRoomId)
-      .then((res) => {
-        console.log("(getChatList) 성공 데이터 확인 ::", res.data);
-        dispatch(getChat(res.data));
-      })
-      .catch((err) => {
-        console.log("(getChatList) 실패 ::", err);
-      });
+    // api
+    //   .enterChatRoom(chatRoomId)
+    //   .then((res) => {
+    //     console.log("(getChatList) 성공 데이터 확인 ::", res.data);
+    //     dispatch(getChat(res.data));
+    //   })
+    //   .catch((err) => {
+    //     console.log("(getChatList) 실패 ::", err);
+    //   });
   }
 }
 
