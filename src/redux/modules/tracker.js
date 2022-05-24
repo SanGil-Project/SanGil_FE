@@ -33,6 +33,7 @@ export const startDB = (mountainId, setCompletedId) => {
 
 export const searchNameDB = (keyword, pageNum) => {
   return function (dispatch, getState) {
+    console.log(keyword, pageNum)
     api
       .searchName(keyword, pageNum)
       .then((res) => {
@@ -149,6 +150,8 @@ export default handleActions(
     [GETSEARCH]: (state, action) =>
       produce(state, (draft) => {
         draft.searchList = action.payload.data.searchList;
+        draft.searchTotalPg = action.payload.data.totalPage;
+        draft.searchCurrentPg = action.payload.data.currentPage;
       }),
     [DISTANCE]: (state, action) =>
       produce(state, (draft) => {

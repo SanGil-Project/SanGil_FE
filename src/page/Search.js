@@ -21,13 +21,19 @@ const Search = (props) => {
   const navigate = useNavigate();
   const menuColor = [false, false, false, true, false]; // 메뉴바 색
   const mountainList = useSelector((state) => state?.mountain?.mountainList);
+  // const searchData = useSelector((state) => state?.tracker?.searchList);
   const searchData = useSelector((state) => state?.tracker?.searchList);
+  const curtPageDB = useSelector((state) => state?.tracker?.searchCurrentPg);
+  const totPageDB = useSelector((state) => state?.tracker?.searchTotalPg);
   const selectMarker = useSelector((state) => state?.handle?.selectMarker?.index);
   const listRef = useRef([]);
 
-  let listIndex = 0;
+  const [searchKeyword, setSearchKeyword] = React.useState("");
+  const [curtPage, setCurtPage] = useState(curtPageDB);
 
-  const [currentList, setCurrentList] = useState(0);
+  React.useEffect(() => {
+    dispatch(mountActions.getTopMntDB());
+  }, []);
 
   React.useEffect(() => {
     if (selectMarker !== "undefined") {
@@ -35,11 +41,16 @@ const Search = (props) => {
     }
   }, [selectMarker]);
 
-  React.useEffect(() => {
-    dispatch(mountActions.getTopMntDB());
-  }, []);
+  console.log(curtPage, totPageDB);
 
-  const [searchKeyword, setSearchKeyword] = React.useState("");
+  React.useEffect(() => {
+    console.log(curtPage, searchKeyword);
+    if (searchKeyword !== "") {
+      dispatch(searchNameDB(searchKeyword, curtPage));
+      // setCurtPage(curtPageDB+1)
+      return;
+    }
+  }, [curtPage]);
 
   const onChange = (e) => {
     setSearchKeyword(e.target.value);
@@ -49,9 +60,25 @@ const Search = (props) => {
       window.alert("검색어를 입력해주세요!");
       return;
     }
-    dispatch(searchNameDB(searchKeyword, 1));
+    // dispatch(searchNameDB(searchKeyword, 1));
+    setCurtPage(1)
     // setSearchKeyword("");
   };
+  const prevPage = () => {
+    if(curtPage > 1) {
+      setCurtPage((pre) => pre - 1)
+      return;
+    }
+    console.log("첫페이지에여!!!!")
+  }
+  const nextPage = () => {
+    if(curtPage < totPageDB) {
+      setCurtPage((pre) => pre + 1)
+      return;
+    }
+    console.log("마지막!!!!!")
+
+  }
 
   const cancel = () => {
     setSearchKeyword("")
@@ -114,20 +141,20 @@ const Search = (props) => {
                     <FullMap data={data} size="500px" padding/>
                   </Grid>
                   <Grid isFlex> 
-                    <Grid width="auto">
+                    <Grid width="auto" _onClick={()=>{setCurtPage(1)}}>
                       <Icon type="goFirst" width="48px" height="48px" margin="0 auto"/>
                     </Grid>
-                    <Grid width="auto">
+                    <Grid width="auto" _onClick={prevPage}>
                       <Icon type="goPrev" width="48px" height="48px" margin="0 auto"/>
                     </Grid>
                     <Grid width="100%" flexRow>
-                      <Text margin="0 5px 0 0" bold="700" size="16px" color="#43CA3B">10</Text>
-                      <Text margin="0" bold="500" size="14px">/ 10</Text>
+                      <Text margin="0 5px 0 0" bold="700" size="16px" color="#43CA3B">{curtPage}</Text>
+                      <Text margin="0" bold="500" size="14px">/ {totPageDB}</Text>
                     </Grid>
-                    <Grid width="auto">
+                    <Grid width="auto" _onClick={nextPage}>
                       <Icon type="goNext" width="48px" height="48px" margin="0 auto"/>
                     </Grid>
-                    <Grid width="auto">
+                    <Grid width="auto" _onClick={()=>{setCurtPage(totPageDB)}}>
                       <Icon type="goLast" width="48px" height="48px" margin="0 auto"/>
                     </Grid>
                   </Grid>
@@ -237,24 +264,52 @@ const Search = (props) => {
                 </Button>
               </Grid>
             </SearchInput>
-            <Grid padding="160px 14px 11.5px" height="auto" bg="#fff" margin="0 0 8px">
+            <Grid padding="160px 14px 11.5px" height="auto" bg="#fff" margin="0">
               {!searchData && (
                 <Text bold="600" size="20px" margin="0 0 12px" align="left">
                   ⛰ 100대 명산 중 10개의 산을 랜덤으로 확인해보세요
                 </Text>
               )}
-              <FullMap data={data}/>
+              {/* <FullMap data={data}/> */}
+              { searchData ? 
+                <>
+                  <Grid padding="0 26px">
+                    <FullMap data={data} size="500px" padding/>
+                  </Grid>
+                  <Grid isFlex> 
+                    <Grid width="auto" _onClick={()=>{setCurtPage(1)}}>
+                      <Icon type="goFirst" width="48px" height="48px" margin="0 auto"/>
+                    </Grid>
+                    <Grid width="auto" _onClick={prevPage}>
+                      <Icon type="goPrev" width="48px" height="48px" margin="0 auto"/>
+                    </Grid>
+                    <Grid width="100%" flexRow>
+                      <Text margin="0 5px 0 0" bold="700" size="16px" color="#43CA3B">{curtPage}</Text>
+                      <Text margin="0" bold="500" size="14px">/ {totPageDB}</Text>
+                    </Grid>
+                    <Grid width="auto" _onClick={nextPage}>
+                      <Icon type="goNext" width="48px" height="48px" margin="0 auto"/>
+                    </Grid>
+                    <Grid width="auto" _onClick={()=>{setCurtPage(totPageDB)}}>
+                      <Icon type="goLast" width="48px" height="48px" margin="0 auto"/>
+                    </Grid>
+                  </Grid>
+                </> : 
+                <FullMap data={data} size="665px"/>}
             </Grid>
-            <Grid padding="0 0 100px" height="auto">
+            <Grid padding="14px 14px 100px" height="auto">
               {data?.map((d, idx) => {
                 const star = d.starAvr==="n" ? "0" : d.starAvr;
                 return (
                   <div key={idx} ref={el => (listRef.current[idx] = el)}>
                   <Grid
                     bg="#fff"
-                    padding="23px 25px"
-                    margin="0 0 8px"
+                    shadow= "0px 1px 4px rgba(0, 0, 0, 0.1)"
+                    padding="20px 12px"
+                    margin="0 0 14px"
                     height="144px"
+                    radius="10px"
+                    border={selectMarker === idx ? "2px solid #43CA3B" : null}
                     flexColumn
                     alignItems="left"
                     hover

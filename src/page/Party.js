@@ -38,6 +38,7 @@ const Party = (props) => {
   const [bottom, setBottom] = useState(null);
   const bottomObserver = useRef(null);
 
+  // observer 적용
   React.useEffect(() => {
     const observer = new IntersectionObserver(
       entries => {
