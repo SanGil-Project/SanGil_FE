@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from "styled-components";
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -20,7 +20,8 @@ const Party = (props) => {
   const today = useRef(new Date());
 
   const partydata = useSelector((state) => state?.party?.list);
-  const partyList = partydata?.partyList
+  const partyList = partydata?.partyList;
+  const totalPage = partydata?.totalPage;
 
   // 날짜가 지난 파티 완료처리 해주기
   const year = today.current.getFullYear();
@@ -33,12 +34,43 @@ const Party = (props) => {
 
   const [searchKeyword, setSearchKeyword] = React.useState("");
 
+  const [curPage, setCurPage] = useState(1);
+  const [bottom, setBottom] = useState(null);
+  const bottomObserver = useRef(null);
+
   React.useEffect(() => {
-    dispatch(partyActions.getPartyDB(1));
-    // if (partyList?.length < 2) {
-    //   dispatch(partyActions.getPartyDB(1));
-    // }
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0].isIntersecting) {
+          console.log(totalPage)
+          // if (totalPage < curPage) {
+          //   return;
+          // }
+          setCurPage((pre) => pre + 1);
+        }
+      },
+      { threshold: 0.25, rootMargin: '80px' },
+    );
+    console.log(curPage);
+    bottomObserver.current = observer;
   }, []);
+
+	React.useEffect(() => {
+		const observer = bottomObserver.current;
+		if (bottom) {
+			observer.observe(bottom);
+		}
+		return () => {
+			if (bottom) {
+				observer.unobserve(bottom);
+			}
+		};
+	}, [bottom]);
+
+  React.useEffect(() => {
+    console.log(curPage);
+    dispatch(partyActions.getPartyDB(curPage));
+  }, [curPage]);
 
   const onChange = (e) => {
     setSearchKeyword(e.target.value);
@@ -209,6 +241,7 @@ const Party = (props) => {
                 );
               })}
             </Grid>
+            {totalPage > curPage ? <div ref={setBottom}></div> : null}
           </PartyWrap>
 
           <MenubarContainer>
