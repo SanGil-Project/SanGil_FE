@@ -49,6 +49,16 @@ export const api = {
   mainBookmark: (mountainId, type) =>
     instance.post(`/api/mountain/bookmark/${mountainId}`, { mountainId }),
 
+  //feedCmt.js
+  getCmt: (feedId, pageNum) =>
+    instance.get(`/feeds/comment/${feedId}/${pageNum}`),
+  addFeedCmt: (feedId, feedComment) =>
+    instance.post(`/feeds/comment/${feedId}`, { feedComment }),
+  updateFeedCmt: (feedCommentId, feedComment) =>
+    instance.put(`/feeds/comment/${feedCommentId}`, { feedComment }),
+  deleteFeedCmt: (feedCommentId) =>
+    instance.delete(`/feeds/comment/${feedCommentId}`),
+
   //tracker.js
   start: (mountainId, setCompletedId) =>
     instance.post(`/api/tracking/${mountainId}`, { send: 1 }),
@@ -69,10 +79,10 @@ export const api = {
     instance.get(`/api/tracking/detail/${completedid}`),
 
   //feed.js
-  getFeedDB: (pageNum) => instance.get(`/api/main/feeds/${pageNum}`),
-  deleteFeed:(feedId)=>instance.delete(`/api/feeds/delete/${feedId}`),
-  feedLike:(feedId)=>instance.post(`/api/feeds/good/${feedId}`,{feedId}),
-  
+  getFeedDB: (pageNum) => instance.get(`/feeds/${pageNum}`),
+  deleteFeed: (feedId) => instance.delete(`/api/feeds/delete/${feedId}`),
+  feedLike: (feedId) => instance.post(`/api/feeds/good/${feedId}`, { feedId }),
+
   // user.js - social login
   kakaoLogin: (code) => instance.get(`/user/kakao/callback?code=${code}`),
   naverLogin: (code, state) =>

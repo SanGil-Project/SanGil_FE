@@ -15,7 +15,6 @@ const Image = (props) => {
     objectFit,
     shadow,
     hover,
-    children,
   } = props;
   const styles = {
     src,

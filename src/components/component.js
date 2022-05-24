@@ -18,6 +18,7 @@ import EndTracking from "./EndTracking";
 import ChatInput from "./ChatInput";
 import AlertModal from "./AlertModal";
 import Bookmark from "./Bookmark";
+import Banner from "./Banner";
 
 export {
   GoogleLogin,
@@ -40,4 +41,5 @@ export {
   ChatInput,
   AlertModal,
   Bookmark,
+  Banner,
 };

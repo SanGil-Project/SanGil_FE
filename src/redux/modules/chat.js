@@ -7,8 +7,7 @@ const GET_CHAT = "GET_CHAT";
 const SEND_CHAT = "SEND_CHAT";
 const ENTER_CHAT = "ENTER_CHAT";
 
-const initialState = {
-}
+const initialState = {};
 
 const addChatRoom = createAction(ADD_CHATROOM, (chatRoom) => ({ chatRoom }));
 const getChat = createAction(GET_CHAT, (chat) => ({ chat }));
@@ -29,13 +28,12 @@ const addChatRoomDB = (title, partyId) => {
           // roomId: res.data.roomId,
           // partyId: partyId,
           entrance: [userInfo.nickname],
-        }
+        };
         dispatch(addChatRoom(roomInfo));
       })
       .catch((err) => {
         console.log("(addChatRoom) 실패 ::", err);
       });
-
   };
 };
 
@@ -54,8 +52,8 @@ const enterChatDB = (chatRoomId) => {
       .catch((err) => {
         console.log("(enterChatRoom) 실패 ::", err);
       });
-  }
-}
+  };
+};
 
 const getChatDB = (content) => {
   return function (dispatch, getState) {
@@ -78,18 +76,21 @@ const getChatDB = (content) => {
 
 export default handleActions(
   {
-    [ADD_CHATROOM]: (state, action) => produce(state, (draft) => {
-      console.log(action.payload);
-      draft.chatInfo = action.payload.chatRoom;
-    }),
-    [GET_CHAT]: (state, action) => produce(state, (draft) => {
-      console.log(action.payload);
-      draft.chatList = action.payload.chat;
-    }),
-    [SEND_CHAT]: (state, action) => produce(state, (draft) => {
-      console.log(action.payload.chat);
-      draft.chatList = [...draft.chatList, ...action.payload.chat];
-    }),
+    [ADD_CHATROOM]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(action.payload);
+        draft.chatInfo = action.payload.chatRoom;
+      }),
+    [GET_CHAT]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(action.payload);
+        draft.chatList = action.payload.chat;
+      }),
+    [SEND_CHAT]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(action.payload.chat);
+        draft.chatList = [...draft.chatList, ...action.payload.chat];
+      }),
   },
   initialState
 );

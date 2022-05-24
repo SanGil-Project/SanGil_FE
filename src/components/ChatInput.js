@@ -1,11 +1,13 @@
-import React from 'react';
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import SockJS from 'sockjs-client';
-import Stomp from 'stompjs';
+import SockJS from "sockjs-client";
+import Stomp from "stompjs";
 
-import { actionCreators as chatActions } from '../redux/modules/chat';
-import { Grid, Text, Button, Input } from '../elements/element';
+import { actionCreators as chatActions } from "../redux/modules/chat";
+import { Grid, Text, Button, Input } from "../elements/element";
 
+
+// const sockJs = new SockJS("https://ehjeong.shop/ws-stomp"); // 서버주소/ws-stomp
 // const sockJs = new SockJS("http://15.164.232.187:8080/ws-stomp"); // 서버주소/ws-stomp
 const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 서버주소/ws-stomp
 // const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 서버주소/ws-stomp
@@ -13,7 +15,7 @@ const stomp = Stomp.over(sockJs);
 
 const ChatInput = (props) => {
   const dispatch = useDispatch();
-  const token = sessionStorage.getItem('token');
+  const token = sessionStorage.getItem("token");
 
   const _userInfo = useSelector((state) => state?.user?.userInfo);
   const { chatRoomId } = props;
@@ -32,8 +34,8 @@ const ChatInput = (props) => {
         message: chat,
         // message: chat.target.value,
         sender: writer,
-        type: 'TALK',
-      }
+        type: "TALK",
+      };
       console.log(chatData);
       if (chat === "") {
         console.log(chatData);
@@ -41,7 +43,9 @@ const ChatInput = (props) => {
       }
       waitForConnection(stomp, function () {
         stomp.send(
-          "/pub/chat/message", { token: token }, JSON.stringify(chatData)
+          "/pub/chat/message",
+          { token: token },
+          JSON.stringify(chatData)
         );
         console.log(stomp.ws.readyState);
         console.log(chatData);
@@ -52,17 +56,17 @@ const ChatInput = (props) => {
       console.log(err);
       console.log(stomp.ws.readyState);
     }
-  }
+  };
 
   function waitForConnection(stomp, callback) {
-    setTimeout(
-      function () {
-        if (stomp.ws.readyState == 1) {
-          callback();
-        } else {
-          console.log(stomp.ws.readyState);
-          waitForConnection(stomp, callback);
-    }}, 1);
+    setTimeout(function () {
+      if (stomp.ws.readyState == 1) {
+        callback();
+      } else {
+        console.log(stomp.ws.readyState);
+        waitForConnection(stomp, callback);
+      }
+    }, 1);
   }
 
   return (
@@ -86,13 +90,14 @@ const ChatInput = (props) => {
           is_submit
         />
         <Button border="none" width="auto" _onClick={onSend}>
-        {/* <Button border="none" width="auto"> */}
-          <Text size="16px" bold="500" margin="0" color="#959595">등록</Text>
+          {/* <Button border="none" width="auto"> */}
+          <Text size="16px" bold="500" margin="0" color="#959595">
+            등록
+          </Text>
         </Button>
       </Grid>
     </React.Fragment>
   );
-
-}
+};
 
 export default ChatInput;

@@ -10,18 +10,20 @@ import party from "./modules/party";
 import mountain from "./modules/mountain";
 import handle from "./modules/handle";
 import chat from "./modules/chat";
+import feedCmt from "./modules/feedCmt";
 
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
-  user: user,
-  tracker: tracker,
-  main: main,
-  feed: feed,
-  party: party,
-  mountain: mountain,
-  handle: handle,
-  chat: chat,
+  user,
+  tracker,
+  main,
+  feed,
+  party,
+  mountain,
+  handle,
+  chat,
+  feedCmt,
   router: connectRouter(history),
 });
 
