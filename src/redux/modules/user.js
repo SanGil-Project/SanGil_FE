@@ -299,39 +299,14 @@ const myFeedDB = (pageNum) => {
   };
 };
 
-const myBookmarkDB = (lat, lng) => {
+const myBookmarkDB = (pageNum, lat, lng) => {
   return function (dispatch, getState) {
 
 
-    // const fakeDB = {
-    //   mountainList : [
-    //   {
-    //     mountainId : 1,
-    //     mountainName : "관악산",
-    //     mountainAddress : "서울 관악구",
-    //     mountainImageUrl : "https://i.esdrop.com/d/f/bww1Enn4jz/5RrOZgFwvp.jpg",
-    //     bookmark : true,
-    //     starAvr: 3,
-    //     distance: "5km",
-    //   },
-    //   {
-    //     mountainId : 10,
-    //     mountainName : "북한산",
-    //     mountainAddress : "서울 은평구",
-    //     mountainImageUrl : "https://i.esdrop.com/d/f/bww1Enn4jz/5RrOZgFwvp.jpg",
-    //     bookmark : true,
-    //     starAvr: 4,
-    //     distance: "6km",
-    //   },
-    //   ]
-    //   };
-    
-    //   dispatch(myBookmark(fakeDB));
-    //   return;
-    console.log(lat, lng);
+    console.log(pageNum, lat, lng);
 
     api
-      .myBookmark(lat, lng)
+      .myBookmark(pageNum, lat, lng)
       .then((res) => {
         console.log("(myBookmark) 성공 후 데이터 ::", res);
         dispatch(myBookmark(res.data));
@@ -384,10 +359,13 @@ export default handleActions(
       produce(state, (draft) => {
         draft.feedList = action.payload.feedList;
       }),
-    [MY_BOOKMARK]: (state, action) =>
-      produce(state, (draft) => {
-        console.log(action.payload);
-        draft.mountList = action.payload.mountList;
+    [MY_BOOKMARK]: (state, action) => produce(state, (draft) => {
+      if (action.payload.mountList.currentPage === 0) {
+        draft.bookmarkList = action.payload.mountList;
+      } else {
+        draft.bookmarkList.bookMarkResponseDtos.push(...action.payload.mountList.bookMarkResponseDtos);
+        draft.bookmarkList.currentPage = action.payload.mountList.currentPage;
+      }
       }),
     [MY_MOUNTAIN]: (state, action) =>
       produce(state, (draft) => {

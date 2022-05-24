@@ -17,6 +17,7 @@ import {
   Header,
   MypageModal,
   AlertModal,
+  Bookmark,
 } from "../components/component";
 import { Grid, Text, Icon, Image, Button } from "../elements/element";
 
@@ -35,15 +36,16 @@ const Mypage = (props) => {
   const img = (userInfo?.userImageUrl !== "없음") ? userInfo?.userImageUrl : "https://user-images.githubusercontent.com/91959791/168119302-948f0dcf-8165-47af-8b6b-2f90f74aca06.png";
   
   const [modalOpen, setModalOpen] = useState(false);
+  // const [selected, setSelected] = React.useState({ idx: 0, state: false });
 
   React.useEffect(() => {
     if (userInfo && token) {
       console.log("유저확인 완료!! ::", userInfo);
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          dispatch(userActions.myBookmarkDB(position.coords.latitude, position.coords.longitude));
-        });
-      }
+      // if (navigator.geolocation) {
+      //   navigator.geolocation.getCurrentPosition((position) => {
+      //     dispatch(userActions.myBookmarkDB(position.coords.latitude, position.coords.longitude));
+      //   });
+      // }
       dispatch(userActions.myTrackingDB());
       dispatch(userActions.myFeedDB(1));
     }
@@ -143,14 +145,23 @@ const Mypage = (props) => {
             <Grid
               padding="27px 14px 0"
               maxHeight="312px"
+              height="auto"
               overflowY="scroll"
             >
               <PlanList userInfo={userInfo} />
             </Grid>
             <Grid padding="34px 14px 25px" height="auto">
-              <Text bold="600" size="20px" margin="0 0 24px" align="left">
-                🚩 정복한 산길
-              </Text>
+              <Grid flexRow justify="left" margin="0 0 24px" >
+                <Image
+                  width="24px"
+                  height="24px"
+                  src={require("../assets/images/Flag.png")}
+                  margin="0 5px 0 0"
+                />
+                <Text bold="600" size="20px" margin="0" align="left">
+                  정복한 산길
+                </Text>
+              </Grid>
                 <HorizontalScroll>
                   {completedList?.map((cur, idx) => {
                     return (
@@ -181,12 +192,20 @@ const Mypage = (props) => {
                     );}
                   )}
                 </HorizontalScroll>
-              <FullMap zoomable={false} data={completedList} />{" "}
+              <FullMap zoomable={false} data={completedList} size="665px"/>{" "}
             </Grid>
             <Grid padding="35px 14px 25px" height="auto">
-              <Text bold="600" size="20px" margin="0 0 24px" align="left">
-                🚩 나의 피드 모아보기
-              </Text>
+              <Grid flexRow justify="left" margin="0 0 24px" >
+                <Image
+                  width="24px"
+                  height="24px"
+                  src={require("../assets/images/Feed.png")}
+                  margin="0 5px 0 0"
+                />
+                <Text bold="600" size="20px" margin="0" align="left">
+                  나의 피드 모아보기
+                </Text>
+              </Grid>
                 <HorizontalScroll>
                   {myFeedList?.feedList?.map((cur, idx) => {
                     const good = cur.goodStatus ? "false" : "0.2"
@@ -210,55 +229,14 @@ const Mypage = (props) => {
                   )}
                 </HorizontalScroll>
             </Grid>
-            <Grid padding="35px 14px 70px" height="auto">
-              <Grid
-                // border="1px solid green"
-                margin="0 auto 60px auto"
-                height="238px"
-              >
-                <Text
-                  width="350px"
-                  height="24px"
-                  margin="0 7px 24px 0"
-                  bold="600"
-                  size="2rem"
-                  lineHeight="24px"
-                >
-                  ❤️ 정복해야할 산길
-                </Text>
-                <HorizontalScroll>
-                  {myBookmarkList?.map((cur, idx) => {
-                    // const distance = cur.distance.toFixed(2);
-                    return (<Grid key={idx} width="auto" margin="0 10px 0 0" _onClick={()=>{moveMountDetail(cur.mountainId)}} hover>
-                      <Card
-                        width="194px"
-                        height="120px"
-                        margin="0"
-                      >
-                        <Image
-                          width="194px"
-                          height="120px"
-                          borderRadius="10px"
-                          border="none"
-                          src={cur.mountainImageUrl}
-                        />
-                      </Card>
-                      <Text margin="8px 0" bold="600" size="14px">
-                        {cur.mountainName} ({cur.mountainAddress})
-                      </Text>
-                      <Grid isFlex>
-                        <Grid margin="0 4px 0 0" flexRow justify="left">
-                          <Icon type="mypageBookStar" width="13px" height="12px" margin="0 auto"/>
-                          <Text bold="300" size="12px" margin="0 4px">{cur.starAvr}</Text>
-                        </Grid>
-                        <Text bold="500" size="12px" color="#43CA3B" margin="0">
-                          {cur.distance}km
-                        </Text>
-                      </Grid>
-                    </Grid>)
-                  })}
-                </HorizontalScroll>
-              </Grid>
+
+            <Grid
+              padding="27px 14px 50px"
+              maxHeight="400px"
+              height="auto"
+              overflowY="scroll"
+            >
+              <Bookmark userInfo={userInfo} />
             </Grid>
           </MypageWrap>
           <MenubarContainer>
@@ -361,7 +339,7 @@ const Mypage = (props) => {
                     );}
                   )}
                 </HorizontalScroll>
-              <FullMap zoomable={false} data={completedList} />{" "}
+              <FullMap zoomable={false} data={completedList} size="665px"/>{" "}
             </Grid>
             <Grid padding="35px 14px 25px" height="auto">
               <Text bold="600" size="20px" margin="0 0 24px" align="left">
@@ -406,7 +384,7 @@ const Mypage = (props) => {
                 >
                   ❤️ 정복해야할 산길
                 </Text>
-                <HorizontalScroll>
+                {/* <HorizontalScroll>
                   {myBookmarkList?.map((cur, idx) => {
                     // const distance = cur.distance.toFixed(2);
                     return (<Grid key={idx} width="auto" margin="0 10px 0 0" _onClick={()=>{moveMountDetail(cur.mountainId)}} hover>
@@ -437,7 +415,7 @@ const Mypage = (props) => {
                       </Grid>
                     </Grid>)
                   })}
-                </HorizontalScroll>
+                </HorizontalScroll> */}
               </Grid>
             </Grid>
           </MypageWrap>
@@ -481,6 +459,7 @@ const MypageWrap = styled.div`
   // position: relative;
   top: 64px;
   height: 100%;
+  padding: 0 0 50px;
   // overflow-y: auto;
 `;
 
