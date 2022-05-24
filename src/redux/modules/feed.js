@@ -25,8 +25,7 @@ export const addFeedDB = (feed) => {
   frm.append("feedContent", feed.feedContent);
   return function (dispatch, getState) {
     axios
-      // .post("https://burgerrr.shop/api/feeds/write", frm, {
-      .post("http://3.35.49.228/api/feeds/write", frm, {
+      .post("http://3.35.16.204:8080/api/feeds/write", frm, {
         headers: {
           Authorization: sessionStorage.getItem("token"),
           "Content-Type": "multipart/form-data",
@@ -61,13 +60,8 @@ export const getFeedDB = (pageNum) => {
 
 export const deleteFeedDB = (feedId) => {
   return function (dispatch, getState) {
-    axios
-      // .delete(`https://burgerrr.shop/api/feeds/delete/${feedId}`, {
-      .delete(`http://3.35.49.228/api/feeds/delete/${feedId}`, {
-        headers: {
-          Authorization: sessionStorage.getItem("token"),
-        },
-      })
+    api
+      .deleteFeed(feedId)
       .then((res) => {
         dispatch(deleteFeed(feedId));
       })
@@ -79,17 +73,8 @@ export const deleteFeedDB = (feedId) => {
 
 export const feedLikeDB = (feedId) => {
   return function (dispatch, getState) {
-    axios
-      .post(
-        // `https://burgerrr.shop/api/feeds/good/${feedId}`,
-        `http://3.35.49.228/api/feeds/good/${feedId}`,
-        { feedId: feedId },
-        {
-          headers: {
-            Authorization: sessionStorage.getItem("token"),
-          },
-        }
-      )
+    api
+      .feedLike(feedId)
       .then((res) => {
         console.log(res.data);
         dispatch(

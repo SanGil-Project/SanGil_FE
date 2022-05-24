@@ -25,35 +25,6 @@ const Header = () => {
 
   return (
     <>
-      {/* <Mobile>
-        <Grid
-          height="64px"
-          bg="#FFFFFF"
-          position="fixed"
-          zindex="1000"
-          borderBottom="1px solid #DEDEDE"
-        >
-          <Grid margin="0 0 0 39.25%" maxWidth="55%" isFlex>
-            <Grid
-              maxWidth="38.7%"
-              height="34px"
-              lineHeight="34px"
-              bg="#fff"
-              fontSize="1.6rem"
-              textAlign
-            >
-              <Image
-                width="auto"
-                height="auto"
-                margin="5px 0 0"
-                src="https://user-images.githubusercontent.com/91959791/168339851-d18da908-8213-49a7-a365-9cad6a0e862e.png"
-              />
-            </Grid>
-          </Grid>
-        </Grid>
-      </Mobile> */}
-
-      {/* <Desktop> */}
       <Grid
         maxWidth="500px"
         height="64px"
@@ -117,7 +88,6 @@ const Header = () => {
           )}
         </Grid>
       </Grid>
-      {/* </Desktop> */}
     </>
   );
 };

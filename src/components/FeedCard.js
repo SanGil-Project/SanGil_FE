@@ -3,11 +3,14 @@ import styled from "@emotion/styled";
 import { Grid, Image, Text, Icon } from "../elements/element";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteFeedDB, feedLikeDB } from "../redux/modules/feed";
+import { useNavigate } from "react-router";
 
 const FeedCard = (props) => {
   const { el } = props;
+  const navigate = useNavigate();
   const userInfo = useSelector((state) => state.user?.userInfo);
   const [likeCnt, setLikeCnt] = React.useState(el.goodCnt);
+  const [hidden, setHidden] = React.useState(false);
   const dispatch = useDispatch();
 
   const like = (feedId) => {
@@ -20,14 +23,18 @@ const FeedCard = (props) => {
       dispatch(deleteFeedDB(feedId));
     }
   };
+
+  const showHidden = () => {
+    setHidden(true);
+  };
+
+  const goCmt = () => {
+    navigate(`/feedcmt/${el.feedId}`);
+  };
+
   return (
     <DescContainer>
-      <Grid
-        height="50px"
-        maxWidth="86%"
-        margin="0 auto 10px auto"
-        isFlex
-      >
+      <Grid height="50px" maxWidth="86%" margin="0 auto 10px auto" isFlex>
         <Grid maxWidth="204px" isFlex>
           <Image
             width="40px"
@@ -89,25 +96,52 @@ const FeedCard = (props) => {
           {el.createdAt.split("T")[0]}
         </Text>
       </Grid>
-      <Grid maxWidth="86%" height="50px" margin="0 auto">
-        <Text
-          width="100%"
-          height="50px"
-          lineHeight="25px"
-          margin="0"
-          wordBreak="break-all"
-          ellipsis="2"
-        >
-          {el.feedContent}
-        </Text>
+      <Grid maxWidth="86%" margin="0 auto" flex="flex">
+        <Cmt className={hidden ? "" : "close"}>{el.feedContent}</Cmt>
+        {el.feedContent.length > 80 && !hidden ? (
+          <Text
+            size="1.2rem"
+            width="35px"
+            margin="28px 0 0 0"
+            color="#C4C4C4"
+            hover
+            _onClick={showHidden}
+          >
+            더보기
+          </Text>
+        ) : null}
       </Grid>
+      <Text
+        width="120px"
+        margin="8px 0 8px 35px"
+        bold="600"
+        size="1.2rem"
+        color="#C4C4C4"
+        hover
+        _onClick={goCmt}
+      >
+        댓글 11개 모두 보기
+      </Text>
     </DescContainer>
   );
 };
 
 const DescContainer = styled.div`
-  width: 100%;
   margin: 0 0 10px 0;
+`;
+
+const Cmt = styled.div`
+  width: 100%;
+  margin: 0;
+  line-height: 25px;
+  font-size: 1.6rem;
+  &.close {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
 `;
 
 export default FeedCard;

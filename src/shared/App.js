@@ -7,12 +7,7 @@ import { history } from "../redux/configureStore";
 import styled from "styled-components";
 import MobileFrame from "./../components/common/MobileFrame";
 // social login
-import {
-  KakaoLogin,
-  GoogleLogin,
-  NaverLogin,
-  Header,
-} from "../components/component";
+import { KakaoLogin, GoogleLogin, NaverLogin } from "../components/component";
 import {
   Login,
   Main,
@@ -29,16 +24,10 @@ import {
   ChatRoom,
   Mytrack,
   DetailCmt,
+  FeedCmt,
 } from "../page/page";
 
 function App() {
-  if ("serviceWorker" in navigator) {
-    console.log("너있니");
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("../service-worker.js");
-    });
-  }
-
   return (
     <BrowserRouter>
       <Fullscreen>
@@ -72,6 +61,7 @@ function App() {
               <Route path="/tracker" element={<Tracker />} />
               <Route path="/mytrack/:completedId" element={<Mytrack />} />
               <Route path="/feed" element={<Feed />} />
+              <Route path="/feedcmt/:feedId" element={<FeedCmt />} />
               <Route path="/feedwrite" element={<FeedWrite />} />
               <Route path="/chatroom/:chatRoomId" element={<ChatRoom />} />
             </Routes>

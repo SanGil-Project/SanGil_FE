@@ -1,18 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
-import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { actionCreators as handleActions } from "../redux/modules/handle";
 
-import { Grid, Text, Icon, Image } from "../elements/element";
+import { Grid } from "../elements/element";
 import EventMarkerContainer from "./EventMarkerContainer";
-import {
-  Map,
-  MapMarker,
-  Polyline,
-  ZoomControl,
-  useMap,
-  CustomOverlayMap,
-} from "react-kakao-maps-sdk";
+import { Map, MapMarker, Polyline, ZoomControl } from "react-kakao-maps-sdk";
 
 const { kakao } = window;
 
@@ -26,7 +18,6 @@ export const KakaoMap = (props) => {
     level,
     zoomable,
     draggable,
-    children,
     maxWidth,
     radius,
     full,
@@ -44,15 +35,15 @@ export const KakaoMap = (props) => {
 
   const select = (mountainId, idx) => {
     dispatch(handleActions.selectMarkerDB(mountainId, idx));
-    setSeleteMarker(idx)
+    setSeleteMarker(idx);
     // console.log(selectedMarker, p);
-  }
+  };
 
   const [selectedMarker, setSeleteMarker] = useState();
   // console.log("여기서 선택된 값 :: ", selectedMarker);
-  if(getIndex) {
+  if (getIndex) {
     props.getIndex(selectedMarker); // 검색 페이지로 선택된 marker index 보내기
-  }  
+  }
 
   return (
     <Grid width={width} height={height} margin={margin} maxWidth={maxWidth}>
@@ -84,14 +75,18 @@ export const KakaoMap = (props) => {
         ) : null}
         {full ? (
           data?.map((p, idx) => {
-            return <EventMarkerContainer
-                      key={idx} 
-                      index={idx} 
-                      content={p}
-                      data={data}
-                      onClick={() => {select(p.mountainId, idx)}}
-                      isClicked={selectedMarker === idx}
-                    />;
+            return (
+              <EventMarkerContainer
+                key={idx}
+                index={idx}
+                content={p}
+                data={data}
+                onClick={() => {
+                  select(p.mountainId, idx);
+                }}
+                isClicked={selectedMarker === idx}
+              />
+            );
           })
         ) : myLoca ? (
           <MapMarker position={myLoca ? myLoca : location} />
