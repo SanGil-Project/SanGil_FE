@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const instance = axios.create({
-  // baseURL: "http://3.35.16.204:8080", // 로컬 - 상준님
+  baseURL: "http://3.35.16.204:8080", // 로컬 - 상준님
   // baseURL: "http://15.164.232.187:8080", // 로컬 - 상준님
   // baseURL: "http://52.79.228.126:8080", // 로컬 - 의현님
   // baseURL: "http://15.164.102.106:8080", // 로컬 - 재진님
-  baseURL: "https://jinnn.shop", // 배포용 - 재진님
+  // baseURL: "https://jinnn.shop", // 배포용 - 재진님
   // baseURL: "https://burgerrr.shop", // yesleee.shop - 상준님
   // baseURL: "https://ehjeong.shop", // yesleee.shop - 의현님
   // baseURL: "https://jinnn.shop", // yesleee.shop - 재진님
@@ -121,10 +121,12 @@ export const api = {
     }),
   myTracking: () => instance.get("/api/mypages/tracking"),
   myTitle: () => instance.get("/api/mypages/userTitle"),
-  myFeed: (pageNum) => instance.get(`/api/myfeeds/${pageNum}`),
+  myFeed: () => instance.get("/mypages/myfeeds"),
+  myFeedList: (pageNum) => instance.get(`/api/myfeeds/${pageNum}`),
+
   myMount: (mountainId) => instance.get(`/api/mypages/tracking/${mountainId}`),
-  myBookmark: (lat, lng) =>
-    instance.get(`/api/mypages/bookmark?lat=${lat}&lng=${lng}`),
+  myBookmark: (pageNum, lat, lng) =>
+    instance.get(`/api/mypages/bookmark/${pageNum}?lat=${lat}&lng=${lng}`),
   changeTitle: (userTitle) =>
     instance.put("/api/mypages/userTitle", {
       userTitle: userTitle,

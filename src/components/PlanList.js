@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as partyActions } from "../redux/modules/party";
 
-import { Grid, Icon, Text } from "../elements/element";
+import { Grid, Icon, Text, Image } from "../elements/element";
 import TextCard from "./TextCard";
 
 const PlanList = (props) => {
@@ -23,7 +23,13 @@ const PlanList = (props) => {
   return (
     <React.Fragment>
       <Grid height="auto" flexRow justify="left" margin="0 0 24px" >
-        <Text bold="600" size="20px" color="#43CA3B" margin="0" width="auto">🗓 {userInfo?.nickname}</Text>
+        <Image
+          width="24px"
+          height="24px"
+          src={require("../assets/images/Plan.png")}
+          margin="0 5px 0 0"
+        />
+        <Text bold="600" size="20px" color="#43CA3B" margin="0 5px 0 0" width="auto">{userInfo?.nickname}</Text>
         <Text bold="600" size="20px" margin="0" align="left">
           님의 산길 일정
         </Text>

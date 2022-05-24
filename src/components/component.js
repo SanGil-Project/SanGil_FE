@@ -17,6 +17,7 @@ import SearchTracking from "./SearchTracking";
 import EndTracking from "./EndTracking";
 import ChatInput from "./ChatInput";
 import AlertModal from "./AlertModal";
+import Bookmark from "./Bookmark";
 import Banner from "./Banner";
 
 export {
@@ -39,5 +40,6 @@ export {
   EndTracking,
   ChatInput,
   AlertModal,
+  Bookmark,
   Banner,
 };

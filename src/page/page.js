@@ -14,6 +14,7 @@ import ChatRoom from "./ChatRoom";
 import Mytrack from "./Mytrack";
 import DetailCmt from "./DetailCmt";
 import FeedCmt from "./FeedCmt";
+import MyFeed from "./MyFeed";
 
 export {
   Login,
@@ -32,4 +33,5 @@ export {
   ChatRoom,
   DetailCmt,
   FeedCmt,
+  MyFeed,
 };

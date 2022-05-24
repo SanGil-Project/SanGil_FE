@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as partyActions } from '../redux/modules/party';
 
-import { Desktop, Mobile } from "../shared/responsive";
 import {
   Menubar,
   Header,
@@ -38,6 +37,7 @@ const Party = (props) => {
   const [bottom, setBottom] = useState(null);
   const bottomObserver = useRef(null);
 
+  // observer 적용
   React.useEffect(() => {
     const observer = new IntersectionObserver(
       entries => {
@@ -106,7 +106,6 @@ const Party = (props) => {
 
   return (
     <React.Fragment>
-      <Mobile>
         <PartyContainer>
           <Header />
           <PartyWrap>
@@ -286,135 +285,6 @@ const Party = (props) => {
             </Grid>
           </MenubarContainer>
         </PartyContainer>
-      </Mobile>
-
-      <Desktop>
-        <PartyContainer>
-          <Header />
-          <PartyWrap>
-            <Grid padding="96px 14px 100px">
-              {partyList?.map((p, idx) => {
-                let btnBg = p.completed ? "#43CA3B" : "#E6E6E6";
-                let btnColor = p.completed ? "#fff" : "#000";
-                let btnText = p.completed ? "모집내용확인" : "마감 되었어요😢";
-                const curPeople = p.curPeople ? p.curPeople : 0;
-                if (p.partyDate === dateString) {
-                  const tempT = p.partyTime.split(":");
-                  if (parseInt(tempT[0]) === parseInt(hours)) {
-                    if (parseInt(tempT[1]) <= parseInt(minutes)) {
-                      btnBg = "#E6E6E6";
-                      btnColor = "#000";
-                      btnText = "마감 되었어요😢";
-                      isCompleted[idx] = true;
-                    }
-                  } else if (parseInt(tempT[0]) < parseInt(hours)) {
-                    btnBg = "#E6E6E6";
-                    btnColor = "#000";
-                    btnText = "마감 되었어요😢";
-                    isCompleted[idx] = true;
-                  }
-                } else if (p.partyDate < dateString) {
-                  btnBg = "#E6E6E6";
-                  btnColor = "#000";
-                  btnText = "마감 되었어요😢";
-                  isCompleted[idx] = true;
-                }
-                return (
-                  <Grid
-                    key={idx}
-                    bg="#FAFAFA"
-                    shadow="1px 3px 10px rgba(69, 69, 69, 0.2)"
-                    radius="16px"
-                    height="230px"
-                    padding="17px 16px"
-                    margin="0 0 24px"
-                    flexColumn
-                  >
-                    <Grid alignItems="left" height="auto">
-                      <Text margin="0 0 18px" bold="500">
-                        {p.title}
-                      </Text>
-                      <Grid flexRow justify="left" padding="0 0 10px" height="auto">
-                        <Grid width="18px">
-                          <Icon
-                            type="partyMountain"
-                            width="18px"
-                            height="17px"
-                            margin="0 auto"
-                          />
-                        </Grid>
-                        <Text margin="0 12px" bold="500" size="14px" height="auto">
-                          {p.mountain} ({p.address})
-                        </Text>
-                      </Grid>
-                      <Grid flexRow justify="left" padding="0 0 10px" height="auto">
-                        <Grid width="18px">
-                          <Icon
-                            type="partyDate"
-                            width="15px"
-                            height="17px"
-                            margin="0 auto"
-                          />
-                        </Grid>
-                        <Text margin="0 12px" bold="500" size="14px">
-                          {p.partyDate} (시간 {p.partyTime})
-                        </Text>
-                      </Grid>
-                      <Grid flexRow justify="left" padding="0" height="auto">
-                        <Grid width="18px">
-                          <Icon
-                            type="partyPeople"
-                            width="16px"
-                            height="16px"
-                            margin="0 auto"
-                          />
-                        </Grid>
-                        <Text margin="0 12px" bold="500" size="14px">
-                          {curPeople}/{p.maxPeople}명
-                        </Text>
-                      </Grid>
-                    </Grid>
-                    <Grid flexColumn padding="27px 0 0">
-                      <Button
-                        type="div"
-                        bgColor={btnBg}
-                        border="none"
-                        radius="8px"
-                        width="170px"
-                        height="48px"
-                        margin="20px 0 0"
-                        _onClick={() => {
-                          moveDetail(p.partyId, p.completed, isCompleted[idx]);
-                        }}
-                      >
-                        <Text margin="0" align color={btnColor}>
-                          {btnText}
-                        </Text>
-                      </Button>
-                    </Grid>
-                  </Grid>
-                );
-              })}
-            </Grid>
-          </PartyWrap>
-
-          <MenubarContainer>
-            <Grid height="88px" maxWidth="500px" margin="auto">
-
-              <CreatPartyBtn>
-                <Grid 
-                  flexRow bg="#43CA3B" width="60px" height="60px" radius="100%" shadow="0px 3px 4px rgba(0, 0, 0, 0.15)" 
-                  _onClick={() => {
-                    navigate(`/partywrite`);
-                  }}>
-                  <Icon type="partyAdd" width="37px" height="25px" margin="0 auto"/>
-                </Grid>
-              </CreatPartyBtn>
-              <Menubar menuColor={menuColor} />
-            </Grid>
-          </MenubarContainer>
-        </PartyContainer>
-      </Desktop>
     </React.Fragment>
   );
 };
