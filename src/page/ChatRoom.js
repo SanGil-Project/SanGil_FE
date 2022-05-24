@@ -1,16 +1,16 @@
-import React from 'react';
+import React from "react";
 import styled from "styled-components";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import SockJS from 'sockjs-client';
-import Stomp from 'stompjs';
+import SockJS from "sockjs-client";
+import Stomp from "stompjs";
 
-import { actionCreators as chatActions } from '../redux/modules/chat';
+import { actionCreators as chatActions } from "../redux/modules/chat";
 import { actionCreators as handleActions } from "../redux/modules/handle";
-import { Menubar, Header, ChatInput } from '../components/component';
+import { Menubar, Header, ChatInput } from "../components/component";
 import { Desktop, Mobile } from "../shared/responsive";
 
-import { Grid, Text, Icon, Button, Input, Image } from '../elements/element';
+import { Grid, Text, Icon, Button, Input, Image } from "../elements/element";
 
 const ChatRoom = (props) => {
   const dispatch = useDispatch();
@@ -22,8 +22,12 @@ const ChatRoom = (props) => {
 
   // console.log(chatRoomId, token, _userInfo);
 
+
+  // const sockJs = new SockJS("http://13.125.232.76:8080/ws-stomp"); // 서버주소/ws-stomp
+  // const sockJs = new SockJS("http://52.79.228.126:8080/ws-stomp"); // 서버주소/ws-stomp
   // const sockJs = new SockJS("http://15.164.232.187:8080/ws-stomp"); // 서버주소/ws-stomp
   // const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 서버주소/ws-stomp
+
   const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 서버주소/ws-stomp
   const stomp = Stomp.over(sockJs);
 
@@ -32,6 +36,7 @@ const ChatRoom = (props) => {
       console.log("STOMP Start");
       stomp.connect({}, () => {
         console.log("STOMP Connection");
+
         stomp.subscribe(`/sub/chat/rooms/${chatRoomId}`,
             (response) => {
               console.log("subscribe callback ::", response);
@@ -58,12 +63,16 @@ const ChatRoom = (props) => {
 
   function DisConnectUnsub() {
     try {
-      stomp.disconnect({
-        Headers: {
-        Authorization: token,
-      }}, () => {
-        stomp.unsubscribe(`/sub/chat/rooms/${chatRoomId}`);
-        }, { token: token }
+      stomp.disconnect(
+        {
+          Headers: {
+            Authorization: token,
+          },
+        },
+        () => {
+          stomp.unsubscribe(`/sub/chat/rooms/${chatRoomId}`);
+        },
+        { token: token }
       );
     } catch (err) {
       console.log("disconnect error!! ::", err);
@@ -77,13 +86,13 @@ const ChatRoom = (props) => {
     return () => {
       DisConnectUnsub();
     };
-  }, []); 
-
+  }, []);
 
   const userInfo = {
-    userId : 1,
+    userId: 1,
     username: "정상준",
-    userImageUrl: "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
+    userImageUrl:
+      "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
     userTitle: "홍길동",
   };
   // const participants = [
@@ -91,75 +100,93 @@ const ChatRoom = (props) => {
     {
       nickname: "정상준",
       userTitle: "홍길동",
-      userImageUrl: "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
-      content: "내욘ㅇ애뇽냉222"
+      userImageUrl:
+        "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
+      content: "내욘ㅇ애뇽냉222",
     },
     {
       nickname: "박예슬",
       userTitle: "등린이",
-      userImageUrl: "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
-      content: "내욘ㅇ애뇽냉1111"
+      userImageUrl:
+        "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
+      content: "내욘ㅇ애뇽냉1111",
     },
     {
       nickname: "정의현",
       userTitle: "산길인맥왕",
-      userImageUrl: "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
-      content: "내욘ㅇ애뇽냉4444"
+      userImageUrl:
+        "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
+      content: "내욘ㅇ애뇽냉4444",
     },
     {
       nickname: "천누리",
       userTitle: "아직 여기라고?",
-      userImageUrl: "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
-      content: "내욘ㅇ애뇽냉3333"
+      userImageUrl:
+        "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
+      content: "내욘ㅇ애뇽냉3333",
     },
   ];
 
   return (
     <React.Fragment>
       <Mobile>
-      <ChatContainer>
-        <Header />
-        <ChatWrap>
-          <Grid padding="96px 14px 100px">
-            {chatList?.map((chat, idx) => {
-              return (
-                <div key={idx}>
-                  <Grid flexRow margin="10px 0 0">
-                    <Image
-                      type="circle"
-                      width="32px"
-                      margin="0 14px 0 0"
-                      src={chat.userImageUrl}/>
-                    <Grid>
-                      <Text margin="0" size="12px" bold="500">[{chat.userTitle}] {chat.nickname}</Text>
+        <ChatContainer>
+          <Header />
+          <ChatWrap>
+            <Grid padding="96px 14px 100px">
+              {chatList?.map((chat, idx) => {
+                return (
+                  <div key={idx}>
+                    <Grid flexRow margin="10px 0 0">
+                      <Image
+                        type="circle"
+                        width="32px"
+                        margin="0 14px 0 0"
+                        src={chat.userImageUrl}
+                      />
+                      <Grid>
+                        <Text margin="0" size="12px" bold="500">
+                          [{chat.userTitle}] {chat.nickname}
+                        </Text>
+                      </Grid>
                     </Grid>
-                  </Grid>
-                  <Grid padding="5px 0 5px 46px" flexRow justify>
-                    <Grid padding="16px" bg="#EBEBEB" radius="30px" width="auto">
-                      <Text margin="0">{chat.content} </Text>
+                    <Grid padding="5px 0 5px 46px" flexRow justify>
+                      <Grid
+                        padding="16px"
+                        bg="#EBEBEB"
+                        radius="30px"
+                        width="auto"
+                      >
+                        <Text margin="0">{chat.content} </Text>
+                      </Grid>
+                      <Text
+                        margin="35px 0 0"
+                        size="12px"
+                        bold="500"
+                        color="#A4A4A4"
+                      >
+                        {chat.createdAt}
+                      </Text>
                     </Grid>
-                    <Text margin="35px 0 0" size="12px" bold="500" color="#A4A4A4">{chat.createdAt}</Text>
-                  </Grid>
-                </div>
-              );
-            })}
-          </Grid>
-        </ChatWrap>
-        <ChatInputWrap>
-          <ChatInput chatRoomId={chatRoomId}/>
-        </ChatInputWrap>
+                  </div>
+                );
+              })}
+            </Grid>
+          </ChatWrap>
+          <ChatInputWrap>
+            <ChatInput chatRoomId={chatRoomId} />
+          </ChatInputWrap>
 
-        <MenubarContainer>
-          <Grid height="88px" maxWidth="500px" margin="auto">
-            <Menubar menuColor={menuColor}/>
-          </Grid>
-        </MenubarContainer>
-
-      </ChatContainer>
+          <MenubarContainer>
+            <Grid height="88px" maxWidth="500px" margin="auto">
+              <Menubar menuColor={menuColor} />
+            </Grid>
+          </MenubarContainer>
+        </ChatContainer>
       </Mobile>
-      
+
       <Desktop>
-      {/* <ChatContainer>
+        {/* <ChatContainer>
         <Header />
         <ChatWrap>
           <Grid padding="96px 14px 100px">
@@ -214,14 +241,12 @@ const ChatRoom = (props) => {
         </MenubarContainer>
 
       </ChatContainer> */}
-
       </Desktop>
     </React.Fragment>
   );
-}
+};
 
 const ChatContainer = styled.div`
-
   background-color: #fff;
   width: 100%;
   height: 100vh;
@@ -252,8 +277,7 @@ const MenubarContainer = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  z-index : 10;
+  z-index: 10;
 `;
-
 
 export default ChatRoom;

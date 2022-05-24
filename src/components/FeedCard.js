@@ -36,16 +36,16 @@ const FeedCard = (props) => {
     <DescContainer>
       <Grid height="50px" maxWidth="86%" margin="0 auto 10px auto" isFlex>
         <Grid maxWidth="204px" isFlex>
-          <Image
-            width="40px"
-            height="40px"
-            type="circle"
-            src={
-              el.userImgUrl !== "없음"
-                ? el.userImgUrl
-                : "https://cdn.newscj.com/news/photo/202009/newscj_%EC%B2%9C%EC%A7%80%EC%9D%BC%EB%B3%B4_774982_810186_5520.jpg"
-            }
-          />
+          {el.userImgUrl !== "없음" ? (
+            <Image
+              width="40px"
+              height="40px"
+              type="circle"
+              src={el.userImgUrl}
+            />
+          ) : (
+            <Icon width="40px" border="1px solid black" />
+          )}
           <Grid height="40px" margin="0 0 0 5px">
             <Text margin="6px 0 0 5px" size="0.9rem" bold="200">
               {el.userTitle}
@@ -120,7 +120,9 @@ const FeedCard = (props) => {
         hover
         _onClick={goCmt}
       >
-        댓글 11개 모두 보기
+        {el.commentCnt === 0
+          ? "댓글 작성하기"
+          : `댓글 ${el.commentCnt}개 모두 보기`}
       </Text>
     </DescContainer>
   );
