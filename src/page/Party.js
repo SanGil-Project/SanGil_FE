@@ -68,7 +68,11 @@ const Party = (props) => {
 	}, [bottom]);
 
   React.useEffect(() => {
-    console.log(curPage);
+    console.log(curPage, searchKeyword);
+    if (searchKeyword !== "") {
+      dispatch(partyActions.getKeywordPartyDB(curPage, searchKeyword));
+      return;
+    }
     dispatch(partyActions.getPartyDB(curPage));
   }, [curPage]);
 
@@ -81,7 +85,8 @@ const Party = (props) => {
       return;
     }
     console.log(searchKeyword);
-    // dispatch(searchNameDB(searchKeyword, 1));
+    setCurPage(1);
+    dispatch(partyActions.getKeywordPartyDB(1, searchKeyword));
     // setSearchKeyword("");
   };
 

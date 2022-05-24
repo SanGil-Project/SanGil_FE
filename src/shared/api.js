@@ -135,6 +135,8 @@ export const api = {
     instance.post(`/api/mountain/bookmark/${mountainId}`, { mountainId }),
 
   // party.js
+  searchParty: (keyword, pageNum) =>
+    instance.get(`/parties/search?keyword=${keyword}&pageNum=${pageNum}`),
   getMyParty: () => instance.get("/api/plan"),
   getPartyList: (pageNum) => instance.get(`/api/parties/${pageNum}`),
   getOneParty: (partyId) => instance.get(`/api/party/${partyId}`),

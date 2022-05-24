@@ -45,178 +45,6 @@ const getMyPartyDB = () => {
 const getPartyDB = (pageNum) => {
   return function (dispatch, getState) {
 
-    // const fackDB1 = {
-    //   partyList : [
-    //   {
-    //   partyId : 1,
-    //   title : "관악산 같이 갈래?",
-    //   mountain : "관악산",
-    //   address : "서울 관악구",
-    //   partyDate : "2022-04-23",
-    //   partyTime: "11:00",
-    //   maxPeople : 8,
-    //   curPeople : 8,
-    //   completed :  false,
-    //   createdAt : "09:00"
-    //   },
-    //   {
-    //   partyId : 2,
-    //   title : "관악산 나도 갈래!",
-    //   mountain : "관악산",
-    //   location : "서울 관악구",
-    //   partyDate : "2022-04-23",
-    //   partyTime: "11:00",
-    //   maxPeople : 8,
-    //   curPeople : 6,
-    //   completed :true,
-    //   createdAt : "09:00",
-    //   },
-    //   {
-    //   partyId : 3,
-    //   title : "2-관악산 나도 갈래!",
-    //   mountain : "관악산",
-    //   location : "서울 관악구",
-    //   partyDate : "2022-04-23",
-    //   partyTime: "11:00",
-    //   maxPeople : 8,
-    //   curPeople : 6,
-    //   completed :true,
-    //   createdAt : "09:00",
-    //   },
-    //   {
-    //   partyId : 4,
-    //   title : "2-관악산 나도 갈래!",
-    //   mountain : "관악산",
-    //   location : "서울 관악구",
-    //   partyDate : "2022-04-23",
-    //   partyTime: "11:00",
-    //   maxPeople : 8,
-    //   curPeople : 6,
-    //   completed :true,
-    //   createdAt : "09:00",
-    //   }],
-    //   totalPage : 3,
-    //   currentPage : 0,
-    //   }
-    //   const fackDB2 = {
-    //     partyList : [
-    //     {
-    //     partyId : 1,
-    //     title : "관악산 같이 갈래?",
-    //     mountain : "관악산",
-    //     address : "서울 관악구",
-    //     partyDate : "2022-04-23",
-    //     partyTime: "11:00",
-    //     maxPeople : 8,
-    //     curPeople : 8,
-    //     completed :  false,
-    //     createdAt : "09:00"
-    //     },
-    //     {
-    //     partyId : 2,
-    //     title : "관악산 나도 갈래!",
-    //     mountain : "관악산",
-    //     location : "서울 관악구",
-    //     partyDate : "2022-04-23",
-    //     partyTime: "11:00",
-    //     maxPeople : 8,
-    //     curPeople : 6,
-    //     completed :true,
-    //     createdAt : "09:00",
-    //     },
-    //     {
-    //     partyId : 3,
-    //     title : "2-관악산 나도 갈래!",
-    //     mountain : "관악산",
-    //     location : "서울 관악구",
-    //     partyDate : "2022-04-23",
-    //     partyTime: "11:00",
-    //     maxPeople : 8,
-    //     curPeople : 6,
-    //     completed :true,
-    //     createdAt : "09:00",
-    //     },
-    //     {
-    //     partyId : 4,
-    //     title : "2-관악산 나도 갈래!",
-    //     mountain : "관악산",
-    //     location : "서울 관악구",
-    //     partyDate : "2022-04-23",
-    //     partyTime: "11:00",
-    //     maxPeople : 8,
-    //     curPeople : 6,
-    //     completed :true,
-    //     createdAt : "09:00",
-    //     }],
-    //     totalPage : 3,
-    //     currentPage : 0,
-    //     }
-    //     const fackDB3 = {
-    //       partyList : [
-    //       {
-    //       partyId : 1,
-    //       title : "관악산 같이 갈래?",
-    //       mountain : "관악산",
-    //       address : "서울 관악구",
-    //       partyDate : "2022-04-23",
-    //       partyTime: "11:00",
-    //       maxPeople : 8,
-    //       curPeople : 8,
-    //       completed :  false,
-    //       createdAt : "09:00"
-    //       },
-    //       {
-    //       partyId : 2,
-    //       title : "관악산 나도 갈래!",
-    //       mountain : "관악산",
-    //       location : "서울 관악구",
-    //       partyDate : "2022-04-23",
-    //       partyTime: "11:00",
-    //       maxPeople : 8,
-    //       curPeople : 6,
-    //       completed :true,
-    //       createdAt : "09:00",
-    //       },
-    //       {
-    //       partyId : 3,
-    //       title : "2-관악산 나도 갈래!",
-    //       mountain : "관악산",
-    //       location : "서울 관악구",
-    //       partyDate : "2022-04-23",
-    //       partyTime: "11:00",
-    //       maxPeople : 8,
-    //       curPeople : 6,
-    //       completed :true,
-    //       createdAt : "09:00",
-    //       },
-    //       {
-    //       partyId : 4,
-    //       title : "2-관악산 나도 갈래!",
-    //       mountain : "관악산",
-    //       location : "서울 관악구",
-    //       partyDate : "2022-04-23",
-    //       partyTime: "11:00",
-    //       maxPeople : 8,
-    //       curPeople : 6,
-    //       completed :true,
-    //       createdAt : "09:00",
-    //       }],
-    //       totalPage : 3,
-    //       currentPage : 0,
-    //       }
-
-    //   if (pageNum === 0) {
-    //     dispatch(getParty(fackDB1));
-    //   } else if (pageNum === 1) {
-    //     dispatch(getParty(fackDB2));
-    //   } else if (pageNum === 2) {
-    //     dispatch(getParty(fackDB3));
-    //   } 
-
-      // dispatch(getParty(fackDB));
-      // return;
-      console.log(pageNum)
-
     api
       .getPartyList(pageNum)
       .then((res) => {
@@ -225,6 +53,23 @@ const getPartyDB = (pageNum) => {
       })
       .catch((err) => {
         console.log("(getPartyList) 실패 ::", err);
+      });
+  };
+};
+
+const getKeywordPartyDB = (pageNum, keyword) => {
+  return function (dispatch, getState) {
+
+    console.log(keyword, pageNum)
+
+    api
+      .searchParty(keyword, pageNum)
+      .then((res) => {
+        console.log("(searchParty) 성공 데이터 확인 ::", res);
+        dispatch(getParty(res.data));
+      })
+      .catch((err) => {
+        console.log("(searchParty) 실패 ::", err);
       });
   };
 };
@@ -376,6 +221,7 @@ const actionCreators = {
   attendPartyDB,
   deletePartyDB,
   getMyPartyDB,
+  getKeywordPartyDB,
 };
 
 export { actionCreators };
