@@ -44,6 +44,7 @@ const getMyPartyDB = () => {
 
 const getPartyDB = (pageNum) => {
   return function (dispatch, getState) {
+
     api
       .getPartyList(pageNum)
       .then((res) => {
@@ -52,6 +53,23 @@ const getPartyDB = (pageNum) => {
       })
       .catch((err) => {
         console.log("(getPartyList) 실패 ::", err);
+      });
+  };
+};
+
+const getKeywordPartyDB = (pageNum, keyword) => {
+  return function (dispatch, getState) {
+
+    console.log(keyword, pageNum)
+
+    api
+      .searchParty(keyword, pageNum)
+      .then((res) => {
+        console.log("(searchParty) 성공 데이터 확인 ::", res);
+        dispatch(getParty(res.data));
+      })
+      .catch((err) => {
+        console.log("(searchParty) 실패 ::", err);
       });
   };
 };
@@ -80,6 +98,7 @@ const getOnePartyDB = (partyId = null) => {
 
 const addPartyDB = (party = {}) => {
   return function (dispatch, getState) {
+    console.log(party);
     api
       .addParty(party)
       .then((res) => {
@@ -157,9 +176,12 @@ export default handleActions(
       draft.myPartyList = action.payload.partyList.plans;
     }),
     [GET_PARTY]: (state, action) => produce(state, (draft) => {
-      // draft.partyList = action.payload.partyList.partyList;
-      // draft.list = action.payload.partyList;
-      draft.list = action.payload.partyList;
+      if (action.payload.partyList.currentPage === 0) {
+        draft.list = action.payload.partyList;
+      } else {
+        draft.list.partyList.push(...action.payload.partyList.partyList);
+        draft.list.currentPage = action.payload.partyList.currentPage;
+      }
     }),
     [GET_ONE_PARTY]: (state, action) => produce(state, (draft) => {
       // draft.partyList = action.payload.partyList.partyList;
@@ -200,6 +222,7 @@ const actionCreators = {
   attendPartyDB,
   deletePartyDB,
   getMyPartyDB,
+  getKeywordPartyDB,
 };
 
 export { actionCreators };
