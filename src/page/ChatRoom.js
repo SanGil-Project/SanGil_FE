@@ -39,19 +39,17 @@ const ChatRoom = (props) => {
               const content = JSON.parse(response.body);
               console.log("받은 메세지 ::", content);
               // const writer = content.writer;
-              // if (content.length === 1){
-              //   dispatch(sockActions.sendMessage(newMessage));
-              // }else {
-              //   dispatch(sockActions.getMessageDB(newMessage));
-              // }
-              // dispatch(chatActions.getChatDB(content)); // 처음 연결시, 서버에서 받은 "content"에 지금까지 전체 채팅내용 올수 있따면..
-              dispatch(chatActions.getChatDB(chatRoomId)); // 아닐경우, api로 요청해야 하는 방식 
+              if (content.length === 1){
+                dispatch(chatActions.sendChat(content));
+              }else {
+                dispatch(chatActions.getChatDB(content));
+              }
             },
           );
           dispatch(chatActions.getChatDB(chatRoomId));
           stomp.send(
-            "/sub/chat/message", { token: token }, JSON.stringify({
-              roomId: chatRoomId, sender: _userInfo.nickname, type: 'ENTER',})
+            "/pub/chat/message", { token: token }, JSON.stringify({
+              roomId: parseInt(chatRoomId), sender: _userInfo.nickname, type: 'ENTER',})
           )
         });
     } catch (err) {

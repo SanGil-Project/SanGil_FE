@@ -107,7 +107,11 @@ const Search = (props) => {
                   ⛰ 100대 명산 중 10개의 산을 랜덤으로 확인해보세요
                 </Text>
               )}
-              <FullMap data={data}/>
+              { searchData ? 
+                <Grid padding="0 26px 15px">
+                  <FullMap data={data} size="500px"/>
+                </Grid> : 
+                <FullMap data={data}/>}
             </Grid>
             <Grid padding="14px 14px 100px" height="auto">
               {data?.map((d, idx) => {

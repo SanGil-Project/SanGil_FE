@@ -5,7 +5,7 @@ import { Grid, Icon, Text } from "../elements/element";
 import KakaoMap from "./KakaoMap";
 
 const FullMap = (props) => {
-  const { data, getIndex, zoomable } = props;
+  const { data, getIndex, zoomable, size } = props;
 
   return (
     <>
@@ -13,7 +13,7 @@ const FullMap = (props) => {
         <MapBox>
           <KakaoMap
             width="100%"
-            height="665px"
+            height={size}
             maxWidth="772px"
             level="13"
             full

@@ -27,7 +27,7 @@ const ChatInput = (props) => {
   const onSend = async () => {
     try {
       const chatData = {
-        roomId: chatRoomId,
+        roomId: parseInt(chatRoomId),
         message: chat,
         // message: chat.target.value,
         sender: writer,
@@ -40,7 +40,7 @@ const ChatInput = (props) => {
       }
       waitForConnection(stomp, function () {
         stomp.send(
-          "/sub/chat/message", { token: token }, JSON.stringify(chatData)
+          "/pub/chat/message", { token: token }, JSON.stringify(chatData)
         );
         console.log(stomp.ws.readyState);
         console.log(chatData);
