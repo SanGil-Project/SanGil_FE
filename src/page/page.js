@@ -13,6 +13,7 @@ import FeedWrite from "./FeedWrite";
 import ChatRoom from "./ChatRoom";
 import Mytrack from "./Mytrack";
 import DetailCmt from "./DetailCmt";
+import FeedCmt from "./FeedCmt";
 
 export {
   Login,
@@ -30,4 +31,5 @@ export {
   PartyWrite,
   ChatRoom,
   DetailCmt,
+  FeedCmt,
 };

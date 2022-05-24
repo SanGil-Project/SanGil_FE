@@ -69,7 +69,9 @@ export const api = {
 
   //feed.js
   getFeedDB: (pageNum) => instance.get(`/api/main/feeds/${pageNum}`),
-
+  deleteFeed:(feedId)=>instance.delete(`/api/feeds/delete/${feedId}`),
+  feedLike:(feedId)=>instance.post(`/api/feeds/good/${feedId}`,{feedId}),
+  
   // user.js - social login
   kakaoLogin: (code) => instance.get(`/user/kakao/callback?code=${code}`),
   naverLogin: (code, state) =>
