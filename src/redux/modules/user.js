@@ -91,6 +91,7 @@ export const isLogInDB = (token) => {
       .isLogin(token)
       .then((res) => {
         dispatch(isLogin(res.data));
+        sessionStorage.setItem("nickname", res.data.nickname); //세션에 저장
       })
       .catch((err) => {
         console.log(err);
