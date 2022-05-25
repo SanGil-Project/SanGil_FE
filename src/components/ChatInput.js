@@ -62,7 +62,6 @@ const ChatInput = (props) => {
       if (stomp.ws.readyState == 1) {
         callback();
       } else {
-        console.log(stomp.ws.readyState);
         waitForConnection(stomp, callback);
       }
     }, 1);

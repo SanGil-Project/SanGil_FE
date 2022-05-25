@@ -7,8 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { actionCreators as handleActions } from "../redux/modules/handle";
 
-import { Desktop, Mobile } from "../shared/responsive";
-import { Header, AlertModal } from "../components/component";
+import { Header, AlertModal, TitleModal } from "../components/component";
 import { Grid, Text, Icon, Image, Button, Input } from '../elements/element';
 
 const MypageEdit = (props) => {
@@ -16,8 +15,11 @@ const MypageEdit = (props) => {
   const fileInput = React.useRef();
   const user = useSelector((state) => state?.user);
   const titleList = useSelector((state) => state?.user?.titleList?.userTitleDtoList);
+  const titleHint = useSelector((state) => state?.user?.titleHint);
   const userInfo = user?.userInfo;
   const checkData = user?.nameCheck;
+
+  console.log(titleHint);
 
   React.useEffect(() => {
     dispatch(handleActions.isPagename("내 정보 수정"));
@@ -35,6 +37,9 @@ const MypageEdit = (props) => {
   const [preview, setPreview] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
+  const [titlemodalOpen, setTitleModalOpen] = useState(false);
+  const [titlemodalContent, setTitleModalContent] = useState("");
+  const [titlemodalUrl, setTitleModalUrl] = useState("");
 
   const selectFile = (e) => {
 
@@ -85,7 +90,7 @@ const MypageEdit = (props) => {
 
   const changeName = () => {
     if (!checkData) {
-      setModalContent(checkType ? "변경사항이 없습니다 😭" : "중복된 닉네임입니다 😭");
+      setModalContent(checkType ? "변경사항이 없습니다" : "중복된 닉네임입니다");
       setModalOpen(true)
       return; 
     }
@@ -101,6 +106,16 @@ const MypageEdit = (props) => {
     dispatch(userActions.changeTitleDB(curTitle));
 
   }
+
+  const getHint = (data) => {
+
+    const filtTitle = titleHint?.filter((p) => p.userTitle === data.userTitle);
+    setTitleModalContent(filtTitle[0].titleHint);
+    console.log(filtTitle);
+    setTitleModalUrl(data.userTitleImgUrl);
+    setTitleModalOpen(true)
+
+  }
   
   return (
     <React.Fragment>
@@ -112,6 +127,13 @@ const MypageEdit = (props) => {
               onClose={setModalOpen} 
               modalState={modalOpen}
               contents={modalContent}/> }
+          { titlemodalOpen && 
+            <TitleModal 
+              type="hint"
+              onClose={setTitleModalOpen} 
+              modalState={titlemodalOpen}
+              contents={titlemodalContent}
+              url={titlemodalUrl}/> }
           <Grid padding="69px 22px 10px" height="auto">
             <Grid flexColumn height="auto" padding="5px 0">
               <UserProfile>
@@ -150,7 +172,7 @@ const MypageEdit = (props) => {
                 })}
                 {noTitleList?.map((t, idx) => {
                   return (
-                    <Grid key={idx} _onClick={()=>{alert("타이틀 힌트 작성해야해!!!")}} margin="0 7px" width="100px" height="164px">
+                    <Grid key={idx} _onClick={()=>{getHint(t)}} margin="0 7px" width="100px" height="164px">
                       <TitleItem key={idx} title={t.userTitle} img={t.userTitleImgUrl}/>
                     </Grid>
                   );

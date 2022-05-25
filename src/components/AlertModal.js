@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
-import { Grid, Text, Button } from "../elements/element";
+import { Grid, Text, Button, Icon } from "../elements/element";
 
 const AlertModal = (props) => {
   const { type, onClose, modalState, checkFunction, contents } = props;
@@ -71,8 +71,9 @@ const AlertModal = (props) => {
       <React.Fragment>
         <Modal className="dateModal" modalState={modalState}>
           <div className="modal_container">
-            <Grid flexColumn margin="0 0 57px">
-              <Text margin="0" color="#131313" bold="600" size="18px">
+            <Grid flexColumn margin="0 0 30px">
+              <Icon type="alertCheck" width="49px" height="48px" margin="0 auto"/>
+              <Text margin="18px 0 0" color="#131313" bold="600" size="18px">
                 {contents}
               </Text>
             </Grid>
@@ -140,7 +141,7 @@ const Modal = styled.div`
     border-radius: 12px;
     background-color: #fff;
     box-shadow: 1px 3px 10px rgba(69, 69, 69, 0.2);
-    padding: 73px 26px 52px;
+    padding: 42px 26px 52px;
     box-sizing: border-box;
     width: 100%;
     margin: 0 auto;

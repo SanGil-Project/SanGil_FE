@@ -17,6 +17,7 @@ import SearchTracking from "./SearchTracking";
 import EndTracking from "./EndTracking";
 import ChatInput from "./ChatInput";
 import AlertModal from "./AlertModal";
+import TitleModal from "./TitleModal";
 import Bookmark from "./Bookmark";
 import Banner from "./Banner";
 import MyFeedList from "./MyFeedList";
@@ -44,4 +45,5 @@ export {
   Bookmark,
   Banner,
   MyFeedList,
+  TitleModal,
 };
