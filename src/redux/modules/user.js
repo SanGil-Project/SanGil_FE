@@ -159,6 +159,7 @@ const changeNameDB = (nickname) => {
 const changeTitleDB = (userTitle) => {
   return async function (dispatch, getState) {
     const userdata = getState().user.userInfo;
+    const titleList = getState().user.titleList.userTitleDtoList;
 
     api
       .changeTitle(userTitle)
@@ -170,6 +171,11 @@ const changeTitleDB = (userTitle) => {
           nickname: userdata.nickname,
           userTitle: userTitle,
         };
+        
+        // const titleImg = {
+        //   changeImg: res.data.userTitleUrl,
+        //   prevImg: res.data.black,
+        // }
         dispatch(changeInfo(_user));
       })
       .catch((err) => {

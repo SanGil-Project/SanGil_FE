@@ -18,7 +18,8 @@ const Party = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const today = useRef(new Date());
-  const listRef = useRef([]);
+  // const listRef = useRef([]);
+  const topRef = useRef();
 
   const partydata = useSelector((state) => state?.party?.list);
   const partyList = partydata?.partyList;
@@ -100,7 +101,8 @@ const Party = (props) => {
     setSearchKeyword("")
   }
   const handleScroll = () => {
-    listRef.current[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // listRef.current[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    topRef.scrollIntoView({ behavior: 'smooth', block: 'center' });
     // if (!window.scrollY) return;
     // window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -156,6 +158,8 @@ const Party = (props) => {
               </Button>
             </SearchInput>
             <Grid padding="160px 14px 100px">
+
+              <div ref={topRef}></div>
               {partyList?.map((p, idx) => {
                 const cardImg = p.completed ? 
                   "https://user-images.githubusercontent.com/91959791/170146663-47e7a0ce-6db5-40f3-ad7e-c078779ed87f.png" : 
@@ -177,7 +181,6 @@ const Party = (props) => {
                   return;
                 }
                 return (
-                  <div key={idx} ref={el => (listRef.current[idx] = el)}>
                   <Grid
                     key={idx}
                     // bg="#FAFAFA"
@@ -257,7 +260,6 @@ const Party = (props) => {
                       </Button>
                     </Grid>
                   </Grid>
-                  </div>
                 );
               })}
             </Grid>
