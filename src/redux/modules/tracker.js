@@ -89,39 +89,39 @@ export const deleteDB = (completedId) => {
 
 const getCompletedDB = (completedId) => {
   return function (dispatch, getState) {
-    // const fakeDB = {
-    //   userId: 1,
-    //   username: "이재진",
-    //   userTitle: "um.....홍길?",
-    //   userTitleImgUrl: "없음",
-    //   completedid: 1,
-    //   mountian: "지리산",
-    //   totalDistance: 10.3,
-    //   totalTime: "4시간 20분 13초",
-    //   creatDate: "2022-05-22",
-    //   trackingList: [
-    //     {
-    //       lat: 12.1234567,
-    //       lng: 123.1234567,
-    //     },
-    //     {
-    //       lat: 12.1234567,
-    //       lng: 123.1234567,
-    //     },
-    //     {
-    //       lat: 12.1234567,
-    //       lng: 123.1234567,
-    //     },
-    //     {
-    //       lat: 12.1234567,
-    //       lng: 123.1234567,
-    //     },
-    //   ],
-    // };
+    const fakeDB = {
+      userId: 1,
+      username: "이재진",
+      userTitle: "um.....홍길?",
+      userTitleImgUrl: "없음",
+      completedid: 1,
+      mountian: "지리산",
+      totalDistance: 10.3,
+      totalTime: "4:20:13",
+      creatDate: "2022-05-22",
+      trackingList: [
+        {
+          lat: 12.1234567,
+          lng: 123.1234567,
+        },
+        {
+          lat: 12.1234567,
+          lng: 123.1234567,
+        },
+        {
+          lat: 12.1234567,
+          lng: 123.1234567,
+        },
+        {
+          lat: 12.1234567,
+          lng: 123.1234567,
+        },
+      ],
+    };
 
-    // dispatch(getCompleted(fakeDB));
-    // dispatch(setPath(fakeDB.trackingList));
-    // return;
+    dispatch(getCompleted(fakeDB));
+    dispatch(setPath(fakeDB.trackingList));
+    return;
 
     api
       .getMytrack(completedId)
