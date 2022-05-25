@@ -17,6 +17,7 @@ import { Grid, Text, Icon, Button, Input } from "../elements/element";
 import { useNavigate } from "react-router";
 
 const Search = (props) => {
+  const smallSize = window.outerWidth < 500 ? true : false;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const menuColor = [false, false, false, true, false]; // 메뉴바 색
@@ -213,7 +214,7 @@ const Search = (props) => {
 
           <MenubarContainer>
             <Grid height="88px" maxWidth="500px" margin="auto">
-              <TrackBtn>
+              <TrackBtn smallSize>
                 <Button
                   width="60px"
                   height="60px"
@@ -273,9 +274,9 @@ const MenubarContainer = styled.div`
 
 const TrackBtn = styled.div`
   position: fixed;
-  right: calc(50% - 236px);
+  right: 
+  ${(props) => (props.smallSize ? `calc(0vw + 14px);`: `calc(50% - 236px);`)}
   bottom: 113px;
 `;
-
 
 export default Search;
