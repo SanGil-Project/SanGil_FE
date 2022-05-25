@@ -231,7 +231,10 @@ const PartyWrite = (props) => {
         <PartyWrap>
           <Grid padding="96px 14px 100px">
             <Grid width="auto">
-              <Text margin="0 0 10px" size="16px" bold="600" color={titleColor}>모임 이름</Text>
+              <Grid flexRow justify="left" margin="0 0 10px" >
+                <Text margin="0 6px 0 0" size="16px" bold="600" color="#000">모임 이름</Text>
+                {is_edit && <Icon type="rock" width="24px" height="24px" margin="0 0 10px"/>}
+              </Grid>
               {is_edit ? 
                 <Input 
                   width="100%" bg="#eee" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 0 34.5px"
@@ -295,7 +298,10 @@ const PartyWrite = (props) => {
               </Grid>
               <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
               <Grid isFlex margin="24px 0">
-                <Text margin="0" size="16px" bold="600" color={titleColor}>위치</Text>
+                <Grid flexRow justify="left" margin="0 0 10px" >
+                  <Text margin="0 6px 0 0" size="16px" bold="600" color="#000">위치</Text>
+                  {is_edit && <Icon type="rock" width="24px" height="24px" margin="0 0 10px"/>}
+                </Grid>
                 {is_edit ? (
                   <Grid 
                     flexRow 

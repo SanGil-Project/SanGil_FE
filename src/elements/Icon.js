@@ -36,6 +36,34 @@ const Icon = (props) => {
   const menuColor = page ? "#43CA3B" : "#C0C0C0";
   const fillOpa = fillOpacity === "false" ? false : fillOpacity;
 
+  if (type === "rock") {
+    return (
+      <MenuIcon {...styles} viewBox="0 0 24 24" fill="none">
+        <rect 
+          x="4.5" 
+          y="11.1666" 
+          width="15" 
+          height="9.16667" 
+          rx="2" 
+          stroke="black" 
+          strokeWidth="2" 
+          strokeLinejoin="round"/>
+        <path 
+          d="M7.83301 11.1666V7.83329C7.83301 5.53211 9.69849 3.66663 11.9997 3.66663C14.3009 3.66663 16.1663 5.53211 16.1663 7.83329V11.1666" 
+          stroke="black" 
+          strokeWidth="2" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"/>
+        <path 
+          d="M12.0003 14.5V17" 
+          stroke="black" 
+          stroke-width="2" 
+          stroke-linecap="round" 
+          stroke-linejoin="round"/>
+      </MenuIcon>
+    );
+  }
+
   if (type === "alertCheck") {
     return (
       <MenuIcon {...styles} viewBox="0 0 49 48" fill="none">
