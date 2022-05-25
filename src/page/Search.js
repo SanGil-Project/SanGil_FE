@@ -191,11 +191,11 @@ const Search = (props) => {
                   > 
                     <Grid padding="0 0 24px" flexRow justify="left">
                       <Icon type="searchMnt" width="24px" height="18px" margin="0 auto"/>
-                      <div key={idx} ref={el => (listRef.current[idx] = el)}>
+                      {/* <div key={idx} ref={el => (listRef.current[idx] = el)}> */}
                       <Text margin="0 10px" size="18px" bold="500" nowrap>
                         {d.mountain}
                       </Text>
-                      </div>
+                      {/* </div> */}
                     </Grid>
                     <Grid padding="0 0 24px" flexRow justify="left">
                       <Icon type="searchAddr" width="24px" height="21px" margin="0 auto"/>

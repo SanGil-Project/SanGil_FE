@@ -27,11 +27,11 @@ const Mytrack = (props) => {
     (state) => state.tracker?.polylinePath?.polylinePath[0]
   );
 
-  console.log(polylinePath);
+  const time = myTrack?.totalTime.split(":");
+  console.log(myTrack?.totalTime, time)
 
   return (
     <React.Fragment>
-      <Mobile>
         <MytrackContainer>
           <Header />
           <MytrackWrap>
@@ -54,56 +54,31 @@ const Mytrack = (props) => {
                     <Text margin="0" size="12px" bold="500" color="#43CA3B">{myTrack?.creatDate}</Text>
                   </Grid>
                 </Grid>
-                <Grid flexRow justify="left" margin="12px 0 4px" height="auto">
-                  <Text margin="0 18px 0 0" size="16px" bold="500" color="#C4C4C4" width="25%">이동한 거리</Text>
-                  <Text margin="0" size="16px" bold="500" color="#C4C4C4">소요 시간</Text>
-                </Grid>
-                <Grid flexRow justify="left" height="auto">
-                  <Text margin="0 18px 0 0" size="25px" bold="600" color="#43CA3B" width="25%">{myTrack?.totalDistance}</Text>
-                  <Text margin="0" size="25px" bold="600" color="#43CA3B">{myTrack?.totalTime}</Text>
+                <Grid flexRow alignItems="flex-start" margin="12px 0 0">
+                  <Grid flexColumn height="auto" width="25%" alignItems="flex-start" margin="0 18px 0 0" >
+                    <Text margin="0" size="16px" bold="500" color="#C4C4C4" >총 거리</Text>
+                    <Grid flexRow alignItems="baseline" width="auto">
+                      <Text margin="0" size="25px" bold="600" color="#43CA3B">{myTrack?.totalDistance}</Text>
+                      <Text margin="0" size="8px" bold="500">km</Text>
+                    </Grid>
+                  </Grid>
+                  <Grid flexColumn height="auto" alignItems="flex-start">
+                    <Text margin="0 0 4px" size="16px" bold="500" color="#C4C4C4">소요 시간</Text>
+                    <Grid flexRow alignItems="baseline" width="auto">
+                      <Text margin="0" size="25px" bold="600" color="#43CA3B" nowrap>{time && time[0]}</Text>
+                      <Text margin="0" size="8px" bold="500">시간</Text>
+                      <Text margin="0" size="25px" bold="600" color="#43CA3B" nowrap>{time && time[1]}</Text>
+                      <Text margin="0" size="8px" bold="500">분</Text>
+                      <Text margin="0" size="25px" bold="600" color="#43CA3B" nowrap>{time && time[2]}</Text>
+                      <Text margin="0" size="8px" bold="500">초</Text>
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Footer>
             </Grid>
           </MytrackWrap>
         </MytrackContainer>
-      </Mobile>
 
-      <Desktop>
-        <MytrackContainer>
-          <Header />
-          <MytrackWrap>
-            <Grid bg="#fff" padding="64px 0 0" height="auto">
-              <Grid height="calc(100vh - 64px);">
-                <KakaoMap
-                  width="100%"
-                  height="100%"
-                  level="3"
-                  margin="0"
-                  zoomable={true}
-                  // myLoca={myLoca}
-                  polylinePath={polylinePath}
-                />
-              </Grid>
-              <Footer>
-                <Grid height="auto" isFlex>
-                  <Text margin="0" bold="500" size="18px">{myTrack?.mountian}</Text>
-                  <Grid width="auto" border="1px solid #43CA3B" radius="4px" padding="6px 7px">
-                    <Text margin="0" size="12px" bold="500" color="#43CA3B">{myTrack?.creatDate}</Text>
-                  </Grid>
-                </Grid>
-                <Grid flexRow justify="left" margin="12px 0 4px" height="auto">
-                  <Text margin="0 18px 0 0" size="16px" bold="500" color="#C4C4C4" width="25%">이동한 거리</Text>
-                  <Text margin="0" size="16px" bold="500" color="#C4C4C4">소요 시간</Text>
-                </Grid>
-                <Grid flexRow justify="left" height="auto">
-                  <Text margin="0 18px 0 0" size="25px" bold="600" color="#43CA3B" width="25%">{myTrack?.totalDistance}</Text>
-                  <Text margin="0" size="25px" bold="600" color="#43CA3B">{myTrack?.totalTime}</Text>
-                </Grid>
-              </Footer>
-            </Grid>
-          </MytrackWrap>
-        </MytrackContainer>
-      </Desktop>
     </React.Fragment>
   );
 };
