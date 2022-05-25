@@ -201,7 +201,6 @@ const PartyWrite = (props) => {
 
   return (
     <React.Fragment>
-      <Mobile>
       <PartyContainer>
         <Header />
         { modalOpen && 
@@ -247,43 +246,7 @@ const PartyWrite = (props) => {
                       <Text margin="0 6px" width="auto" size="16px" color="#989898">{dateValue}</Text>
                       <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
                     </Grid>
-                    { dateHandle && 
-                    <DateModal className="dateModal" modalOpen={dateOpen}>
-                      <div className="modal_container">
-                      <DatePicker 
-                        selected={startDate} 
-                        onChange={(date) => setStartDate(date)}
-                        dateFormat="yyyy-MM-dd (eee)" 
-                        showPopperArrow={false}
-                        inline
-                        locale={ko}
-                        popperModifiers={{ preventOverflow: { enabled: true } }}
-                        popperPlacement="auto"
-                        minDate={new Date()} 
-                        renderCustomHeader={({date, decreaseMonth, increaseMonth}) => (
-                          <Grid className="datepickerHeader" isFlex padding="10px 58px">
-                            <div className="fomrmatDate">{formatDate(date)}</div>
-                            <Grid width="auto" isFlex>
-                              <div onClick={decreaseMonth}>
-                                <Text margin="0 10px 0" color="#43CA3B" bold="700">&lt;</Text>
-                              </div>
-                              <div onClick={increaseMonth}>
-                                <Text margin="0" color="#43CA3B" bold="700">&gt;</Text>
-                              </div>
-                            </Grid>
-                          </Grid>
-                          
-                        )}/>
-                      <Grid flexRow height="auto" padding="10px 20px">
-                        <Button _onClick={handleDateModal} margin="0 10px 0 0" radius="8px" border="none" bgColor="#E6E6E6">
-                          <Text margin="0 auto" align bold="700">취소</Text>
-                        </Button>
-                        <Button _onClick={saveDateModal} radius="8px" border="none" bgColor="#43CA3B">
-                          <Text margin="0 auto" align color="white" bold="700">확인</Text>
-                        </Button>
-                      </Grid>
-                      </div>
-                    </DateModal>}
+                    
                   </Grid>
               </Grid>
               <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
@@ -297,23 +260,6 @@ const PartyWrite = (props) => {
                       <Text margin="0 6px" width="auto" size="16px" color="#989898">{timeValue}</Text>
                       <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
                     </Grid>
-                    { timeHandle && 
-                    <DateModal className="dateModal" modalOpen={timeOpen}>
-                      <div className="modal_container">
-                        <Grid height="auto">
-                          <ScrollTime/>
-                        </Grid>
-                        <Grid flexRow height="auto" padding="10px 20px">
-                          <Button _onClick={handleTimeModal} margin="0 10px 0 0" radius="8px" border="none" bgColor="#E6E6E6">
-                            <Text margin="0 auto" align bold="700">취소</Text>
-                          </Button>
-                          <Button _onClick={saveTimeModal} radius="8px" border="none" bgColor="#43CA3B">
-                            <Text margin="0 auto" align color="white" bold="700">확인</Text>
-                          </Button>
-                        </Grid>
-                      </div>
-                    </DateModal>}
-
                   </Grid>
               </Grid>
               <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
@@ -352,22 +298,6 @@ const PartyWrite = (props) => {
                     <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
                   </Grid>
                 )}
-                { searchHandle && 
-                  <DateModal className="dateModal" modalOpen={searchOpen}>
-                    <div className="modal_container">
-                      <Grid height="auto">  
-                        <SearchModal selectMnt={selectMnt} onClose={setSearchOpen}/>
-                      </Grid>
-                      {/* <Grid flexRow height="auto" padding="10px 20px">
-                        <Button _onClick={handleSearchModal} margin="0 10px 0 0" radius="8px" border="none" bgColor="#E6E6E6">
-                          <Text margin="0 auto" align bold="700">취소</Text>
-                        </Button>
-                        <Button _onClick={saveTimeModal} radius="8px" border="none" bgColor="#43CA3B">
-                          <Text margin="0 auto" align color="white" bold="700">확인</Text>
-                        </Button>
-                      </Grid> */}
-                    </div>
-                  </DateModal>}
               </Grid>
               
             </Grid>
@@ -393,206 +323,84 @@ const PartyWrite = (props) => {
           <SearchModal onClose={setIsOpen} selectMnt={selectMnt}/>
         </ModalContainer>} */}
         <MenubarContainer>
+        { dateHandle && 
+          <DateModal className="dateModal" modalOpen={dateOpen}>
+            <div className="modal_container">
+            <DatePicker 
+              selected={startDate} 
+              onChange={(date) => setStartDate(date)}
+              dateFormat="yyyy-MM-dd (eee)" 
+              showPopperArrow={false}
+              inline
+              locale={ko}
+              popperModifiers={{ preventOverflow: { enabled: true } }}
+              popperPlacement="auto"
+              minDate={new Date()} 
+              renderCustomHeader={({date, decreaseMonth, increaseMonth}) => (
+                <Grid className="datepickerHeader" isFlex padding="10px 58px">
+                  <div className="fomrmatDate">{formatDate(date)}</div>
+                  <Grid width="auto" isFlex>
+                    <div onClick={decreaseMonth}>
+                      <Text margin="0 10px 0" color="#43CA3B" bold="700">&lt;</Text>
+                    </div>
+                    <div onClick={increaseMonth}>
+                      <Text margin="0" color="#43CA3B" bold="700">&gt;</Text>
+                    </div>
+                  </Grid>
+                </Grid>
+                
+              )}/>
+            <Grid flexRow height="auto" padding="10px 20px">
+              <Button _onClick={handleDateModal} margin="0 10px 0 0" radius="8px" border="none" bgColor="#E6E6E6">
+                <Text margin="0 auto" align bold="700">취소</Text>
+              </Button>
+              <Button _onClick={saveDateModal} radius="8px" border="none" bgColor="#43CA3B">
+                <Text margin="0 auto" align color="white" bold="700">확인</Text>
+              </Button>
+            </Grid>
+            </div>
+          </DateModal>}
+
+        { timeHandle && 
+          <DateModal className="dateModal" modalOpen={timeOpen}>
+            <div className="modal_container">
+              <Grid height="auto">
+                <ScrollTime/>
+              </Grid>
+              <Grid flexRow height="auto" padding="10px 20px">
+                <Button _onClick={handleTimeModal} margin="0 10px 0 0" radius="8px" border="none" bgColor="#E6E6E6">
+                  <Text margin="0 auto" align bold="700">취소</Text>
+                </Button>
+                <Button _onClick={saveTimeModal} radius="8px" border="none" bgColor="#43CA3B">
+                  <Text margin="0 auto" align color="white" bold="700">확인</Text>
+                </Button>
+              </Grid>
+            </div>
+          </DateModal>}
+
+        
+        { searchHandle && 
+          <DateModal className="dateModal" modalOpen={searchOpen}>
+            <div className="modal_container">
+              <Grid>  
+                <SearchModal selectMnt={selectMnt} onClose={setSearchOpen} scroll="scroll"/>
+              </Grid>
+              {/* <Grid flexRow height="auto" padding="10px 20px">
+                <Button _onClick={handleSearchModal} margin="0 10px 0 0" radius="8px" border="none" bgColor="#E6E6E6">
+                  <Text margin="0 auto" align bold="700">취소</Text>
+                </Button>
+                <Button _onClick={saveTimeModal} radius="8px" border="none" bgColor="#43CA3B">
+                  <Text margin="0 auto" align color="white" bold="700">확인</Text>
+                </Button>
+              </Grid> */}
+            </div>
+          </DateModal>}
           <Grid height="88px" maxWidth="500px" margin="auto">
             <Menubar menuColor={menuColor}/>
           </Grid>
         </MenubarContainer>
-
       </PartyContainer>
         
-    </Mobile>
-    <Desktop>
-      <PartyContainer>
-        <Header />
-        { modalOpen && 
-          <AlertModal 
-            type="check"
-            onClose={setModalOpen} 
-            modalState={modalOpen}
-            contents={modalContent}/> }
-        <PartyWrap>
-          <Grid padding="96px 14px 100px">
-            <Grid>
-              <Text margin="0 0 10px" size="16px" bold="600">모임 이름</Text>
-              {is_edit ? 
-                <Input 
-                  width="100%" bg="#eee" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 0 34.5px"
-                  placeholder="모임의 이름은 무엇인가요?"
-                  value={partyName}
-                  disabled
-                  _onChange={inputName}/> : 
-                <Input 
-                  width="100%" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 0 34.5px"
-                  placeholder="모임의 이름은 무엇인가요?"
-                  value={partyName}
-                  _onChange={inputName}/>}
-              <Text margin="0 0 10px" size="16px" bold="600">세부 내용</Text>
-              <Input 
-                width="100%" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 0 34.5px"
-                multiLine
-                value={partyContent}
-                placeholder="어떤 활동을 함께 하고 싶으신가요?"
-                _onChange={inputContent}/>
-            </Grid>
-            <Grid margin="28px 0">
-              <Grid isFlex margin="24px 0">
-                <Text margin="0" size="16px" bold="600">날짜</Text>
-                  {/* <Grid flexRow _onClick={handleClick}> */}
-                  <Grid flexRow width="auto">
-                    <Grid
-                      hover
-                      flexRow
-                      _onClick={()=>{setDateOpen(!dateOpen); setDateHandle(true);}} >
-                      <Text margin="0 6px" width="auto" size="16px" color="#989898">{dateValue}</Text>
-                      <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
-                    </Grid>
-                    { dateHandle && 
-                    <DateModal className="dateModal" modalOpen={dateOpen}>
-                      <div className="modal_container">
-                      <DatePicker 
-                        selected={startDate} 
-                        onChange={(date) => setStartDate(date)}
-                        dateFormat="yyyy-MM-dd (eee)" 
-                        showPopperArrow={false}
-                        inline
-                        locale={ko}
-                        popperModifiers={{ preventOverflow: { enabled: true } }}
-                        popperPlacement="auto"
-                        minDate={new Date()} 
-                        renderCustomHeader={({date, decreaseMonth, increaseMonth}) => (
-                          <Grid className="datepickerHeader" isFlex padding="10px 58px">
-                            <div className="fomrmatDate">{formatDate(date)}</div>
-                            <Grid width="auto" isFlex>
-                              <div onClick={decreaseMonth}>
-                                <Text margin="0 10px 0" color="#43CA3B" bold="700">&lt;</Text>
-                              </div>
-                              <div onClick={increaseMonth}>
-                                <Text margin="0" color="#43CA3B" bold="700">&gt;</Text>
-                              </div>
-                            </Grid>
-                          </Grid>
-                          
-                        )}/>
-                      <Grid flexRow height="auto" padding="10px 20px">
-                        <Button _onClick={handleDateModal} margin="0 10px 0 0" radius="8px" border="none" bgColor="#E6E6E6">
-                          <Text margin="0 auto" align bold="700">취소</Text>
-                        </Button>
-                        <Button _onClick={saveDateModal} radius="8px" border="none" bgColor="#43CA3B">
-                          <Text margin="0 auto" align color="white" bold="700">확인</Text>
-                        </Button>
-                      </Grid>
-                      </div>
-                    </DateModal>}
-                  </Grid>
-              </Grid>
-              <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
-              <Grid isFlex margin="24px 0">
-                <Text margin="0" size="16px" bold="600">시간</Text>
-                  <Grid flexRow width="auto">
-                    <Grid 
-                      hover
-                      flexRow
-                      _onClick={()=>{setTimeOpen(!timeOpen); setTimeHandle(true);}} >
-                      <Text margin="0 6px" width="auto" size="16px" color="#989898">{timeValue}</Text>
-                      <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
-                    </Grid>
-                    { timeHandle && 
-                    <DateModal className="dateModal" modalOpen={timeOpen}>
-                      <div className="modal_container">
-                        <Grid height="auto">
-                          <ScrollTime/>
-                        </Grid>
-                        <Grid flexRow height="auto" padding="10px 20px">
-                          <Button _onClick={handleTimeModal} margin="0 10px 0 0" radius="8px" border="none" bgColor="#E6E6E6">
-                            <Text margin="0 auto" align bold="700">취소</Text>
-                          </Button>
-                          <Button _onClick={saveTimeModal} radius="8px" border="none" bgColor="#43CA3B">
-                            <Text margin="0 auto" align color="white" bold="700">확인</Text>
-                          </Button>
-                        </Grid>
-                      </div>
-                    </DateModal>}
-
-                  </Grid>
-              </Grid>
-              <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
-              <Grid isFlex margin="24px 0">
-                <Text margin="0" size="16px" bold="600">인원</Text>
-                <Grid flexRow width="auto">
-                  <Input 
-                    type="number"
-                    color="#989898"
-                    textAlign="right" border="none" radius="8px" padding="0"
-                    placeholder="숫자만 입력해주세요"
-                    value={numberValue}
-                    _onChange={inputNumber}/>
-                </Grid>
-              </Grid>
-              <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
-              <Grid isFlex margin="24px 0">
-                <Text margin="0" size="16px" bold="600">위치</Text>
-                {is_edit ? (
-                  <Grid flexRow width="auto" hover _onClick={()=>{window.alert("산정보는 수정이 불가능합니다!")}} >
-                      <Text margin="0 6px" width="auto" size="16px" color="#989898">{mountValue}</Text>
-                      <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
-                  </Grid>) : (
-                  <Grid 
-                    flexRow 
-                    _onClick={()=>{setSearchOpen(!searchOpen); setSearchHandle(true);}}
-                    hover 
-                    width="auto">
-                    <Text margin="0 6px" width="auto" size="16px" color="#989898">{mountValue}</Text>
-                    <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
-                  </Grid>
-                )}
-                { searchHandle && 
-                  <DateModal className="dateModal" modalOpen={searchOpen}>
-                    <div className="modal_container">
-                      <Grid height="auto">  
-                        <SearchModal selectMnt={selectMnt} onClose={setSearchOpen}/>
-                      </Grid>
-                      {/* <Grid flexRow height="auto" padding="10px 20px">
-                        <Button _onClick={handleSearchModal} margin="0 10px 0 0" radius="8px" border="none" bgColor="#E6E6E6">
-                          <Text margin="0 auto" align bold="700">취소</Text>
-                        </Button>
-                        <Button _onClick={saveTimeModal} radius="8px" border="none" bgColor="#43CA3B">
-                          <Text margin="0 auto" align color="white" bold="700">확인</Text>
-                        </Button>
-                      </Grid> */}
-                    </div>
-                  </DateModal>}
-              </Grid>
-              
-            </Grid>
-            <Grid>
-            {complete ? 
-            <Button 
-              bgColor={btnColor} border="none" height="48px" margin="20px 0" radius="8px" 
-              _onClick={addParty}>
-              <Text color={btnTextColor} margin="0" size="18px" bold="600" align>{is_edit ? "수정 완료" : "작성 완료"}</Text>
-            </Button> : 
-            <Button 
-              bgColor={btnColor} border="none" height="48px" margin="20px 0" radius="8px" 
-              _onClick={addParty}>
-              <Text color={btnTextColor} margin="0" size="18px" bold="600" align>{is_edit ? "수정 완료" : "작성 완료"}</Text>
-            </Button>}
-
-            </Grid>
-          </Grid>
-
-        </PartyWrap>
-        {/* {isOpen && 
-        <ModalContainer>
-          <SearchModal onClose={setIsOpen} selectMnt={selectMnt}/>
-        </ModalContainer>} */}
-        <MenubarContainer>
-          <Grid height="88px" maxWidth="500px" margin="auto">
-            <Menubar menuColor={menuColor}/>
-          </Grid>
-        </MenubarContainer>
-
-      </PartyContainer>
-    </Desktop>
   </React.Fragment>
   );
 }
@@ -606,14 +414,14 @@ const FadeIn = keyframes`
     background-color: transparent;
   }
   100% {
-    bottom: 88px;
+    bottom: 0;
     background-color: rgba(0, 0, 0, 0.6);
   }
 `;
 
 const FadeOut = keyframes`
   0% {
-    bottom: 88px;
+    bottom: 0;
     background-color: rgba(0, 0, 0, 0.6);
   }
   15% {
@@ -628,7 +436,7 @@ const FadeOut = keyframes`
 const DateModal = styled.div`
   background-color: rgba(0, 0, 0, 0.6);
   position: fixed;
-  bottom: ${props => props.modalOpen ? '88px' : '-100%'};
+  bottom: ${props => props.modalOpen ? '0' : '-100%'};
   left: 0;
   right: 0;
   z-index: 100px;
@@ -641,6 +449,7 @@ const DateModal = styled.div`
   justify-content: flex-end;
   
   animation: ${props => props.modalOpen ? FadeIn : FadeOut} 0.5s ease-out alternate;
+  
   .modal_container {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
@@ -700,18 +509,9 @@ const DateModal = styled.div`
     color: #43CA3B;
     border: none;
     background-color: transparent;
-    // border-radius: 50%;
     font-weight: 700;
     text-align: center;
     line-height: 1.8;
-    // display: flex;
-    // flex-direction: row;
-    // justify-content: center;
-    // align-items: center;
-    // width: 2.2rem;
-    // height: 2.2rem;
-    // border-radius: 4.2rem;
-    // box-sizing: border-box;
   }
 
 `;

@@ -48,16 +48,11 @@ const Party = (props) => {
     const observer = new IntersectionObserver(
       entries => {
         if (entries[0].isIntersecting) {
-          console.log(totalPage)
-          // if (totalPage < curPage) {
-          //   return;
-          // }
           setCurPage((pre) => pre + 1);
         }
       },
       { threshold: 0.25, rootMargin: '80px' },
     );
-    console.log(curPage);
     bottomObserver.current = observer;
   }, []);
 
@@ -74,7 +69,6 @@ const Party = (props) => {
 	}, [bottom]);
 
   React.useEffect(() => {
-    console.log(curPage, searchKeyword);
     if (searchKeyword !== "") {
       dispatch(partyActions.getKeywordPartyDB(curPage, searchKeyword));
       return;
@@ -91,7 +85,6 @@ const Party = (props) => {
       setModalOpen(true)
       return;
     }
-    console.log(searchKeyword);
     setCurPage(1);
     dispatch(partyActions.getKeywordPartyDB(1, searchKeyword));
     // setSearchKeyword("");

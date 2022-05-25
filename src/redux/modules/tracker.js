@@ -147,12 +147,16 @@ export default handleActions(
         console.log(action.payload.path);
         draft.polylinePath.polylinePath.push(action.payload.path);
       }),
-    [GETSEARCH]: (state, action) =>
-      produce(state, (draft) => {
+    [GETSEARCH]: (state, action) => produce(state, (draft) => {
+      if (action.payload.data.currentPage === 0) {
         draft.searchList = action.payload.data.searchList;
         draft.searchTotalPg = action.payload.data.totalPage;
         draft.searchCurrentPg = action.payload.data.currentPage;
-      }),
+      } else {
+        draft.searchList.push(...action.payload.data.searchList);
+        draft.searchCurrentPg = action.payload.data.currentPage;
+      }
+    }),
     [DISTANCE]: (state, action) =>
       produce(state, (draft) => {
         draft.distance = action.payload.distance;

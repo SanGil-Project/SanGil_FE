@@ -7,8 +7,7 @@ import { actionCreators as partyActions } from "../redux/modules/party";
 import { actionCreators as chatActions } from "../redux/modules/chat";
 import { actionCreators as handleActions } from "../redux/modules/handle";
 
-import { Menubar, Header } from "../components/component";
-import { Desktop, Mobile } from "../shared/responsive";
+import { Menubar, Header, AlertModal } from "../components/component";
 
 import { Grid, Text, Icon, Button, Image } from "../elements/element";
 
@@ -20,6 +19,9 @@ const PartyDetail = (props) => {
   const userInfo = useSelector((state) => state?.user?.userInfo);
   const curtParty = useSelector((state) => state?.party?.curtParty);
   const menuColor = [false, true, false, false, false]; // 메뉴바 색
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState("");
 
   React.useEffect(() => {
     dispatch(handleActions.isPagename(" "));
@@ -39,11 +41,13 @@ const PartyDetail = (props) => {
 
   const attendParty = (partyId) => {
     if (curtParty.nickname === userInfo.nickname) {
-      window.alert("모임 주최자는 취소할수 없어요!!");
+      setModalContent("모임 주최자는 취소할수 없어요!!");
+      setModalOpen(true)
       return;
     }
     if (partymember.length === curtParty.maxPeople) {
-      window.alert("모집이 완료되었습니다!");
+      setModalContent("모집이 완료되었습니다!");
+      setModalOpen(true)
       return;
     }
     dispatch(partyActions.attendPartyDB(partyId));
@@ -63,6 +67,12 @@ const PartyDetail = (props) => {
     <React.Fragment>
         <PartyContainer>
           <Header />
+          { modalOpen && 
+            <AlertModal 
+              type="check"
+              onClose={setModalOpen} 
+              modalState={modalOpen}
+              contents={modalContent}/> }
           <PartyWrap>
             <Grid padding="64px 0 8px" bg="#F2F3F6" height="auto">
               <Grid isFlex padding="13px 14px" borderBottom="1px solid #DEDEDE"  bg="#fff" height="auto">
