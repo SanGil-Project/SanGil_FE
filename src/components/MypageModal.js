@@ -99,7 +99,6 @@ const MypageModal = (props) => {
 
   const selectTitle = (curTitle) => {
     // 타이틀 수정
-    console.log("자식한테 받은 curTitle ::", curTitle);
     set_userTitle(curTitle);
     dispatch(userActions.changeTitleDB(curTitle));
 

@@ -15,7 +15,6 @@ const PartyDetail = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { partyId } = useParams();
-  console.log(partyId)
   const userInfo = useSelector((state) => state?.user?.userInfo);
   const curtParty = useSelector((state) => state?.party?.curtParty);
   const menuColor = [false, true, false, false, false]; // 메뉴바 색

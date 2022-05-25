@@ -5,7 +5,6 @@ import { Grid, Text, Button, Icon, Image } from "../elements/element";
 const TitleModal = (props) => {
   const { type, onClose, modalState, contents, url } = props;
 
-  console.log(contents);
   const checkBtn = () => {
     onClose(false);
   };

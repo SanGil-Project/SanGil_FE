@@ -22,8 +22,6 @@ const addChatRoomDB = (title, partyId) => {
   return function (dispatch, getState) {
     const userInfo = getState().user.userInfo;
 
-    console.log("title ::", title, partyId);
-
     api
       .addChatRoom(title, partyId)
       .then((res) => {
@@ -43,7 +41,6 @@ const addChatRoomDB = (title, partyId) => {
 
 const enterChatDB = (chatRoomId) => {
   return function (dispatch, getState) {
-    console.log("chatRoomId :: ", typeof chatRoomId , chatRoomId);
 
     dispatch(getChat([]));
 
@@ -85,17 +82,14 @@ export default handleActions(
   {
     [ADD_CHATROOM]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload);
         draft.chatInfo = action.payload.chatRoom;
       }),
     [GET_CHAT]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload);
         draft.chatList = action.payload.chat;
       }),
     [SEND_CHAT]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.chat);
         draft.chatList = [...draft.chatList, ...action.payload.chat];
       }),
   },

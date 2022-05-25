@@ -19,8 +19,6 @@ const MypageEdit = (props) => {
   const userInfo = user?.userInfo;
   const checkData = user?.nameCheck;
 
-  console.log(titleHint);
-
   React.useEffect(() => {
     dispatch(handleActions.isPagename("내 정보 수정"));
     dispatch(userActions.myTitleDB());
@@ -101,7 +99,6 @@ const MypageEdit = (props) => {
 
   const selectTitle = (curTitle) => {
     // 타이틀 수정
-    console.log("자식한테 받은 curTitle ::", curTitle);
     set_userTitle(curTitle);
     dispatch(userActions.changeTitleDB(curTitle));
 
@@ -111,7 +108,6 @@ const MypageEdit = (props) => {
 
     const filtTitle = titleHint?.filter((p) => p.userTitle === data.userTitle);
     setTitleModalContent(filtTitle[0].titleHint);
-    console.log(filtTitle);
     setTitleModalUrl(data.userTitleImgUrl);
     setTitleModalOpen(true)
 

@@ -14,7 +14,6 @@ const Mytrack = (props) => {
   const { completedId } = useParams();
   const dispatch = useDispatch();
   const myTrack = useSelector((state) => state?.tracker?.myTrack);
-  console.log(myTrack);
 
   React.useEffect(() => {
     if (completedId) {
@@ -28,7 +27,6 @@ const Mytrack = (props) => {
   );
 
   const time = myTrack?.totalTime.split(":");
-  console.log(myTrack?.totalTime, time)
 
   return (
     <React.Fragment>

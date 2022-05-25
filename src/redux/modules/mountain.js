@@ -139,7 +139,6 @@ export default handleActions(
   {
     [GET_TOP_MNT]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload);
         draft.mountainList = action.payload.mountainList;
       }),
     [GET_DETAIL]: (state, action) =>
@@ -148,7 +147,6 @@ export default handleActions(
       }),
     [ADD_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.comment);
         draft.mountainData.commentDto.commentLists.push(action.payload.comment);
       }),
     [DELETE_COMMENT]: (state, action) =>

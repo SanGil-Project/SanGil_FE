@@ -22,14 +22,12 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
   const [isOver, setIsOver] = useState(false);
   // const [selectedMarker, setSeleteMarker] = useState()
   const markerClick = () => {
-    console.log("누름");
     onClick();
     setIsVisible(!isVisible);
     // map.panTo(marker.getPosition());
   };
 
   const select = (completedId, idx) => {
-    console.log(idx);
     dispatch(handleActions.selectMarkerDB(completedId, idx));
     navigate(`/mytrack/${completedId}`);
   }

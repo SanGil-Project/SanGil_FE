@@ -40,7 +40,6 @@ const Mypage = (props) => {
 
   React.useEffect(() => {
     if (userInfo && token) {
-      console.log("유저확인 완료!! ::", userInfo);
       // if (navigator.geolocation) {
       //   navigator.geolocation.getCurrentPosition((position) => {
       //     dispatch(userActions.myBookmarkDB(position.coords.latitude, position.coords.longitude));
@@ -71,7 +70,6 @@ const Mypage = (props) => {
     navigate(`/searchdetail/${mountainId}`);
   }
   const like = (feedId, goodStatus, goodCnt) => {
-    console.log(feedId, goodStatus, goodCnt)
     setLikeCnt(goodCnt);
     dispatch(feedLikeDB(feedId));
     setLikeCnt((pre) => (goodStatus ? (pre - 1) : (pre + 1)));
@@ -84,9 +82,6 @@ const Mypage = (props) => {
       navigate("/", { replace: true });
     }
   }
-
-  console.log(completedList);
-
 
   return (
     <React.Fragment>
@@ -149,7 +144,6 @@ const Mypage = (props) => {
                 <HorizontalScroll>
                   {completedList?.map((cur, idx) => {
                     const time = cur.totalTime.split(":");
-                    console.log(time);
                     return (
                     <Grid bg="white" key={idx}  width="auto" height="auto" padding="12px" radius="12px" margin="0 10px 20px 0" _onClick={()=>{moveMytrack(cur.completedId)}} hover>
                         <Grid height="auto" isFlex>

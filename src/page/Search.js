@@ -45,10 +45,7 @@ const Search = (props) => {
     }
   }, [selectMarker]);
 
-  console.log(curtPage, totPageDB);
-
   React.useEffect(() => {
-    console.log(curtPage, searchKeyword);
     if (searchKeyword !== "") {
       dispatch(searchNameDB(searchKeyword, curtPage));
       // setCurtPage(curtPageDB+1)
@@ -58,7 +55,6 @@ const Search = (props) => {
 
   const onChange = (e) => {
     setInput(e.target.value);
-    console.log(input)
   };
   const search = () => {
     if (input === "") {
@@ -88,7 +84,6 @@ const Search = (props) => {
     setSearchKeyword("")
   }
   const goDetail = (mountainId) => {
-    console.log(mountainId);
     navigate(`/searchdetail/${mountainId}`);
   };
   const data = searchData ? searchData : mountainList;

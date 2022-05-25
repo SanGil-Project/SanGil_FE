@@ -55,7 +55,7 @@ const initialState = {
 // 카카오 로그인
 const kakaoLoginDB = (code) => {
   return function (dispatch, getState) {
-    console.log("모듈에서 확인 ::", code);
+    // console.log("모듈에서 확인 ::", code);
     api
       .kakaoLogin(code)
       .then((res) => {
@@ -65,10 +65,10 @@ const kakaoLoginDB = (code) => {
         dispatch(isLogInDB(ACCESS_TOKEN));
       })
       .catch((err) => {
-        console.log("카카오로그인 에러", err);
-        console.log("카카오로그인 에러", err.response);
-        alert("api는 가는 거겠죠?");
-        // window.alert("로그인에 실패하였습니다.");
+        // console.log("카카오로그인 에러", err);
+        // console.log("카카오로그인 에러", err.response);
+        // alert("api는 가는 거겠죠?");
+        window.alert("로그인에 실패하였습니다.");
       });
   };
 };
@@ -84,7 +84,7 @@ const naverLoginDB = (code, state) => {
         dispatch(isLogInDB(ACCESS_TOKEN));
       })
       .catch((err) => {
-        console.log("네이버로그인 에러", err);
+        // console.log("네이버로그인 에러", err);
         window.alert("로그인에 실패하였습니다.");
       });
   };
@@ -93,7 +93,6 @@ const naverLoginDB = (code, state) => {
 // 구글 로그인
 const googleLoginDB = (code) => {
   return function (dispatch, getState) {
-    console.log("모듈에서 확인 ::", code);
     api
       .googleLogin(code)
       .then((res) => {
@@ -102,7 +101,7 @@ const googleLoginDB = (code) => {
         dispatch(isLogInDB(ACCESS_TOKEN));
       })
       .catch((err) => {
-        console.log("구글로그인 에러", err);
+        // console.log("구글로그인 에러", err);
         window.alert("로그인에 실패하였습니다.");
       });
   };
@@ -348,11 +347,9 @@ const myBookmarkDB = (pageNum, lat, lng) => {
 const chagebookmarkDB = (mountainId) => {
   return function (dispatch, getState) {
 
-    console.log(mountainId);
     api
       .mainBookmark(mountainId)
       .then((res) => {
-        console.log(res)
         dispatch(changeBookmark({ state: res.data, mountainId: mountainId}));
       })
       .catch((err) => {
@@ -421,14 +418,12 @@ export default handleActions(
       }
     }),
     [CHANGE_BOOKMARK]: (state, action) => produce(state, (draft) => {
-      console.log(action.payload);
       draft.bookmarkList.bookMarkResponseDtos = draft.bookmarkList.bookMarkResponseDtos.filter(
         (d) => d.mountainId !== action.payload.bookmark.mountainId
       );
     }),
     [MY_MOUNTAIN]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload)
         draft.myMountain = action.payload.mountainList;
       }),
     [CHANGE_INFO]: (state, action) =>
@@ -444,7 +439,6 @@ export default handleActions(
       }),
     [NAMECHECK]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload);
         draft.nameCheck = action.payload.check;
       }),
   },

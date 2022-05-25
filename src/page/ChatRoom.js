@@ -21,9 +21,7 @@ const ChatRoom = (props) => {
   const _userInfo = useSelector((state) => state?.user?.userInfo);
 
   const scrollRef = useRef();
-
-  // console.log(nickname, _userInfo.nickname);
-
+  
   // const sockJs = new SockJS("http://13.125.232.76:8080/ws-stomp"); // 서버주소/ws-stomp
   // const sockJs = new SockJS("http://52.79.228.126:8080/ws-stomp"); // 서버주소/ws-stomp
   // const sockJs = new SockJS("http://15.164.232.187:8080/ws-stomp"); // 서버주소/ws-stomp
@@ -41,21 +39,16 @@ const ChatRoom = (props) => {
 
   function ConnectSub(token) {
     try {
-      console.log("STOMP Start");
       stomp.connect({}, () => {
-        console.log("STOMP Connection");
-
         stomp.subscribe(`/sub/chat/rooms/${chatRoomId}`, (response) => {
-          console.log("subscribe callback ::", response);
+          // console.log("subscribe callback ::", response);
           const content = JSON.parse(response.body);
-          console.log("받은 메세지 ::", content);
+          // console.log("받은 메세지 ::", content);
           // const writer = content.writer;
           if (content.length === 1) {
-            console.log("두번주나???????")
             dispatch(chatActions.sendChat(content));
             scrollToBottom();
           } else {
-            console.log("여긴?")
             dispatch(chatActions.getChatDB(content));
             scrollToBottom();
           }
@@ -92,7 +85,6 @@ const ChatRoom = (props) => {
   }
 
   React.useEffect(() => {
-    console.log("채팅방 시작한다");
     dispatch(handleActions.isPagename(`${chatRoomId}번 채팅방`));
     ConnectSub(token);
     // if (_userInfo) {

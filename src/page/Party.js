@@ -101,7 +101,6 @@ const Party = (props) => {
   }
 
   const moveDetail = (partyId, completed, check) => {
-    console.log(check);
     navigate(`/partydetail/${partyId}`);
   }
 
