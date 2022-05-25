@@ -59,6 +59,11 @@ const Bookmark = (props) => {
     }
   }, [curPage]);
 
+  const bookmark = (d) => {
+    dispatch(userActions.chagebookmarkDB(d.mountainId));
+    console.log(d)
+  }
+
   return (
     <React.Fragment>
       <Grid padding="0 0 50px">
@@ -79,24 +84,28 @@ const Bookmark = (props) => {
               const star = b.starAvr ? b.starAvr : "0.0";
               return (
                 <Grid key={idx} margin="0 0 10px" padding="7px 14px 7px 0" bg="#fff" radius="10px" shadow="0px 1px 4px rgba(0, 0, 0, 0.1)" flexRow>
-                  <Icon 
-                    type="mypageBook" 
-                    width="48px" 
-                    height="48px" 
-                    margin="0 auto" 
-                    fill="#43CA3B"
-                    fillOpacity="1" /> 
-                  {/* <Icon
-                    type="like"
-                    width="18px"
-                    margin="0 0 -190px 355px"
-                    stroke
-                    fillOpacity={mountain && mountain[0]?.bookmark ? "1" : "0.2"}
-                    fill={mountain && mountain[0]?.bookmark ? "#43CA3B" : "#959595"}
-                    _onClick={() => {
-                      bookmark(mountain[0]?.mountainId, "mountain");
-                    }}
-                  /> */}
+                  <Grid 
+                    width="auto" 
+                    _onClick={() => {bookmark(b)}}>
+                    <Icon 
+                      type="mypageBook" 
+                      width="48px" 
+                      height="48px" 
+                      margin="0 auto" 
+                      fill="#43CA3B"
+                      fillOpacity="1" /> 
+                    {/* <Icon
+                      type="like"
+                      width="18px"
+                      margin="0 0 -190px 355px"
+                      stroke
+                      fillOpacity={mountain && mountain[0]?.bookmark ? "1" : "0.2"}
+                      fill={mountain && mountain[0]?.bookmark ? "#43CA3B" : "#959595"}
+                      _onClick={() => {
+                        bookmark(mountain[0]?.mountainId, "mountain");
+                      }}
+                    /> */}
+                  </Grid>
                   <Grid flexColumn alignItems="left">
                     <Text margin="0" size="14px" bold="600" color="#000">{b.mountainName}</Text>
                     <Grid isFlex>

@@ -46,7 +46,7 @@ export const api = {
   mainFeed: () => instance.get(`/api/main/feeds/1`),
   mountains: () => instance.get(`/api/main/mountains`),
   mainParty: () => instance.get(`/api/main/parties`),
-  mainBookmark: (mountainId, type) =>
+  mainBookmark: (mountainId) =>
     instance.post(`/api/mountain/bookmark/${mountainId}`, { mountainId }),
 
   //feedCmt.js

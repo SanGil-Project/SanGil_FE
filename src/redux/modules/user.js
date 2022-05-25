@@ -13,6 +13,7 @@ const MY_FEED = "MY_FEED";
 const MY_BOOKMARK = "MY_BOOKMARK";
 const NAMECHECK = "NAMECHECK";
 const CHANGE_INFO = "CHANGE_INFO";
+const CHANGE_BOOKMARK = "CHANGE_BOOKMARK";
 
 const logIn = createAction(LOGIN, (userInfo) => ({ userInfo }));
 const logOut = createAction(LOG_OUT, () => ({}));
@@ -24,6 +25,7 @@ const myTitle = createAction(MY_TITLE, (titleList) => ({ titleList }));
 const myBookmark = createAction(MY_BOOKMARK, (mountList) => ({ mountList }));
 const nameCheck = createAction(NAMECHECK, (check) => ({ check }));
 const changeInfo = createAction(CHANGE_INFO, (userInfo) => ({ userInfo }));
+const changeBookmark = createAction(CHANGE_BOOKMARK, (bookmark) => ({ bookmark }));
 
 const initialState = {};
 
@@ -323,6 +325,22 @@ const myBookmarkDB = (pageNum, lat, lng) => {
   };
 };
 
+const chagebookmarkDB = (mountainId) => {
+  return function (dispatch, getState) {
+
+    console.log(mountainId);
+    api
+      .mainBookmark(mountainId)
+      .then((res) => {
+        console.log(res)
+        dispatch(changeBookmark({ state: res.data, mountainId: mountainId}));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
 const myTitleDB = () => {
   return function (dispatch, getState) {
     api
@@ -382,6 +400,12 @@ export default handleActions(
         draft.bookmarkList.currentPage = action.payload.mountList.currentPage;
       }
     }),
+    [CHANGE_BOOKMARK]: (state, action) => produce(state, (draft) => {
+      console.log(action.payload);
+      draft.bookmarkList.bookMarkResponseDtos = draft.bookmarkList.bookMarkResponseDtos.filter(
+        (d) => d.mountainId !== action.payload.bookmark.mountainId
+      );
+    }),
     [MY_MOUNTAIN]: (state, action) =>
       produce(state, (draft) => {
         console.log(action.payload)
@@ -426,4 +450,5 @@ export const actionCreators = {
   myFeedDB,
   myMountainDB,
   logOutDB,
+  chagebookmarkDB,
 };
