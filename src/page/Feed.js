@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { Grid, Button } from "../elements/element";
 import { Header, Menubar, FeedCard } from "../components/component";
-import { Desktop, Mobile } from "../shared/responsive";
 import { useSelector, useDispatch } from "react-redux";
 import { getFeedDB } from "../redux/modules/feed";
 import { useNavigate } from "react-router";
@@ -16,37 +15,33 @@ const FeedDetail = () => {
   const menuColor = [true, false, false, false, false]; // 메뉴바 색
   const [pageNum, setPageNum] = React.useState(1);
 
-  const scroll = React.useCallback(
-    _.throttle((e) => {
-      // console.log("현재 위치: " + window.scrollY);
-      // console.log("현재 위치: " + e.srcElement.scrollingElement.scrollTop);
-      // console.log("현재 높이: " + document.body.scrollHeight);
-      const clientHeight = document.body.scrollHeight;
-      const curHeight = window.scrollY;
-      console.log(clientHeight, curHeight);
-      console.log(clientHeight - curHeight);
-      if (clientHeight - curHeight <= 2000) {
-        setPageNum((prev) => prev + 1);
-      }
-    }, 500),
-    []
-  );
+  const onScroll = _.throttle((e) => {
+    // console.log("총 높이: " + e.target.scrollHeight);
+    // console.log("현재 높이: " + curHeight);
+    const clientHeight = e.target.scrollHeight;
+    const curHeight = e.target.scrollTop;
+    if (
+      clientHeight - curHeight <= 1000 &&
+      !(feedList?.totalPage - 1 === feedList?.currentPage)
+    ) {
+      setPageNum((prev) => prev + 1);
+    }
+  }, 500);
 
   React.useEffect(() => {
     if (!feedList.totalPage || feedList.totalPage >= pageNum) {
       dispatch(getFeedDB(pageNum));
     }
-
-    window.addEventListener("scroll", scroll);
+    window.addEventListener("scroll", onScroll);
     return () => {
-      window.removeEventListener("scroll", scroll);
+      window.removeEventListener("scroll", onScroll);
     };
   }, [pageNum]);
 
   return (
     <>
       <Header />
-      <Grid padding="100px 0" overflowY="scroll" height="100vh">
+      <Grid padding="64px 0 88px 0" overflowY="scroll" _onScroll={onScroll}>
         {feedList?.feedList?.map((el, idx) => (
           <FeedContainer>
             <FeedCard el={el} key={idx} />

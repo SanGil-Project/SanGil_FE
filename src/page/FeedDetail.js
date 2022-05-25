@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Grid, Input, Text, Image, Icon } from "../elements/element";
 import { Header, Menubar } from "../components/component";
 import { useParams } from "react-router";
-import { getCmtDB } from "../redux/modules/feedCmt";
+import { getDetailDB } from "../redux/modules/feedCmt";
 import { useDispatch } from "react-redux";
 import _ from "lodash";
 
@@ -18,7 +18,7 @@ const FeedCmt = () => {
   };
 
   React.useEffect(() => {
-    dispatch(getCmtDB(feedId, 1));
+    dispatch(getDetailDB(feedId, 1));
   }, []);
 
   return (
@@ -148,7 +148,7 @@ const FeedCmt = () => {
                 2022-03-15
               </Text>
             </Grid>
-            <Grid border="1px solid #F2F3F6" height="1px" />
+            <Line />
           </Grid>
         </div>
       </Grid>
@@ -161,14 +161,8 @@ const FeedCmt = () => {
   );
 };
 
-const CmtContainer = styled.div`
-  width: 100%;
-  height: 100vh;
-  // min-width: 414px;
-  max-width: 500px;
-  margin: auto;
-  background-color: #fff;
-  overflow-y: scroll;
+const Line = styled.hr`
+  border: 1px solid #d2d2d2;
 `;
 
 const MenubarContainer = styled.div`

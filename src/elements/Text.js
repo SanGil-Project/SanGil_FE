@@ -63,7 +63,8 @@ const P = styled.p`
     props.wordBreak
       ? `word-break: ${props.wordBreak};`
       : `word-break: keep-all;`}
-  ${(props) => (props.nowrap ? `white-space: nowrap;` : `white-space: pre-wrap;`)}
+  ${(props) =>
+    props.nowrap ? `white-space: nowrap;` : `white-space: pre-wrap;`}
   color: ${(props) => props.color};
   font-size: ${(props) => props.size};
   font-weight: ${(props) => props.bold};
@@ -86,11 +87,6 @@ display: -webkit-box;
 -webkit-line-clamp: ${props.ellipsis}; 
 -webkit-box-orient: vertical;`
       : null}
-
-${(props) =>
-  props.ellipsis
-    ? `display: block; text-oberflow: ellipsis; `
-    : null}
 `;
 
 export default Text;

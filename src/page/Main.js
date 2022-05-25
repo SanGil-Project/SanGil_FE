@@ -385,7 +385,12 @@ const Main = (props) => {
                     margin="5px auto 0 auto"
                     isFlex
                   >
-                    <Text bold="600" size="1.6rem">
+                    <Text
+                      bold="600"
+                      size="1.6rem"
+                      ellipsis="1"
+                      maxWidth="368px"
+                    >
                       {el.title}
                     </Text>
                     <Text size="1.2rem" bold="500">

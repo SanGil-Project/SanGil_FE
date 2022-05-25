@@ -14,10 +14,10 @@ const updateCmt = createAction(UPDATE_CMT, (feedData) => ({ feedData }));
 
 const initialState = {};
 
-export const getCmtDB = (feedId, pageNum) => {
+export const getDetailDB = (feedId, pageNum) => {
   return function (dispatch, getState) {
     api
-      .getCmt(feedId, pageNum)
+      .getFeedDetail(feedId, pageNum)
       .then((res) => {
         console.log(res);
       })

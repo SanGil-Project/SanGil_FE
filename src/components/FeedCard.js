@@ -120,9 +120,7 @@ const FeedCard = (props) => {
         hover
         _onClick={goCmt}
       >
-        {el.commentCnt === 0
-          ? "댓글 작성하기"
-          : `댓글 ${el.commentCnt}개 모두 보기`}
+        {!el.commentCnt ? "댓글 작성하기" : `댓글 ${el.commentCnt}개 모두 보기`}
       </Text>
     </DescContainer>
   );
