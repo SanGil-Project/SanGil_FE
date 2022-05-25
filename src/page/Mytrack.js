@@ -17,7 +17,7 @@ const Mytrack = (props) => {
 
   React.useEffect(() => {
     if (completedId) {
-      dispatch(handleActions.isPagename(" "));
+      dispatch(handleActions.isPagename(""));
       dispatch(trackActions.getCompletedDB(completedId));
     }
   }, []);

@@ -24,7 +24,7 @@ const PartyDetail = (props) => {
   const [modalType, setModalType] = useState("");
 
   React.useEffect(() => {
-    dispatch(handleActions.isPagename(" "));
+    dispatch(handleActions.isPagename(""));
     dispatch(partyActions.getOnePartyDB(partyId));
   }, []);
 
