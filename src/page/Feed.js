@@ -24,7 +24,7 @@ const FeedDetail = () => {
       const clientHeight = document.body.scrollHeight;
       const curHeight = window.scrollY;
       console.log(clientHeight, curHeight);
-      // console.log(clientHeight - curHeight);
+      console.log(clientHeight - curHeight);
       if (clientHeight - curHeight <= 2000) {
         setPageNum((prev) => prev + 1);
       }
