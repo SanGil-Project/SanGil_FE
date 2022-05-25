@@ -143,10 +143,12 @@ const changeNameDB = (nickname) => {
       .then((res) => {
         console.log("(changeName) 성공 후 데이터 ::", res);
         const _user = {
+          changeUser: {
           userId: userdata.userId,
           userImageUrl: userdata.userImageUrl,
           nickname: nickname,
           userTitle: userdata.userTitle,
+          },
         };
         dispatch(changeInfo(_user));
       })
@@ -159,17 +161,24 @@ const changeNameDB = (nickname) => {
 const changeTitleDB = (userTitle) => {
   return async function (dispatch, getState) {
     const userdata = getState().user.userInfo;
-    const titleList = getState().user.titleList.userTitleDtoList;
 
     api
       .changeTitle(userTitle)
       .then((res) => {
         console.log("(changeTitle) 성공 후 데이터 ::", res);
         const _user = {
-          userId: userdata.userId,
-          userImageUrl: userdata.userImageUrl,
-          nickname: userdata.nickname,
-          userTitle: userTitle,
+          changeUser: {
+            userId: userdata.userId,
+            userImageUrl: userdata.userImageUrl,
+            nickname: userdata.nickname,
+            userTitle: userTitle,
+          },
+          changeTitle: {
+            beforeTitlUrl: res.data.beforeTitlUrl,
+            afterTitleUrl: res.data.userTitleUrl,
+            beforeTitle: userdata.userTitle,
+            afterTitle: userTitle,
+          }
         };
         
         // const titleImg = {
@@ -371,7 +380,14 @@ export default handleActions(
       }),
     [CHANGE_INFO]: (state, action) =>
       produce(state, (draft) => {
-        draft.userInfo = action.payload.userInfo;
+        draft.userInfo = action.payload.userInfo.changeUser;
+        if (action.payload.userInfo.changeTitle) {
+          const beforeIndex = draft.titleList.userTitleDtoList.findIndex(i => i.userTitle === action.payload.userInfo.changeTitle.beforeTitle);
+          const afterIndex = draft.titleList.userTitleDtoList.findIndex(i => i.userTitle === action.payload.userInfo.changeTitle.afterTitle);
+
+          draft.titleList.userTitleDtoList[beforeIndex].userTitleImgUrl = action.payload.userInfo.changeTitle.beforeTitlUrl;
+          draft.titleList.userTitleDtoList[afterIndex].userTitleImgUrl = action.payload.userInfo.changeTitle.afterTitleUrl;
+        }
       }),
     [NAMECHECK]: (state, action) =>
       produce(state, (draft) => {
