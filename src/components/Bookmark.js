@@ -86,6 +86,7 @@ const Bookmark = (props) => {
           <Grid margin="0 0 30px">
             {myBookmarkList?.map((b, idx) => {
               const star = b.starAvr ? b.starAvr : "0.0";
+              const distance = b.distance.toFixed(2);
               return (
                 <Grid 
                   hover
@@ -96,7 +97,6 @@ const Bookmark = (props) => {
                   radius="10px" 
                   shadow="0px 1px 4px rgba(0, 0, 0, 0.1)" 
                   flexRow
-                  _onClick={()=>{goDetail(b.mountainId)}}
                   >
                   <Grid 
                     width="auto" 
@@ -109,10 +109,15 @@ const Bookmark = (props) => {
                       fill="#43CA3B"
                       fillOpacity="1" />
                   </Grid>
-                  <Grid flexColumn alignItems="left">
-                    <Text margin="0" size="14px" bold="600" color="#000">{b.mountainName}</Text>
+                  <Grid 
+                    flexColumn alignItems="left"
+                    _onClick={()=>{goDetail(b.mountainId)}}>
+                    <Grid flexRow justify="left">
+                      <Text margin="0" size="14px" bold="600" color="#000">{b.mountainName}</Text>
+                      <Text margin="0 5px" size="14px" bold="600" color="#000">({b.mountainAddress})</Text>
+                    </Grid>
                     <Grid isFlex>
-                      <Text margin="0" size="14px" bold="500" color="#000">{b.distance}km</Text>
+                      <Text margin="0" size="14px" bold="500" color="#000">{distance}km</Text>
                       <Grid flexRow width="auto" margin="4px 0 0">
                         <Icon width="11.5px" height="11.5px" type="searchStar" />
                         <Text margin="0 0 0 5px" size="14px" bold="500" color="#000">{star}</Text>

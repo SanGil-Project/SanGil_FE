@@ -75,7 +75,8 @@ const MyFeed = (props) => {
                     height="158px" 
                     bgImg={d.feedImgUrl} 
                     bgSize="cover"
-                    margin="0 3px 6px">
+                    margin="0 3px 6px"
+                    border="1px solid #e1e1e1">
                   </Grid>
                 );
               })}

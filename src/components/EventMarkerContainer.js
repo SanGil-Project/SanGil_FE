@@ -26,7 +26,7 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
     dispatch(handleActions.selectMarkerDB(completedId, idx));
     navigate(`/mytrack/${completedId}`);
   }
-  const time = content.totalTime.split(":");
+  const time = content?.totalTime?.split(":");
   // 마커 이미지 hover, click 상황에따라 변경
   let markerImg = isOver ?  
     "https://user-images.githubusercontent.com/91959791/169664489-10a08071-905f-4a44-9a14-ae065704ced5.png" :

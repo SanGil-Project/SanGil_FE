@@ -18,7 +18,7 @@ const TextCard = (props) => {
       <CardContainer>
         <Grid _onClick={()=>{moveDetail(data.partyId)}} hover>
           <Grid isFlex height="auto" margin="0 0 4px">
-            <Text margin="0" bold="600" size="14px">{data.title}</Text>
+            <Text margin="0 10px 0 0" bold="600" size="14px" ellipsis>{data.title}</Text>
             <Text margin="0" bold="300" size="12px">{data.curPeople}/{data.maxPeople}명</Text>
           </Grid>
           <Grid isFlex height="auto">
