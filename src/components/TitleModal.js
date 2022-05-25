@@ -9,8 +9,11 @@ const TitleModal = (props) => {
   const checkBtn = () => {
     onClose(false);
   };
-  const bgImg = require("../assets/images/title_hint.png");
-  const bgImg2 = require("../assets/images/get_title.png");
+  let bgImg = require("../assets/images/title_hint.png");
+
+  if (type === "get") {
+    bgImg = require("../assets/images/get_title.png");
+  }
 
   if (type === "hint") {
     return (
@@ -58,23 +61,29 @@ const TitleModal = (props) => {
       <React.Fragment>
         <Modal className="dateModal" modalState={modalState} bgImg={bgImg}>
           <div className="modal_container">
-
-        {/* <Image
-          width="100%"
-          height="100px"
-          borderRadius="10px"
-          src={require("../assets/images/Banner_1.png")}
-        /> */}
-            <Grid flexColumn margin="0 0 30px" bgImg={require("../assets/images/Banner_1.png")}>
-              <Icon type="alertCheck" width="49px" height="48px" margin="0 auto"/>
-              <Text margin="18px 0 0" color="#131313" bold="600" size="18px">
-                {contents}
-              </Text>
-            </Grid>
-            <Grid flexRow height="auto" padding="10px 20px">
+            <Grid flexColumn margin="0">
+              <Grid flexRow margin="0 0 48px">
+                <Text margin="0" color="#131313" bold="600" size="18px" align="center">
+                  타이틀을 획득했어요
+                </Text>
+                <Image
+                  width="24px"
+                  height="24px"
+                  margin="0 0 5px 5px"
+                  src={require("../assets/images/Congratulations.png")}
+                />
+              </Grid>
+              <Image
+                type="circle"
+                width="155px"
+                height="155px"
+                margin="0 0 49px"
+                borderRadius="100%"
+                src={url}
+              />
               <Button
                 _onClick={checkBtn}
-                width="60%"
+                width="50%"
                 radius="4px"
                 border="none"
                 bgColor="#43CA3B"
@@ -82,11 +91,11 @@ const TitleModal = (props) => {
                 <Text
                   margin="0 auto"
                   align
-                  color="white"
+                  color="#fff"
                   bold="600"
                   size="16px"
                 >
-                  확인
+                  뱃지 획득 하기
                 </Text>
               </Button>
             </Grid>

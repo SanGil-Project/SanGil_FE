@@ -129,7 +129,7 @@ const MypageEdit = (props) => {
               contents={modalContent}/> }
           { titlemodalOpen && 
             <TitleModal 
-              type="hint"
+              type="get"
               onClose={setTitleModalOpen} 
               modalState={titlemodalOpen}
               contents={titlemodalContent}
