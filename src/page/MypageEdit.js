@@ -150,7 +150,7 @@ const MypageEdit = (props) => {
                 })}
                 {noTitleList?.map((t, idx) => {
                   return (
-                    <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} margin="0 7px" width="100px" height="164px">
+                    <Grid key={idx} _onClick={()=>{alert("타이틀 힌트 작성해야해!!!")}} margin="0 7px" width="100px" height="164px">
                       <TitleItem key={idx} title={t.userTitle} img={t.userTitleImgUrl}/>
                     </Grid>
                   );

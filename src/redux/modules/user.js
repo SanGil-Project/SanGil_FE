@@ -13,6 +13,7 @@ const MY_FEED = "MY_FEED";
 const MY_BOOKMARK = "MY_BOOKMARK";
 const NAMECHECK = "NAMECHECK";
 const CHANGE_INFO = "CHANGE_INFO";
+const CHANGE_BOOKMARK = "CHANGE_BOOKMARK";
 
 const logIn = createAction(LOGIN, (userInfo) => ({ userInfo }));
 const logOut = createAction(LOG_OUT, () => ({}));
@@ -24,6 +25,7 @@ const myTitle = createAction(MY_TITLE, (titleList) => ({ titleList }));
 const myBookmark = createAction(MY_BOOKMARK, (mountList) => ({ mountList }));
 const nameCheck = createAction(NAMECHECK, (check) => ({ check }));
 const changeInfo = createAction(CHANGE_INFO, (userInfo) => ({ userInfo }));
+const changeBookmark = createAction(CHANGE_BOOKMARK, (bookmark) => ({ bookmark }));
 
 const initialState = {};
 
@@ -98,7 +100,6 @@ export const isLogInDB = (token) => {
 
 const nameCheckDB = (nickname) => {
   return function (dispatch, getState) {
-    console.log(nickname);
 
     api
       .nameCheck(nickname)
@@ -197,32 +198,32 @@ const myTrackingDB = () => {
   return async function (dispatch, getState) {
 
 
-    const fakeDB = {
-      completedList : [
-      {
-        completedId : 1,
-        mountainId : 1,
-        mountain : "속리산",
-        lat : 36.56329698,
-        lng : 127.9172195,
-        totalDistance: 10.3,
-        totalTime: "4:20:13",
-        creatDate: "2022-05-22",
-      },
-      {
-        completedId : 3,
-        mountainId : 2,
-        mountain : "화악산",
-        lat : 37.8881266,
-        lng : 127.5492755,
-        totalDistance: 20.3,
-        totalTime: "6:20:13",
-        creatDate: "2022-05-22",
-      },
-    ]}
+    // const fakeDB = {
+    //   completedList : [
+    //   {
+    //     completedId : 1,
+    //     mountainId : 1,
+    //     mountain : "속리산",
+    //     lat : 36.56329698,
+    //     lng : 127.9172195,
+    //     totalDistance: 10.3,
+    //     totalTime: "4:20:13",
+    //     creatDate: "2022-05-22",
+    //   },
+    //   {
+    //     completedId : 3,
+    //     mountainId : 2,
+    //     mountain : "화악산",
+    //     lat : 37.8881266,
+    //     lng : 127.5492755,
+    //     totalDistance: 20.3,
+    //     totalTime: "6:20:13",
+    //     creatDate: "2022-05-22",
+    //   },
+    // ]}
 
-    dispatch(myTracking(fakeDB));
-    return;
+    // dispatch(myTracking(fakeDB));
+    // return;
     api
       .myTracking()
       .then((res) => {
@@ -238,33 +239,33 @@ const myTrackingDB = () => {
 const myMountainDB = (mountainId) => {
   return function (dispatch, getState) {
 
-    const fakeDB1 = {
-      completedList : [
-      {
-        completedId : 1,
-        mountain : "속리산",
-        totalDistance: 10.3,
-        totalTime: "4:20:13",
-        creatDate: "2022-05-22",
-      },
-    ]}
-    const fakeDB2 = {
-      completedList : [
-      {
-        completedId : 3,
-        mountain : "화악산",
-        totalDistance: 20.3,
-        totalTime: "6:20:13",
-        creatDate: "2022-05-22",
-      },
-    ]}
-    if(mountainId === 1) {
-      dispatch(myMountain(fakeDB1));
+    // const fakeDB1 = {
+    //   completedList : [
+    //   {
+    //     completedId : 1,
+    //     mountain : "속리산",
+    //     totalDistance: 10.3,
+    //     totalTime: "4:20:13",
+    //     creatDate: "2022-05-22",
+    //   },
+    // ]}
+    // const fakeDB2 = {
+    //   completedList : [
+    //   {
+    //     completedId : 3,
+    //     mountain : "화악산",
+    //     totalDistance: 20.3,
+    //     totalTime: "6:20:13",
+    //     creatDate: "2022-05-22",
+    //   },
+    // ]}
+    // if(mountainId === 1) {
+    //   dispatch(myMountain(fakeDB1));
       
-    }else {
-      dispatch(myMountain(fakeDB2));
-    }
-    return;
+    // }else {
+    //   dispatch(myMountain(fakeDB2));
+    // }
+    // return;
 
     api
       .myMount(mountainId)
@@ -308,9 +309,6 @@ const myFeedDB = (pageNum = null) => {
 const myBookmarkDB = (pageNum, lat, lng) => {
   return function (dispatch, getState) {
 
-
-    console.log(pageNum, lat, lng);
-
     api
       .myBookmark(pageNum, lat, lng)
       .then((res) => {
@@ -319,6 +317,22 @@ const myBookmarkDB = (pageNum, lat, lng) => {
       })
       .catch((err) => {
         console.log("(myBookmark) 실패 ::", err);
+      });
+  };
+};
+
+const chagebookmarkDB = (mountainId) => {
+  return function (dispatch, getState) {
+
+    console.log(mountainId);
+    api
+      .mainBookmark(mountainId)
+      .then((res) => {
+        console.log(res)
+        dispatch(changeBookmark({ state: res.data, mountainId: mountainId}));
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 };
@@ -382,6 +396,12 @@ export default handleActions(
         draft.bookmarkList.currentPage = action.payload.mountList.currentPage;
       }
     }),
+    [CHANGE_BOOKMARK]: (state, action) => produce(state, (draft) => {
+      console.log(action.payload);
+      draft.bookmarkList.bookMarkResponseDtos = draft.bookmarkList.bookMarkResponseDtos.filter(
+        (d) => d.mountainId !== action.payload.bookmark.mountainId
+      );
+    }),
     [MY_MOUNTAIN]: (state, action) =>
       produce(state, (draft) => {
         console.log(action.payload)
@@ -426,4 +446,5 @@ export const actionCreators = {
   myFeedDB,
   myMountainDB,
   logOutDB,
+  chagebookmarkDB,
 };

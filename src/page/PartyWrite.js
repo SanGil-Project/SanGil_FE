@@ -128,6 +128,7 @@ const PartyWrite = (props) => {
 
   let btnColor = "#E6E6E6";
   let btnTextColor = "#000";
+  const titleColor = is_edit ? "#989898" : "#000";
   if (partyName !== "" && mountValue !=="검색" && dateValue !== "선택" && timeValue !== "선택" && numberValue && partyContent !== "") {
     btnColor = "#43CA3B";
     btnTextColor = "#fff";
@@ -230,7 +231,7 @@ const PartyWrite = (props) => {
         <PartyWrap>
           <Grid padding="96px 14px 100px">
             <Grid>
-              <Text margin="0 0 10px" size="16px" bold="600">모임 이름</Text>
+              <Text margin="0 0 10px" size="16px" bold="600" color={titleColor}>모임 이름</Text>
               {is_edit ? 
                 <Input 
                   width="100%" bg="#eee" border="1px solid #BBBBBB" radius="8px" padding="16px 12px" margin="0 0 34.5px"
@@ -294,17 +295,16 @@ const PartyWrite = (props) => {
               </Grid>
               <hr style={{border: "1px solid #DEDEDE", width: "100%"}}/>
               <Grid isFlex margin="24px 0">
-                <Text margin="0" size="16px" bold="600">위치</Text>
+                <Text margin="0" size="16px" bold="600" color={titleColor}>위치</Text>
                 {is_edit ? (
                   <Grid 
                     flexRow 
-                    width="auto" 
-                    hover 
+                    width="auto"
                     _onClick={()=>{
                       setModalContent("산정보는 수정이 불가능합니다!");
                       setModalOpen(true);}}>
                       <Text margin="0 6px" width="auto" size="16px" color="#989898">{mountValue}</Text>
-                      <Icon type="detailBtn" width="7px" height="13" margin="auto"/>
+                      <Icon type="detailBtn" width="7px" height="13" margin="auto" cursor="default"/>
                   </Grid>) : (
                   <Grid 
                     flexRow 

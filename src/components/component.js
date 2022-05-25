@@ -19,6 +19,7 @@ import ChatInput from "./ChatInput";
 import AlertModal from "./AlertModal";
 import Bookmark from "./Bookmark";
 import Banner from "./Banner";
+import MyFeedList from "./MyFeedList";
 
 export {
   GoogleLogin,
@@ -42,4 +43,5 @@ export {
   AlertModal,
   Bookmark,
   Banner,
+  MyFeedList,
 };
