@@ -29,7 +29,7 @@ const Tracker = (props) => {
   const [myLoca, setMyLoca] = useState({ lat: "", lng: "" });
   const [distance, setDistance] = useState({ distanceM: 0.0, distanceK: 0.0 });
   const [time, setTime] = useState({
-    stopwatch: { s: 0, m: 10, h: 0 },
+    stopwatch: { s: 0, m: 0, h: 0 },
     isStart: false,
   });
 
