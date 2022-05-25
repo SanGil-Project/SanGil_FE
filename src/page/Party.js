@@ -7,6 +7,7 @@ import { actionCreators as partyActions } from '../redux/modules/party';
 import {
   Menubar,
   Header,
+  AlertModal,
 } from "../components/component";
 
 import { Grid, Text, Icon, Button, Input } from "../elements/element";
@@ -17,10 +18,14 @@ const Party = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const today = useRef(new Date());
+  const listRef = useRef([]);
 
   const partydata = useSelector((state) => state?.party?.list);
   const partyList = partydata?.partyList;
   const totalPage = partydata?.totalPage;
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState("");
 
   // 날짜가 지난 파티 완료처리 해주기
   const year = today.current.getFullYear();
@@ -81,7 +86,8 @@ const Party = (props) => {
   };
   const search = () => {
     if (searchKeyword === "") {
-      window.alert("검색어를 입력해주세요!");
+      setModalContent("검색어를 입력해주세요!");
+      setModalOpen(true)
       return;
     }
     console.log(searchKeyword);
@@ -93,21 +99,27 @@ const Party = (props) => {
   const cancel = () => {
     setSearchKeyword("")
   }
+  const handleScroll = () => {
+    listRef.current[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // if (!window.scrollY) return;
+    // window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 
   const moveDetail = (partyId, completed, check) => {
     console.log(check);
     navigate(`/partydetail/${partyId}`);
-    // if (!completed || check) {
-    //   window.alert("마감된 모임입니다!");
-    // } else {
-    //   navigate(`/partydetail/${partyId}`);
-    // }
   }
 
   return (
     <React.Fragment>
         <PartyContainer>
           <Header />
+          { modalOpen && 
+            <AlertModal 
+              type="check"
+              onClose={setModalOpen} 
+              modalState={modalOpen}
+              contents={modalContent}/> }
           <PartyWrap>
             <SearchInput>
             {/* <SearchInput padding="82px 14px 18px" bg="#fff"> */}
@@ -165,6 +177,7 @@ const Party = (props) => {
                   return;
                 }
                 return (
+                  <div key={idx} ref={el => (listRef.current[idx] = el)}>
                   <Grid
                     key={idx}
                     // bg="#FAFAFA"
@@ -244,6 +257,7 @@ const Party = (props) => {
                       </Button>
                     </Grid>
                   </Grid>
+                  </div>
                 );
               })}
             </Grid>
@@ -257,9 +271,7 @@ const Party = (props) => {
                   <Grid 
                     className
                     flexRow bg="#fff" width="60px" height="60px" radius="100%" shadow="0px 3px 4px rgba(0, 0, 0, 0.15)" 
-                    _onClick={() => {
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    }}>
+                    _onClick={handleScroll}>
                     <Icon type="upBtn" width="24px" height="24px" margin="0 auto"/>
                   </Grid>
               </UpBtn>
