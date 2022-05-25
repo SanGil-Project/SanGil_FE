@@ -158,6 +158,7 @@ const attendPartyDB = (partyId = null) => {
 
 const deletePartyDB = (partyId = null) => {
   return function (dispatch, getState) {
+    console.log(partyId)
     api
       .delParty(partyId)
       .then((res) => {
@@ -189,7 +190,9 @@ export default handleActions(
       draft.curtParty = action.payload.party;
     }),
     [ADD_PARTY]: (state, action) => produce(state, (draft) => {
-      draft.list.partyList.unshift(action.payload.party);
+      if (draft.list) {
+        draft.list.partyList.unshift(action.payload.party);
+      }
     }),
     [EDIT_PARTY]: (state, action) => produce(state, (draft) => {
       
@@ -206,8 +209,8 @@ export default handleActions(
       draft.curtParty.curPeople--;
     }),
     [DELETE_PARTY]: (state, action) => produce(state, (draft) => {
-        draft.partyList = draft.partyList.filter(
-          (p) => p.partyId !== action.payload.partyList.partyId
+        draft.list.partyList = draft.list.partyList.filter(
+          (p) => p.partyId !== action.payload.partyId
         );
     }), 
   },

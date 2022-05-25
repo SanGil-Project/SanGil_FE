@@ -19,6 +19,7 @@ import Search from './Search';
 import SearchModal from '../components/SearchModal';
 
 const PartyWrite = (props) => {
+  const dispatch = useDispatch();
   const { partyId } = useParams();
   const is_edit = partyId ? true : false;
   const partyItem = useSelector((state) => state?.party?.curtParty);
@@ -26,7 +27,6 @@ const PartyWrite = (props) => {
 
   const menuColor = [false, true, false, false, false]; // 메뉴바 색
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const today = useRef(new Date());
   const year = today.current.getFullYear();
   const month = ('0' + (today.current.getMonth() + 1)).slice(-2);
@@ -54,6 +54,14 @@ const PartyWrite = (props) => {
   React.useEffect(() => {
     const pagename = is_edit ? "등산 모임 수정하기" : "등산 모임 만들기";
     dispatch(handleActions.isPagename(pagename));
+    if (is_edit) {
+      if (!partyItem) {
+        setModalContent(`정보가 없어졌습니다! \n모임 상세 페이지로 돌아갑니다!`);
+        setModalOpen(true)
+        setIsSend(true)
+        setIsError(true)
+      }
+    }
   }, []); 
 
   const handleDateModal = () => {
@@ -95,6 +103,8 @@ const PartyWrite = (props) => {
   const [complete, setcomplete] = useState(is_edit ? true : false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
+  const [isSend, setIsSend] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const inputName = (e) => {
     setPartyName(e.target.value);
@@ -175,6 +185,7 @@ const PartyWrite = (props) => {
       }
       dispatch(partyActions.editPartyDB(partyId, partyData));
       setModalContent("수정 완료!");
+      setIsSend(true)
       setModalOpen(true);
       return;
     }
@@ -190,12 +201,18 @@ const PartyWrite = (props) => {
     }
     dispatch(partyActions.addPartyDB(partyData));
     setModalContent("작성 완료!");
+    setIsSend(true)
     setModalOpen(true);
   }
 
   const movePage = (check) => {
     if (check) {
       navigate(`/party`, { replace: true });
+    }
+  }
+  const moveBack = (check) => {
+    if (check) {
+      navigate(-1)
     }
   }
 
@@ -209,7 +226,7 @@ const PartyWrite = (props) => {
             onClose={setModalOpen} 
             modalState={modalOpen}
             contents={modalContent}
-            checkFunction={movePage}/> }
+            checkFunction={isSend ? (isError? moveBack : movePage) : null}/> }
         <PartyWrap>
           <Grid padding="96px 14px 100px">
             <Grid>

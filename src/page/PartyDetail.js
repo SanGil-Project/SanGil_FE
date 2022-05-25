@@ -22,6 +22,7 @@ const PartyDetail = (props) => {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
+  const [modalType, setModalType] = useState("");
 
   React.useEffect(() => {
     dispatch(handleActions.isPagename(" "));
@@ -42,11 +43,13 @@ const PartyDetail = (props) => {
   const attendParty = (partyId) => {
     if (curtParty.nickname === userInfo.nickname) {
       setModalContent("모임 주최자는 취소할수 없어요!!");
+      setModalType("check")
       setModalOpen(true)
       return;
     }
     if (partymember.length === curtParty.maxPeople) {
       setModalContent("모집이 완료되었습니다!");
+      setModalType("check")
       setModalOpen(true)
       return;
     }
@@ -59,20 +62,28 @@ const PartyDetail = (props) => {
   }
 
   const deleteParty = (partyId) => {
-    dispatch(partyActions.deletePartyDB(partyId));
-    navigate("/party");
+    setModalContent("모임을 삭제하시겠어요? 😭");
+    setModalType("choice")
+    setModalOpen(true)
   }
 
+  const deleteCheck = (check) => {
+    if (check) {
+      dispatch(partyActions.deletePartyDB(curtParty.partyId));
+      navigate("/party", { replace: true });
+    }
+  }
   return (
     <React.Fragment>
         <PartyContainer>
           <Header />
           { modalOpen && 
             <AlertModal 
-              type="check"
+              type={modalType}
               onClose={setModalOpen} 
               modalState={modalOpen}
-              contents={modalContent}/> }
+              contents={modalContent}
+              checkFunction={modalType === "choice" ? deleteCheck : null} /> }
           <PartyWrap>
             <Grid padding="64px 0 8px" bg="#F2F3F6" height="auto">
               <Grid isFlex padding="13px 14px" borderBottom="1px solid #DEDEDE"  bg="#fff" height="auto">
