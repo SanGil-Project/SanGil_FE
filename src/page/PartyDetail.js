@@ -113,7 +113,7 @@ const PartyDetail = (props) => {
               </Grid>
               <Grid padding="20px 14px" margin="0 0 8px" height="auto" flexColumn  bg="#fff">
                 <Grid alignItems="left">
-                  <Text margin="0 0 33.5px" size="18px" bold="600">
+                  <Text margin="0 0 33.5px" size="18px" bold="600" wordBreak="break-all" lineHeight="24px">
                     {curtParty?.title}
                   </Text>
                   <Grid flexRow justify="left" padding="0 0 10px">
@@ -160,7 +160,7 @@ const PartyDetail = (props) => {
                     {/* <Icon type="detailBtn" width="8px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} /> */}
                   </Grid>
                   <Grid padding="45px 0">
-                    <Text margin="0" size="16px" bold="500">
+                    <Text margin="0" size="16px" bold="500" wordBreak="break-all">
                       {curtParty?.partyContent}
                     </Text>
                   </Grid>

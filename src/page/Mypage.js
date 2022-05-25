@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router";
 
 import { useSelector, useDispatch } from "react-redux";
+import { deleteFeedDB, feedLikeDB } from "../redux/modules/feed";
 import { actionCreators as userActions } from "../redux/modules/user";
 
 import {
@@ -15,6 +16,7 @@ import {
   MypageModal,
   AlertModal,
   Bookmark,
+  MyFeedList,
 } from "../components/component";
 import { Grid, Text, Icon, Image, Button } from "../elements/element";
 
@@ -27,11 +29,12 @@ const Mypage = (props) => {
   const myTrackList = useSelector((state) => state.user.trackList?.completedList);
   const selectMarker = useSelector((state) => state.handle.selectMarker?.id);
   const completedList = useSelector((state) => state.user.myMountain?.completedList);
-  const myFeedList = useSelector((state) => state.user.feedList);
+  const myFeedList = useSelector((state) => state?.user?.feedList);
   const myBookmarkList = useSelector((state) => state.user.mountList);
   const menuColor = [false, false, false, false, true]; // 메뉴바 색
   const img = (userInfo?.userImageUrl !== "없음") ? userInfo?.userImageUrl : "https://user-images.githubusercontent.com/91959791/168119302-948f0dcf-8165-47af-8b6b-2f90f74aca06.png";
   
+  const [likeCnt, setLikeCnt] = React.useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   // const [selected, setSelected] = React.useState({ idx: 0, state: false });
 
@@ -67,6 +70,13 @@ const Mypage = (props) => {
   const moveMountDetail = (mountainId) => {
     navigate(`/searchdetail/${mountainId}`);
   }
+  const like = (feedId, goodStatus, goodCnt) => {
+    console.log(feedId, goodStatus, goodCnt)
+    setLikeCnt(goodCnt);
+    dispatch(feedLikeDB(feedId));
+    setLikeCnt((pre) => (goodStatus ? (pre - 1) : (pre + 1)));
+    // setLikeCnt((prev) => (el.goodStatus ? (prev -= 1) : (prev += 1)));
+  };
 
   const logOut = (check) => {
     if (check) {
@@ -206,27 +216,7 @@ const Mypage = (props) => {
                   {myFeedList?.map((cur, idx) => {
                     const good = cur.goodStatus ? "false" : "0.2"
                     return (
-                    <Grid 
-                      hover
-                      key={idx} 
-                      width="auto" 
-                      margin="0 10px 0 0" 
-                      // _onClick={()=>{moveFeedDetail(cur.feedId)}}
-                      >
-                      <Card width="150px" height="150px" margin="0" shadow="0px 1px 4px rgba(0, 0, 0, 0.1)">
-                        <Image
-                          width="150px"
-                          height="150px"
-                          borderRadius="10px"
-                          border="none"
-                          src={cur.feedImgUrl}
-                        />
-                      </Card>
-                      <Grid margin="4px" flexRow justify="left">
-                        <Icon fillOpacity={good} type="mypageFeedLike" width="13px" height="12px" margin="0 auto"/>
-                        <Text margin="0 4px" size="12px" bold="500" color="#43CA3B">{cur.goodCnt}</Text>
-                      </Grid>
-                    </Grid>
+                      <MyFeedList key={idx} data={cur}/>
                     );}
                   )}
                 </HorizontalScroll>

@@ -188,7 +188,7 @@ const Party = (props) => {
                     bgSize="cover"
                   >
                     <Grid alignItems="left" height="auto">
-                      <Text margin="0 0 18px" bold="500" color={textColor}>
+                      <Text margin="0 0 18px" bold="500" color={textColor} ellipsis>
                         {p.title}
                       </Text>
                       <Grid flexRow justify="left" padding="0 0 10px" height="auto">

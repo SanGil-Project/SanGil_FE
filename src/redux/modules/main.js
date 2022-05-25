@@ -72,7 +72,7 @@ export const partyDB = () => {
 export const bookmarkDB = (mountainId, type) => {
   return function (dispatch, getState) {
     api
-      .mainBookmark(mountainId, type)
+      .mainBookmark(mountainId)
       .then((res) => {
         dispatch(bookmark({ like: res.data, mountainId, type }));
       })

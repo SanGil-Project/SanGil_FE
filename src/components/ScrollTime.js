@@ -47,7 +47,7 @@ const ScrollTime = () => {
       <div className="division">
         {division.map((e,idx) => {
           const selectT = selectTime === e ? "#43CA3B" : "#000";
-          return <Text key={idx} color={selectT} margin="20px 0" size="24px" _onClick={()=>{select(e, "division")}}>{e}</Text>
+          return <Text key={idx} hover color={selectT} margin="20px 0" size="24px" _onClick={()=>{select(e, "division")}}>{e}</Text>
         })}
       </div>
     );
@@ -58,7 +58,7 @@ const ScrollTime = () => {
       <div className="hour">
         {hour.map((e,idx) => {
           const selectH = selectHour === e ? "#43CA3B" : "#000";
-          return <Text key={idx} color={selectH} margin="20px 0" size="24px" _onClick={()=>{select(e, "hour")}}>{e}</Text>
+          return <Text key={idx} hover color={selectH} margin="20px 0" size="24px" _onClick={()=>{select(e, "hour")}}>{e}</Text>
         })}
       </div>
     );
@@ -69,7 +69,7 @@ const ScrollTime = () => {
       <div className="minute">
         {minute.map((e,idx) => {
           const selectM = selectMinute === e ? "#43CA3B" : "#000";
-          return <Text key={idx} color={selectM} margin="20px 0" size="24px" _onClick={()=>{select(e, "minute")}}>{e}</Text>
+          return <Text key={idx} hover color={selectM} margin="20px 0" size="24px" _onClick={()=>{select(e, "minute")}}>{e}</Text>
         })}
       </div>
     );

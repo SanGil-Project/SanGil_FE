@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import styled from "styled-components";
 
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 import { actionCreators as partyActions } from "../redux/modules/party";
 import { actionCreators as userActions } from "../redux/modules/user";
 
@@ -11,6 +12,7 @@ import TextCard from "./TextCard";
 const Bookmark = (props) => {
   const { userInfo } = props;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // const myPartyList = useSelector((state) => state?.party?.myPartyList);
   const myBookmarkData = useSelector((state) => state?.user?.bookmarkList);
@@ -59,6 +61,13 @@ const Bookmark = (props) => {
     }
   }, [curPage]);
 
+  const bookmark = (d) => {
+    dispatch(userActions.chagebookmarkDB(d.mountainId));
+  }
+  const goDetail = (mountainId) => {
+    navigate(`/searchdetail/${mountainId}`);
+  }
+
   return (
     <React.Fragment>
       <Grid padding="0 0 50px">
@@ -77,30 +86,38 @@ const Bookmark = (props) => {
           <Grid margin="0 0 30px">
             {myBookmarkList?.map((b, idx) => {
               const star = b.starAvr ? b.starAvr : "0.0";
+              const distance = b.distance.toFixed(2);
               return (
-                <Grid key={idx} margin="0 0 10px" padding="7px 14px 7px 0" bg="#fff" radius="10px" shadow="0px 1px 4px rgba(0, 0, 0, 0.1)" flexRow>
-                  <Icon 
-                    type="mypageBook" 
-                    width="48px" 
-                    height="48px" 
-                    margin="0 auto" 
-                    fill="#43CA3B"
-                    fillOpacity="1" /> 
-                  {/* <Icon
-                    type="like"
-                    width="18px"
-                    margin="0 0 -190px 355px"
-                    stroke
-                    fillOpacity={mountain && mountain[0]?.bookmark ? "1" : "0.2"}
-                    fill={mountain && mountain[0]?.bookmark ? "#43CA3B" : "#959595"}
-                    _onClick={() => {
-                      bookmark(mountain[0]?.mountainId, "mountain");
-                    }}
-                  /> */}
-                  <Grid flexColumn alignItems="left">
-                    <Text margin="0" size="14px" bold="600" color="#000">{b.mountainName}</Text>
+                <Grid 
+                  hover
+                  key={idx} 
+                  margin="0 0 10px" 
+                  padding="7px 14px 7px 0" 
+                  bg="#fff" 
+                  radius="10px" 
+                  shadow="0px 1px 4px rgba(0, 0, 0, 0.1)" 
+                  flexRow
+                  >
+                  <Grid 
+                    width="auto" 
+                    _onClick={() => {bookmark(b)}}>
+                    <Icon 
+                      type="mypageBook" 
+                      width="48px" 
+                      height="48px" 
+                      margin="0 auto" 
+                      fill="#43CA3B"
+                      fillOpacity="1" />
+                  </Grid>
+                  <Grid 
+                    flexColumn alignItems="left"
+                    _onClick={()=>{goDetail(b.mountainId)}}>
+                    <Grid flexRow justify="left">
+                      <Text margin="0" size="14px" bold="600" color="#000">{b.mountainName}</Text>
+                      <Text margin="0 5px" size="14px" bold="600" color="#000">({b.mountainAddress})</Text>
+                    </Grid>
                     <Grid isFlex>
-                      <Text margin="0" size="14px" bold="500" color="#000">{b.distance}km</Text>
+                      <Text margin="0" size="14px" bold="500" color="#000">{distance}km</Text>
                       <Grid flexRow width="auto" margin="4px 0 0">
                         <Icon width="11.5px" height="11.5px" type="searchStar" />
                         <Text margin="0 0 0 5px" size="14px" bold="500" color="#000">{star}</Text>
