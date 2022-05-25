@@ -29,7 +29,7 @@ const Tracker = (props) => {
   const [myLoca, setMyLoca] = useState({ lat: "", lng: "" });
   const [distance, setDistance] = useState({ distanceM: 0.0, distanceK: 0.0 });
   const [time, setTime] = useState({
-    stopwatch: { s: 0, m: 0, h: 0 },
+    stopwatch: { s: 0, m: 10, h: 0 },
     isStart: false,
   });
 
@@ -45,11 +45,13 @@ const Tracker = (props) => {
   };
 
   const releaseWakeLock = async () => {
-    try {
-      wakeLock?.release();
-      console.log("Wake lock has been released.");
-    } catch (err) {
-      console.log(err);
+    if ("wakeLock" in navigator) {
+      try {
+        wakeLock.release();
+        console.log("Wake lock has been released.");
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -87,8 +89,8 @@ const Tracker = (props) => {
               dispatch(setPath(myLoca));
               if (_distance?.distanceM) {
                 setDistance((prev) => ({
-                  distanceM: prev.distanceM + parseFloat(_distance?.distanceM),
-                  distanceK: prev.distanceK + parseFloat(_distance?.distanceK),
+                  distanceM: prev.distanceM + Number(_distance?.distanceM),
+                  distanceK: prev.distanceK + Number(_distance?.distanceK),
                 }));
               }
             }
@@ -174,7 +176,7 @@ const Tracker = (props) => {
           padding="16px 0 0 0"
           margin="0 auto"
         >
-          <Grid width="342px" height="60px" isFlex margin="20px auto 0 auto">
+          <Grid width="79.71%" height="60px" isFlex margin="20px auto 0 auto">
             <Grid width="100px">
               <Text color="#C4C4C4" margin="0">
                 이동한 거리

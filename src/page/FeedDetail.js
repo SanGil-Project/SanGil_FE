@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Grid, Input, Text, Image } from "../elements/element";
+import { Grid, Input, Text, Image, Icon } from "../elements/element";
 import { Header, Menubar } from "../components/component";
 import { useParams } from "react-router";
 import { getCmtDB } from "../redux/modules/feedCmt";
@@ -24,13 +24,65 @@ const FeedCmt = () => {
   return (
     <>
       <Header />
-      <Grid padding="64px 0 0 0">
+      <Grid padding="64px 0 88px 0" overflowY="scroll">
+        <div>
+          <Grid maxWidth="91.78%" margin="0 auto">
+            <Grid width="93.23%" height="52px" margin="0 auto" isFlex>
+              <Grid width="190px" flex="flex">
+                <Image
+                  width="40px"
+                  height="40px"
+                  type="circle"
+                  src="https://www.theguru.co.kr/data/photos/20210937/art_16316071303022_bf8378.jpg"
+                />
+                <Grid
+                  width="130px"
+                  height="40px"
+                  margin="0 0 0 10px"
+                  padding="2px 0"
+                >
+                  <Text margin="0" bold="300" size="1.2rem">
+                    칭호입니다
+                  </Text>
+                  <Text margin="0" bold="600" size="1.2rem">
+                    닉네임입니다
+                  </Text>
+                </Grid>
+              </Grid>
+              <Icon type="delete" width="20" height="22px" />
+            </Grid>
+          </Grid>
+        </div>
+        <Grid height="500px" margin="10px 0">
+          <Image
+            width="100%"
+            height="100%"
+            src="https://newsimg.hankookilbo.com/cms/articlerelease/2021/04/01/57f00c7a-6fb6-49b1-905f-2438e4f7897a.jpg"
+          />
+        </Grid>
+        <Grid maxWidth="91.78%" height="25px" margin="20px auto" isFlex>
+          <Grid width="68px" flex="flex">
+            <Icon type="like" width="20px" height="20px" />
+            <Text margin="0 0 0 10px">300</Text>
+          </Grid>
+          <Text size="1.2rem" bold="600" color="#C4C4C4">
+            15분 전
+          </Text>
+        </Grid>
+        <div>
+          <Grid maxWidth="91.78%" margin="0 auto">
+            <Text bold="500" size="1.6rem" wordBreak="break-all" margin="0">
+              가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사
+            </Text>
+          </Grid>
+        </div>
         <Grid maxWidth="91.78%" height="80px" margin="25px auto" isFlex>
           <Grid
             border="1px solid #C4C4C4"
             width="86.84%"
             radius="10px"
             height="48px"
+            padding="0 0 0 10px"
           >
             <Input
               radius="10px"
@@ -42,6 +94,7 @@ const FeedCmt = () => {
             />
           </Grid>
           <Text
+            margin="0 15px 0 0"
             bold="500"
             size="1.6rem"
             color="#959595"
@@ -108,7 +161,7 @@ const FeedCmt = () => {
   );
 };
 
-const DetailContainer = styled.div`
+const CmtContainer = styled.div`
   width: 100%;
   height: 100vh;
   // min-width: 414px;

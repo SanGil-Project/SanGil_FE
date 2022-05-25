@@ -29,7 +29,7 @@ const FeedCard = (props) => {
   };
 
   const goCmt = () => {
-    navigate(`/feedcmt/${el.feedId}`);
+    navigate(`/feeddetail/${el.feedId}`);
   };
 
   return (
