@@ -59,12 +59,7 @@ const Main = (props) => {
       <MainContainer>
         <Header />
         <Grid padding="74px 7px 0 7px" overflowY="scroll">
-          <Grid
-            border="1px solid red"
-            width="93.23%"
-            height="100px"
-            margin="20px auto"
-          >
+          <Grid width="93.23%" height="120px" margin="20px auto">
             <Banner />
           </Grid>
           <Grid height="453px" margin="10px auto 75px auto">
@@ -277,6 +272,11 @@ const Main = (props) => {
 
           <Grid height="220px">
             <Grid maxWidth="472px" margin="0 0 24px 7px" height="25px" isFlex>
+              <Image
+                width="24px"
+                height="24px"
+                src={require("../assets/images/Camera.png")}
+              />
               <Text
                 width="350px"
                 height="24px"
@@ -284,7 +284,7 @@ const Main = (props) => {
                 size="2rem"
                 lineHeight="24px"
               >
-                📷 실시간 정복한 산길 인증샷
+                실시간 정복한 산길 인증샷
               </Text>
               <Grid
                 margin="0 18px 0 0"

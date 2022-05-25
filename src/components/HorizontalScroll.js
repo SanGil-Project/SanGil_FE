@@ -1,4 +1,6 @@
+import React from "react";
 import styled from "styled-components";
+import _ from "lodash";
 
 const HorizontalScroll = (props) => {
   return (
@@ -12,7 +14,12 @@ const OuterBox = styled.div`
   overflow-x: scroll;
   white-space: nowrap;
   &::-webkit-scrollbar {
-    display: none;
+    height: 4px;
+    display: block;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #c8c8ca;
+    border-radius: 5px;
   }
 `;
 
