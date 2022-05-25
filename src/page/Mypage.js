@@ -255,10 +255,10 @@ const MypageContainer = styled.div`
   // position: relative;
   width: 100%;
   height: 100%;
-  // min-width: 414px;
   max-width: 500px;
   margin: auto;
   background-color: #F1F1F1;
+  overflow: scroll;
 `;
 
 const MypageWrap = styled.div`

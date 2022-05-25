@@ -230,7 +230,7 @@ const PartyWrite = (props) => {
             checkFunction={isSend ? (isError? moveBack : movePage) : null}/> }
         <PartyWrap>
           <Grid padding="96px 14px 100px">
-            <Grid>
+            <Grid width="auto">
               <Text margin="0 0 10px" size="16px" bold="600" color={titleColor}>모임 이름</Text>
               {is_edit ? 
                 <Input 
@@ -496,24 +496,23 @@ const DateModal = styled.div`
     font-size: 2.5rem;
   }
   .react-datepicker__month {
-    margin: .4em 1em;
+    margin: .4em;
   }
   .react-datepicker__day-name {
     font-size: 1.6rem;
     font-weight: 500;
-    margin: 2rem;
+    margin: 3.8%;
     color: #959595; 
   }
   .react-datepicker__day {
-    width: 28px;
-    height: 28px;
+    width: 25px;
+    height: 25px;
     font-size: 2.0rem;
-    margin: 1.5rem;
+    margin: 3%;
     line-height: 1.8;
     text-align: center;
   }
   .react-datepicker__navigation {
-    background-color: orange;
     top: 2em;
     line-height: 1.7em;
     border: 0.45em solid transparent;
@@ -545,6 +544,7 @@ const PartyContainer = styled.div`
 const PartyWrap = styled.div`
   top: 64px;
   height:100%
+  width: 100%;
   overflow-y: auto;
   input[type="number"]::-webkit-outer-spin-button, 
   input[type="number"]::-webkit-inner-spin-button { 

@@ -202,7 +202,7 @@ const PartyDetail = (props) => {
                 })}
               </Grid>
             </Grid>
-            <Grid flexRow bg="#fff" padding="44px 14px 0" alignItems="flex-start" height="auto">
+            <Grid flexRow bg="#fff" padding="44px 14px" alignItems="flex-start" height="auto">
               <Button
                 bgColor="#E6E6E6"
                 border="none"
@@ -249,17 +249,18 @@ const PartyContainer = styled.div`
   // position: relative;
   background-color: #fff;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   max-width: 500px;
   margin: auto;
-  overflow: hidden;
+  overflow: scroll;
 `;
 
 const PartyWrap = styled.div`
   // position: absolute;
   top: 64px;
-  height:100%;
-  overflow-y: auto;
+  height: 100%;
+  padding: 0 0 80px;
+  overflow: scroll;
 `;
 
 const MenubarContainer = styled.div`
