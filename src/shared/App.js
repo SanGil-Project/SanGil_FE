@@ -1,6 +1,5 @@
 import "./App.css";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-import Modal from "react-modal";
 import background from "../assets/images/cover.png";
 import { history } from "../redux/configureStore";
 // import { ConnectedRouter } from "connected-react-router";
@@ -101,7 +100,5 @@ const Fullscreen = styled.div`
   @media (min-width: 1580px) {
   }
 `;
-
-Modal.setAppElement("#root");
 
 export default App;
