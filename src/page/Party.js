@@ -102,7 +102,7 @@ const Party = (props) => {
   }
   const handleScroll = () => {
     // listRef.current[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
-    topRef.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    topRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     // if (!window.scrollY) return;
     // window.scrollTo({ top: 0, behavior: "smooth" });
   }

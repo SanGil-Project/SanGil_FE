@@ -143,7 +143,7 @@ const attendPartyDB = (partyId = null) => {
       .attendParty(partyId)
       .then((res) => {
         console.log("(attendParty) 성공 데이터 확인 ::", res);
-        if (res.data) {
+        if (res.data.msg === "true") {
           dispatch(attendParty(user_info));
         } else {
           dispatch(cancelParty(user_info));
