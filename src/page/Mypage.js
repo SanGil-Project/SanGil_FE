@@ -75,6 +75,8 @@ const Mypage = (props) => {
     }
   }
 
+  console.log(completedList);
+
 
   return (
     <React.Fragment>
@@ -136,6 +138,8 @@ const Mypage = (props) => {
               </Grid>
                 <HorizontalScroll>
                   {completedList?.map((cur, idx) => {
+                    const time = cur.totalTime.split(":");
+                    console.log(time);
                     return (
                     <Grid bg="white" key={idx}  width="auto" height="auto" padding="12px" radius="12px" margin="0 10px 20px 0" _onClick={()=>{moveMytrack(cur.completedId)}} hover>
                         <Grid height="auto" isFlex>
@@ -155,8 +159,12 @@ const Mypage = (props) => {
                           <Grid flexColumn height="auto" alignItems="flex-start">
                             <Text margin="0 0 4px" size="12px" bold="500" color="#C4C4C4">소요 시간</Text>
                             <Grid flexRow alignItems="baseline">
-                              <Text margin="0" size="14px" bold="600" color="#43CA3B" nowrap>{cur.totalTime}</Text>
-                              {/* <Text margin="0" size="8px" bold="500">시간</Text> */}
+                              <Text margin="0" size="14px" bold="600" color="#43CA3B" nowrap>{time[0]}</Text>
+                              <Text margin="0" size="8px" bold="500">시간</Text>
+                              <Text margin="0" size="14px" bold="600" color="#43CA3B" nowrap>{time[1]}</Text>
+                              <Text margin="0" size="8px" bold="500">분</Text>
+                              <Text margin="0" size="14px" bold="600" color="#43CA3B" nowrap>{time[2]}</Text>
+                              <Text margin="0" size="8px" bold="500">초</Text>
                             </Grid>
                           </Grid>
                         </Grid>
@@ -164,7 +172,7 @@ const Mypage = (props) => {
                     );}
                   )}
                 </HorizontalScroll>
-              <FullMap zoomable={false} data={completedList} size="665px"/>{" "}
+              <FullMap zoomable={false} data={myTrackList} size="665px"/>{" "}
             </Grid>
             <Grid padding="35px 14px 25px" height="auto">
               <Grid isFlex margin="0 0 24px">

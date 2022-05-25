@@ -7,6 +7,7 @@ import { actionCreators as partyActions } from '../redux/modules/party';
 import {
   Menubar,
   Header,
+  AlertModal,
 } from "../components/component";
 
 import { Grid, Text, Icon, Button, Input } from "../elements/element";
@@ -17,10 +18,15 @@ const Party = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const today = useRef(new Date());
+  // const listRef = useRef([]);
+  const topRef = useRef();
 
   const partydata = useSelector((state) => state?.party?.list);
   const partyList = partydata?.partyList;
   const totalPage = partydata?.totalPage;
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState("");
 
   // 날짜가 지난 파티 완료처리 해주기
   const year = today.current.getFullYear();
@@ -42,16 +48,11 @@ const Party = (props) => {
     const observer = new IntersectionObserver(
       entries => {
         if (entries[0].isIntersecting) {
-          console.log(totalPage)
-          // if (totalPage < curPage) {
-          //   return;
-          // }
           setCurPage((pre) => pre + 1);
         }
       },
       { threshold: 0.25, rootMargin: '80px' },
     );
-    console.log(curPage);
     bottomObserver.current = observer;
   }, []);
 
@@ -68,7 +69,6 @@ const Party = (props) => {
 	}, [bottom]);
 
   React.useEffect(() => {
-    console.log(curPage, searchKeyword);
     if (searchKeyword !== "") {
       dispatch(partyActions.getKeywordPartyDB(curPage, searchKeyword));
       return;
@@ -81,10 +81,10 @@ const Party = (props) => {
   };
   const search = () => {
     if (searchKeyword === "") {
-      window.alert("검색어를 입력해주세요!");
+      setModalContent("검색어를 입력해주세요!");
+      setModalOpen(true)
       return;
     }
-    console.log(searchKeyword);
     setCurPage(1);
     dispatch(partyActions.getKeywordPartyDB(1, searchKeyword));
     // setSearchKeyword("");
@@ -93,21 +93,28 @@ const Party = (props) => {
   const cancel = () => {
     setSearchKeyword("")
   }
+  const handleScroll = () => {
+    // listRef.current[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    topRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // if (!window.scrollY) return;
+    // window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 
   const moveDetail = (partyId, completed, check) => {
     console.log(check);
     navigate(`/partydetail/${partyId}`);
-    // if (!completed || check) {
-    //   window.alert("마감된 모임입니다!");
-    // } else {
-    //   navigate(`/partydetail/${partyId}`);
-    // }
   }
 
   return (
     <React.Fragment>
         <PartyContainer>
           <Header />
+          { modalOpen && 
+            <AlertModal 
+              type="check"
+              onClose={setModalOpen} 
+              modalState={modalOpen}
+              contents={modalContent}/> }
           <PartyWrap>
             <SearchInput>
             {/* <SearchInput padding="82px 14px 18px" bg="#fff"> */}
@@ -144,34 +151,27 @@ const Party = (props) => {
               </Button>
             </SearchInput>
             <Grid padding="160px 14px 100px">
+
+              <div ref={topRef}></div>
               {partyList?.map((p, idx) => {
                 const cardImg = p.completed ? 
-                  "https://user-images.githubusercontent.com/91959791/170047867-6794743f-7174-4208-b425-2f7456617d45.png" : 
-                  "https://user-images.githubusercontent.com/91959791/170047969-5020a76c-9306-4ba0-afdf-e200fbc33a39.png";
-                let btnBg = p.completed ? "#43CA3B" : "#959595";
-                let textColor = p.completed ? "#000" : "#D9D9D9";
-                let btnText = p.completed ? "모집내용확인" : "마감 되었어요😢";
+                  "https://user-images.githubusercontent.com/91959791/170146663-47e7a0ce-6db5-40f3-ad7e-c078779ed87f.png" : 
+                  "https://user-images.githubusercontent.com/91959791/170146585-0d85e1a8-f60b-4b76-b634-dbc8f6a73d64.png";
+                const btnBg = p.completed ? "#43CA3B" : "#959595";
+                const textColor = p.completed ? "#000" : "#D9D9D9";
+                const btnText = p.completed ? "모집내용확인" : "마감 되었어요😢";
                 const curPeople = p.curPeople ? p.curPeople : 0;
                 if (p.partyDate === dateString) {
                   const tempT = p.partyTime.split(":");
                   if (parseInt(tempT[0]) === parseInt(hours)) {
                     if (parseInt(tempT[1]) <= parseInt(minutes)) {
-                      btnBg = "#E6E6E6";
-                      textColor = "#D9D9D9";
-                      btnText = "마감 되었어요😢";
-                      isCompleted[idx] = true;
+                      return;
                     }
                   } else if (parseInt(tempT[0]) < parseInt(hours)) {
-                    btnBg = "#E6E6E6";
-                    textColor = "#D9D9D9";
-                    btnText = "마감 되었어요😢";
-                    isCompleted[idx] = true;
+                    return;
                   }
                 } else if (p.partyDate < dateString) {
-                  btnBg = "#E6E6E6";
-                  textColor = "#D9D9D9";
-                  btnText = "마감 되었어요😢";
-                  isCompleted[idx] = true;
+                  return;
                 }
                 return (
                   <Grid
@@ -266,9 +266,7 @@ const Party = (props) => {
                   <Grid 
                     className
                     flexRow bg="#fff" width="60px" height="60px" radius="100%" shadow="0px 3px 4px rgba(0, 0, 0, 0.15)" 
-                    _onClick={() => {
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    }}>
+                    _onClick={handleScroll}>
                     <Icon type="upBtn" width="24px" height="24px" margin="0 auto"/>
                   </Grid>
               </UpBtn>

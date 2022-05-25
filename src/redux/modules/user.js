@@ -143,10 +143,12 @@ const changeNameDB = (nickname) => {
       .then((res) => {
         console.log("(changeName) 성공 후 데이터 ::", res);
         const _user = {
+          changeUser: {
           userId: userdata.userId,
           userImageUrl: userdata.userImageUrl,
           nickname: nickname,
           userTitle: userdata.userTitle,
+          },
         };
         dispatch(changeInfo(_user));
       })
@@ -165,11 +167,24 @@ const changeTitleDB = (userTitle) => {
       .then((res) => {
         console.log("(changeTitle) 성공 후 데이터 ::", res);
         const _user = {
-          userId: userdata.userId,
-          userImageUrl: userdata.userImageUrl,
-          nickname: userdata.nickname,
-          userTitle: userTitle,
+          changeUser: {
+            userId: userdata.userId,
+            userImageUrl: userdata.userImageUrl,
+            nickname: userdata.nickname,
+            userTitle: userTitle,
+          },
+          changeTitle: {
+            beforeTitlUrl: res.data.beforeTitlUrl,
+            afterTitleUrl: res.data.userTitleUrl,
+            beforeTitle: userdata.userTitle,
+            afterTitle: userTitle,
+          }
         };
+        
+        // const titleImg = {
+        //   changeImg: res.data.userTitleUrl,
+        //   prevImg: res.data.black,
+        // }
         dispatch(changeInfo(_user));
       })
       .catch((err) => {
@@ -182,30 +197,32 @@ const myTrackingDB = () => {
   return async function (dispatch, getState) {
 
 
-    // const fakeDB = {
-    //   completedList : [
-    //   {
-    //     completedId : 1,
-    //     mountainId : 1,
-    //     mountain : "속리산",
-    //     lat : 36.56329698,
-    //     lng : 127.9172195,
-    //     totalDistance: 10.3,
-    //     totalTime: "4시간 20분 13초",
-    //   },
-    //   {
-    //     completedId : 3,
-    //     mountainId : 2,
-    //     mountain : "화악산",
-    //     lat : 37.8881266,
-    //     lng : 127.5492755,
-    //     totalDistance: 20.3,
-    //     totalTime: "6시간 20분 13초",
-    //   },
-    // ]}
+    const fakeDB = {
+      completedList : [
+      {
+        completedId : 1,
+        mountainId : 1,
+        mountain : "속리산",
+        lat : 36.56329698,
+        lng : 127.9172195,
+        totalDistance: 10.3,
+        totalTime: "4:20:13",
+        creatDate: "2022-05-22",
+      },
+      {
+        completedId : 3,
+        mountainId : 2,
+        mountain : "화악산",
+        lat : 37.8881266,
+        lng : 127.5492755,
+        totalDistance: 20.3,
+        totalTime: "6:20:13",
+        creatDate: "2022-05-22",
+      },
+    ]}
 
-    // dispatch(myTracking(fakeDB));
-    // return;
+    dispatch(myTracking(fakeDB));
+    return;
     api
       .myTracking()
       .then((res) => {
@@ -221,26 +238,33 @@ const myTrackingDB = () => {
 const myMountainDB = (mountainId) => {
   return function (dispatch, getState) {
 
-    // const fakeDB = {
-    //   completedList : [
-    //   {
-    //     completedId : 1,
-    //     mountain : "속리산",
-    //     totalDistance: 10.3,
-    //     totalTime: "4시간 20분 13초",
-    //     creatDate: "2022-05-22",
-    //   },
-    //   {
-    //     completedId : 3,
-    //     mountain : "화악산",
-    //     totalDistance: 20.3,
-    //     totalTime: "6시간 20분 13초",
-    //     creatDate: "2022-05-22",
-    //   },
-    // ]}
-
-    // dispatch(myMountain(fakeDB));
-    // return;
+    const fakeDB1 = {
+      completedList : [
+      {
+        completedId : 1,
+        mountain : "속리산",
+        totalDistance: 10.3,
+        totalTime: "4:20:13",
+        creatDate: "2022-05-22",
+      },
+    ]}
+    const fakeDB2 = {
+      completedList : [
+      {
+        completedId : 3,
+        mountain : "화악산",
+        totalDistance: 20.3,
+        totalTime: "6:20:13",
+        creatDate: "2022-05-22",
+      },
+    ]}
+    if(mountainId === 1) {
+      dispatch(myMountain(fakeDB1));
+      
+    }else {
+      dispatch(myMountain(fakeDB2));
+    }
+    return;
 
     api
       .myMount(mountainId)
@@ -365,7 +389,14 @@ export default handleActions(
       }),
     [CHANGE_INFO]: (state, action) =>
       produce(state, (draft) => {
-        draft.userInfo = action.payload.userInfo;
+        draft.userInfo = action.payload.userInfo.changeUser;
+        if (action.payload.userInfo.changeTitle) {
+          const beforeIndex = draft.titleList.userTitleDtoList.findIndex(i => i.userTitle === action.payload.userInfo.changeTitle.beforeTitle);
+          const afterIndex = draft.titleList.userTitleDtoList.findIndex(i => i.userTitle === action.payload.userInfo.changeTitle.afterTitle);
+
+          draft.titleList.userTitleDtoList[beforeIndex].userTitleImgUrl = action.payload.userInfo.changeTitle.beforeTitlUrl;
+          draft.titleList.userTitleDtoList[afterIndex].userTitleImgUrl = action.payload.userInfo.changeTitle.afterTitleUrl;
+        }
       }),
     [NAMECHECK]: (state, action) =>
       produce(state, (draft) => {

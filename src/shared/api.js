@@ -106,29 +106,29 @@ export const api = {
       },
     }),
   nameCheck: (username) =>
-    instance.post("/api/mypages/usernameCheck", {
+    instance.post("/api/mypage/usernameCheck", {
       nickname: username,
     }),
   changeName: (username) =>
-    instance.put("/api/mypages/profilename", {
+    instance.put("/api/mypage/profilename", {
       nickname: username,
     }),
   changeImg: (formData) =>
-    instance.put("/api/mypages/profileUrl", formData, {
+    instance.put("/api/mypage/profileUrl", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     }),
-  myTracking: () => instance.get("/api/mypages/tracking"),
-  myTitle: () => instance.get("/api/mypages/userTitle"),
-  myFeed: () => instance.get("/mypages/myfeeds"),
+  myTracking: () => instance.get("/api/mypage/tracking"),
+  myTitle: () => instance.get("/api/mypage/userTitle"),
+  myFeed: () => instance.get("/mypage/myfeeds"),
   myFeedList: (pageNum) => instance.get(`/api/myfeeds/${pageNum}`),
 
-  myMount: (mountainId) => instance.get(`/api/mypages/tracking/${mountainId}`),
+  myMount: (mountainId) => instance.get(`/api/mypage/tracking/${mountainId}`),
   myBookmark: (pageNum, lat, lng) =>
-    instance.get(`/api/mypages/bookmark/${pageNum}?lat=${lat}&lng=${lng}`),
+    instance.get(`/api/mypage/bookmark/${pageNum}?lat=${lat}&lng=${lng}`),
   changeTitle: (userTitle) =>
-    instance.put("/api/mypages/userTitle", {
+    instance.put("/api/mypage/userTitle", {
       userTitle: userTitle,
     }),
 

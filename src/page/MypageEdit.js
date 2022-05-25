@@ -112,7 +112,7 @@ const MypageEdit = (props) => {
               onClose={setModalOpen} 
               modalState={modalOpen}
               contents={modalContent}/> }
-          <Grid padding="69px 36px 10px" height="auto">
+          <Grid padding="69px 22px 10px" height="auto">
             <Grid flexColumn height="auto" padding="5px 0">
               <UserProfile>
                 <Label className="input_file_button" htmlFor="input_image">
@@ -142,17 +142,16 @@ const MypageEdit = (props) => {
               <TitleList>
                 {userTitleList?.map((t, idx) => {
                   const pick = (userInfo?.userTitle === t.userTitle) ? true : false;
-                  const img = (t.userTitleImgUrl === "없음") ? "https://user-images.githubusercontent.com/91959791/169658309-a910c67d-7ae2-4895-b6be-a155dcfaf5bb.png" : t.userTitleImgUrl;
                   return (
                     <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} margin="0 7px" width="100px" height="164px">
-                      <TitleItem key={idx} title={t.userTitle} img={img} pick={pick} done/>
+                      <TitleItem key={idx} title={t.userTitle} img={t.userTitleImgUrl} pick={pick} have/>
                     </Grid> 
                   );
                 })}
                 {noTitleList?.map((t, idx) => {
                   return (
                     <Grid key={idx} _onClick={()=>{selectTitle(t.userTitle)}} margin="0 7px" width="100px" height="164px">
-                      <TitleItem key={idx} title={t.userTitle} img={img}/>
+                      <TitleItem key={idx} title={t.userTitle} img={t.userTitleImgUrl}/>
                     </Grid>
                   );
                 })}
@@ -214,45 +213,25 @@ export default MypageEdit;
 
 const TitleItem = (props) => {
 
-  const { title, img , pick, done, selectTitle } = props
-
-  if(done) {
-    return (
-      <React.Fragment>
-        {pick ? 
-          (<Grid flexColumn width="100px" radius="4px" hover justify="flex-start">
-              <Image
-                width="100px"
-                height="100px"
-                bg="#000"
-                border="2px solid #43CA3B"
-                borderRadius="100%"
-                src={img}/>
-              <Text width="100px" margin="5px 0 0 0" size="14px" bold="600" align="center" color="#43CA3B">{title}</Text>
-            </Grid>) : 
-          (<Grid flexColumn width="100px" radius="4px" hover justify="flex-start">
-              <Image
-                width="100px"
-                height="100px" 
-                bg="#000"
-                borderRadius="100%"
-                src={img}/>
-              <Text width="100px" margin="5px 0 0 0" size="14px" bold="500" align="center" color="#919191">{title}</Text>
-            </Grid>)}
-      </React.Fragment>
-    );
+  const { title, img , pick, have, selectTitle } = props
+  const textBold = pick ? "600" : "500";
+  let textColor = pick ? "#43CA3B" : "#919191";
+  
+  if (!have) {
+    textColor = "#D2D2D2";
   }
 
   return (
     <React.Fragment>
-      <Grid flexColumn width="100px" radius="4px" justify="flex-start">
-        <Grid 
+      <Grid flexColumn width="100px" radius="4px" hover justify="flex-start">
+        <Image
           width="100px"
-          height="100px" 
-          bg="#D2D2D2"
-          radius="100%"></Grid>
-        <Text width="100px" margin="5px 0 0 0" size="14px" bold="500" color="#D2D2D2" align="center">{title}</Text>
+          height="100px"
+          borderRadius="100%"
+          src={img}/>
+        <Text width="100px" margin="5px 0 0 0" size="14px" bold={textBold} align="center" color={textColor}>{title}</Text>
       </Grid>
     </React.Fragment>
   );
 }
+

@@ -26,6 +26,7 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
     dispatch(handleActions.selectMarkerDB(completedId, idx));
     navigate(`/mytrack/${completedId}`);
   }
+  const time = content.totalTime.split(":");
   // 마커 이미지 hover, click 상황에따라 변경
   let markerImg = isOver ?  
     "https://user-images.githubusercontent.com/91959791/169664489-10a08071-905f-4a44-9a14-ae065704ced5.png" :
@@ -70,17 +71,35 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
         >
           {/* {isVisible && */}
           {isClicked && isVisible &&
-          <CustomOverlayMap index={index} position={{lat: content.lat, lng: content.lng}} yAnchor={1.56} zIndex={1}>
+          <CustomOverlayMap index={index} position={{lat: content.lat, lng: content.lng}} yAnchor={1.50} zIndex={1}>
             <MymarkerInfo>
-              <Grid padding="9px 13px" _onClick={()=>{select(content.completedId, index)}} hover>
-                <Text margin="5px 0" bold="600" size="14px">{content.mountain}</Text>
-                <Grid flexRow justify="left" margin="8px 0 4px">
-                  <Text margin="0 18px 0 0" size="12px" bold="500" color="#C4C4C4">총 거리</Text>
-                  <Text margin="0" size="12px" bold="500" color="#C4C4C4">소요 시간</Text>
+              {/* <Grid padding="9px 13px" _onClick={()=>{select(content.completedId, index)}} hover> */}
+              <Grid bg="white" width="auto" height="auto" padding="12px" radius="12px" _onClick={()=>{select(content.completedId, index)}} hover>
+                <Grid height="auto" isFlex>
+                  <Text margin="0" bold="600" size="14px">{content.mountain}</Text>
+                  <Grid width="auto" border="1px solid #43CA3B" radius="4px" padding="1px 4px">
+                    <Text margin="0" size="6px" bold="400" color="#43CA3B">{content.creatDate}</Text>
+                  </Grid>
                 </Grid>
-                <Grid flexRow justify="left">
-                  <Text margin="0 18px 0 0" size="12px" bold="500">{content.totalDistance}</Text>
-                  <Text margin="0" size="12px" bold="500">{content.totalTime}</Text>
+                <Grid flexRow alignItems="flex-start" margin="12px 0 0">
+                  <Grid flexColumn height="auto" width="auto" alignItems="flex-start" margin="0 18px 0 0" >
+                    <Text margin="0 0 4px" size="12px" bold="500" color="#C4C4C4">총 거리</Text>
+                    <Grid flexRow alignItems="baseline" width="auto">
+                      <Text margin="0" size="14px" bold="600" color="#43CA3B">{content.totalDistance}</Text>
+                      <Text margin="0" size="8px" bold="500">km</Text>
+                    </Grid>
+                  </Grid>
+                  <Grid flexColumn height="auto" alignItems="flex-start">
+                    <Text margin="0 0 4px" size="12px" bold="500" color="#C4C4C4">소요 시간</Text>
+                    <Grid flexRow alignItems="baseline" width="auto">
+                      <Text margin="0" size="14px" bold="600" color="#43CA3B" nowrap>{time[0]}</Text>
+                      <Text margin="0" size="8px" bold="500">시간</Text>
+                      <Text margin="0" size="14px" bold="600" color="#43CA3B" nowrap>{time[1]}</Text>
+                      <Text margin="0" size="8px" bold="500">분</Text>
+                      <Text margin="0" size="14px" bold="600" color="#43CA3B" nowrap>{time[2]}</Text>
+                      <Text margin="0" size="8px" bold="500">초</Text>
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
             </MymarkerInfo>
