@@ -53,8 +53,11 @@ const ChatRoom = (props) => {
           if (content.length === 1) {
             console.log("두번주나???????")
             dispatch(chatActions.sendChat(content));
+            scrollToBottom();
           } else {
+            console.log("여긴?")
             dispatch(chatActions.getChatDB(content));
+            scrollToBottom();
           }
         });
         // dispatch(chatActions.getChatDB(chatRoomId));
@@ -100,7 +103,14 @@ const ChatRoom = (props) => {
       DisConnectUnsub();
     };
   }, []);
-  
+
+  React.useEffect(() => {
+    scrollToBottom();
+  }, [enterChat]);
+
+  const scrollToBottom = () => {
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
   const chatList = useSelector((state) => state?.chat?.chatList);
 
   return (
@@ -109,7 +119,6 @@ const ChatRoom = (props) => {
           <Header />
           <ChatWrap>
             <Grid padding="96px 14px 200px">
-            <div ref={scrollRef}>
               {chatList?.map((chat, idx) => {
                 const time = chat.createdAt.split(" ");
                 const boxColor = chat.nickname === nickname ? "#9EE59C" : "#EBEBEB";
@@ -151,7 +160,8 @@ const ChatRoom = (props) => {
                   </div>
                 );
               })}
-              </div>
+              
+            <ChatBottom ref={scrollRef}></ChatBottom>
             </Grid>
           </ChatWrap>
           <ChatInputWrap>
@@ -200,6 +210,10 @@ const MenubarContainer = styled.div`
   left: 0;
   right: 0;
   z-index: 10;
+`;
+
+const ChatBottom = styled.div`
+  // padding-bottom: 5px;
 `;
 
 export default ChatRoom;
