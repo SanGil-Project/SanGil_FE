@@ -8,8 +8,8 @@ import { Grid, Text, Button, Input } from "../elements/element";
 
 // const sockJs = new SockJS("https://ehjeong.shop/ws-stomp"); // 서버주소/ws-stomp
 // const sockJs = new SockJS("http://15.164.232.187:8080/ws-stomp"); // 서버주소/ws-stomp
-// const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 서버주소/ws-stomp
-const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 서버주소/ws-stomp
+const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 서버주소/ws-stomp
+// const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 서버주소/ws-stomp
 const stomp = Stomp.over(sockJs);
 
 const ChatInput = (props) => {
@@ -46,8 +46,8 @@ const ChatInput = (props) => {
           { token: token },
           JSON.stringify(chatData)
         );
-        console.log(stomp.ws.readyState);
-        console.log(chatData);
+        // console.log(stomp.ws.readyState);
+        // console.log(chatData);
         // dispatch(chatActions.sendChat(chatData));
         setChat("");
       });
@@ -70,24 +70,27 @@ const ChatInput = (props) => {
 
   return (
     <React.Fragment>
-      <Grid
-        bg="#fff"
-        height="48px"
-        border="1px solid #C4C4C4"
-        radius="12px"
-        padding="15px 13px"
-        flexRow
-      >
-        <Input
-          width="100%"
-          border="none"
-          margin="0 5.5px"
-          placeholder="메시지를 입력하세요."
-          _onChange={onChange}
-          value={chat}
-          onSubmit={onSend}
-          is_submit
-        />
+      <Grid isFlex>
+        <Grid
+          bg="#fff"
+          height="48px"
+          border="1px solid #C4C4C4"
+          radius="12px"
+          padding="15px 12.5px"
+          flexRow
+          margin="0 15px 0 0"
+        >
+          <Input
+            width="100%"
+            border="none"
+            margin="0"
+            placeholder="메시지를 입력하세요."
+            _onChange={onChange}
+            value={chat}
+            onSubmit={onSend}
+            is_submit
+          />
+        </Grid>
         <Button border="none" width="auto" _onClick={onSend}>
           {/* <Button border="none" width="auto"> */}
           <Text size="16px" bold="500" margin="0" color="#959595">
