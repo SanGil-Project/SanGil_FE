@@ -19,7 +19,7 @@ const instance = axios.create({
 });
 
 const sock = axios.create({
-  baseURL: "http://15.164.232.187:8080",
+  baseURL: "https://jinnn.shop",
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
@@ -74,7 +74,7 @@ export const api = {
       totalDistance: data.totalDistance,
       totalTime: data.totalTime,
     }),
-  deleteDB: (completedId) => instance.get(`/api/tracking/${completedId}`),
+  deleteDB: (completedId) => instance.delete(`/api/tracking/${completedId}`),
   getMytrack: (completedid) =>
     instance.get(`/api/tracking/detail/${completedid}`),
 
