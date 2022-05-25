@@ -5,10 +5,12 @@ import { api } from "../../shared/api";
 const IS_PAGENAME = "IS_PAGENAME";
 const SELECT_MARKER = "SELECT_MARKER";
 const SELECT_TIME = "SELECT_TIME";
+const FEED_LIKE = "FEED_LIKE";
 
 const isPagename = createAction(IS_PAGENAME, (pagename) => ({ pagename }));
 const selectMarker = createAction(SELECT_MARKER, (selectData) => ({ selectData }));
 const selectTime = createAction(SELECT_TIME, (selectTime) => ({ selectTime }));
+const feedLike = createAction(FEED_LIKE, (feed) => ({ feed }));
 
 const initialState = {
   selectTime: {
@@ -54,6 +56,25 @@ const selectTimeDB = (time = null, type) => {
   };
 };
 
+export const myfeedLikeDB = (feedId) => {
+  return function (dispatch, getState) {
+    api
+      .feedLike(feedId)
+      .then((res) => {
+        console.log("feedLike 성공 결과 ::", res.data);
+        dispatch(feedLike({
+            goodStatus: res.data.goodStatus,
+            goodCnt: res.data.goodCnt,
+            feedId,
+          })
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
 export default handleActions(
   {
     [IS_PAGENAME]: (state, action) => produce(state, (draft) => {
@@ -66,6 +87,10 @@ export default handleActions(
       console.log(action.payload);
       draft.selectTime = action.payload.selectTime;
     }),
+    [FEED_LIKE]: (state, action) => produce(state, (draft) => {
+      console.log(action.payload);
+      draft.myfeedLike = action.payload.feed;
+      }),
   },
   initialState
 );
@@ -73,7 +98,8 @@ export default handleActions(
 const actionCreators = {
   isPagename,
   selectMarkerDB,
-  selectTimeDB
+  selectTimeDB,
+  myfeedLikeDB,
 };
 
 export { actionCreators };
