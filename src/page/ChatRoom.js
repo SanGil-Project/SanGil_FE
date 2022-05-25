@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,17 +17,27 @@ const ChatRoom = (props) => {
   const menuColor = [false, true, false, false, false]; // 메뉴바 색
   const { chatRoomId } = useParams();
   const token = sessionStorage.getItem("token");
+  const nickname = sessionStorage.getItem("nickname");
   const _userInfo = useSelector((state) => state?.user?.userInfo);
-  // const chatList = useSelector((state) => state.chat?.chatList);
 
-  // console.log(chatRoomId, token, _userInfo);
+  const scrollRef = useRef();
+
+  // console.log(nickname, _userInfo.nickname);
 
   // const sockJs = new SockJS("http://13.125.232.76:8080/ws-stomp"); // 서버주소/ws-stomp
   // const sockJs = new SockJS("http://52.79.228.126:8080/ws-stomp"); // 서버주소/ws-stomp
   // const sockJs = new SockJS("http://15.164.232.187:8080/ws-stomp"); // 서버주소/ws-stomp
-  // const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 서버주소/ws-stomp
-  const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 서버주소/ws-stomp
+  const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 서버주소/ws-stomp
+  // const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 서버주소/ws-stomp
   const stomp = Stomp.over(sockJs);
+
+  // const sender = _userInfo?.nickname;
+
+  const enterChat = {
+    roomId: parseInt(chatRoomId),
+    sender: nickname,
+    type: 'ENTER',
+  }
 
   function ConnectSub(token) {
     try {
@@ -41,20 +51,17 @@ const ChatRoom = (props) => {
           console.log("받은 메세지 ::", content);
           // const writer = content.writer;
           if (content.length === 1) {
+            console.log("두번주나???????")
             dispatch(chatActions.sendChat(content));
           } else {
             dispatch(chatActions.getChatDB(content));
           }
         });
-        dispatch(chatActions.getChatDB(chatRoomId));
+        // dispatch(chatActions.getChatDB(chatRoomId));
         stomp.send(
           "/pub/chat/message",
           { token: token },
-          JSON.stringify({
-            roomId: parseInt(chatRoomId),
-            sender: _userInfo.nickname,
-            type: "ENTER",
-          })
+          JSON.stringify(enterChat)
         );
       });
     } catch (err) {
@@ -71,7 +78,8 @@ const ChatRoom = (props) => {
           },
         },
         () => {
-          stomp.unsubscribe(`/sub/chat/rooms/${chatRoomId}`);
+          // stomp.unsubscribe(`/sub/chat/rooms/${chatRoomId}`);
+          stomp.unsubscribe('sub-0');
         },
         { token: token }
       );
@@ -81,69 +89,40 @@ const ChatRoom = (props) => {
   }
 
   React.useEffect(() => {
-    // console.log(token);
+    console.log("채팅방 시작한다");
     dispatch(handleActions.isPagename(`${chatRoomId}번 채팅방`));
     ConnectSub(token);
+    // if (_userInfo) {
+    //   dispatch(handleActions.isPagename(`${chatRoomId}번 채팅방`));
+    //   ConnectSub(token);
+    // }
     return () => {
       DisConnectUnsub();
     };
   }, []);
-
-  const userInfo = {
-    userId: 1,
-    username: "정상준",
-    userImageUrl:
-      "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
-    userTitle: "홍길동",
-  };
-  // const participants = [
-  const chatList = [
-    {
-      nickname: "정상준",
-      userTitle: "홍길동",
-      userImageUrl:
-        "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
-      content: "내욘ㅇ애뇽냉222",
-    },
-    {
-      nickname: "박예슬",
-      userTitle: "등린이",
-      userImageUrl:
-        "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
-      content: "내욘ㅇ애뇽냉1111",
-    },
-    {
-      nickname: "정의현",
-      userTitle: "산길인맥왕",
-      userImageUrl:
-        "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
-      content: "내욘ㅇ애뇽냉4444",
-    },
-    {
-      nickname: "천누리",
-      userTitle: "아직 여기라고?",
-      userImageUrl:
-        "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png",
-      content: "내욘ㅇ애뇽냉3333",
-    },
-  ];
+  
+  const chatList = useSelector((state) => state?.chat?.chatList);
 
   return (
     <React.Fragment>
-      <Mobile>
         <ChatContainer>
           <Header />
           <ChatWrap>
-            <Grid padding="96px 14px 100px">
+            <Grid padding="96px 14px 200px">
+            <div ref={scrollRef}>
               {chatList?.map((chat, idx) => {
+                const time = chat.createdAt.split(" ");
+                const boxColor = chat.nickname === nickname ? "#9EE59C" : "#EBEBEB";
+                const img = chat.userImageUrl==="없음" ? "https://user-images.githubusercontent.com/91959791/168119302-948f0dcf-8165-47af-8b6b-2f90f74aca06.png" : chat.userImageUrl;
                 return (
                   <div key={idx}>
-                    <Grid flexRow margin="10px 0 0">
+                    <Grid flexRow margin="8px 0">
                       <Image
                         type="circle"
                         width="32px"
+                        height="32px"
                         margin="0 14px 0 0"
-                        src={chat.userImageUrl}
+                        src={img}
                       />
                       <Grid>
                         <Text margin="0" size="12px" bold="500">
@@ -151,27 +130,28 @@ const ChatRoom = (props) => {
                         </Text>
                       </Grid>
                     </Grid>
-                    <Grid padding="5px 0 5px 46px" flexRow justify>
+                    <Grid padding="0 0 8px 46px" flexRow justify>
                       <Grid
                         padding="16px"
-                        bg="#EBEBEB"
-                        radius="30px"
+                        bg={boxColor}
+                        radius="10px"
                         width="auto"
                       >
-                        <Text margin="0">{chat.content} </Text>
+                        <Text margin="0" bold="500" size="16px">{chat.message} </Text>
                       </Grid>
                       <Text
-                        margin="35px 0 0"
+                        margin="35px 2px 0"
                         size="12px"
                         bold="500"
                         color="#A4A4A4"
                       >
-                        {chat.createdAt}
+                        {time[1]}
                       </Text>
                     </Grid>
                   </div>
                 );
               })}
+              </div>
             </Grid>
           </ChatWrap>
           <ChatInputWrap>
@@ -184,65 +164,6 @@ const ChatRoom = (props) => {
             </Grid>
           </MenubarContainer>
         </ChatContainer>
-      </Mobile>
-
-      <Desktop>
-        {/* <ChatContainer>
-        <Header />
-        <ChatWrap>
-          <Grid padding="96px 14px 100px">
-            <Grid flexRow margin="10px 0 0">
-              <Image
-                type="circle"
-                width="32px"
-                margin="0 14px 0 0"
-                src={participants[2].userImageUrl}/>
-              <Grid>
-                <Text margin="0" size="12px" bold="500">[{participants[2].userTitle}] {participants[2].username}</Text>
-              </Grid>
-            </Grid>
-            <Grid padding="5px 0 5px 46px" flexRow justify>
-              <Grid padding="16px" bg="#EBEBEB" radius="30px" width="auto">
-                <Text margin="0">등산에 필요한 물품은 각자 알아서 </Text>
-              </Grid>
-            </Grid>
-            <Grid padding="5px 0 5px 46px" flexRow justify>
-              <Grid padding="16px" bg="#EBEBEB" radius="30px" width="auto">
-                <Text margin="0">가져오는 걸로 해요 !!! </Text>
-              </Grid>
-              <Text margin="35px 0 0" size="12px" bold="500" color="#A4A4A4">오전 8:20</Text>
-            </Grid>
-
-
-            <Grid flexRow margin="10px 0 0">
-              <Image
-                type="circle"
-                width="32px"
-                margin="0 14px 0 0"
-                src={userInfo.userImageUrl}/>
-              <Grid>
-                <Text margin="0" size="12px" bold="500">[{userInfo.userTitle}] {userInfo.username}</Text>
-              </Grid>
-            </Grid>
-            <Grid padding="5px 0 5px 46px" flexRow justify>
-              <Grid padding="16px" bg="#68DC68" radius="30px" width="auto">
-                <Text margin="0">등산에 필요한 물품은 각자 알아서 </Text>
-              </Grid>
-              <Text margin="35px 0 0" size="12px" bold="500" color="#A4A4A4">오전 8:20</Text>
-            </Grid>
-          </Grid>
-        </ChatWrap>
-        
-        
-
-        <MenubarContainer>
-          <Grid height="88px" maxWidth="500px" margin="auto">
-            <Menubar menuColor={menuColor}/>
-          </Grid>
-        </MenubarContainer>
-
-      </ChatContainer> */}
-      </Desktop>
     </React.Fragment>
   );
 };
@@ -253,7 +174,7 @@ const ChatContainer = styled.div`
   height: 100vh;
   max-width: 500px;
   margin: auto;
-  overflow: hidden;
+  overflow: scroll;
 `;
 
 const ChatWrap = styled.div`
@@ -269,7 +190,7 @@ const ChatInputWrap = styled.div`
   width: 100%;
   max-width: 500px;
   box-sizing: border-box;
-  padding: 20px 15px 27px;
+  padding: 20px 14.5px 27px;
   background-color: #fff;
 `;
 
