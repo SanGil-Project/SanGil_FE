@@ -258,10 +258,11 @@ const Main = (props) => {
 
                     <Grid height="20px" isFlex width="194px" margin="0">
                       <Text bold="300" size="1.2rem">
-                        <BsStarFill color="#43CA3B" /> {el.starAvr}
+                        <BsStarFill color="#43CA3B" />{" "}
+                        {el.starAvr ? el.starAvr : 0.0}
                       </Text>
                       <Text bold="400" size="1.2rem" color="#43CA3B">
-                        {el.distance}km
+                        {parseFloat(el.distance).toFixed(2)}km
                       </Text>
                     </Grid>
                   </Grid>

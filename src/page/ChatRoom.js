@@ -22,12 +22,11 @@ const ChatRoom = (props) => {
 
   // console.log(chatRoomId, token, _userInfo);
 
-
   // const sockJs = new SockJS("http://13.125.232.76:8080/ws-stomp"); // 서버주소/ws-stomp
   // const sockJs = new SockJS("http://52.79.228.126:8080/ws-stomp"); // 서버주소/ws-stomp
   // const sockJs = new SockJS("http://15.164.232.187:8080/ws-stomp"); // 서버주소/ws-stomp
-  const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 서버주소/ws-stomp
-  // const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 서버주소/ws-stomp
+  // const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 서버주소/ws-stomp
+  const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 서버주소/ws-stomp
   const stomp = Stomp.over(sockJs);
 
   function ConnectSub(token) {
@@ -36,25 +35,28 @@ const ChatRoom = (props) => {
       stomp.connect({}, () => {
         console.log("STOMP Connection");
 
-        stomp.subscribe(`/sub/chat/rooms/${chatRoomId}`,
-            (response) => {
-              console.log("subscribe callback ::", response);
-              const content = JSON.parse(response.body);
-              console.log("받은 메세지 ::", content);
-              // const writer = content.writer;
-              if (content.length === 1){
-                dispatch(chatActions.sendChat(content));
-              }else {
-                dispatch(chatActions.getChatDB(content));
-              }
-            },
-          );
-          dispatch(chatActions.getChatDB(chatRoomId));
-          stomp.send(
-            "/pub/chat/message", { token: token }, JSON.stringify({
-              roomId: parseInt(chatRoomId), sender: _userInfo.nickname, type: 'ENTER',})
-          )
+        stomp.subscribe(`/sub/chat/rooms/${chatRoomId}`, (response) => {
+          console.log("subscribe callback ::", response);
+          const content = JSON.parse(response.body);
+          console.log("받은 메세지 ::", content);
+          // const writer = content.writer;
+          if (content.length === 1) {
+            dispatch(chatActions.sendChat(content));
+          } else {
+            dispatch(chatActions.getChatDB(content));
+          }
         });
+        dispatch(chatActions.getChatDB(chatRoomId));
+        stomp.send(
+          "/pub/chat/message",
+          { token: token },
+          JSON.stringify({
+            roomId: parseInt(chatRoomId),
+            sender: _userInfo.nickname,
+            type: "ENTER",
+          })
+        );
+      });
     } catch (err) {
       console.log("connect, subscribe error!! ::", err.response);
     }

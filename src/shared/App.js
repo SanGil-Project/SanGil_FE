@@ -23,7 +23,7 @@ import {
   ChatRoom,
   Mytrack,
   DetailCmt,
-  FeedCmt,
+  FeedDetail,
   MyFeed,
 } from "../page/page";
 
@@ -62,7 +62,7 @@ function App() {
               <Route path="/tracker" element={<Tracker />} />
               <Route path="/mytrack/:completedId" element={<Mytrack />} />
               <Route path="/feed" element={<Feed />} />
-              <Route path="/feedcmt/:feedId" element={<FeedCmt />} />
+              <Route path="/feeddetail/:feedId" element={<FeedDetail />} />
               <Route path="/feedwrite" element={<FeedWrite />} />
               <Route path="/chatroom/:chatRoomId" element={<ChatRoom />} />
             </Routes>
