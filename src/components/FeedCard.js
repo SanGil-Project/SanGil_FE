@@ -73,7 +73,7 @@ const FeedCard = (props) => {
       <Image
         border="1px solid #E6E6E8"
         width="100%"
-        height="500px"
+        height="400px"
         objectFit="scale-down"
         borderRadius="4px"
         src={el.feedImgUrl}

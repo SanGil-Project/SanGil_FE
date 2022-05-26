@@ -3,14 +3,16 @@ import styled from "styled-components";
 import _ from "lodash";
 
 const HorizontalScroll = (props) => {
+  const { margin } = props;
   return (
-    <OuterBox>
+    <OuterBox margin={margin}>
       <InnerBox>{props.children}</InnerBox>
     </OuterBox>
   );
 };
 
 const OuterBox = styled.div`
+  ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
   overflow-x: scroll;
   white-space: nowrap;
   &::-webkit-scrollbar {

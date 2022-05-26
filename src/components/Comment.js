@@ -1,7 +1,6 @@
 import React from "react";
 import { Star } from "../components/component";
 import { Grid, Text, Button } from "../elements/element";
-import { Desktop, Mobile } from "../shared/responsive";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as mountAction } from "../redux/modules/mountain";
 
@@ -26,9 +25,6 @@ const Comment = (props) => {
 
   return (
     <>
-      <Mobile></Mobile>
-
-      <Desktop>
         <div>
           <Grid margin="25px auto 0 auto">
             <Grid maxWidth="93.23%" margin="0 auto 0 auto" height="18px" isFlex>
@@ -104,7 +100,6 @@ const Comment = (props) => {
             />
           </Grid>
         </div>
-      </Desktop>
     </>
   );
 };

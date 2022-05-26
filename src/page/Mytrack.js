@@ -3,7 +3,6 @@ import styled from "styled-components";
 import KakaoMap from "../components/KakaoMap";
 import { Grid, Text } from "../elements/element";
 import { Header } from "../components/component";
-import { Desktop, Mobile } from "../shared/responsive";
 import { actionCreators as trackActions } from "../redux/modules/tracker";
 import { actionCreators as handleActions } from "../redux/modules/handle";
 import { useDispatch, useSelector } from "react-redux";

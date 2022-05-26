@@ -1,6 +1,5 @@
 import React from "react";
 import { Grid, Button, Icon, Image, Text } from "../elements/element";
-import { Desktop, Mobile } from "../shared/responsive";
 import { isLogInDB } from "../redux/modules/user";
 import { useLocation, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";

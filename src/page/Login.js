@@ -43,7 +43,7 @@ const Login = (props) => {
               bg="#FFDC00"
               hover
             >
-              <Grid margin="0 auto" width="60%" flex="flex">
+              <Grid margin="0 auto" width="220px" flex="flex">
                 <Image
                   width="27px"
                   height="24px"
@@ -68,7 +68,7 @@ const Login = (props) => {
               bg="#1EC800"
               hover
             >
-              <Grid margin="0 auto" width="60%" flex="flex">
+              <Grid margin="0 auto" width="220px" flex="flex">
                 <Image
                   width="27px"
                   height="24px"
@@ -82,7 +82,7 @@ const Login = (props) => {
           </A>
           <A href={GOOGLE_AUTH_URL}>
             <Grid height="56px" margin="0" radius="8px" bg="black">
-              <Grid margin="0 auto" width="60%" flex="flex" hover>
+              <Grid margin="0 auto" width="220px" flex="flex" hover>
                 <Google viewBox="0 0 40 40" fill="none">
                   <path
                     d="M32.5 20.3001C32.5 19.4223 32.423 18.5889 32.291 17.7778H19.8638V22.7889H26.9792C26.6603 24.4334 25.7255 25.8223 24.3398 26.7667V30.1001H28.5849C31.0703 27.7778 32.5 24.3556 32.5 20.3001Z"

@@ -62,12 +62,12 @@ const Main = (props) => {
     <>
       <MainContainer>
         <Header />
-        <Grid padding="74px 7px 0 7px" overflowY="scroll">
+        <Grid padding="74px 7px 88px 7px" overflowY="scroll" height="100vh">
           <Grid width="93.23%" height="120px" margin="20px auto">
             <Banner />
           </Grid>
           <Grid height="453px" margin="10px auto 75px auto">
-            <Grid margin="0 7px" height="24px" flex="flex">
+            <Grid padding="0 7px" height="24px" flex="flex">
               <Image
                 width="24px"
                 height="24px"
@@ -87,7 +87,7 @@ const Main = (props) => {
 
             <Card
               border="2px solid #B3B3B3"
-              width="93.23%px"
+              width="93.23%"
               height="200px"
               margin="34px auto 0 auto"
               bgImg={mountain && mountain[0]?.mountainImgUrl}
@@ -137,7 +137,7 @@ const Main = (props) => {
               </Text>
             </Grid>
 
-            <HorizontalScroll>
+            <HorizontalScroll margin="0 7px">
               {mountain &&
                 mountain
                   .filter((el, idx) => idx !== 0)
@@ -226,7 +226,7 @@ const Main = (props) => {
                 주변 산길
               </Text>
             </Grid>
-            <HorizontalScroll>
+            <HorizontalScroll margin="0 7px">
               {around?.map((el, idx) => (
                 <div key={idx}>
                   <Card
@@ -313,7 +313,7 @@ const Main = (props) => {
                 <Icon type="arrow" width="5px" height="8px" />
               </Grid>
             </Grid>
-            <HorizontalScroll>
+            <HorizontalScroll margin="0 7px">
               {feedList?.map((el, idx) => (
                 <div key={idx} style={{ margin: "10px 0 10px 0" }}>
                   <Card
@@ -463,7 +463,6 @@ const MainContainer = styled.div`
   background-color: #fff;
   width: 100%;
   height: 100%;
-  padding: 0 0 100px 0;
   min-width: 414px;
   max-width: 500px;
   margin: auto;
@@ -485,4 +484,6 @@ const TrackBtn = styled.div`
   ${(props) => (props.smallSize ? `calc(0vw + 14px);` : `calc(50% - 236px);`)}
   bottom: 113px;
 `;
+
+
 export default Main;

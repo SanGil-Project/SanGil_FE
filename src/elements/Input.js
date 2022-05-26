@@ -6,7 +6,6 @@ const Input = (props) => {
   const {
     width,
     height,
-    name,
     multiLine,
     type,
     border,
@@ -30,6 +29,7 @@ const Input = (props) => {
     hover,
     textAlign,
     color,
+    ref,
   } = props;
 
   const styles = {
@@ -76,6 +76,7 @@ const Input = (props) => {
           type={type}
           onChange={_onChange}
           defaultValue={defaultValue}
+          ref={ref}
         />
       </Grid>
     );
@@ -137,7 +138,7 @@ Input.defaultProps = {
   border: "1px solid #212121",
   padding: "12px 4px",
   multiLine: false,
-  dir: "ltr"
+  dir: "ltr",
 };
 
 const InfoInput = styled.input`
@@ -154,8 +155,8 @@ const InfoInput = styled.input`
   ${(props) => (props.radius ? `border-radius: ${props.radius};` : null)}
   ${(props) => (props.bg ? `background-color: ${props.bg};` : null)}
   ${(props) => (props.display ? `display: ${props.display};` : null)}
-  ${(props) => props.hover ? `&:hover { cursor: pointer; };` : null}
-  ${(props) => props.textAlign ? `text-align: ${props.textAlign};` : null}
+  ${(props) => (props.hover ? `&:hover { cursor: pointer; };` : null)}
+  ${(props) => (props.textAlign ? `text-align: ${props.textAlign};` : null)}
 `;
 
 const ElTextarea = styled.textarea`

@@ -70,6 +70,7 @@ const Tracker = (props) => {
         },
         (err) => {
           alert("현재 위치를 표시할 수 없어요");
+          navigate("/main", { replace: true });
         },
         { enableHighAccuracy: true }
       );
@@ -99,6 +100,7 @@ const Tracker = (props) => {
           },
           (err) => {
             alert("현재 위치를 표시할 수 없어요");
+            navigate("/main", { replace: true });
           },
           { enableHighAccuracy: true }
         );
