@@ -39,7 +39,6 @@ export const searchNameDB = (keyword, pageNum) => {
     api
       .searchName(keyword, pageNum)
       .then((res) => {
-        console.log(res.data);
         dispatch(getSearch(res.data));
       })
       .catch((err) => {
@@ -66,7 +65,6 @@ export const endClimbDB = (completedId, data) => {
     api
       .endClimb(completedId, data)
       .then((res) => {
-        console.log(res);
         dispatch(endClimb(res.data));
       })
       .catch((err) => {
@@ -80,7 +78,6 @@ export const deleteDB = (completedId) => {
     api
       .deleteDB(completedId)
       .then((res) => {
-        console.log(res);
       })
       .catch((err) => {
         console.log(err);
@@ -127,7 +124,6 @@ const getCompletedDB = (completedId) => {
     api
       .getMytrack(completedId)
       .then((res) => {
-        console.log("(getMytrack) 성공 후 데이터 ::", res);
         dispatch(getCompleted(res.data));
         dispatch(setPath(res.data.trackingList));
       })

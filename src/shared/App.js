@@ -1,5 +1,5 @@
 import "./App.css";
-import "../assets/fonts/font.css"
+import "../assets/fonts/font.css";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import background from "../assets/images/cover.png";
 import { history } from "../redux/configureStore";
@@ -8,6 +8,7 @@ import styled from "styled-components";
 import MobileFrame from "./../components/common/MobileFrame";
 // social login
 import { KakaoLogin, GoogleLogin, NaverLogin } from "../components/component";
+import { Image } from "../elements/element";
 import {
   Login,
   Main,
@@ -84,8 +85,7 @@ const Wrap = styled.div`
 
 const Fullscreen = styled.div`
   background-image: url(${background});
-  background-size: cover;
-  /* position: fixed; */
+  background-size: 100vw 100vh;
   background-repeat: no-repeat;
   margin: 0;
   display: flex;

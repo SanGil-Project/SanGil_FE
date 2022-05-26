@@ -109,7 +109,7 @@ const Main = (props) => {
               <Icon
                 type="like"
                 width="18px"
-                margin="0 0 -190px 355px"
+                margin="0 0 -190px 440px"
                 fill={mountain && mountain[0]?.bookmark ? "#43ca3b" : "#c4c4c4"}
                 _onClick={() => {
                   bookmark(mountain[0]?.mountainId, "mountain");

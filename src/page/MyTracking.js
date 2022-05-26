@@ -46,7 +46,6 @@ const Tracker = (props) => {
   const releaseWakeLock = async () => {
     try {
       wakeLock?.release();
-      console.log("Wake lock has been released.");
     } catch (err) {
       console.log(err);
     }

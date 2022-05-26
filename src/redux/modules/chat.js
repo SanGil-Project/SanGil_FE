@@ -25,10 +25,7 @@ const addChatRoomDB = (title, partyId) => {
     api
       .addChatRoom(title, partyId)
       .then((res) => {
-        console.log("(addChatRoom) 성공 데이터 확인 ::", res.data);
         const roomInfo = {
-          // roomId: res.data.roomId,
-          // partyId: partyId,
           entrance: [userInfo.nickname],
         };
         dispatch(addChatRoom(roomInfo));
@@ -65,16 +62,6 @@ const getChatDB = (content) => {
     
     dispatch(getChat(content));
     return;
-
-    // api
-    //   .enterChatRoom(chatRoomId)
-    //   .then((res) => {
-    //     console.log("(getChatList) 성공 데이터 확인 ::", res.data);
-    //     dispatch(getChat(res.data));
-    //   })
-    //   .catch((err) => {
-    //     console.log("(getChatList) 실패 ::", err);
-    //   });
   }
 }
 

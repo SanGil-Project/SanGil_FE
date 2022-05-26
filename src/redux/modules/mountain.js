@@ -55,7 +55,7 @@ const getTopMntDB = () => {
     api
       .getTopList()
       .then((res) => {
-        console.log("(getTopList) 성공 데이터 확인 ::", res);
+        // console.log("(getTopList) 성공 데이터 확인 ::", res);
         dispatch(getTopMnt(res.data));
       })
       .catch((err) => {

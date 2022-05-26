@@ -33,7 +33,6 @@ const getMyPartyDB = () => {
     api
       .getMyParty()
       .then((res) => {
-        console.log("(getMyParty) 성공 데이터 확인 ::", res);
         dispatch(getMyParty(res.data));
       })
       .catch((err) => {
@@ -48,7 +47,6 @@ const getPartyDB = (pageNum) => {
     api
       .getPartyList(pageNum)
       .then((res) => {
-        console.log("(getPartyList) 성공 데이터 확인 ::", res);
         dispatch(getParty(res.data));
       })
       .catch((err) => {
@@ -63,7 +61,6 @@ const getKeywordPartyDB = (pageNum, keyword) => {
     api
       .searchParty(keyword, pageNum)
       .then((res) => {
-        console.log("(searchParty) 성공 데이터 확인 ::", res);
         dispatch(getParty(res.data));
       })
       .catch((err) => {
@@ -78,12 +75,6 @@ const getOnePartyDB = (partyId = null) => {
     api
       .getOneParty(partyId)
       .then((res) => {
-        console.log("(getOneParty) 성공 데이터 확인 ::", res);
-        // const partyDB = {
-        //   partyList: [...partyList],
-        //   curtParty: res.data,
-        // };
-        // dispatch(getParty(partyDB));
         dispatch(getOneParty(res.data));
       })
       .catch((err) => {
@@ -97,7 +88,6 @@ const addPartyDB = (party = {}) => {
     api
       .addParty(party)
       .then((res) => {
-        console.log("(addParty) 성공 데이터 확인 ::", res);
         dispatch(addParty(res.data));
         dispatch(chatActions.addChatRoomDB(party.title, res.data.partyId)); // 작성할때 해당 partyId 채팅방 만들기
       })
@@ -113,9 +103,8 @@ const editPartyDB = (partyId = null, party = {}) => {
     api
       .editParty(partyId, party)
       .then((res) => {
-        console.log("(editParty) 성공 데이터 확인 ::", res);
+
         dispatch(editParty(res.data));
-        // dispatch(editParty(partyId, { ...party }));
       })
       .catch((err) => {
         console.log("(editParty) 실패 ::", err);
@@ -135,13 +124,11 @@ const attendPartyDB = (partyId = null) => {
     api
       .attendParty(partyId)
       .then((res) => {
-        console.log("(attendParty) 성공 데이터 확인 ::", res);
         if (res.data.msg === "true") {
           dispatch(attendParty(user_info));
         } else {
           dispatch(cancelParty(user_info));
         }
-        // dispatch(editParty(partyId, { ...party }));
       })
       .catch((err) => {
         console.log("(attendParty) 실패 ::", err);
@@ -154,7 +141,6 @@ const deletePartyDB = (partyId = null) => {
     api
       .delParty(partyId)
       .then((res) => {
-        console.log("(delParty) 성공 데이터 확인 ::", res);
         dispatch(deleteParty(partyId));
       })
       .catch((err) => {

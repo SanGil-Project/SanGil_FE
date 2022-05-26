@@ -54,11 +54,6 @@ const MyFeed = (props) => {
     dispatch(userActions.myFeedDB(curPage));
   }, [curPage]);
 
-  // const moveDetail = (partyId, completed, check) => {
-  //   console.log(check);
-  //   navigate(`/partydetail/${partyId}`);
-  // }
-
   return (
     <React.Fragment>
         <FeedContainer>
