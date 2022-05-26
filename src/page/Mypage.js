@@ -30,7 +30,7 @@ const Mypage = (props) => {
   const myTrackList = useSelector((state) => state.user.trackList?.completedList);
   const selectMarker = useSelector((state) => state.handle.selectMarker?.id);
   const completedList = useSelector((state) => state.user.myMountain?.completedList);
-  const myFeedList = useSelector((state) => state?.user?.feedList);
+  const myFeedList = useSelector((state) => state?.user?.feedList?.feedList);
   const myBookmarkList = useSelector((state) => state.user.mountList);
   const menuColor = [false, false, false, false, true]; // 메뉴바 색
   const img = (userInfo?.userImageUrl !== "없음") ? userInfo?.userImageUrl : "https://user-images.githubusercontent.com/91959791/168119302-948f0dcf-8165-47af-8b6b-2f90f74aca06.png";
@@ -209,7 +209,6 @@ const Mypage = (props) => {
               </Grid>
                 <HorizontalScroll>
                   {myFeedList?.map((cur, idx) => {
-                    const good = cur.goodStatus ? "false" : "0.2"
                     return (
                       <MyFeedList key={idx} data={cur}/>
                     );}

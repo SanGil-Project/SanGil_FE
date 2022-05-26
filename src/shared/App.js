@@ -1,4 +1,5 @@
 import "./App.css";
+import "../assets/fonts/font.css"
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import background from "../assets/images/cover.png";
 import { history } from "../redux/configureStore";
