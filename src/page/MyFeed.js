@@ -1,14 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { actionCreators as handleActions } from "../redux/modules/handle";
 
-import {
-  Menubar,
-  Header,
-} from "../components/component";
+import { Menubar, Header } from "../components/component";
 
 import { Grid, Text, Icon, Button, Input } from "../elements/element";
 import { useNavigate } from "react-router";
@@ -30,27 +27,31 @@ const MyFeed = (props) => {
   React.useEffect(() => {
     dispatch(handleActions.isPagename(""));
     const observer = new IntersectionObserver(
-      entries => {
+      (entries) => {
         if (entries[0].isIntersecting) {
           setCurPage((pre) => pre + 1);
         }
       },
-      { threshold: 0.25, rootMargin: '80px' },
+      { threshold: 0.25, rootMargin: "80px" }
     );
     bottomObserver.current = observer;
   }, []);
 
-	React.useEffect(() => {
-		const observer = bottomObserver.current;
-		if (bottom) {
-			observer.observe(bottom);
-		}
-		return () => {
-			if (bottom) {
-				observer.unobserve(bottom);
-			}
-		};
-	}, [bottom]);
+  React.useEffect(() => {
+    const observer = bottomObserver.current;
+    if (bottom) {
+      observer.observe(bottom);
+    }
+    return () => {
+      if (bottom) {
+        observer.unobserve(bottom);
+      }
+    };
+  }, [bottom]);
+
+  const goDetail = (d) => {
+    navigate(`/feeddetail/${d.feedId}`);
+  };
 
   React.useEffect(() => {
     dispatch(userActions.myFeedDB(curPage));
@@ -58,33 +59,35 @@ const MyFeed = (props) => {
 
   return (
     <React.Fragment>
-        <FeedContainer>
-          <Header />
-          <FeedWrap>
-            <Grid padding="70px 3px 100px" flexRow wrap="wrap" justify="left">
-              {feedList?.map((d, idx) => {
-                return (
-                  <Grid 
-                    key={idx} 
-                    width="158px" 
-                    height="158px" 
-                    bgImg={d.feedImgUrl} 
-                    bgSize="cover"
-                    margin="0 3px 6px"
-                    border="1px solid #e1e1e1">
-                  </Grid>
-                );
-              })}
-            </Grid>
-            {totalPage > curPage ? <div ref={setBottom}></div> : null}
-          </FeedWrap>
+      <FeedContainer>
+        <Header />
+        <FeedWrap>
+          <Grid padding="70px 3px 100px" flexRow wrap="wrap" justify="left">
+            {feedList?.map((d, idx) => {
+              return (
+                <Grid
+                  key={idx}
+                  width="158px"
+                  height="158px"
+                  bgImg={d.feedImgUrl}
+                  bgSize="cover"
+                  margin="0 3px 6px"
+                  border="1px solid #e1e1e1"
+                  hover
+                  _onClick={() => goDetail(d)}
+                ></Grid>
+              );
+            })}
+          </Grid>
+          {totalPage > curPage ? <div ref={setBottom}></div> : null}
+        </FeedWrap>
 
-          <MenubarContainer>
-            <Grid height="88px" maxWidth="500px" margin="auto">
-              <Menubar menuColor={menuColor} />
-            </Grid>
-          </MenubarContainer>
-        </FeedContainer>
+        <MenubarContainer>
+          <Grid height="88px" maxWidth="500px" margin="auto">
+            <Menubar menuColor={menuColor} />
+          </Grid>
+        </MenubarContainer>
+      </FeedContainer>
     </React.Fragment>
   );
 };
@@ -112,6 +115,5 @@ const MenubarContainer = styled.div`
   right: 0;
   z-index: 10;
 `;
-
 
 export default MyFeed;

@@ -22,20 +22,20 @@ const MyFeedList = (props) => {
     setLikeState(!likeState);
   };
 
-  // const goCmt = () => {
-  //   navigate(`/feedcmt/${el.feedId}`);
-  // };
+  const goDetail = () => {
+    navigate(`/feeddetail/${data.feedId}`);
+  };
 
   return (
     <React.Fragment>
-      <Grid 
-        // hover
-        width="auto" 
-        margin="0 10px 0 0" 
-        // _onClick={()=>{moveFeedDetail(cur.feedId)}}
-        >
-        <Grid hover>
-          <Card width="150px" height="150px" margin="0" shadow="0px 1px 4px rgba(0, 0, 0, 0.1)">
+      <Grid width="auto" margin="0 10px 0 0">
+        <Grid hover _onClick={goDetail}>
+          <Card
+            width="150px"
+            height="150px"
+            margin="0"
+            shadow="0px 1px 4px rgba(0, 0, 0, 0.1)"
+          >
             <Image
               width="150px"
               height="150px"
@@ -46,19 +46,18 @@ const MyFeedList = (props) => {
           </Card>
         </Grid>
         <Grid margin="4px" flexRow justify="left">
-          <Grid
-            width="auto"
-            _onClick={() => like(data.feedId)}>
-            <Icon 
+          <Grid width="auto" _onClick={() => like(data.feedId)}>
+            <Icon
               fillOpacity={likeState ? "1" : "0.2"}
-              type="mypageFeedLike" 
-              width="13px" 
-              height="12px" 
+              type="mypageFeedLike"
+              width="13px"
+              height="12px"
               margin="0 auto"
-              />
-
+            />
           </Grid>
-          <Text margin="0 4px" size="12px" bold="500" color="#43CA3B">{likeCnt}</Text>
+          <Text margin="0 4px" size="12px" bold="500" color="#43CA3B">
+            {likeCnt}
+          </Text>
         </Grid>
       </Grid>
     </React.Fragment>
