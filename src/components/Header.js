@@ -35,8 +35,7 @@ const Header = () => {
           zindex="100"
           borderBottom="1px solid #DEDEDE"
         >
-          <Grid width="auto" margin="0 auto" isFlex>
-          <Grid maxWidth="280px" margin="0 0 0 39.2%" isFlex>
+          <Grid maxWidth="280px" margin="0 auto" flexRow>
             <Grid
               maxWidth="89px"
               height="34px"
@@ -53,7 +52,6 @@ const Header = () => {
               />
             </Grid>
           </Grid>
-        </Grid>
       </Grid>
     </>
     );
@@ -92,7 +90,7 @@ const Header = () => {
                 <Image
                   width="auto"
                   height="auto"
-                  margin="5px 0 0"
+                  margin="0 5% 0 0"
                   src="https://user-images.githubusercontent.com/91959791/168339851-d18da908-8213-49a7-a365-9cad6a0e862e.png"
                 />
                 )}
