@@ -22,10 +22,10 @@ const Tracker = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const _distance = useSelector((state) => state.tracker.distance);
+  const mountainImg = useSelector((state) => state.tracker.mountainImg);
   const polylinePath = useSelector(
     (state) => state.tracker?.polylinePath.polylinePath
   );
-
   const [myLoca, setMyLoca] = useState({ lat: "", lng: "" });
   const [distance, setDistance] = useState({ distanceM: 0.0, distanceK: 0.0 });
   const [time, setTime] = useState({
@@ -47,7 +47,7 @@ const Tracker = (props) => {
   const releaseWakeLock = async () => {
     if ("wakeLock" in navigator) {
       try {
-        wakeLock.release();
+        wakeLock?.release();
         console.log("Wake lock has been released.");
       } catch (err) {
         console.log(err);
@@ -102,6 +102,7 @@ const Tracker = (props) => {
         );
       }
     }, 3000);
+    console.log(distance.distanceK);
     return () => clearTimeout(path.current);
   }, [myLoca]);
 
@@ -282,6 +283,7 @@ const Tracker = (props) => {
           setDistance={setDistance}
           distance={distance.distanceK}
           mountainId={mountainId}
+          mountainImg={mountainImg}
         />
       ) : null}
     </>

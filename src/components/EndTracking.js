@@ -14,6 +14,7 @@ const EndTracking = (props) => {
     setDistance,
     distance,
     mountainId,
+    mountainImg,
   } = props;
   const commentCheck = useSelector((state) => state.tracker.comment);
   const navigate = useNavigate();
@@ -53,7 +54,7 @@ const EndTracking = (props) => {
               height="157px"
               objectFit="cover"
               margin="0 auto"
-              src="http://cdn.iconsumer.or.kr/news/photo/202007/12408_15753_1231.jpg"
+              src={mountainImg}
             />
           </Grid>
           <Grid width="78.3%" margin="20px auto 0 auto" height="75px" isFlex>

@@ -8,7 +8,6 @@ import Stomp from "stompjs";
 import { actionCreators as chatActions } from "../redux/modules/chat";
 import { actionCreators as handleActions } from "../redux/modules/handle";
 import { Menubar, Header, ChatInput } from "../components/component";
-import { Desktop, Mobile } from "../shared/responsive";
 
 import { Grid, Text, Icon, Button, Input, Image } from "../elements/element";
 
@@ -36,8 +35,8 @@ const ChatRoom = (props) => {
   const enterChat = {
     roomId: parseInt(chatRoomId),
     sender: nickname,
-    type: 'ENTER',
-  }
+    type: "ENTER",
+  };
 
   function ConnectSub(token) {
     try {
@@ -51,11 +50,11 @@ const ChatRoom = (props) => {
           console.log("받은 메세지 ::", content);
           // const writer = content.writer;
           if (content.length === 1) {
-            console.log("두번주나???????")
+            console.log("두번주나???????");
             dispatch(chatActions.sendChat(content));
             scrollToBottom();
           } else {
-            console.log("여긴?")
+            console.log("여긴?");
             dispatch(chatActions.getChatDB(content));
             scrollToBottom();
           }
@@ -82,7 +81,7 @@ const ChatRoom = (props) => {
         },
         () => {
           // stomp.unsubscribe(`/sub/chat/rooms/${chatRoomId}`);
-          stomp.unsubscribe('sub-0');
+          stomp.unsubscribe("sub-0");
         },
         { token: token }
       );
@@ -109,71 +108,78 @@ const ChatRoom = (props) => {
   }, [enterChat]);
 
   const scrollToBottom = () => {
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
+    // scrollRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    scrollRef.current?.scrollIntoView({ block: "center" });
+  };
   const chatList = useSelector((state) => state?.chat?.chatList);
 
   return (
     <React.Fragment>
-        <ChatContainer>
-          <Header />
-          <ChatWrap>
-            <Grid padding="96px 14px 200px">
-              {chatList?.map((chat, idx) => {
-                const time = chat.createdAt.split(" ");
-                const boxColor = chat.nickname === nickname ? "#9EE59C" : "#EBEBEB";
-                const img = chat.userImageUrl==="없음" ? "https://user-images.githubusercontent.com/91959791/168119302-948f0dcf-8165-47af-8b6b-2f90f74aca06.png" : chat.userImageUrl;
-                return (
-                  <div key={idx}>
-                    <Grid flexRow margin="8px 0">
-                      <Image
-                        type="circle"
-                        width="32px"
-                        height="32px"
-                        margin="0 14px 0 0"
-                        src={img}
-                      />
-                      <Grid>
-                        <Text margin="0" size="12px" bold="500">
-                          [{chat.userTitle}] {chat.nickname}
-                        </Text>
-                      </Grid>
-                    </Grid>
-                    <Grid padding="0 0 8px 46px" flexRow justify>
-                      <Grid
-                        padding="16px"
-                        bg={boxColor}
-                        radius="10px"
-                        width="auto"
-                      >
-                        <Text margin="0" bold="500" size="16px">{chat.message} </Text>
-                      </Grid>
-                      <Text
-                        margin="35px 2px 0"
-                        size="12px"
-                        bold="500"
-                        color="#A4A4A4"
-                      >
-                        {time[1]}
+      <ChatContainer>
+        <Header />
+        <ChatWrap>
+          <Grid padding="96px 14px 200px">
+            {chatList?.map((chat, idx) => {
+              const time = chat.createdAt.split(" ");
+              const boxColor =
+                chat.nickname === nickname ? "#9EE59C" : "#EBEBEB";
+              const img =
+                chat.userImageUrl === "없음"
+                  ? "https://user-images.githubusercontent.com/91959791/168119302-948f0dcf-8165-47af-8b6b-2f90f74aca06.png"
+                  : chat.userImageUrl;
+              return (
+                <div key={idx}>
+                  <Grid flexRow margin="8px 0">
+                    <Image
+                      type="circle"
+                      width="32px"
+                      height="32px"
+                      margin="0 14px 0 0"
+                      src={img}
+                    />
+                    <Grid>
+                      <Text margin="0" size="12px" bold="500">
+                        [{chat.userTitle}] {chat.nickname}
                       </Text>
                     </Grid>
-                  </div>
-                );
-              })}
-              
-            <ChatBottom ref={scrollRef}></ChatBottom>
-            </Grid>
-          </ChatWrap>
-          <ChatInputWrap>
-            <ChatInput chatRoomId={chatRoomId} />
-          </ChatInputWrap>
+                  </Grid>
+                  <Grid padding="0 0 8px 46px" flexRow justify>
+                    <Grid
+                      padding="16px"
+                      bg={boxColor}
+                      radius="10px"
+                      width="auto"
+                    >
+                      <Text margin="0" bold="500" size="16px">
+                        {chat.message}{" "}
+                      </Text>
+                    </Grid>
+                    <Text
+                      margin="35px 2px 0"
+                      size="12px"
+                      bold="500"
+                      color="#A4A4A4"
+                    >
+                      {time[1]}
+                    </Text>
+                  </Grid>
+                </div>
+              );
+            })}
 
-          <MenubarContainer>
-            <Grid height="88px" maxWidth="500px" margin="auto">
-              <Menubar menuColor={menuColor} />
-            </Grid>
-          </MenubarContainer>
-        </ChatContainer>
+            <ChatBottom ref={scrollRef}></ChatBottom>
+          </Grid>
+        </ChatWrap>
+        <ChatInputWrap>
+          <ChatInput chatRoomId={chatRoomId} />
+        </ChatInputWrap>
+
+        <MenubarContainer>
+          <Grid height="88px" maxWidth="500px" margin="auto">
+            <Menubar menuColor={menuColor} />
+          </Grid>
+        </MenubarContainer>
+      </ChatContainer>
     </React.Fragment>
   );
 };

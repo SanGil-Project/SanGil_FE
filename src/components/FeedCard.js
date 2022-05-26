@@ -84,7 +84,7 @@ const FeedCard = (props) => {
             type="like"
             width="18px"
             height="18px"
-            fill={el.goodStatus ? "#e54353" : `#c4c4c4`}
+            fill={el.goodStatus ? "#43ca3b" : `#c4c4c4`}
             _onClick={() => like(el.feedId)}
           />
           <Text size="1.2rem" bold="500">

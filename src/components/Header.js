@@ -33,7 +33,7 @@ const Header = () => {
         zindex="100"
         borderBottom="1px solid #DEDEDE"
       >
-        <Grid width="460px" margin="0 auto" isFlex>
+        <Grid width="92%" margin="0 auto" isFlex>
           {noBack ? (
             <>
               <Grid maxWidth="280px" margin="0 0 0 39.2%" isFlex>
