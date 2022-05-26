@@ -38,6 +38,7 @@ const Grid = (props) => {
     _onScroll,
     color,
     wrap,
+    display,
   } = props;
   const styles = {
     bg,
@@ -73,6 +74,7 @@ const Grid = (props) => {
     color,
     flex,
     wrap,
+    display,
   };
 
   return (
@@ -89,6 +91,7 @@ Grid.defaultProps = {
 };
 
 const Box = styled.div`
+  ${(props) => (props.display ? `display: ${props.display};` : null)}
   box-sizing: border-box;
   width: ${(props) => `${props.width}`};
   height: ${(props) => `${props.height}`};

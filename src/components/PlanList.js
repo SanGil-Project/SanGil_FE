@@ -31,7 +31,7 @@ const PlanList = (props) => {
         />
         <Text bold="600" size="20px" color="#43CA3B" margin="0 5px 0 0" width="auto">{userInfo?.nickname}</Text>
         <Text bold="600" size="20px" margin="0" align="left">
-          님의 산길 일정
+          님의 임박한 산길 일정
         </Text>
       </Grid>
       <div>

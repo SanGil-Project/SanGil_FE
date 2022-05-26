@@ -6,11 +6,13 @@ const IS_PAGENAME = "IS_PAGENAME";
 const SELECT_MARKER = "SELECT_MARKER";
 const SELECT_TIME = "SELECT_TIME";
 const FEED_LIKE = "FEED_LIKE";
+const PARTY_BEFORE = "PARTY_BEFORE";
 
 const isPagename = createAction(IS_PAGENAME, (pagename) => ({ pagename }));
 const selectMarker = createAction(SELECT_MARKER, (selectData) => ({ selectData }));
 const selectTime = createAction(SELECT_TIME, (selectTime) => ({ selectTime }));
 const feedLike = createAction(FEED_LIKE, (feed) => ({ feed }));
+const partyBefore = createAction(PARTY_BEFORE, (party) => ({ party }));
 
 const initialState = {
   selectTime: {
@@ -55,7 +57,13 @@ const selectTimeDB = (time = null, type) => {
   };
 };
 
-export const myfeedLikeDB = (feedId) => {
+const partyBeforeDB = (party) => {
+  return function (dispatch, getState) {
+    dispatch(partyBefore(party));
+  };
+};
+
+const myfeedLikeDB = (feedId) => {
   return function (dispatch, getState) {
     api
       .feedLike(feedId)
@@ -73,6 +81,7 @@ export const myfeedLikeDB = (feedId) => {
   };
 };
 
+
 export default handleActions(
   {
     [IS_PAGENAME]: (state, action) => produce(state, (draft) => {
@@ -84,9 +93,12 @@ export default handleActions(
     [SELECT_TIME]: (state, action) => produce(state, (draft) => {
       draft.selectTime = action.payload.selectTime;
     }),
+    [PARTY_BEFORE]: (state, action) => produce(state, (draft) => {
+      draft.partyBefore = action.payload.party;
+    }),
     [FEED_LIKE]: (state, action) => produce(state, (draft) => {
       draft.myfeedLike = action.payload.feed;
-      }),
+    }),
   },
   initialState
 );
@@ -96,6 +108,7 @@ const actionCreators = {
   selectMarkerDB,
   selectTimeDB,
   myfeedLikeDB,
+  partyBeforeDB,
 };
 
 export { actionCreators };
