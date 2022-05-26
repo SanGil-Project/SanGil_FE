@@ -23,6 +23,14 @@ const Banner = () => {
           src={require("../assets/images/Banner_1.png")}
         />
       </Grid>
+      <Grid>
+        <Image
+          width="100%"
+          height="100px"
+          borderRadius="10px"
+          src={require("../assets/images/Banner_2.png")}
+        />
+      </Grid>
     </Slider>
   );
 };

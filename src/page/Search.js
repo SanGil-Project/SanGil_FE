@@ -26,7 +26,9 @@ const Search = (props) => {
   const searchData = useSelector((state) => state?.mountain?.searchList);
   const curtPageDB = useSelector((state) => state?.mountain?.searchCurrentPg);
   const totPageDB = useSelector((state) => state?.mountain?.searchTotalPg);
-  const selectMarker = useSelector((state) => state?.handle?.selectMarker?.index);
+  const selectMarker = useSelector(
+    (state) => state?.handle?.selectMarker?.index
+  );
   const listRef = useRef([]);
 
   const [input, setInput] = React.useState("");
@@ -211,7 +213,9 @@ const Search = (props) => {
                 </Grid>
               </>
             ) : (
-              <FullMap data={data} size="665px" />
+              <Grid padding="0 26px">
+                <FullMap data={data} size="500px" padding />
+              </Grid>
             )}
           </Grid>
           <Grid padding="14px 14px 100px" height="auto">

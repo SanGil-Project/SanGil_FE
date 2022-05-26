@@ -137,7 +137,7 @@ const Party = (props) => {
                 border="none"
                 padding="0"
                 margin="0 5.5px"
-                placeholder="검색 키워드 : 산이름, 지명, 모임제목"
+                placeholder="산이름, 지명, 모임제목"
                 _onChange={onChange}
                 value={searchKeyword}
                 onSubmit={search}

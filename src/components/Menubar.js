@@ -25,6 +25,7 @@ const Menubar = (props) => {
           hover
           _onClick={() => {
             navigate("/feed");
+            window.location.reload();
           }}
         >
           <Icon
@@ -50,6 +51,7 @@ const Menubar = (props) => {
           hover
           _onClick={() => {
             navigate("/party");
+            window.location.reload();
           }}
         >
           <Icon
@@ -100,6 +102,7 @@ const Menubar = (props) => {
           hover
           _onClick={() => {
             navigate("/search");
+            window.location.reload();
           }}
         >
           <Icon
@@ -125,6 +128,7 @@ const Menubar = (props) => {
           hover
           _onClick={() => {
             navigate("/mypage");
+            window.location.reload();
           }}
         >
           <Icon
