@@ -19,77 +19,91 @@ const Header = () => {
     }
   }, []);
 
+  console.log(isPagename);
   const url = location.pathname;
   const mainpage = ["/main", "/mypage", "/feed", "/party", "/search"];
   const noBack = mainpage.includes(url);
 
-  return (
-    <>
-      <Grid
-        maxWidth="500px"
-        height="64px"
-        bg="#FFFFFF"
-        position="fixed"
-        zindex="100"
-        borderBottom="1px solid #DEDEDE"
-      >
-        <Grid width="92%" margin="0 auto" isFlex>
-          {noBack ? (
-            <>
-              <Grid maxWidth="280px" margin="0 0 0 39.2%" isFlex>
-                <Grid
-                  maxWidth="89px"
-                  height="34px"
-                  lineHeight="34px"
-                  bg="#fff"
-                  fontSize="1.6rem"
-                  textAlign
-                >
-                  <Image
-                    width="auto"
-                    height="auto"
-                    margin="5px 0 0"
-                    src="https://user-images.githubusercontent.com/91959791/168339851-d18da908-8213-49a7-a365-9cad6a0e862e.png"
-                  />
-                </Grid>
-              </Grid>
-            </>
-          ) : (
-            <>
-              <Grid
+  if (noBack) {
+    return (
+      <>
+        <Grid
+          maxWidth="500px"
+          height="64px"
+          bg="#FFFFFF"
+          position="fixed"
+          zindex="100"
+          borderBottom="1px solid #DEDEDE"
+        >
+          <Grid width="auto" margin="0 auto" isFlex>
+          <Grid maxWidth="280px" margin="0 0 0 39.2%" isFlex>
+            <Grid
+              maxWidth="89px"
+              height="34px"
+              lineHeight="34px"
+              bg="#fff"
+              fontSize="1.6rem"
+              textAlign
+            >
+              <Image
                 width="auto"
                 height="auto"
-                _onClick={() => navigate(-1)}
-                hover
-              >
-                <Icon
-                  type="headerBack"
-                  width="12px"
-                  height="20px"
-                  margin="0 auto"
-                />
-              </Grid>
-              <Grid flexRow bg="#fff" fontSize="1.6rem" margin="0 5px 0 0">
-                {isPagename ? (
-                  <Text margin="0" size="18px" bold="600">
-                    {isPagename}
-                  </Text>
-                ) : (
-                  <Image
-                    width="auto"
-                    height="auto"
-                    margin="5px 0 0"
-                    src="https://user-images.githubusercontent.com/91959791/168339851-d18da908-8213-49a7-a365-9cad6a0e862e.png"
-                  />
-                )}
-              </Grid>
-              <Grid width="12px" height="20px"></Grid>
-            </>
-          )}
+                margin="5px 0 0"
+                src="https://user-images.githubusercontent.com/91959791/168339851-d18da908-8213-49a7-a365-9cad6a0e862e.png"
+              />
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </>
-  );
+    );
+  }
+  if (!noBack) {
+    return (
+      <>
+        <Grid
+          maxWidth="500px"
+          height="64px"
+          bg="#FFFFFF"
+          position="fixed"
+          zindex="100"
+          borderBottom="1px solid #DEDEDE"
+        >
+          <Grid width="auto" margin="0 auto" isFlex>
+            <Grid
+              width="auto"
+              height="auto"
+              margin="0 0 0 17px"
+              _onClick={() => navigate(-1)}
+              hover
+              >
+              <Icon
+                type="headerBack"
+                width="12px"
+                height="20px"
+                margin="0 auto"
+              />
+            </Grid>
+            <Grid flexRow bg="#fff" fontSize="1.6rem" margin="0 5px 0 0">
+              {isPagename ? (
+                <Text margin="0 10px 0 0" size="18px" bold="600">
+                  {isPagename}
+                </Text>) : (
+                <Image
+                  width="auto"
+                  height="auto"
+                  margin="5px 0 0"
+                  src="https://user-images.githubusercontent.com/91959791/168339851-d18da908-8213-49a7-a365-9cad6a0e862e.png"
+                />
+                )}
+            </Grid>
+            <Grid width="12px" height="20px"></Grid>
+          </Grid>
+        </Grid>
+      </>
+    )
+  }
+
 };
 
 export default Header;

@@ -17,8 +17,6 @@ const MyFeedList = (props) => {
   const dispatch = useDispatch();
 
   const like = (feedId) => {
-    // dispatch(feedLikeDB(feedId));
-    console.log(feedId);
     dispatch(handleActions.myfeedLikeDB(feedId));
     setLikeCnt((prev) => (likeState ? (prev -= 1) : (prev += 1)));
     setLikeState(!likeState);

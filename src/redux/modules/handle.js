@@ -22,7 +22,6 @@ const initialState = {
 
 const selectMarkerDB = (id, idx = null) => {
   return function (dispatch, getState) {
-    console.log(id, idx)
     const selectData = {
       id: id,
       index: idx,
@@ -84,11 +83,9 @@ export default handleActions(
       draft.selectMarker = action.payload.selectData;
     }),
     [SELECT_TIME]: (state, action) => produce(state, (draft) => {
-      console.log(action.payload);
       draft.selectTime = action.payload.selectTime;
     }),
     [FEED_LIKE]: (state, action) => produce(state, (draft) => {
-      console.log(action.payload);
       draft.myfeedLike = action.payload.feed;
       }),
   },

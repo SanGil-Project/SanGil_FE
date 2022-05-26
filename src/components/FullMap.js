@@ -6,7 +6,6 @@ import KakaoMap from "./KakaoMap";
 
 const FullMap = (props) => {
   const { data, getIndex, zoomable, size, padding } = props;
-  console.log(size);
 
   return (
     <>
