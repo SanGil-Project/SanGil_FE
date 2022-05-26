@@ -131,9 +131,10 @@ const ChatRoom = (props) => {
                     </Text>
                     <Grid
                       padding="16px"
-                      bg={boxColor}
+                      bg="#9DE49C"
                       radius="10px"
                       width="auto"
+                      border="1px solid #7FC07E"
                     >
                       <Text
                         margin="0"
@@ -168,6 +169,7 @@ const ChatRoom = (props) => {
                       bg={boxColor}
                       radius="10px"
                       width="auto"
+                      border="1px solid #CFCFCF"
                     >
                       <Text
                         margin="0"
@@ -207,9 +209,14 @@ const ChatRoom = (props) => {
     </React.Fragment>
   );
 };
-
 const ChatContainer = styled.div`
-  background-color: #fff;
+  background-image: url(${require("../assets/images/chatbg.png")});
+  background-size: 100%;
+  background-positin: 
+  background-repeat: no-repeat;
+  ::-webkit-scrollbar {
+    display: none;
+  }
   width: 100%;
   height: 100vh;
   max-width: 500px;
@@ -230,7 +237,7 @@ const ChatInputWrap = styled.div`
   width: 100%;
   max-width: 500px;
   box-sizing: border-box;
-  padding: 20px 14.5px 27px;
+  padding: 10px 14.5px 10px;
   background-color: #fff;
 `;
 
