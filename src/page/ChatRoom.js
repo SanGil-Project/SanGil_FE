@@ -24,10 +24,12 @@ const ChatRoom = (props) => {
   // const sockJs = new SockJS("http://13.125.232.76:8080/ws-stomp"); // 서버주소/ws-stomp
   // const sockJs = new SockJS("http://52.79.228.126:8080/ws-stomp"); // 서버주소/ws-stomp
   // const sockJs = new SockJS("http://15.164.232.187:8080/ws-stomp"); // 서버주소/ws-stomp
-  // const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 서버주소/ws-stomp
-  const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 서버주소/ws-stomp
+  const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 서버주소/ws-stomp
+  // const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 서버주소/ws-stomp
   const stomp = Stomp.over(sockJs);
+
   stomp.debug = null;
+
   // const sender = _userInfo?.nickname;
 
   const enterChat = {
@@ -104,10 +106,12 @@ const ChatRoom = (props) => {
 
   return (
     <React.Fragment>
+        
       <ChatContainer>
         <Header />
+        <Wrap>
         <ChatWrap>
-          <Grid padding="96px 14px 200px">
+          <Grid padding="96px 14px 50px">
             {chatList?.map((chat, idx) => {
               const mine = chat.nickname === nickname ? true : false;
               const time = chat.createdAt.split(" ");
@@ -129,9 +133,10 @@ const ChatRoom = (props) => {
                     </Text>
                     <Grid
                       padding="16px"
-                      bg={boxColor}
+                      bg="#9DE49C"
                       radius="10px"
                       width="auto"
+                      border="1px solid #7FC07E"
                     >
                       <Text
                         margin="0"
@@ -166,6 +171,7 @@ const ChatRoom = (props) => {
                       bg={boxColor}
                       radius="10px"
                       width="auto"
+                      border="1px solid #CFCFCF"
                     >
                       <Text
                         margin="0"
@@ -196,18 +202,25 @@ const ChatRoom = (props) => {
           <ChatInput chatRoomId={chatRoomId} />
         </ChatInputWrap>
 
-        <MenubarContainer>
+        {/* <MenubarContainer>
           <Grid height="88px" maxWidth="500px" margin="auto">
             <Menubar menuColor={menuColor} />
           </Grid>
-        </MenubarContainer>
+        </MenubarContainer> */}
+      </Wrap>
       </ChatContainer>
     </React.Fragment>
   );
 };
-
 const ChatContainer = styled.div`
-  background-color: #fff;
+  background-image: url(${require("../assets/images/chatbg1.png")});
+  background-size: 100%;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-color: #C6E7D3;
+  ::-webkit-scrollbar {
+    display: none;
+  }
   width: 100%;
   height: 100vh;
   max-width: 500px;
@@ -215,6 +228,18 @@ const ChatContainer = styled.div`
   overflow: scroll;
 `;
 
+const Wrap = styled.div`
+  position: fixed;
+  bottom: 25px;
+  background-image: url(${require("../assets/images/chatbg2.png")});
+  background-size: 100%;
+  background-position: center bottom;
+  width: 100%;
+  height: 100vh;
+  max-width: 500px;
+  margin: auto;
+  overflow: scroll;
+`;
 const ChatWrap = styled.div`
   top: 64px;
   height:100%
@@ -223,13 +248,13 @@ const ChatWrap = styled.div`
 
 const ChatInputWrap = styled.div`
   position: fixed;
-  bottom: 88px;
+  bottom: 0px;
   z-index: 10;
   width: 100%;
   max-width: 500px;
   box-sizing: border-box;
-  padding: 20px 14.5px 27px;
-  background-color: #fff;
+  padding: 15px 14px 15px 19px;
+  background-color: #94DAB0;
 `;
 
 const MenubarContainer = styled.div`

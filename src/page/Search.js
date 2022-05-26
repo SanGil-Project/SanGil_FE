@@ -13,7 +13,7 @@ import {
   Header,
   AlertModal,
 } from "../components/component";
-import { Grid, Text, Icon, Button, Input } from "../elements/element";
+import { Grid, Text, Icon, Button, Input, Image } from "../elements/element";
 import { useNavigate } from "react-router";
 import { indexOf } from "lodash";
 
@@ -224,55 +224,60 @@ const Search = (props) => {
               const star = d.starAvr === "n" ? "0" : d.starAvr;
               return (
                 <div key={idx} ref={(el) => (listRef.current[idx] = el)}>
+
                   <Grid
                     bg="#fff"
                     shadow="0px 1px 4px rgba(0, 0, 0, 0.1)"
-                    padding="20px 12px"
+                    padding="10px"
                     margin="0 0 14px"
-                    height="144px"
+                    height="192px"
                     radius="10px"
                     border={selectMarker === idx ? "2px solid #43CA3B" : null}
-                    flexColumn
-                    alignItems="left"
+                    flexRow
+                    alignItems="flex-start"
                     hover
                     _onClick={() => {
                       goDetail(d.mountainId);
                     }}
                   >
-                    <Grid padding="0 0 24px" flexRow justify="left">
-                      <Icon
-                        type="searchMnt"
-                        width="24px"
-                        height="18px"
-                        margin="0 auto"
-                      />
-                      {/* <div key={idx} ref={el => (listRef.current[idx] = el)}> */}
-                      <Text margin="0 10px" size="18px" bold="500" nowrap>
-                        {d.mountain}
-                      </Text>
-                      {/* </div> */}
-                    </Grid>
-                    <Grid padding="0 0 24px" flexRow justify="left">
-                      <Icon
-                        type="searchAddr"
-                        width="24px"
-                        height="21px"
-                        margin="0 auto"
-                      />
-                      <Text margin="0 10px" size="18px" bold="500" nowrap>
-                        {d.mountainAddress}
-                      </Text>
-                    </Grid>
-                    <Grid flexRow justify="left">
-                      <Icon
-                        type="searchStar"
-                        width="24px"
-                        height="21px"
-                        margin="0 auto"
-                      />
-                      <Text margin="0 10px" size="18px" bold="500" nowrap>
-                        ({star})
-                      </Text>
+                    <Grid bgImg={d.mountainImgUrl} bgSize="cover" height="172px" radius="10px" margin="0 13px 0 0"></Grid>
+                    {/* <Image src={d.mountainImgUrl} height="100%" width="50%" /> */}
+                    <Grid flexColumn alignItems="left" height="auto" padding="16px 0 0">
+                      <Grid padding="0 0 12px" flexRow justify="left">
+                        <Icon
+                          type="searchMnt"
+                          width="24px"
+                          height="18px"
+                          margin="0 auto"
+                        />
+                        {/* <div key={idx} ref={el => (listRef.current[idx] = el)}> */}
+                        <Text margin="0 10px" size="18px" bold="500" nowrap>
+                          {d.mountain}
+                        </Text>
+                        {/* </div> */}
+                      </Grid>
+                      <Grid padding="0 0 12px" flexRow justify="left">
+                        <Icon
+                          type="searchAddr"
+                          width="24px"
+                          height="21px"
+                          margin="0 auto"
+                        />
+                        <Text margin="0 10px" size="18px" bold="500">
+                          {d.mountainAddress}
+                        </Text>
+                      </Grid>
+                      <Grid flexRow justify="left">
+                        <Icon
+                          type="searchStar"
+                          width="24px"
+                          height="21px"
+                          margin="0 auto"
+                        />
+                        <Text margin="0 10px" size="18px" bold="500" nowrap>
+                          ({star})
+                        </Text>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </div>
@@ -345,6 +350,9 @@ const TrackBtn = styled.div`
   right: 
   ${(props) => (props.smallSize ? `calc(0vw + 14px);` : `calc(50% - 236px);`)}
   bottom: 113px;
+`;
+
+const MountainImg = styled.div`
 `;
 
 export default Search;
