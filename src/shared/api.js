@@ -49,15 +49,19 @@ export const api = {
   mainBookmark: (mountainId) =>
     instance.post(`/api/mountain/bookmark/${mountainId}`, { mountainId }),
 
-  //feedCmt.js
-  getCmt: (feedId, pageNum) =>
-    instance.get(`/feeds/comment/${feedId}/${pageNum}`),
+  //feedDetail.js
+  getFeedDetail: (feedId, pageNum) =>
+    instance.get(`/feeds/detail/${feedId}/${pageNum}`),
+  deleteDetail: (feedId) =>
+    instance.delete(`/api/feeds/delete/${feedId}`, { feedId }),
   addFeedCmt: (feedId, feedComment) =>
     instance.post(`/feeds/comment/${feedId}`, { feedComment }),
   updateFeedCmt: (feedCommentId, feedComment) =>
     instance.put(`/feeds/comment/${feedCommentId}`, { feedComment }),
   deleteFeedCmt: (feedCommentId) =>
     instance.delete(`/feeds/comment/${feedCommentId}`),
+  detailLike: (feedId) =>
+    instance.post(`/api/feeds/good/${feedId}`, { feedId }),
 
   //tracker.js
   start: (mountainId, setCompletedId) =>

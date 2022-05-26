@@ -22,14 +22,15 @@ const Tracker = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const _distance = useSelector((state) => state.tracker.distance);
-  const polylinePath = useSelector(
+  const mountainImg = useSelector((state) => state.tracker.mountainImg);
+  const _polylinePath = useSelector(
     (state) => state.tracker?.polylinePath.polylinePath
   );
-
+  const [polylinePath, setPolylinePath] = useState([..._polylinePath]);
   const [myLoca, setMyLoca] = useState({ lat: "", lng: "" });
   const [distance, setDistance] = useState({ distanceM: 0.0, distanceK: 0.0 });
   const [time, setTime] = useState({
-    stopwatch: { s: 0, m: 10, h: 0 },
+    stopwatch: { s: 0, m: 0, h: 0 },
     isStart: false,
   });
 
@@ -47,7 +48,7 @@ const Tracker = (props) => {
   const releaseWakeLock = async () => {
     if ("wakeLock" in navigator) {
       try {
-        wakeLock.release();
+        wakeLock?.release();
         console.log("Wake lock has been released.");
       } catch (err) {
         console.log(err);
@@ -102,6 +103,7 @@ const Tracker = (props) => {
         );
       }
     }, 3000);
+    console.log(distance.distanceK);
     return () => clearTimeout(path.current);
   }, [myLoca]);
 
@@ -134,6 +136,7 @@ const Tracker = (props) => {
         });
         setDistance({ distanceM: 0.0, distanceK: 0.0 });
         setCompletedId();
+        setPolylinePath([]);
         releaseWakeLock();
         navigate("/main", { replace: true });
       }
@@ -147,10 +150,12 @@ const Tracker = (props) => {
         );
         setEndOpen(true);
         setTime({
-          ...time,
+          stopwatch: { s: 0, m: 0, h: 0 },
           isStart: false,
         });
+        setDistance({ distanceM: 0.0, distanceK: 0.0 });
         setCompletedId();
+        setPolylinePath([]);
         releaseWakeLock();
       }
     }
@@ -282,6 +287,7 @@ const Tracker = (props) => {
           setDistance={setDistance}
           distance={distance.distanceK}
           mountainId={mountainId}
+          mountainImg={mountainImg}
         />
       ) : null}
     </>

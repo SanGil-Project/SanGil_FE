@@ -2,23 +2,64 @@ import React from "react";
 import styled from "styled-components";
 import { Grid, Input, Text, Image, Icon } from "../elements/element";
 import { Header, Menubar } from "../components/component";
-import { useParams } from "react-router";
-import { getCmtDB } from "../redux/modules/feedCmt";
-import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router";
+import {
+  getDetailDB,
+  detailLikeDB,
+  addCmtDB,
+  deleteDB,
+  deleteCmtDB,
+} from "../redux/modules/feedDetail";
+
+import { useDispatch, useSelector } from "react-redux";
 import _ from "lodash";
+import { deleteFeedDB } from "../redux/modules/feed";
 
 const FeedCmt = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const feedDetail = useSelector((state) => state.feedDetail?.feed);
+  const feedCmt = useSelector(
+    (state) => state.feedDetail.feed?.feedCommentListDto
+  );
+  // console.log(feedCmt?.commentResponseDtos);
+  const userId = useSelector((state) => state.user.userInfo?.userId);
   const { feedId } = useParams();
   const menuColor = [false, false, false, true, false]; // 메뉴바 색
   const [cmt, setCmt] = React.useState(null);
+
+  const detailLike = () => {
+    dispatch(detailLikeDB(feedId));
+  };
 
   const getText = (e) => {
     setCmt(e.target.value);
   };
 
+  const addCmt = () => {
+    if (cmt) {
+      dispatch(addCmtDB(feedId, cmt));
+    } else {
+      alert("댓글을 입력해주세요");
+    }
+  };
+
+  const deleteDetail = async () => {
+    if (window.confirm("정말 삭제하시겠습니까?") === true) {
+      await dispatch(deleteFeedDB(feedId));
+      alert("삭제되었습니다");
+      navigate("/main", { replace: true });
+    }
+  };
+
+  const deleteCmt = (feedCommentId) => {
+    if (window.confirm("정말 삭제하시겠습니까?") === true) {
+      dispatch(deleteCmtDB(feedCommentId));
+    }
+  };
+
   React.useEffect(() => {
-    dispatch(getCmtDB(feedId, 1));
+    dispatch(getDetailDB(feedId, 1));
   }, []);
 
   return (
@@ -27,14 +68,18 @@ const FeedCmt = () => {
       <Grid padding="64px 0 88px 0" overflowY="scroll">
         <div>
           <Grid maxWidth="91.78%" margin="0 auto">
-            <Grid width="93.23%" height="52px" margin="0 auto" isFlex>
+            <Grid width="93.23%" height="52px" margin="10px auto 0 auto" isFlex>
               <Grid width="190px" flex="flex">
-                <Image
-                  width="40px"
-                  height="40px"
-                  type="circle"
-                  src="https://www.theguru.co.kr/data/photos/20210937/art_16316071303022_bf8378.jpg"
-                />
+                {feedDetail?.userImageUrl !== "없음" ? (
+                  <Image
+                    width="40px"
+                    height="40px"
+                    type="circle"
+                    src={feedDetail?.userImageUrl}
+                  />
+                ) : (
+                  <Icon width="40px" height="40px" />
+                )}
                 <Grid
                   width="130px"
                   height="40px"
@@ -42,37 +87,52 @@ const FeedCmt = () => {
                   padding="2px 0"
                 >
                   <Text margin="0" bold="300" size="1.2rem">
-                    칭호입니다
+                    {feedDetail?.userTitle}
                   </Text>
                   <Text margin="0" bold="600" size="1.2rem">
-                    닉네임입니다
+                    {feedDetail?.nickname}
                   </Text>
                 </Grid>
               </Grid>
-              <Icon type="delete" width="20" height="22px" />
+              {userId === feedDetail?.userId ? (
+                <Icon
+                  type="delete"
+                  width="20"
+                  height="22px"
+                  hover
+                  _onClick={deleteDetail}
+                />
+              ) : null}
             </Grid>
           </Grid>
         </div>
-        <Grid height="500px" margin="10px 0">
+        <Grid border="1px solid #e1e1e1" height="500px" margin="10px 0">
           <Image
             width="100%"
             height="100%"
-            src="https://newsimg.hankookilbo.com/cms/articlerelease/2021/04/01/57f00c7a-6fb6-49b1-905f-2438e4f7897a.jpg"
+            objectFit="contain"
+            src={feedDetail?.feedImageUrl}
           />
         </Grid>
         <Grid maxWidth="91.78%" height="25px" margin="20px auto" isFlex>
           <Grid width="68px" flex="flex">
-            <Icon type="like" width="20px" height="20px" />
-            <Text margin="0 0 0 10px">300</Text>
+            <Icon
+              type="like"
+              width="20px"
+              height="20px"
+              fill={feedDetail?.goodStatus ? "#43ca3b" : "#c4c4c4"}
+              _onClick={detailLike}
+            />
+            <Text margin="0 0 0 10px">{feedDetail?.goodCnt}</Text>
           </Grid>
           <Text size="1.2rem" bold="600" color="#C4C4C4">
-            15분 전
+            {feedDetail?.beforeTime}
           </Text>
         </Grid>
         <div>
           <Grid maxWidth="91.78%" margin="0 auto">
             <Text bold="500" size="1.6rem" wordBreak="break-all" margin="0">
-              가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사
+              {feedDetail?.feedContent}
             </Text>
           </Grid>
         </div>
@@ -97,7 +157,8 @@ const FeedCmt = () => {
             margin="0 15px 0 0"
             bold="500"
             size="1.6rem"
-            color="#959595"
+            color={cmt ? "#43CA3B" : "#959595"}
+            _onClick={addCmt}
             width="30px"
             align="center"
             hover
@@ -106,50 +167,64 @@ const FeedCmt = () => {
           </Text>
         </Grid>
         <div>
-          <Grid width="91.78%" height="90px" margin="10px auto">
-            <Grid height="40px" margin="0" flex="flex">
-              <Image
-                type="circle"
-                width="40px"
-                height="40px"
-                src="https://dimg.donga.com/wps/NEWS/IMAGE/2021/01/17/104953245.2.jpg"
-              />
-              <Grid margin="0 0 0 10px" width="89%">
-                <Grid height="16px" isFlex>
-                  <Text
-                    bold="500"
-                    size="1.2rem"
-                    margin="0"
-                    height="12px"
-                    lineHeight="12px"
-                    color="#43CA3B"
-                  >
-                    [엄홍길]
-                  </Text>
-                  <Grid width="60px" isFlex>
-                    <Text bold="300" size="1.2rem">
-                      수정
+          {feedCmt?.commentResponseDtos.map((el, idx) => (
+            <Grid width="91.78%" height="100px" margin="10px auto">
+              <Grid height="40px" margin="0" flex="flex">
+                {el.userImgUrl !== "없음" ? (
+                  <Image
+                    type="circle"
+                    width="40px"
+                    height="40px"
+                    src={el.userImgUrl}
+                  />
+                ) : (
+                  <Icon width="40px" height="40px" />
+                )}
+                <Grid margin="0 0 0 10px" width="89%">
+                  <Grid height="16px" isFlex>
+                    <Text
+                      bold="500"
+                      size="1.2rem"
+                      margin="0"
+                      height="12px"
+                      lineHeight="12px"
+                      color="#43CA3B"
+                    >
+                      [{el.userTitle}]
                     </Text>
-                    <Text bold="300" size="1.2rem" color="#FF7676">
-                      삭제
-                    </Text>
+                    {el.userId === userId ? (
+                      <Grid width="60px" isFlex>
+                        <Text bold="300" size="1.2rem">
+                          수정
+                        </Text>
+                        <Text
+                          bold="300"
+                          size="1.2rem"
+                          color="#FF7676"
+                          hover
+                          _onClick={() => deleteCmt(el.commentId)}
+                        >
+                          삭제
+                        </Text>
+                      </Grid>
+                    ) : null}
                   </Grid>
+                  <Text bold="700" size="1.6rem" margin="0">
+                    {el.nickname}
+                  </Text>
                 </Grid>
-                <Text bold="700" size="1.6rem" margin="0">
-                  닉넴가나다라마바사
+              </Grid>
+              <Grid height="50px" margin="0 0 0 11%" width="89%" isFlex>
+                <Text bold="500" size="1.6rem">
+                  {el.feedComment}
+                </Text>
+                <Text bold="500" size="1.4rem" color="#C0C0C0">
+                  {el.beforeTime}
                 </Text>
               </Grid>
+              <Line />
             </Grid>
-            <Grid height="50px" margin="0 0 0 11%" width="89%" isFlex>
-              <Text bold="500" size="1.6rem">
-                여기는 댓글 내용이 들어갑니다
-              </Text>
-              <Text bold="500" size="1.4rem" color="#C0C0C0">
-                2022-03-15
-              </Text>
-            </Grid>
-            <Grid border="1px solid #F2F3F6" height="1px" />
-          </Grid>
+          ))}
         </div>
       </Grid>
       <MenubarContainer>
@@ -161,14 +236,8 @@ const FeedCmt = () => {
   );
 };
 
-const CmtContainer = styled.div`
-  width: 100%;
-  height: 100vh;
-  // min-width: 414px;
-  max-width: 500px;
-  margin: auto;
-  background-color: #fff;
-  overflow-y: scroll;
+const Line = styled.hr`
+  border: 1px solid #d2d2d2;
 `;
 
 const MenubarContainer = styled.div`

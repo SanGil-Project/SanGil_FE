@@ -9,6 +9,7 @@ const DISTANCE = "DISTANCE";
 const ENDCLIMB = "ENDCLIMB";
 const DELETE = "DELETE";
 const GET_COMPLETED = "GET_COMPLETED";
+const GET_IMG = "GET_IMG";
 
 export const setPath = createAction(SET_PATH, (path) => ({ path }));
 const getSearch = createAction(GETSEARCH, (data) => ({ data }));
@@ -17,6 +18,7 @@ const endClimb = createAction(ENDCLIMB, (comment) => ({ comment }));
 const getCompleted = createAction(GET_COMPLETED, (trackList) => ({
   trackList,
 }));
+const getImg = createAction(GET_IMG, (mountainImg) => ({ mountainImg }));
 
 export const startDB = (mountainId, setCompletedId) => {
   return function (dispatch, getState) {
@@ -24,6 +26,7 @@ export const startDB = (mountainId, setCompletedId) => {
       .start(mountainId, setCompletedId)
       .then((res) => {
         setCompletedId(res.data.completedId);
+        dispatch(getImg(res.data.mountainImgUrl));
       })
       .catch((err) => {
         console.log(err);
@@ -144,16 +147,17 @@ export default handleActions(
       produce(state, (draft) => {
         draft.polylinePath.polylinePath.push(action.payload.path);
       }),
-    [GETSEARCH]: (state, action) => produce(state, (draft) => {
-      if (action.payload.data.currentPage === 0) {
-        draft.searchList = action.payload.data.searchList;
-        draft.searchTotalPg = action.payload.data.totalPage;
-        draft.searchCurrentPg = action.payload.data.currentPage;
-      } else {
-        draft.searchList.push(...action.payload.data.searchList);
-        draft.searchCurrentPg = action.payload.data.currentPage;
-      }
-    }),
+    [GETSEARCH]: (state, action) =>
+      produce(state, (draft) => {
+        if (action.payload.data.currentPage === 0) {
+          draft.searchList = action.payload.data.searchList;
+          draft.searchTotalPg = action.payload.data.totalPage;
+          draft.searchCurrentPg = action.payload.data.currentPage;
+        } else {
+          draft.searchList.push(...action.payload.data.searchList);
+          draft.searchCurrentPg = action.payload.data.currentPage;
+        }
+      }),
     [DISTANCE]: (state, action) =>
       produce(state, (draft) => {
         draft.distance = action.payload.distance;
@@ -165,6 +169,10 @@ export default handleActions(
     [GET_COMPLETED]: (state, action) =>
       produce(state, (draft) => {
         draft.myTrack = action.payload.trackList;
+      }),
+    [GET_IMG]: (state, action) =>
+      produce(state, (draft) => {
+        draft.mountainImg = action.payload.mountainImg;
       }),
   },
   initialState

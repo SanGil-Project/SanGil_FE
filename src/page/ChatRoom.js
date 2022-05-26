@@ -8,7 +8,6 @@ import Stomp from "stompjs";
 import { actionCreators as chatActions } from "../redux/modules/chat";
 import { actionCreators as handleActions } from "../redux/modules/handle";
 import { Menubar, Header, ChatInput } from "../components/component";
-import { Desktop, Mobile } from "../shared/responsive";
 
 import { Grid, Text, Icon, Button, Input, Image } from "../elements/element";
 
@@ -34,8 +33,8 @@ const ChatRoom = (props) => {
   const enterChat = {
     roomId: parseInt(chatRoomId),
     sender: nickname,
-    type: 'ENTER',
-  }
+    type: "ENTER",
+  };
 
   function ConnectSub(token) {
     try {
@@ -75,7 +74,7 @@ const ChatRoom = (props) => {
         },
         () => {
           // stomp.unsubscribe(`/sub/chat/rooms/${chatRoomId}`);
-          stomp.unsubscribe('sub-0');
+          stomp.unsubscribe("sub-0");
         },
         { token: token }
       );
@@ -182,12 +181,12 @@ const ChatRoom = (props) => {
             <ChatInput chatRoomId={chatRoomId} />
           </ChatInputWrap>
 
-          <MenubarContainer>
-            <Grid height="88px" maxWidth="500px" margin="auto">
-              <Menubar menuColor={menuColor} />
-            </Grid>
-          </MenubarContainer>
-        </ChatContainer>
+        <MenubarContainer>
+          <Grid height="88px" maxWidth="500px" margin="auto">
+            <Menubar menuColor={menuColor} />
+          </Grid>
+        </MenubarContainer>
+      </ChatContainer>
     </React.Fragment>
   );
 };
