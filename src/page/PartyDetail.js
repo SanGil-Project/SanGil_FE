@@ -37,6 +37,7 @@ const PartyDetail = (props) => {
     ? "참가취소하기"
     : "참가하기";
   const myMode = userInfo?.nickname === curtParty?.nickname ? true : false;
+  const isMember = partymember?.some((m) => m.nickname === userInfo.nickname)
   const isChief = userInfo?.nickname === curtParty?.nickname ? true : false;
 
   const attendParty = (partyId) => {
@@ -60,8 +61,14 @@ const PartyDetail = (props) => {
   };
 
   const enterChatRoom = (partyId) => {
-    dispatch(chatActions.enterChatDB(partyId));
-    navigate(`/chatroom/${partyId}`);
+    if (isMember) {
+      dispatch(chatActions.enterChatDB(partyId));
+      navigate(`/chatroom/${partyId}`);
+    } else {
+      setModalContent(`모임에 참가한 사람들만 \n대화방에 입장할 수 있습니다!`);
+      setModalType("check");
+      setModalOpen(true);
+    }
   };
 
   const deleteParty = (partyId) => {
@@ -276,8 +283,6 @@ const PartyDetail = (props) => {
               radius="8px"
               _onClick={() => {
                 enterChatRoom(curtParty.partyId);
-                navigate(`/chatroom/${curtParty.partyId}`);
-                // navigate(`/chatroom/${curtParty.chatRoomId}`);
               }}
             >
               <Text margin="0" size="18px" bold="600" align>

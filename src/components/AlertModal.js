@@ -27,7 +27,7 @@ const AlertModal = (props) => {
         <Modal className="dateModal" modalState={modalState}>
           <div className="modal_container">
             <Grid flexColumn margin="0 0 57px">
-              <Text margin="0" color="#131313" bold="600" size="18px">
+              <Text margin="0" color="#131313" bold="600" size="18px" align="center">
                 {contents}
               </Text>
             </Grid>
@@ -73,7 +73,7 @@ const AlertModal = (props) => {
           <div className="modal_container">
             <Grid flexColumn margin="0 0 30px">
               <Icon type="alertCheck" width="49px" height="48px" margin="0 auto"/>
-              <Text margin="18px 0 0" color="#131313" bold="600" size="18px">
+              <Text margin="18px 0 0" color="#131313" bold="600" size="18px" align="center">
                 {contents}
               </Text>
             </Grid>
