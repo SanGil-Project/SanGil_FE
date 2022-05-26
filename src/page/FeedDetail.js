@@ -22,7 +22,6 @@ const FeedCmt = () => {
   const feedCmt = useSelector(
     (state) => state.feedDetail.feed?.feedCommentListDto
   );
-  // console.log(feedCmt?.commentResponseDtos);
   const userId = useSelector((state) => state.user.userInfo?.userId);
   const { feedId } = useParams();
   const menuColor = [false, false, false, true, false]; // 메뉴바 색

@@ -60,7 +60,6 @@ export const myfeedLikeDB = (feedId) => {
     api
       .feedLike(feedId)
       .then((res) => {
-        console.log("feedLike 성공 결과 ::", res.data);
         dispatch(feedLike({
             goodStatus: res.data.goodStatus,
             goodCnt: res.data.goodCnt,

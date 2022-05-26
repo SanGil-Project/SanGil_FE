@@ -28,20 +28,6 @@ const FeedWrite = () => {
         setImg({ uploadImg: file, preImg: reader.result });
       };
     }
-
-    // const options = {
-    //   maxSizeMB: 10,
-    //   maxWidthOrHeight: 500,
-    // };
-
-    // try {
-    //   const compressedFile = await imageCompression(file, options);
-    //   const promise = imageCompression.getDataUrlFromFile(compressedFile);
-    //   console.log(compressedFile);
-    //   setImg({ ...img, preImg: promise.PromiseResult });
-    // } catch (err) {
-    //   console.log(err);
-    // }
   };
 
   const deletePreImg = () => {

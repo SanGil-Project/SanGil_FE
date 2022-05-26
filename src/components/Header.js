@@ -18,8 +18,6 @@ const Header = () => {
       dispatch(isLogInDB(token));
     }
   }, []);
-
-  console.log(isPagename);
   const url = location.pathname;
   const mainpage = ["/main", "/mypage", "/feed", "/party", "/search"];
   const noBack = mainpage.includes(url);

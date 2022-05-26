@@ -9,8 +9,6 @@ const KakaoLogin = (props) => {
 
   // 인가코드 받기
   let code = new URL(window.location.href).searchParams.get("code");
-  // console.log("모듈에서 확인 ::", window.location.href);
-
   React.useEffect(() => {
     const kakaoLogin = async () => {
       await dispatch(userActions.kakaoLoginDB(code));

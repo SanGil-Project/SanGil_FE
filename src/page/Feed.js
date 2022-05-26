@@ -16,8 +16,8 @@ const FeedDetail = () => {
   const [pageNum, setPageNum] = React.useState(1);
 
   const onScroll = _.throttle((e) => {
-    // console.log("총 높이: " + e.target.scrollHeight);
-    // console.log("현재 높이: " + curHeight);
+    // 총 높이: e.target.scrollHeight
+    // 현재 높이:  curHeight
     const clientHeight = e.target.scrollHeight;
     const curHeight = e.target.scrollTop;
     if (
@@ -43,8 +43,8 @@ const FeedDetail = () => {
       <Header />
       <Grid padding="64px 0 88px 0" overflowY="scroll" _onScroll={onScroll}>
         {feedList?.feedList?.map((el, idx) => (
-          <FeedContainer>
-            <FeedCard el={el} key={idx} />
+          <FeedContainer key={idx}>
+            <FeedCard el={el} />
           </FeedContainer>
         ))}
       </Grid>

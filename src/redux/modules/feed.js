@@ -25,8 +25,8 @@ export const addFeedDB = (feed) => {
   frm.append("feedContent", feed.feedContent);
   return function (dispatch, getState) {
     axios
-      .post("http://15.164.102.106:8080/api/feeds/write", frm, {
-        // .post("http://jinnn.shop/api/feeds/write", frm, {
+      // .post("http://15.164.102.106:8080/api/feeds/write", frm, {
+        .post("http://jinnn.shop/api/feeds/write", frm, {
         headers: {
           Authorization: sessionStorage.getItem("token"),
           "Content-Type": "multipart/form-data",
@@ -46,7 +46,6 @@ export const getFeedDB = (pageNum) => {
     api
       .getFeedDB(pageNum)
       .then((res) => {
-        console.log(res.data);
         if (res.data.currentPage === 0) {
           dispatch(getFeed(res.data));
         } else {
@@ -77,7 +76,6 @@ export const feedLikeDB = (feedId) => {
     api
       .feedLike(feedId)
       .then((res) => {
-        console.log(res.data);
         dispatch(
           likeFeed({
             goodStatus: res.data.goodStatus,

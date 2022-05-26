@@ -40,10 +40,8 @@ const ChatRoom = (props) => {
     try {
       stomp.connect({}, () => {
         stomp.subscribe(`/sub/chat/rooms/${chatRoomId}`, (response) => {
-          // console.log("subscribe callback ::", response);
           const content = JSON.parse(response.body);
-          // console.log("받은 메세지 ::", content);
-          // const writer = content.writer;
+
           if (content.length === 1) {
             dispatch(chatActions.sendChat(content));
             scrollToBottom();
@@ -52,7 +50,6 @@ const ChatRoom = (props) => {
             scrollToBottom();
           }
         });
-        // dispatch(chatActions.getChatDB(chatRoomId));
         stomp.send(
           "/pub/chat/message",
           { token: token },

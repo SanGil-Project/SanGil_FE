@@ -31,16 +31,13 @@ export const KakaoMap = (props) => {
     lat: 36.5,
     lng: 127.8,
   });
-  // const [selectMarker, setSeletMarker] = useState();
 
   const select = (mountainId, idx) => {
     dispatch(handleActions.selectMarkerDB(mountainId, idx));
     setSeleteMarker(idx);
-    // console.log(selectedMarker, p);
   };
 
   const [selectedMarker, setSeleteMarker] = useState();
-  // console.log("여기서 선택된 값 :: ", selectedMarker);
   if (getIndex) {
     props.getIndex(selectedMarker); // 검색 페이지로 선택된 marker index 보내기
   }
