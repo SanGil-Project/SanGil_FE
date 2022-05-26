@@ -15,7 +15,7 @@ const Banner = () => {
   };
   return (
     <Slider {...settings}>
-      <Grid>
+      <Grid padding="0 1px" hover>
         <Image
           width="100%"
           height="100px"
@@ -23,7 +23,7 @@ const Banner = () => {
           src={require("../assets/images/Banner_1.png")}
         />
       </Grid>
-      <Grid>
+      <Grid padding="0 1px" hover>
         <Image
           width="100%"
           height="100px"
