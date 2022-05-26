@@ -8,8 +8,8 @@ import { Grid, Text, Button, Input } from "../elements/element";
 
 // const sockJs = new SockJS("https://ehjeong.shop/ws-stomp"); // 서버주소/ws-stomp
 // const sockJs = new SockJS("http://15.164.232.187:8080/ws-stomp"); // 서버주소/ws-stomp
-// const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 서버주소/ws-stomp
-const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 서버주소/ws-stomp
+const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 서버주소/ws-stomp
+// const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 서버주소/ws-stomp
 const stomp = Stomp.over(sockJs);
 
 const ChatInput = (props) => {
@@ -72,7 +72,7 @@ const ChatInput = (props) => {
           radius="12px"
           padding="15px 12.5px"
           flexRow
-          margin="0 15px 0 0"
+          margin="0"
         >
           <Input
             width="100%"
@@ -84,13 +84,18 @@ const ChatInput = (props) => {
             onSubmit={onSend}
             is_submit
           />
+          <Button border="none" width="auto" _onClick={onSend}>
+            {/* <Button border="none" width="auto"> */}
+            <Text size="16px" bold="500" margin="0" color="#7E7E7E">
+              등록
+            </Text>
+          </Button>
         </Grid>
-        <Button border="none" width="auto" _onClick={onSend}>
-          {/* <Button border="none" width="auto"> */}
-          <Text size="16px" bold="500" margin="0" color="#959595">
+        {/* <Button border="none" width="auto" _onClick={onSend}>
+          <Text size="16px" bold="500" margin="0" color="#7E7E7E">
             등록
           </Text>
-        </Button>
+        </Button> */}
       </Grid>
     </React.Fragment>
   );
