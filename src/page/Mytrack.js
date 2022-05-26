@@ -49,7 +49,7 @@ const Mytrack = (props) => {
             <Footer>
               <Grid height="auto" isFlex>
                 <Text margin="0" bold="500" size="18px">
-                  {myTrack?.mountian}
+                  {myTrack?.mountain}
                 </Text>
                 <Grid
                   width="auto"
@@ -74,7 +74,9 @@ const Mytrack = (props) => {
                     총 거리
                   </Text>
                   <Grid flexRow alignItems="baseline" width="auto">
-                    {/* <Text margin="0" size="25px" bold="600" color="#43CA3B">{myTrack?.totalDistance}</Text> */}
+                    <Text margin="0" size="25px" bold="600" color="#43CA3B">
+                      {myTrack?.totalDistance.toFixed(2)}
+                    </Text>
                     <Text margin="0" size="8px" bold="500">
                       km
                     </Text>
