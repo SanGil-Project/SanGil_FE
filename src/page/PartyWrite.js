@@ -79,6 +79,8 @@ const PartyWrite = (props) => {
     const day = ('0' + startDate.getDate()).slice(-2);
 
     const dateString = year + '-' + month  + '-' + day;
+
+    console.log(dateValue, dateString);
     setDateValue(dateString);
     setDateOpen(false);
   };
@@ -135,12 +137,12 @@ const PartyWrite = (props) => {
   }
 
   const addParty = () => {
-    if (partyName === "" || mountValue==="검색" || mountAddValue==="" || dateValue==="선택" || timeValue==="선택" || numberValue==="" || partyContent==="") {
+    if (partyName === "" || mountValue==="검색" || mountAddValue==="" || dateValue==="선택" || timeValue==="선택" || partyContent==="") {
       setModalContent("입력되지 않은 부분이 있습니다!");
       setModalOpen(true)
       return;
     }
-    if (numberValue <= 0) {
+    if (numberValue <= 0 || numberValue==="") {
       setModalContent("인원수는 자연수로만 입력해주세요!")
       setModalOpen(true)
       return;
@@ -150,11 +152,6 @@ const PartyWrite = (props) => {
       setModalOpen(true)
       return;
     }
-    // if (partyName === "" || mountValue==="검색" || mountAddValue==="" || dateValue==="선택" || timeValue==="선택" || numberValue==="" || partyContent==="") {
-    //   (numberValue==="") ? setModalContent("인원수는 0을 제외한 숫자로만 입력해주세요!") : setModalContent("입력되지 않은 부분이 있습니다!");
-    //   setModalOpen(true)
-    //   return;
-    // }
     if (dateValue === dateString) {
       const tempT = timeValue.split(":");
       if (parseInt(tempT[0]) === parseInt(hours)) {
