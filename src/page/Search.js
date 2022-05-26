@@ -23,9 +23,9 @@ const Search = (props) => {
   const menuColor = [false, false, false, true, false]; // 메뉴바 색
   const mountainList = useSelector((state) => state?.mountain?.mountainList);
   // const searchData = useSelector((state) => state?.tracker?.searchList);
-  const searchData = useSelector((state) => state?.tracker?.searchList);
-  const curtPageDB = useSelector((state) => state?.tracker?.searchCurrentPg);
-  const totPageDB = useSelector((state) => state?.tracker?.searchTotalPg);
+  const searchData = useSelector((state) => state?.mountain?.searchList);
+  const curtPageDB = useSelector((state) => state?.mountain?.searchCurrentPg);
+  const totPageDB = useSelector((state) => state?.mountain?.searchTotalPg);
   const selectMarker = useSelector((state) => state?.handle?.selectMarker?.index);
   const listRef = useRef([]);
 
@@ -48,7 +48,7 @@ const Search = (props) => {
 
   React.useEffect(() => {
     if (searchKeyword !== "") {
-      dispatch(searchNameDB(searchKeyword, curtPage));
+      dispatch(mountActions.getSearchDB(searchKeyword, curtPage));
       // setCurtPage(curtPageDB+1)
       return;
     }

@@ -23,6 +23,7 @@ const PartyWrite = (props) => {
   const { partyId } = useParams();
   const is_edit = partyId ? true : false;
   const partyItem = useSelector((state) => state?.party?.curtParty);
+  const origin = useSelector((state) => state?.handle?.partyBefore);
   const selectTime = useSelector((state) => state?.handle?.selectTime);
 
   const menuColor = [false, true, false, false, false]; // 메뉴바 색
@@ -55,6 +56,7 @@ const PartyWrite = (props) => {
     const pagename = is_edit ? "등산 모임 수정하기" : "등산 모임 만들기";
     dispatch(handleActions.isPagename(pagename));
     if (is_edit) {
+      dispatch(handleActions.partyBeforeDB(partyItem));
       if (!partyItem) {
         setModalContent(`정보가 없어졌습니다! \n모임 상세 페이지로 돌아갑니다!`);
         setModalOpen(true)
@@ -171,6 +173,11 @@ const PartyWrite = (props) => {
       return;
     }
     if (is_edit) {
+      if (numberValue < origin.curPeople) {
+        setModalContent("현재 참가 인원수보다 적게 설정할 수 없습니다!");
+        setModalOpen(true)
+        return;
+      }
       const num = parseInt(numberValue);
       const partyData = {
         title : partyName,

@@ -5,6 +5,7 @@ import axios from "axios";
 
 const GET_TOP_MNT = "GET_TOP_MNT";
 const GET_DETAIL = "GET_DEATIL";
+const GET_SEARCH = "GET_SEARCH";
 const ADD_COMMENT = "ADD_COMMENT";
 const DELETE_COMMENT = "DELETE_COMMENT";
 const UPDATE_COMMENT = "UPDATE_COMMENT";
@@ -15,6 +16,7 @@ const getTopMnt = createAction(GET_TOP_MNT, (mountainList) => ({
 }));
 const addComment = createAction(ADD_COMMENT, (comment) => ({ comment }));
 const getDetail = createAction(GET_DETAIL, (data) => ({ data }));
+const getSearch = createAction(GET_SEARCH, (data) => ({ data }));
 const deleteComment = createAction(DELETE_COMMENT, (commentId) => ({
   commentId,
 }));
@@ -60,6 +62,19 @@ const getTopMntDB = () => {
       })
       .catch((err) => {
         console.log("(getTopList) 실패 ::", err);
+      });
+  };
+};
+
+const getSearchDB = (keyword, pageNum) => {
+  return function (dispatch, getState) {
+    api
+      .searchName(keyword, pageNum)
+      .then((res) => {
+        dispatch(getSearch(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 };
@@ -141,6 +156,12 @@ export default handleActions(
       produce(state, (draft) => {
         draft.mountainList = action.payload.mountainList;
       }),
+    [GET_SEARCH]: (state, action) =>
+      produce(state, (draft) => {
+        draft.searchList = action.payload.data.searchList;
+        draft.searchTotalPg = action.payload.data.totalPage;
+        draft.searchCurrentPg = action.payload.data.currentPage;
+      }),
     [GET_DETAIL]: (state, action) =>
       produce(state, (draft) => {
         draft.mountainData = action.payload.data;
@@ -182,6 +203,7 @@ const actionCreators = {
   deleteCmtDB,
   updateCmtDB,
   likeDB,
+  getSearchDB,
 };
 
 export { actionCreators };
