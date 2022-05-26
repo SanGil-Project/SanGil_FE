@@ -33,7 +33,6 @@ export const startDB = (mountainId, setCompletedId) => {
 
 export const searchNameDB = (keyword, pageNum) => {
   return function (dispatch, getState) {
-    // console.log(keyword, pageNum)
     api
       .searchName(keyword, pageNum)
       .then((res) => {
@@ -74,7 +73,6 @@ export const endClimbDB = (completedId, data) => {
 };
 
 export const deleteDB = (completedId) => {
-  // console.log(completedId);
   return function (distpatch, getState) {
     api
       .deleteDB(completedId)
@@ -144,7 +142,6 @@ export default handleActions(
   {
     [SET_PATH]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.path);
         draft.polylinePath.polylinePath.push(action.payload.path);
       }),
     [GETSEARCH]: (state, action) => produce(state, (draft) => {
@@ -167,7 +164,6 @@ export default handleActions(
       }),
     [GET_COMPLETED]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload);
         draft.myTrack = action.payload.trackList;
       }),
   },

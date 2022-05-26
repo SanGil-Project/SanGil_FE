@@ -12,8 +12,6 @@ import { Desktop, Mobile } from "../shared/responsive";
 const Login = (props) => {
   const navigate = useNavigate();
 
-  console.log(KAKAO_AUTH_URL);
-
   return (
     <>
       <Grid bg="#fff" width="414px" height="100%" margin="0 auto">

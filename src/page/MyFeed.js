@@ -30,13 +30,11 @@ const MyFeed = (props) => {
     const observer = new IntersectionObserver(
       entries => {
         if (entries[0].isIntersecting) {
-          console.log(totalPage)
           setCurPage((pre) => pre + 1);
         }
       },
       { threshold: 0.25, rootMargin: '80px' },
     );
-    console.log(curPage);
     bottomObserver.current = observer;
   }, []);
 

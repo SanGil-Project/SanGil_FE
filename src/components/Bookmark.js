@@ -19,8 +19,6 @@ const Bookmark = (props) => {
   const myBookmarkList = myBookmarkData?.bookMarkResponseDtos;
   const currentPage = myBookmarkData?.currentPage;
   const totalPage = myBookmarkData?.totalPage;
-
-  console.log(currentPage, totalPage);
   
   const [curPage, setCurPage] = useState(1);
   const [bottom, setBottom] = useState(null);
@@ -31,13 +29,11 @@ const Bookmark = (props) => {
     const observer = new IntersectionObserver(
       entries => {
         if (entries[0].isIntersecting) {
-          console.log(totalPage)
           setCurPage((pre) => pre + 1);
         }
       },
       { threshold: 0.25, rootMargin: '80px' },
     );
-    console.log(curPage);
     bottomObserver.current = observer;
   }, []);
 

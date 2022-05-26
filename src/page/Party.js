@@ -14,6 +14,7 @@ import { Grid, Text, Icon, Button, Input } from "../elements/element";
 import { useNavigate } from "react-router";
 
 const Party = (props) => {
+  const smallSize = window.outerWidth < 500 ? true : false;
   const menuColor = [false, true, false, false, false]; // 메뉴바 색
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -101,7 +102,6 @@ const Party = (props) => {
   }
 
   const moveDetail = (partyId, completed, check) => {
-    console.log(check);
     navigate(`/partydetail/${partyId}`);
   }
 
@@ -261,8 +261,7 @@ const Party = (props) => {
 
           <MenubarContainer>
             <Grid height="88px" maxWidth="500px" margin="auto">
-
-              <UpBtn>
+              <UpBtn smallSize>
                   <Grid 
                     className
                     flexRow bg="#fff" width="60px" height="60px" radius="100%" shadow="0px 3px 4px rgba(0, 0, 0, 0.15)" 
@@ -270,7 +269,7 @@ const Party = (props) => {
                     <Icon type="upBtn" width="24px" height="24px" margin="0 auto"/>
                   </Grid>
               </UpBtn>
-              <CreatPartyBtn>
+              <CreatPartyBtn smallSize>
                 <Grid 
                   flexRow bg="#43CA3B" width="60px" height="60px" radius="100%" shadow="0px 3px 4px rgba(0, 0, 0, 0.15)" 
                   _onClick={() => {
@@ -327,23 +326,17 @@ const MenubarContainer = styled.div`
 `;
 
 const CreatPartyBtn = styled.div`
-  
   position: fixed;
-  // position: absolute;
-  left: calc(50% + 175.5px);
+  right: 
+  ${(props) => (props.smallSize ? `calc(0vw + 14px);`: `calc(50% - 236px);`)}
   bottom: 113px;
-  // right: 5%;
-  // z-index: 9;
 `;
 
 const UpBtn = styled.div`
-  
   position: fixed;
-  // position: absolute;
-  left: calc(50% + 175.5px);
+  right: 
+  ${(props) => (props.smallSize ? `calc(0vw + 14px);`: `calc(50% - 236px);`)}
   bottom: 197px;
-  // right: 5%;
-  // z-index: 9;
 `;
 
 export default Party;

@@ -35,9 +35,7 @@ const ChatInput = (props) => {
         sender: writer,
         type: "TALK",
       };
-      console.log(chatData);
       if (chat === "") {
-        console.log(chatData);
         return;
       }
       waitForConnection(stomp, function () {
@@ -62,7 +60,6 @@ const ChatInput = (props) => {
       if (stomp.ws.readyState == 1) {
         callback();
       } else {
-        console.log(stomp.ws.readyState);
         waitForConnection(stomp, callback);
       }
     }, 1);

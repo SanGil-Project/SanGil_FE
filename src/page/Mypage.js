@@ -21,6 +21,7 @@ import {
 import { Grid, Text, Icon, Image, Button } from "../elements/element";
 
 const Mypage = (props) => {
+  const smallSize = window.outerWidth < 500 ? true : false;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = sessionStorage.getItem("token");
@@ -40,7 +41,6 @@ const Mypage = (props) => {
 
   React.useEffect(() => {
     if (userInfo && token) {
-      console.log("유저확인 완료!! ::", userInfo);
       // if (navigator.geolocation) {
       //   navigator.geolocation.getCurrentPosition((position) => {
       //     dispatch(userActions.myBookmarkDB(position.coords.latitude, position.coords.longitude));
@@ -71,7 +71,6 @@ const Mypage = (props) => {
     navigate(`/searchdetail/${mountainId}`);
   }
   const like = (feedId, goodStatus, goodCnt) => {
-    console.log(feedId, goodStatus, goodCnt)
     setLikeCnt(goodCnt);
     dispatch(feedLikeDB(feedId));
     setLikeCnt((pre) => (goodStatus ? (pre - 1) : (pre + 1)));
@@ -84,9 +83,6 @@ const Mypage = (props) => {
       navigate("/", { replace: true });
     }
   }
-
-  console.log(completedList);
-
 
   return (
     <React.Fragment>
@@ -149,7 +145,6 @@ const Mypage = (props) => {
                 <HorizontalScroll>
                   {completedList?.map((cur, idx) => {
                     const time = cur.totalTime.split(":");
-                    console.log(time);
                     return (
                     <Grid bg="white" key={idx}  width="auto" height="auto" padding="12px" radius="12px" margin="0 10px 20px 0" _onClick={()=>{moveMytrack(cur.completedId)}} hover>
                         <Grid height="auto" isFlex>
@@ -233,7 +228,7 @@ const Mypage = (props) => {
           </MypageWrap>
           <MenubarContainer>
             <Grid height="88px" maxWidth="500px" margin="auto">
-              <TrackBtn>
+              <TrackBtn smallSize>
                 <Button
                   width="60px"
                   height="60px"
@@ -260,10 +255,10 @@ const MypageContainer = styled.div`
   // position: relative;
   width: 100%;
   height: 100%;
-  // min-width: 414px;
   max-width: 500px;
   margin: auto;
   background-color: #F1F1F1;
+  overflow: scroll;
 `;
 
 const MypageWrap = styled.div`
@@ -293,7 +288,8 @@ const MenubarContainer = styled.div`
 
 const TrackBtn = styled.div`
   position: fixed;
-  right: calc(50% - 236px);
+  right: 
+  ${(props) => (props.smallSize ? `calc(0vw + 14px);`: `calc(50% - 236px);`)}
   bottom: 113px;
 `;
 

@@ -7,7 +7,6 @@ import { actionCreators as mountAction } from "../redux/modules/mountain";
 
 const Comment = (props) => {
   const { data, setUpdateCmt, updateCmt } = props;
-  console.log(data);
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.userInfo);
 

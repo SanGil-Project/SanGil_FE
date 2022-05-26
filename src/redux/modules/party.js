@@ -60,8 +60,6 @@ const getPartyDB = (pageNum) => {
 const getKeywordPartyDB = (pageNum, keyword) => {
   return function (dispatch, getState) {
 
-    // console.log(keyword, pageNum)
-
     api
       .searchParty(keyword, pageNum)
       .then((res) => {
@@ -77,8 +75,6 @@ const getKeywordPartyDB = (pageNum, keyword) => {
 const getOnePartyDB = (partyId = null) => {
   return function (dispatch, getState) {
 
-    // const partyList = getState().party.list.partyList;
-    // console.log(partyList);
     api
       .getOneParty(partyId)
       .then((res) => {
@@ -98,7 +94,6 @@ const getOnePartyDB = (partyId = null) => {
 
 const addPartyDB = (party = {}) => {
   return function (dispatch, getState) {
-    // console.log(party);
     api
       .addParty(party)
       .then((res) => {
@@ -114,7 +109,6 @@ const addPartyDB = (party = {}) => {
 
 const editPartyDB = (partyId = null, party = {}) => {
   return function (dispatch, getState) {
-    // console.log(party);
 
     api
       .editParty(partyId, party)
@@ -132,7 +126,6 @@ const editPartyDB = (partyId = null, party = {}) => {
 const attendPartyDB = (partyId = null) => {
   return function (dispatch, getState) {
     const _user = getState().user.userInfo;
-    // console.log(_user);
     const user_info = {
       nickname: _user.nickname,
       userTitle: _user.userTitle,
@@ -158,7 +151,6 @@ const attendPartyDB = (partyId = null) => {
 
 const deletePartyDB = (partyId = null) => {
   return function (dispatch, getState) {
-    console.log(partyId)
     api
       .delParty(partyId)
       .then((res) => {
