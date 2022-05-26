@@ -15,6 +15,7 @@ import {
 } from "../components/component";
 import { Grid, Text, Icon, Button, Input, Image } from "../elements/element";
 import { useNavigate } from "react-router";
+import { indexOf } from "lodash";
 
 const Search = (props) => {
   const smallSize = window.outerWidth < 500 ? true : false;

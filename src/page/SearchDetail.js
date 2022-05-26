@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Grid, Text, Image, Input, Button, Icon } from "../elements/element";
-import { CourseCard, Menubar } from "../components/component";
+import { CourseCard, Menubar, Header } from "../components/component";
 import { actionCreators as mountAction } from "../redux/modules/mountain";
 import _ from "lodash";
 import { useNavigate, useParams } from "react-router";
@@ -43,14 +43,10 @@ const SearchDetail = () => {
   return (
     <>
       <DetailContainer>
+        <Header />
         <Grid overflowY="scroll" height="100vh" padding="74px 0 0 0">
           <Grid width="93.23%" height="48px" margin="0 auto" isFlex>
-            <Grid
-              width="35.26%"
-              margin="0"
-              height="48px"
-              flex="flex"
-            >
+            <Grid width="35.26%" margin="0" height="48px" flex="flex">
               <Text
                 margin="0"
                 bold="600"

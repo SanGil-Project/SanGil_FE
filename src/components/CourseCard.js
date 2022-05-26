@@ -1,7 +1,5 @@
 import React from "react";
 import { Grid, Text, Icon } from "../elements/element";
-import { Desktop, Mobile } from "../shared/responsive";
-
 const CourseCard = (props) => {
   const { data } = props;
   return (

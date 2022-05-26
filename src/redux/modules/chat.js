@@ -8,9 +8,7 @@ const SEND_CHAT = "SEND_CHAT";
 const ENTER_CHAT = "ENTER_CHAT";
 
 const initialState = {
-  chatList: [
-
-  ],
+  chatList: [],
 };
 
 const addChatRoom = createAction(ADD_CHATROOM, (chatRoom) => ({ chatRoom }));
@@ -38,10 +36,9 @@ const addChatRoomDB = (title, partyId) => {
 
 const enterChatDB = (chatRoomId) => {
   return function (dispatch, getState) {
-
     dispatch(getChat([]));
 
-    // const 
+    // const
     return;
     api
       .enterChatRoom(chatRoomId)
@@ -58,12 +55,10 @@ const enterChatDB = (chatRoomId) => {
 
 const getChatDB = (content) => {
   return function (dispatch, getState) {
-    console.log("content :: ", content);
-    
     dispatch(getChat(content));
     return;
-  }
-}
+  };
+};
 
 export default handleActions(
   {

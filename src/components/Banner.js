@@ -13,9 +13,16 @@ const Banner = () => {
     autoplaySpeed: 3000,
     draggable: true,
   };
+
   return (
     <Slider {...settings}>
-      <Grid padding="0 1px" hover>
+      <Grid
+        padding="0 1px"
+        hover
+        _onClick={() =>
+          window.open("https://forms.gle/c3oqW5aNZo96tVMf6", "_blank")
+        }
+      >
         <Image
           width="100%"
           height="100px"
@@ -23,7 +30,13 @@ const Banner = () => {
           src={require("../assets/images/Banner_1.png")}
         />
       </Grid>
-      <Grid padding="0 1px" hover>
+      <Grid
+        padding="0 1px"
+        hover
+        _onClick={() =>
+          window.open("https://forms.gle/c3oqW5aNZo96tVMf6", "_blank")
+        }
+      >
         <Image
           width="100%"
           height="100px"

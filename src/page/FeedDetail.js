@@ -37,7 +37,6 @@ const FeedCmt = () => {
     // 현재 높이:  curHeight
     const clientHeight = e.target.scrollHeight;
     const curHeight = e.target.scrollTop;
-    console.log(clientHeight - curHeight);
     if (
       clientHeight - curHeight <= 1000 &&
       !(feedCmt?.totalPage - 1 === feedCmt?.currentPage)
@@ -185,64 +184,76 @@ const FeedCmt = () => {
           </Text>
         </Grid>
         <div>
-          {feedCmt?.commentResponseDtos.map((el, idx) => (
-            <Grid width="91.78%" height="100px" margin="10px auto" key={idx}>
-              <Grid height="40px" margin="0" flex="flex">
-                {el.userImgUrl !== "없음" ? (
-                  <Image
-                    type="circle"
-                    width="40px"
-                    height="40px"
-                    src={el.userImgUrl}
-                  />
-                ) : (
-                  <Icon width="40px" height="40px" />
-                )}
-                <Grid margin="0 0 0 10px" width="89%">
-                  <Grid height="16px" isFlex>
-                    <Text
-                      bold="500"
-                      size="1.2rem"
-                      margin="0"
-                      height="12px"
-                      lineHeight="12px"
-                      color="#43CA3B"
-                    >
-                      [{el.userTitle}]
+          {feedCmt?.commentResponseDtos.length === 0 ? (
+            <Grid width="250px" margin="0 auto">
+              <Image
+                width="250px"
+                src={require("../assets/images/NoCmt.png")}
+              />
+              <Text bold="800" color="#d2d2d2" size="32px" align="center">
+                댓글이 없어요
+              </Text>
+            </Grid>
+          ) : (
+            feedCmt?.commentResponseDtos.map((el, idx) => (
+              <Grid width="91.78%" height="100px" margin="10px auto" key={idx}>
+                <Grid height="40px" margin="0" flex="flex">
+                  {el.userImgUrl !== "없음" ? (
+                    <Image
+                      type="circle"
+                      width="40px"
+                      height="40px"
+                      src={el.userImgUrl}
+                    />
+                  ) : (
+                    <Icon width="40px" height="40px" />
+                  )}
+                  <Grid margin="0 0 0 10px" width="89%">
+                    <Grid height="16px" isFlex>
+                      <Text
+                        bold="500"
+                        size="1.2rem"
+                        margin="0"
+                        height="12px"
+                        lineHeight="12px"
+                        color="#43CA3B"
+                      >
+                        [{el.userTitle}]
+                      </Text>
+                      {el.userId === userId ? (
+                        <Grid width="60px" isFlex>
+                          <Text bold="300" size="1.2rem">
+                            수정
+                          </Text>
+                          <Text
+                            bold="300"
+                            size="1.2rem"
+                            color="#FF7676"
+                            hover
+                            _onClick={() => deleteCmt(el.commentId)}
+                          >
+                            삭제
+                          </Text>
+                        </Grid>
+                      ) : null}
+                    </Grid>
+                    <Text bold="700" size="1.6rem" margin="0">
+                      {el.nickname}
                     </Text>
-                    {el.userId === userId ? (
-                      <Grid width="60px" isFlex>
-                        <Text bold="300" size="1.2rem">
-                          수정
-                        </Text>
-                        <Text
-                          bold="300"
-                          size="1.2rem"
-                          color="#FF7676"
-                          hover
-                          _onClick={() => deleteCmt(el.commentId)}
-                        >
-                          삭제
-                        </Text>
-                      </Grid>
-                    ) : null}
                   </Grid>
-                  <Text bold="700" size="1.6rem" margin="0">
-                    {el.nickname}
+                </Grid>
+                <Grid height="50px" margin="0 0 0 11%" width="89%" isFlex>
+                  <Text bold="500" size="1.6rem">
+                    {el.feedComment}
+                  </Text>
+                  <Text bold="500" size="1.4rem" color="#C0C0C0">
+                    {el.beforeTime}
                   </Text>
                 </Grid>
+                <Line />
               </Grid>
-              <Grid height="50px" margin="0 0 0 11%" width="89%" isFlex>
-                <Text bold="500" size="1.6rem">
-                  {el.feedComment}
-                </Text>
-                <Text bold="500" size="1.4rem" color="#C0C0C0">
-                  {el.beforeTime}
-                </Text>
-              </Grid>
-              <Line />
-            </Grid>
-          ))}
+            ))
+          )}
         </div>
       </Grid>
       <MenubarContainer>
