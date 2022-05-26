@@ -133,7 +133,12 @@ const ChatRoom = (props) => {
                       radius="10px"
                       width="auto"
                     >
-                      <Text margin="0" bold="500" size="16px">
+                      <Text
+                        margin="0"
+                        bold="500"
+                        size="16px"
+                        wordBreak="break-all"
+                      >
                         {chat.message}{" "}
                       </Text>
                     </Grid>
@@ -162,8 +167,13 @@ const ChatRoom = (props) => {
                       radius="10px"
                       width="auto"
                     >
-                      <Text margin="0" bold="500" size="16px">
-                        {chat.message}{" "}
+                      <Text
+                        margin="0"
+                        bold="500"
+                        size="16px"
+                        wordBreak="break-all"
+                      >
+                        {chat.message}
                       </Text>
                     </Grid>
                     <Text

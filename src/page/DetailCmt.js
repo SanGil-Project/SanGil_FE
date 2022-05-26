@@ -31,15 +31,22 @@ const DetailCmt = () => {
 
   const sendComment = () => {
     if (updateCmt.state) {
-      dispatch(
-        mountAction.addCommentDB(mountainId, {
-          mountainComment: comment,
-          star: star.filter(Boolean).length,
-        })
-      );
+      if (comment === "") {
+        return alert("댓글을 입력해주세요");
+      } else {
+        dispatch(
+          mountAction.addCommentDB(mountainId, {
+            mountainComment: comment,
+            star: star.filter(Boolean).length,
+          })
+        );
+      }
       setComment("");
       setPageNum(mountain?.commentDto.totalPage);
     } else {
+      if (comment === "") {
+        return alert("댓글을 입력해주세요");
+      }
       dispatch(
         mountAction.updateCmtDB({
           mountainCommentId: updateCmt.mountainCommentId,

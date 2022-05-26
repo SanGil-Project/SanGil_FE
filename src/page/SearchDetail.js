@@ -45,13 +45,18 @@ const SearchDetail = () => {
       <DetailContainer>
         <Grid overflowY="scroll" height="100vh" padding="74px 0 0 0">
           <Grid width="93.23%" height="48px" margin="0 auto" isFlex>
-            <Grid width="30.26%" margin="0" height="48px" flex="flex">
+            <Grid
+              width="35.26%"
+              margin="0"
+              height="48px"
+              flex="flex"
+            >
               <Text
                 margin="0"
                 bold="600"
                 size="20px"
                 lineHeight="48px"
-                maxWidth="100px"
+                maxWidth="200px"
               >
                 {mountain?.mountain}
               </Text>
