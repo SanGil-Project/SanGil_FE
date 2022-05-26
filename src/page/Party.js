@@ -269,6 +269,24 @@ const Party = (props) => {
                       </Text>
                     </Grid>
                   </Grid>
+                  <Grid flexColumn padding="27px 0 0">
+                    <Button
+                      type="div"
+                      bgColor={btnBg}
+                      border="none"
+                      radius="4px"
+                      width="170px"
+                      height="48px"
+                      margin="20px 0 0"
+                      _onClick={() => {
+                        moveDetail(p.partyId, p.completed, isCompleted[idx]);
+                      }}
+                    >
+                      <Text margin="0" align color="#fff">
+                        {btnText}
+                      </Text>
+                    </Button>
+                  </Grid>
                 </Grid>
               );
             })}

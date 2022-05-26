@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as userActions } from "../redux/modules/user";
+import { actionCreators as handleActions } from "../redux/modules/handle";
 
 import {
   Menubar,
@@ -27,6 +28,7 @@ const MyFeed = (props) => {
 
   // observer 적용
   React.useEffect(() => {
+    dispatch(handleActions.isPagename(""));
     const observer = new IntersectionObserver(
       entries => {
         if (entries[0].isIntersecting) {
