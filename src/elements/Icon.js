@@ -57,9 +57,9 @@ const Icon = (props) => {
         <path 
           d="M12.0003 14.5V17" 
           stroke="black" 
-          stroke-width="2" 
-          stroke-linecap="round" 
-          stroke-linejoin="round"/>
+          strokeWidth="2" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"/>
       </MenuIcon>
     );
   }
