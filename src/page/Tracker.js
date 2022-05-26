@@ -49,7 +49,6 @@ const Tracker = (props) => {
     if ("wakeLock" in navigator) {
       try {
         wakeLock?.release();
-        console.log("Wake lock has been released.");
       } catch (err) {
         console.log(err);
       }
@@ -103,7 +102,6 @@ const Tracker = (props) => {
         );
       }
     }, 3000);
-    console.log(distance.distanceK);
     return () => clearTimeout(path.current);
   }, [myLoca]);
 

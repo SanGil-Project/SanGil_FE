@@ -55,19 +55,14 @@ const initialState = {
 // 카카오 로그인
 const kakaoLoginDB = (code) => {
   return function (dispatch, getState) {
-    // console.log("모듈에서 확인 ::", code);
     api
       .kakaoLogin(code)
       .then((res) => {
-        console.log(res);
         const ACCESS_TOKEN = res.headers.authorization;
         sessionStorage.setItem("token", ACCESS_TOKEN); //세션에 저장
         dispatch(isLogInDB(ACCESS_TOKEN));
       })
       .catch((err) => {
-        // console.log("카카오로그인 에러", err);
-        // console.log("카카오로그인 에러", err.response);
-        // alert("api는 가는 거겠죠?");
         window.alert("로그인에 실패하였습니다.");
       });
   };
@@ -84,7 +79,6 @@ const naverLoginDB = (code, state) => {
         dispatch(isLogInDB(ACCESS_TOKEN));
       })
       .catch((err) => {
-        // console.log("네이버로그인 에러", err);
         window.alert("로그인에 실패하였습니다.");
       });
   };
@@ -101,7 +95,6 @@ const googleLoginDB = (code) => {
         dispatch(isLogInDB(ACCESS_TOKEN));
       })
       .catch((err) => {
-        // console.log("구글로그인 에러", err);
         window.alert("로그인에 실패하였습니다.");
       });
   };
@@ -127,7 +120,6 @@ const nameCheckDB = (nickname) => {
     api
       .nameCheck(nickname)
       .then((res) => {
-        console.log("(nameCheck) 성공 후 데이터 ::", res);
         dispatch(nameCheck(res.data));
       })
       .catch((err) => {
@@ -144,7 +136,7 @@ const changeImgDB = (file, image) => {
     api
       .changeImg(formData)
       .then((res) => {
-        console.log("(changeImg) 성공 후 데이터 ::", res);
+
         const _user = {
           userId: userdata.userId,
           userImageUrl: image,
@@ -165,7 +157,6 @@ const changeNameDB = (nickname) => {
     api
       .changeName(nickname)
       .then((res) => {
-        console.log("(changeName) 성공 후 데이터 ::", res);
         const _user = {
           changeUser: {
           userId: userdata.userId,
@@ -189,7 +180,6 @@ const changeTitleDB = (userTitle) => {
     api
       .changeTitle(userTitle)
       .then((res) => {
-        console.log("(changeTitle) 성공 후 데이터 ::", res);
         const _user = {
           changeUser: {
             userId: userdata.userId,
@@ -205,10 +195,6 @@ const changeTitleDB = (userTitle) => {
           }
         };
         
-        // const titleImg = {
-        //   changeImg: res.data.userTitleUrl,
-        //   prevImg: res.data.black,
-        // }
         dispatch(changeInfo(_user));
       })
       .catch((err) => {
@@ -219,38 +205,9 @@ const changeTitleDB = (userTitle) => {
 
 const myTrackingDB = () => {
   return async function (dispatch, getState) {
-
-
-    // const fakeDB = {
-    //   completedList : [
-    //   {
-    //     completedId : 1,
-    //     mountainId : 1,
-    //     mountain : "속리산",
-    //     lat : 36.56329698,
-    //     lng : 127.9172195,
-    //     totalDistance: 10.3,
-    //     totalTime: "4:20:13",
-    //     creatDate: "2022-05-22",
-    //   },
-    //   {
-    //     completedId : 3,
-    //     mountainId : 2,
-    //     mountain : "화악산",
-    //     lat : 37.8881266,
-    //     lng : 127.5492755,
-    //     totalDistance: 20.3,
-    //     totalTime: "6:20:13",
-    //     creatDate: "2022-05-22",
-    //   },
-    // ]}
-
-    // dispatch(myTracking(fakeDB));
-    // return;
     api
       .myTracking()
       .then((res) => {
-        console.log("(myTracking) 성공 후 데이터 ::", res);
         dispatch(myTracking(res.data));
       })
       .catch((err) => {
@@ -261,39 +218,9 @@ const myTrackingDB = () => {
 
 const myMountainDB = (mountainId) => {
   return function (dispatch, getState) {
-
-    // const fakeDB1 = {
-    //   completedList : [
-    //   {
-    //     completedId : 1,
-    //     mountain : "속리산",
-    //     totalDistance: 10.3,
-    //     totalTime: "4:20:13",
-    //     creatDate: "2022-05-22",
-    //   },
-    // ]}
-    // const fakeDB2 = {
-    //   completedList : [
-    //   {
-    //     completedId : 3,
-    //     mountain : "화악산",
-    //     totalDistance: 20.3,
-    //     totalTime: "6:20:13",
-    //     creatDate: "2022-05-22",
-    //   },
-    // ]}
-    // if(mountainId === 1) {
-    //   dispatch(myMountain(fakeDB1));
-      
-    // }else {
-    //   dispatch(myMountain(fakeDB2));
-    // }
-    // return;
-
     api
       .myMount(mountainId)
       .then((res) => {
-        console.log("(myMount) 성공 후 데이터 ::", res);
         dispatch(myMountain(res.data));
       })
       .catch((err) => {
@@ -309,7 +236,6 @@ const myFeedDB = (pageNum = null) => {
       api
         .myFeedList(pageNum)
         .then((res) => {
-          console.log("(myFeedList) 성공 후 데이터 ::", res);
           dispatch(myFeed(res.data));
         })
         .catch((err) => {
@@ -320,7 +246,6 @@ const myFeedDB = (pageNum = null) => {
     api
       .myFeed()
       .then((res) => {
-        console.log("(myFeed) 성공 후 데이터 ::", res);
         const list = {feedList: [...res.data]}
         dispatch(myFeed(list));
       })
@@ -336,7 +261,6 @@ const myBookmarkDB = (pageNum, lat, lng) => {
     api
       .myBookmark(pageNum, lat, lng)
       .then((res) => {
-        console.log("(myBookmark) 성공 후 데이터 ::", res);
         dispatch(myBookmark(res.data));
       })
       .catch((err) => {
@@ -364,7 +288,6 @@ const myTitleDB = () => {
     api
       .myTitle()
       .then((res) => {
-        console.log("(myTitle) 성공 후 데이터 ::", res);
         dispatch(myTitle(res.data));
       })
       .catch((err) => {

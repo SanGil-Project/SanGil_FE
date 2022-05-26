@@ -44,9 +44,6 @@ const ChatInput = (props) => {
           { token: token },
           JSON.stringify(chatData)
         );
-        // console.log(stomp.ws.readyState);
-        // console.log(chatData);
-        // dispatch(chatActions.sendChat(chatData));
         setChat("");
       });
     } catch (err) {
