@@ -77,7 +77,6 @@ const Menubar = (props) => {
           hover
           _onClick={() => {
             navigate("/main");
-            window.location.reload();
           }}
         >
           <Icon

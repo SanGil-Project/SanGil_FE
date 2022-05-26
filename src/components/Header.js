@@ -13,6 +13,9 @@ const Header = () => {
   const token = sessionStorage?.getItem("token");
   const dispatch = useDispatch();
 
+  const goHome = () => {
+    navigate("/main", { replace: true });
+  };
   React.useEffect(() => {
     if (token) {
       dispatch(isLogInDB(token));
@@ -46,12 +49,14 @@ const Header = () => {
                 width="auto"
                 height="auto"
                 margin="5px 0 0"
+                hover
+                _onClick={goHome}
                 src="https://user-images.githubusercontent.com/91959791/168339851-d18da908-8213-49a7-a365-9cad6a0e862e.png"
               />
             </Grid>
           </Grid>
-      </Grid>
-    </>
+        </Grid>
+      </>
     );
   }
   if (!noBack) {
@@ -72,7 +77,7 @@ const Header = () => {
               margin="0 0 0 17px"
               _onClick={() => navigate(-1)}
               hover
-              >
+            >
               <Icon
                 type="headerBack"
                 width="12px"
@@ -84,22 +89,23 @@ const Header = () => {
               {isPagename ? (
                 <Text margin="0 10px 0 0" size="18px" bold="600">
                   {isPagename}
-                </Text>) : (
+                </Text>
+              ) : (
                 <Image
                   width="auto"
                   height="auto"
                   margin="0 5% 0 0"
+                  _onClick={goHome}
                   src="https://user-images.githubusercontent.com/91959791/168339851-d18da908-8213-49a7-a365-9cad6a0e862e.png"
                 />
-                )}
+              )}
             </Grid>
             <Grid width="12px" height="20px"></Grid>
           </Grid>
         </Grid>
       </>
-    )
+    );
   }
-
 };
 
 export default Header;

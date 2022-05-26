@@ -46,11 +46,11 @@ const FeedCard = (props) => {
           ) : (
             <Icon width="40px" border="1px solid black" />
           )}
-          <Grid height="40px" margin="0 0 0 5px">
-            <Text margin="6px 0 0 5px" size="0.9rem" bold="200">
+          <Grid height="40px" lineHeight="15px" margin="0 0 0 5px">
+            <Text margin="6px 0 0 5px" size="1.2rem" bold="200">
               {el.userTitle}
             </Text>
-            <Text margin="0 0 6px 5px" bold="500" size="1.2rem">
+            <Text margin="0 0 6px 5px" bold="500" size="1.4rem">
               {el.nickname}
             </Text>
           </Grid>

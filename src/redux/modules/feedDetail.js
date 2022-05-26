@@ -5,6 +5,7 @@ import { api } from "../../shared/api";
 const GET_DETAIL = "GET_DETAIL";
 const DELETE_FEED = "DELETE_FEED";
 const ADD_CMT = "ADD_CMT";
+const MORE_CMT = "MORE_CMT";
 const DELETE_CMT = "DELETE_CMT";
 const UPDATE_CMT = "UPDATE_CMT";
 const DETAIL_LIKE = "DETAIL_LIKE";
@@ -12,6 +13,7 @@ const DETAIL_LIKE = "DETAIL_LIKE";
 const getFeedDetail = createAction(GET_DETAIL, (feed) => ({ feed }));
 const deleteFeed = createAction(DELETE_FEED, (data) => ({ data }));
 const addFeedCmt = createAction(ADD_CMT, (comment) => ({ comment }));
+const moreCmt = createAction(MORE_CMT, (feedList) => ({ feedList }));
 const deleteFeedCmt = createAction(DELETE_CMT, (feedCommentId) => ({
   feedCommentId,
 }));
@@ -25,7 +27,11 @@ export const getDetailDB = (feedId, pageNum) => {
     api
       .getFeedDetail(feedId, pageNum)
       .then((res) => {
-        dispatch(getFeedDetail(res.data));
+        if (res.data.feedCommentListDto.currentPage === 0) {
+          dispatch(getFeedDetail(res.data));
+        } else {
+          dispatch(moreCmt(res.data.feedCommentListDto));
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -65,6 +71,7 @@ export const addCmtDB = (feedId, feedComment) => {
       .addFeedCmt(feedId, feedComment)
       .then((res) => {
         dispatch(addFeedCmt({ ...res.data, feedComment }));
+        alert("댓글이 작성되었습니다");
       })
       .catch((err) => {
         console.log(err);
@@ -91,6 +98,17 @@ export default handleActions(
       produce(state, (draft) => {
         draft.feed = action.payload.feed;
       }),
+    [MORE_CMT]: (state, action) =>
+      produce(state, (draft) => {
+        const moreCmt =
+          draft.feed.feedCommentListDto.commentResponseDtos.concat(
+            action.payload.feedList.commentResponseDtos
+          );
+        draft.feed.feedCommentListDto = {
+          ...action.payload.feedList,
+          commentResponseDtos: moreCmt,
+        };
+      }),
     [DETAIL_LIKE]: (state, action) =>
       produce(state, (draft) => {
         draft.feed = {
@@ -105,9 +123,10 @@ export default handleActions(
       }),
     [ADD_CMT]: (state, action) =>
       produce(state, (draft) => {
-        draft.feed.feedCommentListDto.commentResponseDtos.push(
-          action.payload.comment
-        );
+        draft.feed.feedCommentListDto.commentResponseDtos.unshift({
+          ...action.payload.comment,
+          beforeTime: "방금 전",
+        });
       }),
     [DELETE_CMT]: (state, action) =>
       produce(state, (draft) => {

@@ -20,7 +20,6 @@ const ChatInput = (props) => {
   const { chatRoomId } = props;
   const writer = _userInfo?.nickname;
   stomp.debug = null;
-
   const [chat, setChat] = React.useState("");
 
   const onChange = (e) => {

@@ -23,13 +23,28 @@ const FeedCmt = () => {
     (state) => state.feedDetail.feed?.feedCommentListDto
   );
   const userId = useSelector((state) => state.user.userInfo?.userId);
+  const [pageNum, setPageNum] = React.useState(1);
   const { feedId } = useParams();
-  const menuColor = [false, false, false, true, false]; // 메뉴바 색
+  const menuColor = [true, false, false, false, false]; // 메뉴바 색
   const [cmt, setCmt] = React.useState(null);
 
   const detailLike = () => {
     dispatch(detailLikeDB(feedId));
   };
+
+  const onScroll = _.throttle((e) => {
+    // 총 높이: e.target.scrollHeight
+    // 현재 높이:  curHeight
+    const clientHeight = e.target.scrollHeight;
+    const curHeight = e.target.scrollTop;
+    console.log(clientHeight - curHeight);
+    if (
+      clientHeight - curHeight <= 1000 &&
+      !(feedCmt?.totalPage - 1 === feedCmt?.currentPage)
+    ) {
+      setPageNum((prev) => prev + 1);
+    }
+  }, 500);
 
   const getText = (e) => {
     setCmt(e.target.value);
@@ -58,13 +73,17 @@ const FeedCmt = () => {
   };
 
   React.useEffect(() => {
-    dispatch(getDetailDB(feedId, 1));
-  }, []);
+    dispatch(getDetailDB(feedId, pageNum));
+    window.addEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [pageNum]);
 
   return (
     <>
       <Header />
-      <Grid padding="64px 0 88px 0" overflowY="scroll">
+      <Grid padding="64px 0 88px 0" overflowY="scroll" _onScroll={onScroll}>
         <div>
           <Grid maxWidth="91.78%" margin="0 auto">
             <Grid width="93.23%" height="52px" margin="10px auto 0 auto" isFlex>
@@ -167,7 +186,7 @@ const FeedCmt = () => {
         </Grid>
         <div>
           {feedCmt?.commentResponseDtos.map((el, idx) => (
-            <Grid width="91.78%" height="100px" margin="10px auto">
+            <Grid width="91.78%" height="100px" margin="10px auto" key={idx}>
               <Grid height="40px" margin="0" flex="flex">
                 {el.userImgUrl !== "없음" ? (
                   <Image

@@ -15,6 +15,7 @@ const Image = (props) => {
     objectFit,
     shadow,
     hover,
+    _onClick,
   } = props;
   const styles = {
     src,
@@ -41,7 +42,9 @@ const Image = (props) => {
       </React.Fragment>
     );
   }
-  return <Img onChange={onChange} src={src} {...styles}></Img>;
+  return (
+    <Img onChange={onChange} onClick={_onClick} src={src} {...styles}></Img>
+  );
 };
 
 Image.defaultProps = {
@@ -59,10 +62,12 @@ const Img = styled.img`
   ${(props) => (props.border ? `border: ${props.border};` : null)}
   ${(props) =>
     props.borderRadius ? `border-radius: ${props.borderRadius};` : null}
-  ${(props) => (props.shadow ? `shadow : 0 4px 12px rgba(0, 0, 0, 0.1);` : null)}
+  ${(props) =>
+    props.shadow ? `shadow : 0 4px 12px rgba(0, 0, 0, 0.1);` : null}
   object-fit:${(props) => `${props.objectFit}`};
   box-sizing: border-box;
   ${(props) => (props.zindex ? `z-index: ${props.zindex};` : null)}
+  ${(props) => (props.hover ? `&:hover {cursor: pointer;};` : null)}
 `;
 
 const AspectOutter = styled.div`
@@ -87,7 +92,7 @@ const CircleImg = styled.img`
   ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
   border-radius: 100%;
   object-fit: cover;
-  ${(props) => props.hover ? `&:hover { cursor: pointer; };` : null}
+  ${(props) => (props.hover ? `&:hover { cursor: pointer; };` : null)}
 `;
 
 export default Image;

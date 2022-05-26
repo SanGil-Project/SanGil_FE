@@ -42,8 +42,8 @@ const PartyDetail = (props) => {
   const attendParty = (partyId) => {
     if (curtParty.nickname === userInfo.nickname) {
       setModalContent("모임 주최자는 취소할수 없어요!!");
-      setModalType("check")
-      setModalOpen(true)
+      setModalType("check");
+      setModalOpen(true);
       return;
     }
     if (partymember.length === curtParty.maxPeople) {
@@ -51,9 +51,9 @@ const PartyDetail = (props) => {
         dispatch(partyActions.attendPartyDB(partyId));
         return;
       }
-      setModalContent("모집이 완료되었습니다!");
-      setModalType("check")
-      setModalOpen(true)
+      setModalContent("이미 완료된 모임입니다!");
+      setModalType("check");
+      setModalOpen(true);
       return;
     }
     dispatch(partyActions.attendPartyDB(partyId));
@@ -62,201 +62,251 @@ const PartyDetail = (props) => {
   const enterChatRoom = (partyId) => {
     dispatch(chatActions.enterChatDB(partyId));
     navigate(`/chatroom/${partyId}`);
-  }
+  };
 
   const deleteParty = (partyId) => {
     setModalContent("모임을 삭제하시겠어요? 😭");
-    setModalType("choice")
-    setModalOpen(true)
-  }
+    setModalType("choice");
+    setModalOpen(true);
+  };
 
   const deleteCheck = (check) => {
     if (check) {
       dispatch(partyActions.deletePartyDB(curtParty.partyId));
       navigate("/party", { replace: true });
     }
-  }
+  };
   return (
     <React.Fragment>
-        <PartyContainer>
-          <Header />
-          { modalOpen && 
-            <AlertModal 
-              type={modalType}
-              onClose={setModalOpen} 
-              modalState={modalOpen}
-              contents={modalContent}
-              checkFunction={modalType === "choice" ? deleteCheck : null} /> }
-          <PartyWrap>
-            <Grid padding="64px 0 8px" bg="#F2F3F6" height="auto">
-              <Grid isFlex padding="13px 14px" borderBottom="1px solid #DEDEDE"  bg="#fff" height="auto">
-                <Grid flexRow margin="0">
-                  <Image
-                    type="circle"
-                    width="32px"
-                    height="32px"
-                    margin="0 14px 0 0"
-                    src={img}
-                  />
-                  <Grid>
-                    <Text margin="0" size="12px" bold="500">
-                      [{curtParty?.userTitle}] {curtParty?.nickname}
-                    </Text>
-                  </Grid>
+      <PartyContainer>
+        <Header />
+        {modalOpen && (
+          <AlertModal
+            type={modalType}
+            onClose={setModalOpen}
+            modalState={modalOpen}
+            contents={modalContent}
+            checkFunction={modalType === "choice" ? deleteCheck : null}
+          />
+        )}
+        <PartyWrap>
+          <Grid padding="64px 0 8px" bg="#F2F3F6" height="auto">
+            <Grid
+              isFlex
+              padding="13px 14px"
+              borderBottom="1px solid #DEDEDE"
+              bg="#fff"
+              height="auto"
+            >
+              <Grid flexRow margin="0">
+                <Image
+                  type="circle"
+                  width="32px"
+                  height="32px"
+                  margin="0 14px 0 0"
+                  src={img}
+                />
+                <Grid>
+                  <Text margin="0" size="12px" bold="500">
+                    [{curtParty?.userTitle}] {curtParty?.nickname}
+                  </Text>
                 </Grid>
-                {myMode && 
+              </Grid>
+              {myMode && (
                 <Grid width="auto" margin="0" flexRow>
-                  <Grid _onClick={()=>{navigate(`/partywrite/${curtParty.partyId}`);}}>
-                  <Icon type="partyEdit" width="48px" height="48px" margin="auto"/>
+                  <Grid
+                    _onClick={() => {
+                      navigate(`/partywrite/${curtParty.partyId}`);
+                    }}
+                  >
+                    <Icon
+                      type="partyEdit"
+                      width="48px"
+                      height="48px"
+                      margin="auto"
+                    />
                   </Grid>
-                  <Grid _onClick={()=>{deleteParty(curtParty.partyId)}}>
-                    <Icon type="partyDelete" width="48px" height="48px" margin="auto"/>
-                  </Grid>
-                </Grid>}
-              </Grid>
-              <Grid padding="20px 14px" margin="0 0 8px" height="auto" flexColumn  bg="#fff">
-                <Grid alignItems="left">
-                  <Grid isFlex margin="0 0 33.5px" height="auto">
-                    <Text margin="0 20px 0 0" size="18px" bold="600" wordBreak="break-all" lineHeight="24px">
-                      {curtParty?.title}
-                    </Text>
-                    <Text
-                      margin="0"
-                      bold="400"
-                      size="12px"
-                      nowrap
-                      color="#5E5E5E"
-                      // ellipsis="1"
-                    >
-                      {curtParty?.beforeTime}
-                    </Text>
-                  </Grid>
-                  <Grid flexRow justify="left" padding="0 0 10px">
-                    <Grid width="18px">
-                      <Icon
-                        type="partyMountain"
-                        width="18px"
-                        height="17px"
-                        margin="0 auto"
-                        fill="#43CA3B"
-                      />
-                    </Grid>
-                    <Text margin="0 12px" bold="500" size="14px">
-                      {curtParty?.mountain} ({curtParty?.address})
-                    </Text>
-                  </Grid>
-                  <Grid flexRow justify="left" padding="0 0 10px">
-                    <Grid width="18px">
-                      <Icon
-                        type="partyDate"
-                        width="15px"
-                        height="17px"
-                        margin="0 auto"
-                        fill="#43CA3B"
-                      />
-                    </Grid>
-                    <Text margin="0 12px" bold="500" size="14px">
-                      {curtParty?.partyDate} (시간 {curtParty?.partyTime})
-                    </Text>
-                  </Grid>
-                  <Grid flexRow justify="left" padding="0 0 10px">
-                    <Grid width="18px">
-                      <Icon
-                        type="partyPeople"
-                        width="16px"
-                        height="16px"
-                        margin="0 auto"
-                        fill="#43CA3B"
-                      />
-                    </Grid>
-                    <Text margin="0 8px 0 12px" bold="500" size="14px">
-                      {curtParty?.curPeople}/{curtParty?.maxPeople}명
-                    </Text>
-                    {/* <Icon type="detailBtn" width="8px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} /> */}
-                  </Grid>
-                  <Grid padding="45px 0">
-                    <Text margin="0" size="16px" bold="500" wordBreak="break-all">
-                      {curtParty?.partyContent}
-                    </Text>
+                  <Grid
+                    _onClick={() => {
+                      deleteParty(curtParty.partyId);
+                    }}
+                  >
+                    <Icon
+                      type="partyDelete"
+                      width="48px"
+                      height="48px"
+                      margin="auto"
+                    />
                   </Grid>
                 </Grid>
-              </Grid>
-              <Grid padding="12px 14px 18px"  margin="0" height="auto"  bg="#fff">
-                <Text margin="0" size="16px" bold="600">
-                  참여인원
-                </Text>
-                {partymember?.map((p, idx) => {
-                  const isCheif = (p.nickname === curtParty.nickname) ? true : false;
-                  const image =
-                    p?.userImageUrl !== "없음"
-                      ? p?.userImageUrl
-                      : "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png";
-                  return (
-                    <Grid key={idx} margin="20px 0 0" isFlex>
-                      <Grid flexRow >
-                        <Image
-                          type="circle"
-                          width="32px"
-                          height="32px"
-                          margin="0 14px 0 0"
-                          src={image}
-                        />
-                        <Grid>
-                          <Text margin="0" size="12px" bold="500">
-                            [{p.userTitle}] {p.nickname}
-                          </Text>
-                        </Grid>
-                      </Grid>
-                      {isCheif && 
-                        <Image
-                          src={"https://user-images.githubusercontent.com/91959791/169491140-498a7ef5-5a76-4301-8771-d13449d3b92e.png"} 
-                          width="31px"
-                          height="31px" />
-                      }
-                      </Grid>
-                  );
-                })}
+              )}
+            </Grid>
+            <Grid
+              padding="20px 14px"
+              margin="0 0 8px"
+              height="auto"
+              flexColumn
+              bg="#fff"
+            >
+              <Grid alignItems="left">
+                <Grid isFlex margin="0 0 33.5px" height="auto">
+                  <Text
+                    margin="0 20px 0 0"
+                    size="18px"
+                    bold="600"
+                    wordBreak="break-all"
+                    lineHeight="24px"
+                  >
+                    {curtParty?.title}
+                  </Text>
+                  <Text
+                    margin="0"
+                    bold="400"
+                    size="12px"
+                    nowrap
+                    color="#5E5E5E"
+                    // ellipsis="1"
+                  >
+                    {curtParty?.beforeTime}
+                  </Text>
+                </Grid>
+                <Grid flexRow justify="left" padding="0 0 10px">
+                  <Grid width="18px">
+                    <Icon
+                      type="partyMountain"
+                      width="18px"
+                      height="17px"
+                      margin="0 auto"
+                      fill="#43CA3B"
+                    />
+                  </Grid>
+                  <Text margin="0 12px" bold="500" size="14px">
+                    {curtParty?.mountain} ({curtParty?.address})
+                  </Text>
+                </Grid>
+                <Grid flexRow justify="left" padding="0 0 10px">
+                  <Grid width="18px">
+                    <Icon
+                      type="partyDate"
+                      width="15px"
+                      height="17px"
+                      margin="0 auto"
+                      fill="#43CA3B"
+                    />
+                  </Grid>
+                  <Text margin="0 12px" bold="500" size="14px">
+                    {curtParty?.partyDate} (시간 {curtParty?.partyTime})
+                  </Text>
+                </Grid>
+                <Grid flexRow justify="left" padding="0 0 10px">
+                  <Grid width="18px">
+                    <Icon
+                      type="partyPeople"
+                      width="16px"
+                      height="16px"
+                      margin="0 auto"
+                      fill="#43CA3B"
+                    />
+                  </Grid>
+                  <Text margin="0 8px 0 12px" bold="500" size="14px">
+                    {curtParty?.curPeople}/{curtParty?.maxPeople}명
+                  </Text>
+                  {/* <Icon type="detailBtn" width="8px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} /> */}
+                </Grid>
+                <Grid padding="45px 0">
+                  <Text margin="0" size="16px" bold="500" wordBreak="break-all">
+                    {curtParty?.partyContent}
+                  </Text>
+                </Grid>
               </Grid>
             </Grid>
-            <Grid flexRow bg="#fff" padding="44px 14px" alignItems="flex-start" height="auto">
-              <Button
-                bgColor="#E6E6E6"
-                border="none"
-                height="48px"
-                margin="0 17px 0 0"
-                radius="8px"
-                _onClick={() => {enterChatRoom(curtParty.partyId)
-                  navigate(`/chatroom/${curtParty.partyId}`);
-                  // navigate(`/chatroom/${curtParty.chatRoomId}`);
-                }}
-              >
-                <Text margin="0" size="18px" bold="600" align>
-                  대화하기
-                </Text>
-              </Button>
-              <Button
-                bgColor="#43CA3B"
-                border="none"
-                height="48px"
-                margin="0"
-                radius="8px"
-                _onClick={() => {
-                  attendParty(curtParty.partyId);
-                }}
-              >
-                <Text margin="0" size="18px" bold="600" color="#fff" align>
-                  {attendBtn}
-                </Text>
-              </Button>
+            <Grid padding="12px 14px 18px" margin="0" height="auto" bg="#fff">
+              <Text margin="0" size="16px" bold="600">
+                참여인원
+              </Text>
+              {partymember?.map((p, idx) => {
+                const isCheif =
+                  p.nickname === curtParty.nickname ? true : false;
+                const image =
+                  p?.userImageUrl !== "없음"
+                    ? p?.userImageUrl
+                    : "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png";
+                return (
+                  <Grid key={idx} margin="20px 0 0" isFlex>
+                    <Grid flexRow>
+                      <Image
+                        type="circle"
+                        width="32px"
+                        height="32px"
+                        margin="0 14px 0 0"
+                        src={image}
+                      />
+                      <Grid>
+                        <Text margin="0" size="12px" bold="500">
+                          [{p.userTitle}] {p.nickname}
+                        </Text>
+                      </Grid>
+                    </Grid>
+                    {isCheif && (
+                      <Image
+                        src={
+                          "https://user-images.githubusercontent.com/91959791/169491140-498a7ef5-5a76-4301-8771-d13449d3b92e.png"
+                        }
+                        width="31px"
+                        height="31px"
+                      />
+                    )}
+                  </Grid>
+                );
+              })}
             </Grid>
-          </PartyWrap>
+          </Grid>
+          <Grid
+            flexRow
+            bg="#fff"
+            padding="44px 14px"
+            alignItems="flex-start"
+            height="auto"
+          >
+            <Button
+              bgColor="#E6E6E6"
+              border="none"
+              height="48px"
+              margin="0 17px 0 0"
+              radius="8px"
+              _onClick={() => {
+                enterChatRoom(curtParty.partyId);
+                navigate(`/chatroom/${curtParty.partyId}`);
+                // navigate(`/chatroom/${curtParty.chatRoomId}`);
+              }}
+            >
+              <Text margin="0" size="18px" bold="600" align>
+                대화하기
+              </Text>
+            </Button>
+            <Button
+              bgColor="#43CA3B"
+              border="none"
+              height="48px"
+              margin="0"
+              radius="8px"
+              _onClick={() => {
+                attendParty(curtParty.partyId);
+              }}
+            >
+              <Text margin="0" size="18px" bold="600" color="#fff" align>
+                {attendBtn}
+              </Text>
+            </Button>
+          </Grid>
+        </PartyWrap>
 
-          <MenubarContainer>
-            <Grid height="88px" maxWidth="500px" margin="auto">
-              <Menubar menuColor={menuColor} />
-            </Grid>
-          </MenubarContainer>
-        </PartyContainer>
+        <MenubarContainer>
+          <Grid height="88px" maxWidth="500px" margin="auto">
+            <Menubar menuColor={menuColor} />
+          </Grid>
+        </MenubarContainer>
+      </PartyContainer>
     </React.Fragment>
   );
 };
