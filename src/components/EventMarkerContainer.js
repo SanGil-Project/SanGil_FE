@@ -30,10 +30,11 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
   const select = (completedId, idx) => {
     dispatch(handleActions.selectMarkerDB(completedId, idx));
     navigate(`/mytrack/${completedId}`);
-  }
-  const time = [];
+  };
+
+  let time = [];
   if (content?.totalTime) {
-    time = content?.totalTime?.split(":");
+    time = content?.totalTime.split(":");
   }
   // 마커 이미지 hover, click 상황에따라 변경
   let markerImg = isOver
@@ -109,7 +110,7 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
                       padding="1px 4px"
                     >
                       <Text margin="0" size="6px" bold="400" color="#43CA3B">
-                        {content.creatDate}
+                        {content.createAt.split("T")[0]}
                       </Text>
                     </Grid>
                   </Grid>
@@ -131,7 +132,7 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
                       </Text>
                       <Grid flexRow alignItems="baseline" width="auto">
                         <Text margin="0" size="14px" bold="600" color="#43CA3B">
-                          {content.totalDistance}
+                          {content.totalDistance.toFixed(2)}
                         </Text>
                         <Text margin="0" size="8px" bold="500">
                           km

@@ -173,13 +173,13 @@ const Tracker = (props) => {
           polylinePath={polylinePath}
         />
         <Grid
-          width="414px"
+          width="92.8%"
           bg="#fff"
           height="20%"
           padding="16px 0 0 0"
           margin="0 auto"
         >
-          <Grid width="79.71%" height="60px" isFlex margin="20px auto 0 auto">
+          <Grid width="70.71%" height="60px" isFlex margin="20px auto 0 auto">
             <Grid width="100px">
               <Text color="#C4C4C4" margin="0">
                 이동한 거리
@@ -205,14 +205,8 @@ const Tracker = (props) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid
-            width="260px"
-            height="30px"
-            isFlex
-            margin="5px auto 0 auto"
-          ></Grid>
 
-          <Grid width="342px" height="48px" margin="auto">
+          <Grid width="73.7%" height="48px" margin="50px auto 0 auto">
             {time.isStart ? (
               <>
                 <Button

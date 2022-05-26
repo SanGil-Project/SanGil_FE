@@ -21,6 +21,7 @@ import TitleModal from "./TitleModal";
 import Bookmark from "./Bookmark";
 import Banner from "./Banner";
 import MyFeedList from "./MyFeedList";
+import Logo from "./Logo";
 
 export {
   GoogleLogin,
@@ -46,4 +47,5 @@ export {
   Banner,
   MyFeedList,
   TitleModal,
+  Logo,
 };

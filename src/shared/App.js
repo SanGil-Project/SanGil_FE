@@ -2,13 +2,15 @@ import "./App.css";
 import "../assets/fonts/font.css";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import background from "../assets/images/cover.png";
-import { history } from "../redux/configureStore";
-// import { ConnectedRouter } from "connected-react-router";
 import styled from "styled-components";
 import MobileFrame from "./../components/common/MobileFrame";
 // social login
-import { KakaoLogin, GoogleLogin, NaverLogin } from "../components/component";
-import { Image } from "../elements/element";
+import {
+  KakaoLogin,
+  GoogleLogin,
+  NaverLogin,
+  Logo,
+} from "../components/component";
 import {
   Login,
   Main,
@@ -34,6 +36,7 @@ function App() {
     <BrowserRouter>
       <Fullscreen>
         <Wrap>
+          <Logo />
           <MobileFrame>
             <Routes>
               <Route path="/main" element={<Main />} />
