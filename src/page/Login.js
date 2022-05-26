@@ -11,7 +11,7 @@ const Login = (props) => {
   return (
     <>
       <Container>
-        <Grid width="58px" height="38px" margin="0 auto 70px auto">
+        <Grid width="58px" height="38px" margin="0 auto 40px auto">
           <Image
             width="100%"
             height="100%"
@@ -26,7 +26,7 @@ const Login = (props) => {
             등산의 신이 되어봐요!
           </Text>
         </Grid>
-        <Grid width="85.02%" height="178px" margin="90px auto 0 auto">
+        <Grid width="85.02%" height="178px" margin="50px auto 0 auto">
           <Image
             width="100%"
             height="100%"
@@ -34,7 +34,7 @@ const Login = (props) => {
             objectFit="contain"
           />
         </Grid>
-        <Grid width="89.85%" height="184px" margin="85px auto 0 auto">
+        <Grid width="89.85%" height="184px" margin="50px auto 0 auto">
           <A href={KAKAO_AUTH_URL}>
             <Grid
               height="56px"
@@ -43,11 +43,7 @@ const Login = (props) => {
               bg="#FFDC00"
               hover
             >
-              <Grid
-                margin="0 auto"
-                width="60%"
-                flex="flex"
-              >
+              <Grid margin="0 auto" width="60%" flex="flex">
                 <Image
                   width="27px"
                   height="24px"
@@ -127,7 +123,7 @@ const A = styled.a`
 `;
 
 const Container = styled.div`
-  padding: 90px 0 0 0;
+  padding: 50px 0 0 0;
   border: 1px solid #fff;
   max-width: 500px;
   margin: 0 auto;
