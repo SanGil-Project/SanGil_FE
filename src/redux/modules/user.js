@@ -321,7 +321,8 @@ const myFeedDB = (pageNum = null) => {
       .myFeed()
       .then((res) => {
         console.log("(myFeed) 성공 후 데이터 ::", res);
-        dispatch(myFeed(res.data));
+        const list = {feedList: [...res.data]}
+        dispatch(myFeed(list));
       })
       .catch((err) => {
         console.log("(myFeed) 실패 ::", err);
