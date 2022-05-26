@@ -47,6 +47,10 @@ const PartyDetail = (props) => {
       return;
     }
     if (partymember.length === curtParty.maxPeople) {
+      if (attendBtn === "참가취소하기") {
+        dispatch(partyActions.attendPartyDB(partyId));
+        return;
+      }
       setModalContent("모집이 완료되었습니다!");
       setModalType("check")
       setModalOpen(true)

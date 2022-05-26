@@ -24,9 +24,11 @@ const ChatRoom = (props) => {
   // const sockJs = new SockJS("http://13.125.232.76:8080/ws-stomp"); // 서버주소/ws-stomp
   // const sockJs = new SockJS("http://52.79.228.126:8080/ws-stomp"); // 서버주소/ws-stomp
   // const sockJs = new SockJS("http://15.164.232.187:8080/ws-stomp"); // 서버주소/ws-stomp
-  // const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 서버주소/ws-stomp
-  const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 서버주소/ws-stomp
+  const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 서버주소/ws-stomp
+  // const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 서버주소/ws-stomp
   const stomp = Stomp.over(sockJs);
+
+  stomp.debug = null;
 
   // const sender = _userInfo?.nickname;
 
@@ -133,7 +135,7 @@ const ChatRoom = (props) => {
                       radius="10px"
                       width="auto"
                     >
-                      <Text margin="0" bold="500" size="16px">
+                      <Text margin="0" bold="500" size="16px" wordBreak="break-all">
                         {chat.message}{" "}
                       </Text>
                     </Grid>

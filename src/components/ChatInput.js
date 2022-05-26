@@ -8,8 +8,8 @@ import { Grid, Text, Button, Input } from "../elements/element";
 
 // const sockJs = new SockJS("https://ehjeong.shop/ws-stomp"); // 서버주소/ws-stomp
 // const sockJs = new SockJS("http://15.164.232.187:8080/ws-stomp"); // 서버주소/ws-stomp
-// const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 서버주소/ws-stomp
-const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 서버주소/ws-stomp
+const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 서버주소/ws-stomp
+// const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 서버주소/ws-stomp
 const stomp = Stomp.over(sockJs);
 
 const ChatInput = (props) => {
@@ -19,6 +19,7 @@ const ChatInput = (props) => {
   const _userInfo = useSelector((state) => state?.user?.userInfo);
   const { chatRoomId } = props;
   const writer = _userInfo?.nickname;
+  stomp.debug = null;
 
   const [chat, setChat] = React.useState("");
 
