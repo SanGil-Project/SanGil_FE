@@ -106,10 +106,12 @@ const ChatRoom = (props) => {
 
   return (
     <React.Fragment>
+        
       <ChatContainer>
         <Header />
+        <Wrap>
         <ChatWrap>
-          <Grid padding="96px 14px 200px">
+          <Grid padding="96px 14px 50px">
             {chatList?.map((chat, idx) => {
               const mine = chat.nickname === nickname ? true : false;
               const time = chat.createdAt.split(" ");
@@ -200,20 +202,22 @@ const ChatRoom = (props) => {
           <ChatInput chatRoomId={chatRoomId} />
         </ChatInputWrap>
 
-        <MenubarContainer>
+        {/* <MenubarContainer>
           <Grid height="88px" maxWidth="500px" margin="auto">
             <Menubar menuColor={menuColor} />
           </Grid>
-        </MenubarContainer>
+        </MenubarContainer> */}
+      </Wrap>
       </ChatContainer>
     </React.Fragment>
   );
 };
 const ChatContainer = styled.div`
-  background-image: url(${require("../assets/images/chatbg.png")});
+  background-image: url(${require("../assets/images/chatbg1.png")});
   background-size: 100%;
-  background-positin: 
+  background-position: center top;
   background-repeat: no-repeat;
+  background-color: #C6E7D3;
   ::-webkit-scrollbar {
     display: none;
   }
@@ -224,6 +228,18 @@ const ChatContainer = styled.div`
   overflow: scroll;
 `;
 
+const Wrap = styled.div`
+  position: fixed;
+  bottom: 25px;
+  background-image: url(${require("../assets/images/chatbg2.png")});
+  background-size: 100%;
+  background-position: center bottom;
+  width: 100%;
+  height: 100vh;
+  max-width: 500px;
+  margin: auto;
+  overflow: scroll;
+`;
 const ChatWrap = styled.div`
   top: 64px;
   height:100%
@@ -232,13 +248,13 @@ const ChatWrap = styled.div`
 
 const ChatInputWrap = styled.div`
   position: fixed;
-  bottom: 88px;
+  bottom: 0px;
   z-index: 10;
   width: 100%;
   max-width: 500px;
   box-sizing: border-box;
-  padding: 10px 14.5px 10px;
-  background-color: #fff;
+  padding: 15px 14px 15px 19px;
+  background-color: #94DAB0;
 `;
 
 const MenubarContainer = styled.div`
