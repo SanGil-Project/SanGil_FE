@@ -105,9 +105,10 @@ export default handleActions(
       }),
     [ADD_CMT]: (state, action) =>
       produce(state, (draft) => {
-        draft.feed.feedCommentListDto.commentResponseDtos.push(
-          action.payload.comment
-        );
+        draft.feed.feedCommentListDto.commentResponseDtos.push({
+          ...action.payload.comment,
+          beforeTime: "방금 전",
+        });
       }),
     [DELETE_CMT]: (state, action) =>
       produce(state, (draft) => {

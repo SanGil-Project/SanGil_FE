@@ -24,7 +24,7 @@ const FeedCmt = () => {
   );
   const userId = useSelector((state) => state.user.userInfo?.userId);
   const { feedId } = useParams();
-  const menuColor = [false, false, false, true, false]; // 메뉴바 색
+  const menuColor = [true, false, false, false, false]; // 메뉴바 색
   const [cmt, setCmt] = React.useState(null);
 
   const detailLike = () => {

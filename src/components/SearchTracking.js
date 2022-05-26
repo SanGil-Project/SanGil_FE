@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 // import Modal from "react-modal";
 import { Grid, Icon, Input, Text } from "../elements/element";
@@ -9,8 +9,9 @@ import _ from "lodash";
 const SearchTracking = (props) => {
   const { name, setName, setMountainId, searchOpen, setSearchOpen } = props;
   const dispatch = useDispatch();
+  const [pageNum, setPageNum] = useState(1);
   const searchData = useSelector((state) => state.tracker?.searchList);
-
+  const trackerData = useSelector((state) => state?.tracker);
   const getName = _.debounce((e) => {
     setName(e.target.value);
   }, 1000);
@@ -21,15 +22,33 @@ const SearchTracking = (props) => {
     setSearchOpen(false);
   };
 
+  const onScroll = _.throttle((e) => {
+    // 총 높이: e.target.scrollHeight
+    // 현재 높이:  curHeight
+    const clientHeight = e.target.scrollHeight;
+    const curHeight = e.target.scrollTop;
+    if (
+      clientHeight - curHeight <= 500 &&
+      !(trackerData?.searchTotalPg - 1 === trackerData?.searchCurrentPg)
+    ) {
+      setPageNum((prev) => prev + 1);
+    }
+  }, 500);
+
   React.useEffect(() => {
     if (name) {
-      dispatch(searchNameDB(name, 1));
+      dispatch(searchNameDB(name, pageNum));
     }
-  }, [name]);
+    window.addEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [name, pageNum]);
 
   return (
     <Modal>
       <div
+        onScroll={onScroll}
         className="modal_container"
         style={{
           height: "50vh",
@@ -69,7 +88,7 @@ const SearchTracking = (props) => {
                   <Grid
                     border="2px solid #43CA3B"
                     bg="#fff"
-                    maxWidth="82px"
+                    maxWidth="102px"
                     height="30px"
                     textAlign="center"
                     fontSize="1.4rem"

@@ -9,6 +9,7 @@ import {
   setPathDB,
   setPath,
 } from "../redux/modules/tracker";
+import { actionCreators as handleActions } from "../redux/modules/handle";
 import { useDispatch, useSelector } from "react-redux";
 import StopWatch from "../components/StopWatch";
 import { useNavigate } from "react-router";
@@ -23,10 +24,10 @@ const Tracker = (props) => {
   const dispatch = useDispatch();
   const _distance = useSelector((state) => state.tracker.distance);
   const mountainImg = useSelector((state) => state.tracker.mountainImg);
-  const _polylinePath = useSelector(
+  const polylinePath = useSelector(
     (state) => state.tracker?.polylinePath.polylinePath
   );
-  const [polylinePath, setPolylinePath] = useState([..._polylinePath]);
+
   const [myLoca, setMyLoca] = useState({ lat: "", lng: "" });
   const [distance, setDistance] = useState({ distanceM: 0.0, distanceK: 0.0 });
   const [time, setTime] = useState({
@@ -58,6 +59,7 @@ const Tracker = (props) => {
   const path = useRef();
 
   useEffect(() => {
+    dispatch(handleActions.isPagename(``));
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -134,7 +136,6 @@ const Tracker = (props) => {
         });
         setDistance({ distanceM: 0.0, distanceK: 0.0 });
         setCompletedId();
-        setPolylinePath([]);
         releaseWakeLock();
         navigate("/main", { replace: true });
       }
@@ -153,7 +154,6 @@ const Tracker = (props) => {
         });
         setDistance({ distanceM: 0.0, distanceK: 0.0 });
         setCompletedId();
-        setPolylinePath([]);
         releaseWakeLock();
       }
     }
@@ -206,7 +206,7 @@ const Tracker = (props) => {
             </Grid>
           </Grid>
 
-          <Grid width="73.7%" height="48px" margin="50px auto 0 auto">
+          <Grid width="75.7%" height="48px" margin="50px auto 0 auto">
             {time.isStart ? (
               <>
                 <Button
@@ -247,7 +247,8 @@ const Tracker = (props) => {
               </Button>
             ) : (
               <Button
-                bgColor="black"
+                border="none"
+                bgColor="#6F6F6F"
                 color="#fff"
                 width="100%"
                 height="48px"

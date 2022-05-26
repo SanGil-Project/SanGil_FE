@@ -35,6 +35,9 @@ const Main = (props) => {
   const goDetail = (mountainId) => {
     navigate(`/searchdetail/${mountainId}`);
   };
+  const goFeed = (el) => {
+    navigate(`/feeddetail/${el.feedId}`);
+  };
 
   React.useEffect(() => {
     if (userInfo && token) {
@@ -109,7 +112,7 @@ const Main = (props) => {
               <Icon
                 type="like"
                 width="18px"
-                margin="0 0 -190px 440px"
+                margin="0 0 -190px 93%"
                 fill={mountain && mountain[0]?.bookmark ? "#43ca3b" : "#c4c4c4"}
                 _onClick={() => {
                   bookmark(mountain[0]?.mountainId, "mountain");
@@ -313,7 +316,13 @@ const Main = (props) => {
             <HorizontalScroll>
               {feedList?.map((el, idx) => (
                 <div key={idx} style={{ margin: "10px 0 10px 0" }}>
-                  <Card width="150px" height="150px" margin="0 7px 0 7px">
+                  <Card
+                    hover
+                    width="150px"
+                    height="150px"
+                    margin="0 7px 0 7px"
+                    _onClick={() => goFeed(el)}
+                  >
                     <Image
                       width="150px"
                       height="150px"
@@ -371,6 +380,8 @@ const Main = (props) => {
                   maxWidth="93.23%"
                   height="86px"
                   margin="0 auto 14px auto"
+                  hover
+                  _onClick={() => navigate(`/partydetail/${el.partyId}`)}
                 >
                   <Grid
                     border="1px solid #43CA3B"
@@ -412,13 +423,7 @@ const Main = (props) => {
                     <Text bold="500" size="1.2rem">
                       {el.partyDate}
                     </Text>
-                    <Text
-                      size="1.2rem"
-                      bold="500"
-                      color="#C4C4C4"
-                      hover
-                      _onClick={() => navigate(`/partydetail/${el.partyId}`)}
-                    >
+                    <Text size="1.2rem" bold="500" color="#C4C4C4">
                       자세한 내용 보기
                     </Text>
                   </Grid>

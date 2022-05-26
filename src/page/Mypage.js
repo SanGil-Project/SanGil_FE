@@ -341,7 +341,7 @@ const Mypage = (props) => {
                 color="#fff"
                 radius="100%"
                 shadow="0px 3px 4px rgba(0, 0, 0, 0.15)"
-                _onClick={() => navigate("/searchmountain")}
+                _onClick={() => navigate("/tracker")}
               >
                 <Icon type="climber" width="20px" height="32px" />
               </Button>

@@ -43,13 +43,22 @@ const Login = (props) => {
               bg="#FFDC00"
               hover
             >
-              <Grid margin="0 auto" width="47.13%" isFlex>
+              <Grid
+                margin="0 auto"
+                width="60%"
+                flex="flex"
+              >
                 <Image
                   width="27px"
                   height="24px"
                   src={require("../assets/images/KakaoLogo.png")}
                 />
-                <Text bold="600" size="1.6rem" color="#47292B">
+                <Text
+                  margin="0 0 0 10px"
+                  bold="600"
+                  size="1.6rem"
+                  color="#47292B"
+                >
                   카카오 아이디로 로그인
                 </Text>
               </Grid>
@@ -63,13 +72,13 @@ const Login = (props) => {
               bg="#1EC800"
               hover
             >
-              <Grid margin="0 auto" width="47.13%" isFlex>
+              <Grid margin="0 auto" width="60%" flex="flex">
                 <Image
                   width="27px"
                   height="24px"
                   src={require("../assets/images/naverLogo.png")}
                 />
-                <Text bold="600" size="1.6rem" color="#fff">
+                <Text margin="0 0 0 10px" bold="600" size="1.6rem" color="#fff">
                   네이버 아이디로 로그인
                 </Text>
               </Grid>
@@ -77,7 +86,7 @@ const Login = (props) => {
           </A>
           <A href={GOOGLE_AUTH_URL}>
             <Grid height="56px" margin="0" radius="8px" bg="black">
-              <Grid margin="0 auto" width="47.13%" isFlex hover>
+              <Grid margin="0 auto" width="60%" flex="flex" hover>
                 <Google viewBox="0 0 40 40" fill="none">
                   <path
                     d="M32.5 20.3001C32.5 19.4223 32.423 18.5889 32.291 17.7778H19.8638V22.7889H26.9792C26.6603 24.4334 25.7255 25.8223 24.3398 26.7667V30.1001H28.5849C31.0703 27.7778 32.5 24.3556 32.5 20.3001Z"
@@ -96,7 +105,7 @@ const Login = (props) => {
                     fill="#EA4335"
                   />
                 </Google>
-                <Text bold="600" size="1.6rem" color="#fff">
+                <Text margin="0 0 0 10px" bold="600" size="1.6rem" color="#fff">
                   구글 아이디로 로그인
                 </Text>
               </Grid>
