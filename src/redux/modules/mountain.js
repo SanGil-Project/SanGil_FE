@@ -155,6 +155,9 @@ export default handleActions(
     [GET_TOP_MNT]: (state, action) =>
       produce(state, (draft) => {
         draft.mountainList = action.payload.mountainList;
+        draft.searchList = null;
+        draft.searchTotalPg = null;
+        draft.searchCurrentPg = null;
       }),
     [GET_SEARCH]: (state, action) =>
       produce(state, (draft) => {
