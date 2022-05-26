@@ -75,7 +75,7 @@ const Bookmark = (props) => {
             margin="0 5px 0 0"
           />
           <Text bold="600" size="20px" margin="0" align="left">
-            찜한 산길
+            찜한 산길과 나와의 거리
           </Text>
         </Grid>
         <div>
@@ -130,58 +130,6 @@ const Bookmark = (props) => {
         </div>
       </Grid>
 
-
-
-            {/* <Grid padding="35px 14px 70px" height="auto">
-              <Grid
-                // border="1px solid green"
-                margin="0 auto 60px auto"
-                height="238px"
-              >
-                <Text
-                  width="350px"
-                  height="24px"
-                  margin="0 7px 24px 0"
-                  bold="600"
-                  size="2rem"
-                  lineHeight="24px"
-                >
-                  ❤️ 정복해야할 산길
-                </Text>
-                <HorizontalScroll>
-                  {myBookmarkList?.map((cur, idx) => {
-                    // const distance = cur.distance.toFixed(2);
-                    return (<Grid key={idx} width="auto" margin="0 10px 0 0" _onClick={()=>{moveMountDetail(cur.mountainId)}} hover>
-                      <Card
-                        width="194px"
-                        height="120px"
-                        margin="0"
-                      >
-                        <Image
-                          width="194px"
-                          height="120px"
-                          borderRadius="10px"
-                          border="none"
-                          src={cur.mountainImageUrl}
-                        />
-                      </Card>
-                      <Text margin="8px 0" bold="600" size="14px">
-                        {cur.mountainName} ({cur.mountainAddress})
-                      </Text>
-                      <Grid isFlex>
-                        <Grid margin="0 4px 0 0" flexRow justify="left">
-                          <Icon type="mypageBookStar" width="13px" height="12px" margin="0 auto"/>
-                          <Text bold="300" size="12px" margin="0 4px">{cur.starAvr}</Text>
-                        </Grid>
-                        <Text bold="500" size="12px" color="#43CA3B" margin="0">
-                          {cur.distance}km
-                        </Text>
-                      </Grid>
-                    </Grid>)
-                  })}
-                </HorizontalScroll>
-              </Grid>
-            </Grid> */}
     </React.Fragment>
   );
 };

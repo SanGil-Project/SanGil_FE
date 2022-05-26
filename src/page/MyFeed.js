@@ -67,7 +67,7 @@ const MyFeed = (props) => {
               return (
                 <Grid
                   key={idx}
-                  width="158px"
+                  width="31%"
                   height="158px"
                   bgImg={d.feedImgUrl}
                   bgSize="cover"
@@ -93,7 +93,7 @@ const MyFeed = (props) => {
 };
 
 const FeedContainer = styled.div`
-  // position: relative;
+  // position: relative;s
   background-color: #fff;
   width: 100%;
   height: 100vh;

@@ -112,9 +112,21 @@ const PartyDetail = (props) => {
               </Grid>
               <Grid padding="20px 14px" margin="0 0 8px" height="auto" flexColumn  bg="#fff">
                 <Grid alignItems="left">
-                  <Text margin="0 0 33.5px" size="18px" bold="600" wordBreak="break-all" lineHeight="24px">
-                    {curtParty?.title}
-                  </Text>
+                  <Grid isFlex margin="0 0 33.5px" height="auto">
+                    <Text margin="0 20px 0 0" size="18px" bold="600" wordBreak="break-all" lineHeight="24px">
+                      {curtParty?.title}
+                    </Text>
+                    <Text
+                      margin="0"
+                      bold="400"
+                      size="12px"
+                      nowrap
+                      color="#5E5E5E"
+                      // ellipsis="1"
+                    >
+                      {curtParty?.beforeTime}
+                    </Text>
+                  </Grid>
                   <Grid flexRow justify="left" padding="0 0 10px">
                     <Grid width="18px">
                       <Icon
