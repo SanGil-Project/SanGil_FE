@@ -58,8 +58,6 @@ const FeedDetail = () => {
           color="#fff"
           radius="100%"
           shadow="0px 3px 4px rgba(0, 0, 0, 0.15)"
-          // position="fixed"
-          // margin="-80px 0 0 350px"
           _onClick={() => navigate("/feedwrite")}
         >
           <AddFeed viewBox="0 0 25 25" fill="none">
@@ -104,7 +102,7 @@ const MenubarContainer = styled.div`
 
 const TrackBtn = styled.div`
   position: fixed;
-  right: calc(50% - 236px);
+  right: calc(5%);
   bottom: 113px;
 `;
 

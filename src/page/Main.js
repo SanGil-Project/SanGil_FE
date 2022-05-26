@@ -71,7 +71,7 @@ const Main = (props) => {
                 src={require("../assets/images/Mountain.png")}
               />
               <Text
-                width="380px"
+                width="93.23%"
                 height="24px"
                 margin="0 0 0 7px"
                 bold="600"
@@ -84,7 +84,7 @@ const Main = (props) => {
 
             <Card
               border="2px solid #B3B3B3"
-              width="386px"
+              width="93.23%px"
               height="200px"
               margin="34px auto 0 auto"
               bgImg={mountain && mountain[0]?.mountainImgUrl}
@@ -118,7 +118,7 @@ const Main = (props) => {
             </Card>
             <Grid
               height="30px"
-              maxWidth="386px"
+              maxWidth="93.23%"
               margin="0 auto"
               hover
               flex="flex"
@@ -214,7 +214,7 @@ const Main = (props) => {
               />
               <Text
                 margin="0 0 0 10px"
-                width="350px"
+                width="93.23%"
                 height="24px"
                 bold="600"
                 size="2rem"
@@ -273,14 +273,19 @@ const Main = (props) => {
           </Grid>
 
           <Grid height="220px">
-            <Grid maxWidth="472px" margin="0 0 24px 7px" height="25px" isFlex>
+            <Grid
+              maxWidth="93.23%"
+              margin="0 auto 24px auto"
+              height="25px"
+              isFlex
+            >
               <Image
                 width="24px"
                 height="24px"
                 src={require("../assets/images/Camera.png")}
               />
               <Text
-                width="350px"
+                width="93.23%"
                 height="24px"
                 bold="600"
                 size="2rem"
@@ -472,7 +477,7 @@ const MenubarContainer = styled.div`
 const TrackBtn = styled.div`
   position: fixed;
   right: 
-  ${(props) => (props.smallSize ? `calc(0vw + 14px);`: `calc(50% - 236px);`)}
+  ${(props) => (props.smallSize ? `calc(0vw + 14px);` : `calc(50% - 236px);`)}
   bottom: 113px;
 `;
 export default Main;

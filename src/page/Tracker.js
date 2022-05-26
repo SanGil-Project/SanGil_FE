@@ -23,13 +23,14 @@ const Tracker = (props) => {
   const dispatch = useDispatch();
   const _distance = useSelector((state) => state.tracker.distance);
   const mountainImg = useSelector((state) => state.tracker.mountainImg);
-  const polylinePath = useSelector(
+  const _polylinePath = useSelector(
     (state) => state.tracker?.polylinePath.polylinePath
   );
+  const [polylinePath, setPolylinePath] = useState([..._polylinePath]);
   const [myLoca, setMyLoca] = useState({ lat: "", lng: "" });
   const [distance, setDistance] = useState({ distanceM: 0.0, distanceK: 0.0 });
   const [time, setTime] = useState({
-    stopwatch: { s: 0, m: 10, h: 0 },
+    stopwatch: { s: 0, m: 0, h: 0 },
     isStart: false,
   });
 
@@ -135,6 +136,7 @@ const Tracker = (props) => {
         });
         setDistance({ distanceM: 0.0, distanceK: 0.0 });
         setCompletedId();
+        setPolylinePath([]);
         releaseWakeLock();
         navigate("/main", { replace: true });
       }
@@ -148,10 +150,12 @@ const Tracker = (props) => {
         );
         setEndOpen(true);
         setTime({
-          ...time,
+          stopwatch: { s: 0, m: 0, h: 0 },
           isStart: false,
         });
+        setDistance({ distanceM: 0.0, distanceK: 0.0 });
         setCompletedId();
+        setPolylinePath([]);
         releaseWakeLock();
       }
     }
