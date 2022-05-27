@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 
 import { Grid, Icon, Input, Text, Button } from "../elements/element";
-// import { Header } from "../components/component";
+import { CheckSpecial } from "../components/component";
 import { useNavigate } from "react-router";
 import { searchNameDB } from "../redux/modules/tracker";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,32 +24,32 @@ const SearchModal = (props) => {
   // observer 적용
   React.useEffect(() => {
     const observer = new IntersectionObserver(
-      entries => {
+      (entries) => {
         if (entries[0].isIntersecting) {
           setCurPage((pre) => pre + 1);
         }
       },
-      { threshold: 0.25, rootMargin: '80px' },
+      { threshold: 0.25, rootMargin: "80px" }
     );
     bottomObserver.current = observer;
   }, []);
 
-	React.useEffect(() => {
-		const observer = bottomObserver.current;
-		if (bottom) {
-			observer.observe(bottom);
-		}
-		return () => {
-			if (bottom) {
-				observer.unobserve(bottom);
-			}
-		};
-	}, [bottom]);
+  React.useEffect(() => {
+    const observer = bottomObserver.current;
+    if (bottom) {
+      observer.observe(bottom);
+    }
+    return () => {
+      if (bottom) {
+        observer.unobserve(bottom);
+      }
+    };
+  }, [bottom]);
 
   React.useEffect(() => {
     if (searchKeyword !== "") {
       dispatch(searchNameDB(searchKeyword, curPage));
-    return;
+      return;
     }
   }, [curPage]);
 
@@ -65,18 +65,21 @@ const SearchModal = (props) => {
   };
 
   const onChange = (e) => {
+    if (CheckSpecial(e.target.value)) {
+      return alert("특수문자는 입력할 수 없습니다");
+    }
     setSearchKeyword(e.target.value);
   };
 
   const selectMt = (data) => {
     props.selectMnt(data);
     onClose(false);
-  }
+  };
 
   const cancel = () => {
-    setSearchKeyword("")
+    setSearchKeyword("");
     onClose(false);
-  }
+  };
 
   return (
     <SearchModalContainer>
@@ -84,15 +87,23 @@ const SearchModal = (props) => {
         <Grid isFlex margin="0 0 18px">
           <Grid
             height="55px"
-            padding="15px 13px" 
+            padding="15px 13px"
             border="1px solid #D2D2D2"
             radius="12px"
             bg="#fff"
             isFlex
           >
-            <Icon type="searchIcon" width="30px" height="37px" margin="0 auto" />
+            <Icon
+              type="searchIcon"
+              width="30px"
+              height="37px"
+              margin="0 auto"
+            />
             <Input
-              width="100%" border="none" padding="0" margin="0 5.5px"
+              width="100%"
+              border="none"
+              padding="0"
+              margin="0 5.5px"
               size="1.6rem"
               placeholder="산의 이름을 입력해주세요."
               _onChange={onChange}
@@ -100,11 +111,19 @@ const SearchModal = (props) => {
               onSubmit={search}
               is_submit
             ></Input>
-          </Grid>    
-          <Button margin="0 7px 0 19px" padding="0" border="none" width="auto" _onClick={cancel}>
-            <Text margin="0" color="#6F6F6F">취소</Text>
-          </Button> 
-        </Grid>    
+          </Grid>
+          <Button
+            margin="0 7px 0 19px"
+            padding="0"
+            border="none"
+            width="auto"
+            _onClick={cancel}
+          >
+            <Text margin="0" color="#6F6F6F">
+              취소
+            </Text>
+          </Button>
+        </Grid>
         <Grid height="230px" overflowY={scroll} padding="0 0 50px">
           {searchList
             ? searchList.map((el, idx) => (
@@ -114,7 +133,9 @@ const SearchModal = (props) => {
                   isFlex
                   hover
                   height="auto"
-                  _onClick={() => {selectMt(el)}}
+                  _onClick={() => {
+                    selectMt(el);
+                  }}
                 >
                   <Grid
                     flexRow
@@ -126,7 +147,15 @@ const SearchModal = (props) => {
                     padding="6px 15px"
                     margin="0 10px 0 0"
                   >
-                    <Text margin="0" width="auto" size="14px" bold="600" color="#43CA3B">{el.mountain}</Text>
+                    <Text
+                      margin="0"
+                      width="auto"
+                      size="14px"
+                      bold="600"
+                      color="#43CA3B"
+                    >
+                      {el.mountain}
+                    </Text>
                   </Grid>
                   <Grid height="23px">
                     <Text
@@ -141,10 +170,9 @@ const SearchModal = (props) => {
                 </Grid>
               ))
             : null}
-            {totalPage > curPage ? <div ref={setBottom}></div> : null}
+          {totalPage > curPage ? <div ref={setBottom}></div> : null}
         </Grid>
       </Grid>
-
     </SearchModalContainer>
   );
 };

@@ -1,18 +1,25 @@
 import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
-// import Modal from "react-modal";
 import { Grid, Icon, Input, Text } from "../elements/element";
 import { searchNameDB } from "../redux/modules/tracker";
 import { useDispatch, useSelector } from "react-redux";
 import _ from "lodash";
+import { useNavigate } from "react-router";
+import { CheckSpecial } from "../components/component";
 
 const SearchTracking = (props) => {
   const { name, setName, setMountainId, searchOpen, setSearchOpen } = props;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [pageNum, setPageNum] = useState(1);
   const searchData = useSelector((state) => state.tracker?.searchList);
   const trackerData = useSelector((state) => state?.tracker);
+
   const getName = _.debounce((e) => {
+    if (CheckSpecial(e.target.value)) {
+      alert("특수문자는 입력할 수 없습니다");
+      e.target.value = "";
+    }
     setName(e.target.value);
   }, 1000);
 
@@ -35,6 +42,10 @@ const SearchTracking = (props) => {
     }
   }, 500);
 
+  const cancle = () => {
+    navigate("/main", { replace: true });
+  };
+
   React.useEffect(() => {
     if (name) {
       dispatch(searchNameDB(name, pageNum));
@@ -56,24 +67,29 @@ const SearchTracking = (props) => {
         }}
       >
         <Grid height="100%" width="90%" margin="0 auto">
-          <Grid
-            border="1px solid black"
-            width="91.46%"
-            height="52px"
-            margin="0 auto 16px auto"
-            radius="40px"
-            bg="#ffffff"
-            isFlex
-          >
-            <Icon type="find" width="30px" height="36px" margin="0 14px" />
-            <Input
-              border="none"
-              width="78.71%"
-              height="50px"
-              size="1.6rem"
-              placeholder="어떤 산을 찾고 계신가요?"
-              _onChange={getName}
-            />
+          <Grid width="94%" height="52px" margin="0 auto" isFlex>
+            <Grid
+              border="1px solid black"
+              width="80.46%"
+              height="52px"
+              margin="0"
+              radius="40px"
+              bg="#ffffff"
+              isFlex
+            >
+              <Icon type="find" width="30px" height="36px" margin="0 10px" />
+              <Input
+                border="none"
+                width="78.71%"
+                height="50px"
+                size="1.6rem"
+                placeholder="어떤 산을 찾고 계신가요?"
+                _onChange={getName}
+              />
+            </Grid>
+            <Text color="#6F6F6F" hover _onClick={cancle}>
+              취소
+            </Text>
           </Grid>
           {searchData
             ? searchData.map((el, idx) => (
