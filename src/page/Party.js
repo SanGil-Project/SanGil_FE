@@ -166,12 +166,19 @@ const Party = (props) => {
           <Grid padding="160px 14px 100px">
             <div ref={topRef}></div>
             {partyList?.map((p, idx) => {
-              const cardImg = p.completed
+              let cardImg = p.completed
                 ? "https://user-images.githubusercontent.com/91959791/170146663-47e7a0ce-6db5-40f3-ad7e-c078779ed87f.png"
                 : "https://user-images.githubusercontent.com/91959791/170146585-0d85e1a8-f60b-4b76-b634-dbc8f6a73d64.png";
-              const btnBg = p.completed ? "#43CA3B" : "#959595";
-              const textColor = p.completed ? "#000" : "#D9D9D9";
-              const btnText = p.completed ? "모집내용확인" : "마감 되었어요😢";
+              let btnBg = p.completed ? "#43CA3B" : "#959595";
+              let textColor = p.completed ? "#000" : "#D9D9D9";
+              let btnText = p.completed ? "모집내용확인" : "마감 되었어요😢";
+              const timeover = (p.partyDate === "마감되었습니다.")
+              if (timeover) {
+                cardImg = "https://user-images.githubusercontent.com/91959791/170146585-0d85e1a8-f60b-4b76-b634-dbc8f6a73d64.png";
+                btnBg = "#959595";
+                textColor = "#D9D9D9";
+                btnText = "마감 되었어요😢";
+              }
               const curPeople = p.curPeople ? p.curPeople : 0;
               if (p.partyDate === dateString) {
                 const tempT = p.partyTime.split(":");
@@ -266,7 +273,7 @@ const Party = (props) => {
                         size="14px"
                         color={textColor}
                       >
-                        {p.partyDate} (시간 {p.partyTime})
+                        {p.partyDate} {!timeover &&`(시간 ${p.partyTime})`}
                       </Text>
                     </Grid>
                     <Grid flexRow justify="left" padding="0" height="auto">
