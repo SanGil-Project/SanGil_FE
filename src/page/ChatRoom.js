@@ -1,25 +1,33 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 
 import { actionCreators as chatActions } from "../redux/modules/chat";
 import { actionCreators as handleActions } from "../redux/modules/handle";
-import { Menubar, Header, ChatInput } from "../components/component";
+import { actionCreators as partyActions } from "../redux/modules/party";
+import { Menubar, Header, ChatInput, AlertModal } from "../components/component";
 
 import { Grid, Text, Icon, Button, Input, Image } from "../elements/element";
 
 const ChatRoom = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const menuColor = [false, true, false, false, false]; // 메뉴바 색
   const { chatRoomId } = useParams();
   const token = sessionStorage.getItem("token");
   const nickname = sessionStorage.getItem("nickname");
   const _userInfo = useSelector((state) => state?.user?.userInfo);
+  const curtParty = useSelector((state) => state?.party?.curtParty);
+  const partymember = curtParty?.partymemberDto;
+  const isMember = partymember?.some((m) => m.nickname === nickname);
+  console.log(isMember);
 
   const scrollRef = useRef();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState("");
 
   // const sockJs = new SockJS("http://13.125.232.76:8080/ws-stomp"); // 서버주소/ws-stomp
   // const sockJs = new SockJS("http://52.79.228.126:8080/ws-stomp"); // 서버주소/ws-stomp
@@ -39,6 +47,11 @@ const ChatRoom = (props) => {
   };
 
   function ConnectSub(token) {
+    if (!isMember) {
+      setModalContent(`잘못된 접근입니다! \n 메인페이지로 돌아갑니다!`);
+      setModalOpen(true);
+      return;
+    }
     try {
       stomp.connect({}, () => {
         stomp.subscribe(`/sub/chat/rooms/${chatRoomId}`, (response) => {
@@ -84,6 +97,7 @@ const ChatRoom = (props) => {
 
   React.useEffect(() => {
     dispatch(handleActions.isPagename(`${chatRoomId}번 채팅방`));
+    dispatch(partyActions.getOnePartyDB(chatRoomId));
     ConnectSub(token);
     // if (_userInfo) {
     //   dispatch(handleActions.isPagename(`${chatRoomId}번 채팅방`));
@@ -104,11 +118,26 @@ const ChatRoom = (props) => {
   };
   const chatList = useSelector((state) => state?.chat?.chatList);
 
+  const goMain = (check) => {
+    if (check) {
+      navigate("/", { replace: true });
+    }
+  };
+
   return (
     <React.Fragment>
         
       <ChatContainer>
         <Header />
+        {modalOpen && (
+          <AlertModal
+            type="check"
+            onClose={setModalOpen}
+            modalState={modalOpen}
+            contents={modalContent}
+            checkFunction={goMain}
+          />
+        )}
         <Wrap>
         <ChatWrap>
           <Grid padding="96px 14px 50px">
