@@ -7,10 +7,11 @@ const SET_PATH = "SET_PATH";
 const GETSEARCH = "GETSEARCH";
 const DISTANCE = "DISTANCE";
 const ENDCLIMB = "ENDCLIMB";
-const DELETE = "DELETE";
+const DELETE_PATH = "DELETE_PATH";
 const GET_COMPLETED = "GET_COMPLETED";
 const GET_IMG = "GET_IMG";
 
+export const deletePath = createAction(DELETE_PATH, (path) => ({ path }));
 export const setPath = createAction(SET_PATH, (path) => ({ path }));
 const getSearch = createAction(GETSEARCH, (data) => ({ data }));
 const distance = createAction(DISTANCE, (distance) => ({ distance }));
@@ -77,8 +78,7 @@ export const deleteDB = (completedId) => {
   return function (distpatch, getState) {
     api
       .deleteDB(completedId)
-      .then((res) => {
-      })
+      .then((res) => {})
       .catch((err) => {
         console.log(err);
       });
@@ -87,40 +87,6 @@ export const deleteDB = (completedId) => {
 
 const getCompletedDB = (completedId) => {
   return function (dispatch, getState) {
-    // const fakeDB = {
-    //   userId: 1,
-    //   username: "이재진",
-    //   userTitle: "um.....홍길?",
-    //   userTitleImgUrl: "없음",
-    //   completedid: 1,
-    //   mountian: "지리산",
-    //   totalDistance: 10.3,
-    //   totalTime: "4:20:13",
-    //   creatDate: "2022-05-22",
-    //   trackingList: [
-    //     {
-    //       lat: 12.1234567,
-    //       lng: 123.1234567,
-    //     },
-    //     {
-    //       lat: 12.1234567,
-    //       lng: 123.1234567,
-    //     },
-    //     {
-    //       lat: 12.1234567,
-    //       lng: 123.1234567,
-    //     },
-    //     {
-    //       lat: 12.1234567,
-    //       lng: 123.1234567,
-    //     },
-    //   ],
-    // };
-
-    // dispatch(getCompleted(fakeDB));
-    // dispatch(setPath(fakeDB.trackingList));
-    // return;
-
     api
       .getMytrack(completedId)
       .then((res) => {
@@ -142,6 +108,10 @@ export default handleActions(
     [SET_PATH]: (state, action) =>
       produce(state, (draft) => {
         draft.polylinePath.polylinePath.push(action.payload.path);
+      }),
+    [DELETE_PATH]: (state, action) =>
+      produce(state, (draft) => {
+        draft.polylinePath = [];
       }),
     [GETSEARCH]: (state, action) =>
       produce(state, (draft) => {

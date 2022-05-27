@@ -4,7 +4,12 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as partyActions } from "../redux/modules/party";
 
-import { Menubar, Header, AlertModal } from "../components/component";
+import {
+  Menubar,
+  Header,
+  AlertModal,
+  CheckSpecial,
+} from "../components/component";
 
 import { Grid, Text, Icon, Button, Input } from "../elements/element";
 import { useNavigate } from "react-router";
@@ -74,6 +79,9 @@ const Party = (props) => {
   }, [curPage]);
 
   const onChange = (e) => {
+    if (CheckSpecial(e.target.value)) {
+      return alert("특수문자는 입력할 수 없습니다");
+    }
     setSearchKeyword(e.target.value);
   };
   const search = () => {
