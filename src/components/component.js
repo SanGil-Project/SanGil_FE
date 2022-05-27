@@ -22,6 +22,7 @@ import Bookmark from "./Bookmark";
 import Banner from "./Banner";
 import MyFeedList from "./MyFeedList";
 import Logo from "./Logo";
+import CheckSpecial from "./CheckSpecial";
 
 export {
   GoogleLogin,
@@ -48,4 +49,5 @@ export {
   MyFeedList,
   TitleModal,
   Logo,
+  CheckSpecial,
 };

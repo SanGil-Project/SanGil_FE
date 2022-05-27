@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import KakaoMap from "../components/KakaoMap";
-import { Grid, Button, Text, Icon, Input } from "../elements/element";
+import { Grid, Button, Text } from "../elements/element";
 import { Header, SearchTracking, EndTracking } from "../components/component";
 import {
   startDB,
@@ -8,6 +8,7 @@ import {
   deleteDB,
   setPathDB,
   setPath,
+  deletePath,
 } from "../redux/modules/tracker";
 import { actionCreators as handleActions } from "../redux/modules/handle";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +21,7 @@ const Tracker = (props) => {
   const [endOpen, setEndOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(true);
   const [completedId, setCompletedId] = useState();
+  const path = useRef();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const _distance = useSelector((state) => state.tracker.distance);
@@ -56,11 +58,9 @@ const Tracker = (props) => {
     }
   };
 
-  const path = useRef();
-
   useEffect(() => {
     dispatch(handleActions.isPagename(``));
-    if (navigator.geolocation) {
+    if (navigator.geolocation && time.isStart === false) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           setMyLoca({
@@ -93,7 +93,8 @@ const Tracker = (props) => {
               if (_distance?.distanceM) {
                 setDistance((prev) => ({
                   distanceM: prev.distanceM + Number(_distance?.distanceM),
-                  distanceK: prev.distanceK + Number(_distance?.distanceK),
+                  distanceK:
+                    prev.distanceK + Number(_distance?.distanceK).toFixed(2),
                 }));
               }
             }
@@ -137,6 +138,7 @@ const Tracker = (props) => {
           isStart: false,
         });
         setDistance({ distanceM: 0.0, distanceK: 0.0 });
+        dispatch(deletePath());
         setCompletedId();
         releaseWakeLock();
         navigate("/main", { replace: true });
@@ -155,6 +157,7 @@ const Tracker = (props) => {
           isStart: false,
         });
         setDistance({ distanceM: 0.0, distanceK: 0.0 });
+        dispatch(deletePath());
         setCompletedId();
         releaseWakeLock();
       }
@@ -181,7 +184,13 @@ const Tracker = (props) => {
           padding="16px 0 0 0"
           margin="0 auto"
         >
-          <Grid width="70.71%" height="60px" isFlex margin="20px auto 0 auto">
+          <Grid
+            minWidth="280px"
+            width="70.71%"
+            height="60px"
+            isFlex
+            margin="20px auto 0 auto"
+          >
             <Grid width="100px">
               <Text color="#C4C4C4" margin="0">
                 이동한 거리
@@ -215,7 +224,7 @@ const Tracker = (props) => {
                   border="none"
                   bgColor="#6F6F6F"
                   color="#fff"
-                  width="166px"
+                  width="47.3%"
                   height="48px"
                   radius="12px"
                   margin="0 5px"
@@ -227,7 +236,7 @@ const Tracker = (props) => {
                   border="none"
                   bgColor="#43CA3B"
                   color="#fff"
-                  width="166px"
+                  width="47.3%"
                   height="48px"
                   radius="12px"
                   _onClick={endClimb}

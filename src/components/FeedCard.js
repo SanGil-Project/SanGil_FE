@@ -19,7 +19,7 @@ const FeedCard = (props) => {
   };
 
   const deleteFeed = (feedId) => {
-    if (window.confirm("진짜 삭제하시려고요? 이걸?") === true) {
+    if (window.confirm("삭제하시겠습니까?") === true) {
       dispatch(deleteFeedDB(feedId));
     }
   };

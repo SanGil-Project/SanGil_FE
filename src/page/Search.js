@@ -12,6 +12,7 @@ import {
   Card,
   Header,
   AlertModal,
+  CheckSpecial,
 } from "../components/component";
 import { Grid, Text, Icon, Button, Input, Image } from "../elements/element";
 import { useNavigate } from "react-router";
@@ -61,6 +62,9 @@ const Search = (props) => {
   }, [curtPage, searchKeyword]);
 
   const onChange = (e) => {
+    if (CheckSpecial(e.target.value)) {
+      return alert("특수문자는 입력할 수 없습니다");
+    }
     setInput(e.target.value);
   };
   const search = () => {
@@ -224,7 +228,6 @@ const Search = (props) => {
               const star = d.starAvr === "n" ? "0" : d.starAvr;
               return (
                 <div key={idx} ref={(el) => (listRef.current[idx] = el)}>
-
                   <Grid
                     bg="#fff"
                     shadow="0px 1px 4px rgba(0, 0, 0, 0.1)"
@@ -240,9 +243,20 @@ const Search = (props) => {
                       goDetail(d.mountainId);
                     }}
                   >
-                    <Grid bgImg={d.mountainImgUrl} bgSize="cover" height="172px" radius="10px" margin="0 13px 0 0"></Grid>
+                    <Grid
+                      bgImg={d.mountainImgUrl}
+                      bgSize="cover"
+                      height="172px"
+                      radius="10px"
+                      margin="0 13px 0 0"
+                    ></Grid>
                     {/* <Image src={d.mountainImgUrl} height="100%" width="50%" /> */}
-                    <Grid flexColumn alignItems="left" height="auto" padding="16px 0 0">
+                    <Grid
+                      flexColumn
+                      alignItems="left"
+                      height="auto"
+                      padding="16px 0 0"
+                    >
                       <Grid padding="0 0 12px" flexRow justify="left">
                         <Icon
                           type="searchMnt"
@@ -352,7 +366,6 @@ const TrackBtn = styled.div`
   bottom: 113px;
 `;
 
-const MountainImg = styled.div`
-`;
+const MountainImg = styled.div``;
 
 export default Search;

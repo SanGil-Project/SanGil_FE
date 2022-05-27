@@ -24,8 +24,8 @@ const ChatRoom = (props) => {
   // const sockJs = new SockJS("http://13.125.232.76:8080/ws-stomp"); // 서버주소/ws-stomp
   // const sockJs = new SockJS("http://52.79.228.126:8080/ws-stomp"); // 서버주소/ws-stomp
   // const sockJs = new SockJS("http://15.164.232.187:8080/ws-stomp"); // 서버주소/ws-stomp
-  const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 서버주소/ws-stomp
-  // const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 서버주소/ws-stomp
+  // const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 서버주소/ws-stomp
+  const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 서버주소/ws-stomp
   const stomp = Stomp.over(sockJs);
 
   stomp.debug = null;
@@ -106,108 +106,107 @@ const ChatRoom = (props) => {
 
   return (
     <React.Fragment>
-        
       <ChatContainer>
         <Header />
         <Wrap>
-        <ChatWrap>
-          <Grid padding="96px 14px 50px">
-            {chatList?.map((chat, idx) => {
-              const mine = chat.nickname === nickname ? true : false;
-              const time = chat.createdAt.split(" ");
-              const boxColor = mine ? "#9EE59C" : "#EBEBEB";
-              const img =
-                chat.userImageUrl === "없음"
-                  ? "https://user-images.githubusercontent.com/91959791/168119302-948f0dcf-8165-47af-8b6b-2f90f74aca06.png"
-                  : chat.userImageUrl;
-              return mine ? (
-                <Grid key={idx}>
-                  <Grid padding="0 0 8px 46px" flexRow justify="flex-end">
-                    <Text
-                      margin="35px 2px 0"
-                      size="12px"
-                      bold="500"
-                      color="#A4A4A4"
-                    >
-                      {time[1]}
-                    </Text>
-                    <Grid
-                      padding="16px"
-                      bg="#9DE49C"
-                      radius="10px"
-                      width="auto"
-                      border="1px solid #7FC07E"
-                    >
+          <ChatWrap>
+            <Grid padding="96px 14px 50px">
+              {chatList?.map((chat, idx) => {
+                const mine = chat.nickname === nickname ? true : false;
+                const time = chat.createdAt.split(" ");
+                const boxColor = mine ? "#9EE59C" : "#EBEBEB";
+                const img =
+                  chat.userImageUrl === "없음"
+                    ? "https://user-images.githubusercontent.com/91959791/168119302-948f0dcf-8165-47af-8b6b-2f90f74aca06.png"
+                    : chat.userImageUrl;
+                return mine ? (
+                  <Grid key={idx}>
+                    <Grid padding="0 0 8px 46px" flexRow justify="flex-end">
                       <Text
-                        margin="0"
+                        margin="35px 2px 0"
+                        size="12px"
                         bold="500"
-                        size="16px"
-                        wordBreak="break-all"
+                        color="#A4A4A4"
                       >
-                        {chat.message}{" "}
+                        {time[1]}
                       </Text>
+                      <Grid
+                        padding="16px"
+                        bg="#9DE49C"
+                        radius="10px"
+                        width="auto"
+                        border="1px solid #7FC07E"
+                      >
+                        <Text
+                          margin="0"
+                          bold="500"
+                          size="16px"
+                          wordBreak="break-all"
+                        >
+                          {chat.message}{" "}
+                        </Text>
+                      </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-              ) : (
-                <Grid key={idx}>
-                  <Grid flexRow margin="8px 0" justify="right">
-                    <Image
-                      type="circle"
-                      width="32px"
-                      height="32px"
-                      margin="0 14px 0 0"
-                      src={img}
-                    />
-                    <Grid>
-                      <Text margin="0" size="12px" bold="500">
-                        [{chat.userTitle}] {chat.nickname}
-                      </Text>
+                ) : (
+                  <Grid key={idx}>
+                    <Grid flexRow margin="8px 0" justify="right">
+                      <Image
+                        type="circle"
+                        width="32px"
+                        height="32px"
+                        margin="0 14px 0 0"
+                        src={img}
+                      />
+                      <Grid>
+                        <Text margin="0" size="12px" bold="500">
+                          [{chat.userTitle}] {chat.nickname}
+                        </Text>
+                      </Grid>
                     </Grid>
-                  </Grid>
-                  <Grid padding="0 0 8px 46px" flexRow justify>
-                    <Grid
-                      padding="16px"
-                      bg={boxColor}
-                      radius="10px"
-                      width="auto"
-                      border="1px solid #CFCFCF"
-                    >
+                    <Grid padding="0 0 8px 46px" flexRow justify>
+                      <Grid
+                        padding="16px"
+                        bg={boxColor}
+                        radius="10px"
+                        width="auto"
+                        border="1px solid #CFCFCF"
+                      >
+                        <Text
+                          margin="0"
+                          bold="500"
+                          size="16px"
+                          wordBreak="break-all"
+                        >
+                          {chat.message}
+                        </Text>
+                      </Grid>
                       <Text
-                        margin="0"
+                        margin="35px 2px 0"
+                        size="12px"
                         bold="500"
-                        size="16px"
-                        wordBreak="break-all"
+                        color="#A4A4A4"
                       >
-                        {chat.message}
+                        {time[1]}
                       </Text>
                     </Grid>
-                    <Text
-                      margin="35px 2px 0"
-                      size="12px"
-                      bold="500"
-                      color="#A4A4A4"
-                    >
-                      {time[1]}
-                    </Text>
                   </Grid>
-                </Grid>
-              );
-            })}
+                );
+              })}
 
-            <ChatBottom ref={scrollRef}></ChatBottom>
-          </Grid>
-        </ChatWrap>
-        <ChatInputWrap>
-          <ChatInput chatRoomId={chatRoomId} />
-        </ChatInputWrap>
+              <ChatBottom ref={scrollRef}></ChatBottom>
+            </Grid>
+          </ChatWrap>
+          <ChatInputWrap>
+            <ChatInput chatRoomId={chatRoomId} />
+          </ChatInputWrap>
 
-        {/* <MenubarContainer>
+          {/* <MenubarContainer>
           <Grid height="88px" maxWidth="500px" margin="auto">
             <Menubar menuColor={menuColor} />
           </Grid>
         </MenubarContainer> */}
-      </Wrap>
+        </Wrap>
       </ChatContainer>
     </React.Fragment>
   );
@@ -217,7 +216,7 @@ const ChatContainer = styled.div`
   background-size: 100%;
   background-position: center top;
   background-repeat: no-repeat;
-  background-color: #C6E7D3;
+  background-color: #c6e7d3;
   ::-webkit-scrollbar {
     display: none;
   }
@@ -254,7 +253,7 @@ const ChatInputWrap = styled.div`
   max-width: 500px;
   box-sizing: border-box;
   padding: 15px 14px 15px 19px;
-  background-color: #94DAB0;
+  background-color: #94dab0;
 `;
 
 const MenubarContainer = styled.div`
