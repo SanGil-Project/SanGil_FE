@@ -23,7 +23,6 @@ const ChatRoom = (props) => {
   const curtParty = useSelector((state) => state?.party?.curtParty);
   const partymember = curtParty?.partymemberDto;
   const isMember = partymember?.some((m) => m.nickname === nickname);
-  console.log(isMember);
 
   const scrollRef = useRef();
   const [modalOpen, setModalOpen] = useState(false);
