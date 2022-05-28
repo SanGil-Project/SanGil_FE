@@ -18,8 +18,7 @@ import {
   AlertModal,
 } from "../components/component";
 
-import { Grid, Text, Icon, Button, Input, Image } from "../elements/element";
-import Search from "./Search";
+import { Grid, Text, Icon, Button, Input, ElInput } from "../elements/element";
 import SearchModal from "../components/SearchModal";
 
 const PartyWrite = (props) => {
@@ -92,9 +91,6 @@ const PartyWrite = (props) => {
   const handleTimeModal = () => {
     setTimeOpen(false);
   };
-  const handleSearchModal = () => {
-    setSearchOpen(false);
-  };
   const saveDateModal = () => {
     const year = startDate.getFullYear();
     const month = ("0" + (startDate.getMonth() + 1)).slice(-2);
@@ -137,12 +133,6 @@ const PartyWrite = (props) => {
   };
   const inputContent = (e) => {
     setPartyContent(e.target.value);
-  };
-  const inputDate = (e) => {
-    setDateValue(e.target.value);
-  };
-  const inputTime = (e) => {
-    setTimeValue(e.target.value);
   };
   const inputNumber = (e) => {
     setNumberValue(e.target.value);
@@ -287,9 +277,10 @@ const PartyWrite = (props) => {
                 )}
               </Grid>
               {is_edit ? (
-                <Input
+                <ElInput
                   width="100%"
                   bg="#eee"
+                  size="16px"
                   border="1px solid #BBBBBB"
                   radius="8px"
                   padding="16px 12px"
@@ -300,8 +291,9 @@ const PartyWrite = (props) => {
                   _onChange={inputName}
                 />
               ) : (
-                <Input
+                <ElInput
                   width="100%"
+                  size="16px"
                   border="1px solid #BBBBBB"
                   radius="8px"
                   padding="16px 12px"
@@ -314,13 +306,14 @@ const PartyWrite = (props) => {
               <Text margin="0 0 10px" size="16px" bold="600">
                 세부 내용
               </Text>
-              <Input
+              <ElInput
                 width="100%"
+                size="16px"
                 border="1px solid #BBBBBB"
                 radius="8px"
                 padding="16px 12px"
                 margin="0 0 34.5px"
-                multiLine
+                textarea
                 value={partyContent}
                 placeholder="어떤 활동을 함께 하고 싶으신가요?"
                 _onChange={inputContent}
@@ -331,7 +324,6 @@ const PartyWrite = (props) => {
                 <Text margin="0" size="16px" bold="600">
                   날짜
                 </Text>
-                {/* <Grid flexRow _onClick={handleClick}> */}
                 <Grid flexRow width="auto">
                   <Grid
                     hover
@@ -395,8 +387,9 @@ const PartyWrite = (props) => {
                   인원
                 </Text>
                 <Grid flexRow width="auto">
-                  <Input
+                  <ElInput
                     type="number"
+                    size="16px"
                     color="#989898"
                     textAlign="right"
                     border="none"

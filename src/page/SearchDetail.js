@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Grid, Text, Image, Input, Button, Icon } from "../elements/element";
+import { Grid, Text, Image, Button, Icon } from "../elements/element";
 import { CourseCard, Menubar, Header } from "../components/component";
 import { actionCreators as mountAction } from "../redux/modules/mountain";
 import _ from "lodash";

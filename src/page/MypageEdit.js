@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Modal from "react-modal";
 import styled from "styled-components";
 import _ from "lodash";
 
@@ -8,7 +7,7 @@ import { actionCreators as userActions } from "../redux/modules/user";
 import { actionCreators as handleActions } from "../redux/modules/handle";
 
 import { Header, AlertModal, TitleModal } from "../components/component";
-import { Grid, Text, Icon, Image, Button, Input } from "../elements/element";
+import { Grid, Text, Image, Button, Input, ElInput } from "../elements/element";
 
 const MypageEdit = (props) => {
   const dispatch = useDispatch();
@@ -172,8 +171,7 @@ const MypageEdit = (props) => {
               <UserName>
                 <Grid flexRow width="auto">
                   <Grid width="4px" height="23px" bg={checkBarColor}></Grid>
-                  <Input
-                    gridWidth="140px"
+                  <ElInput
                     size="14px"
                     width="140px"
                     padding="4.5px 0 4.5px 8px"

@@ -11,7 +11,7 @@ import {
   CheckSpecial,
 } from "../components/component";
 
-import { Grid, Text, Icon, Button, Input } from "../elements/element";
+import { Grid, Text, Icon, Button, Input, ElInput } from "../elements/element";
 import { useNavigate } from "react-router";
 
 const Party = (props) => {
@@ -20,7 +20,6 @@ const Party = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const today = useRef(new Date());
-  // const listRef = useRef([]);
   const topRef = useRef();
 
   const partydata = useSelector((state) => state?.party?.list);
@@ -92,20 +91,17 @@ const Party = (props) => {
     }
     setCurPage(1);
     dispatch(partyActions.getKeywordPartyDB(1, searchKeyword));
-    // setSearchKeyword("");
   };
 
   const cancel = () => {
     setSearchKeyword("");
   };
+
   const handleScroll = () => {
-    // listRef.current[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
     topRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-    // if (!window.scrollY) return;
-    // window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const moveDetail = (partyId, completed, check) => {
+  const moveDetail = (partyId) => {
     navigate(`/partydetail/${partyId}`);
   };
 
@@ -123,7 +119,6 @@ const Party = (props) => {
         )}
         <PartyWrap>
           <SearchInput>
-            {/* <SearchInput padding="82px 14px 18px" bg="#fff"> */}
             <Grid
               bg="#F2F3F6"
               height="50px"
@@ -139,7 +134,9 @@ const Party = (props) => {
                 height="37px"
                 margin="0 auto"
               />
-              <Input
+              <ElInput
+                type="text"
+                size="16px"
                 bg="#F2F3F6"
                 width="100%"
                 border="none"
@@ -149,7 +146,6 @@ const Party = (props) => {
                 _onChange={onChange}
                 value={searchKeyword}
                 onSubmit={search}
-                is_submit
               />
             </Grid>
             <Button
@@ -222,7 +218,6 @@ const Party = (props) => {
                         size="12px"
                         nowrap
                         color={textColor}
-                        // ellipsis="1"
                       >
                         {p.beforeTime}
                       </Text>
@@ -306,7 +301,7 @@ const Party = (props) => {
                       height="48px"
                       margin="20px 0 0"
                       _onClick={() => {
-                        moveDetail(p.partyId, p.completed, isCompleted[idx]);
+                        moveDetail(p.partyId);
                       }}
                     >
                       <Text margin="0" align color="#fff">

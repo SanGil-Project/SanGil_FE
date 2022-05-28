@@ -1,9 +1,8 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
 
-import { Grid, Icon, Input, Text, Button } from "../elements/element";
-import { CheckSpecial } from "../components/component";
-import { useNavigate } from "react-router";
+import { Grid, Icon, Input, Text, Button, ElInput } from "../elements/element";
+import { AlertModal, CheckSpecial } from "../components/component";
 import { searchNameDB } from "../redux/modules/tracker";
 import { useDispatch, useSelector } from "react-redux";
 import _ from "lodash";
@@ -20,6 +19,9 @@ const SearchModal = (props) => {
   const [curPage, setCurPage] = useState(1);
   const [bottom, setBottom] = useState(null);
   const bottomObserver = useRef(null);
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState("");
 
   // observer 적용
   React.useEffect(() => {
@@ -55,18 +57,19 @@ const SearchModal = (props) => {
 
   const search = () => {
     if (searchKeyword === "") {
-      // setModalContent("검색어를 입력해주세요!");
-      // setModalOpen(true)
+      setModalContent("검색어를 입력해주세요!");
+      setModalOpen(true);
       return;
     }
     setCurPage(1);
     dispatch(searchNameDB(searchKeyword, curPage));
-    // setSearchKeyword("");
   };
 
   const onChange = (e) => {
     if (CheckSpecial(e.target.value)) {
-      return alert("특수문자는 입력할 수 없습니다");
+      setModalContent("특수문자는 입력할 수 없습니다");
+      setModalOpen(true);
+      return;
     }
     setSearchKeyword(e.target.value);
   };
@@ -83,6 +86,14 @@ const SearchModal = (props) => {
 
   return (
     <SearchModalContainer>
+      {modalOpen && (
+        <AlertModal
+          type="check"
+          onClose={setModalOpen}
+          modalState={modalOpen}
+          contents={modalContent}
+        />
+      )}
       <Grid>
         <Grid isFlex margin="0 0 18px">
           <Grid
@@ -99,18 +110,18 @@ const SearchModal = (props) => {
               height="37px"
               margin="0 auto"
             />
-            <Input
+            <ElInput
+              type="text"
+              size="16px"
               width="100%"
               border="none"
               padding="0"
               margin="0 5.5px"
-              size="1.6rem"
               placeholder="산의 이름을 입력해주세요."
               _onChange={onChange}
               value={searchKeyword}
               onSubmit={search}
-              is_submit
-            ></Input>
+            />
           </Grid>
           <Button
             margin="0 7px 0 19px"

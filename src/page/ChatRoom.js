@@ -10,7 +10,7 @@ import { actionCreators as handleActions } from "../redux/modules/handle";
 import { actionCreators as partyActions } from "../redux/modules/party";
 import { Menubar, Header, ChatInput, AlertModal } from "../components/component";
 
-import { Grid, Text, Icon, Button, Input, Image } from "../elements/element";
+import { Grid, Text, Image } from "../elements/element";
 
 const ChatRoom = (props) => {
   const dispatch = useDispatch();

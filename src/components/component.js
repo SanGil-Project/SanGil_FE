@@ -10,7 +10,6 @@ import Star from "./shared/Star";
 import Comment from "./Comment";
 import CourseCard from "./card/CourseCard";
 import FullMap from "./map/FullMap";
-import MypageModal from "./MypageModal";
 import FeedCard from "./card/FeedCard";
 import ScrollTime from "./ScrollTime";
 import SearchTracking from "./SearchTracking";
@@ -37,7 +36,6 @@ export {
   Comment,
   CourseCard,
   FullMap,
-  MypageModal,
   FeedCard,
   ScrollTime,
   SearchTracking,
