@@ -9,13 +9,11 @@ const FeedCard = (props) => {
   const { el } = props;
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.user?.userInfo);
-  const [likeCnt, setLikeCnt] = React.useState(el.goodCnt);
   const [hidden, setHidden] = React.useState(false);
   const dispatch = useDispatch();
 
   const like = (feedId) => {
     dispatch(feedLikeDB(feedId));
-    setLikeCnt((prev) => (el.goodStatus ? (prev -= 1) : (prev += 1)));
   };
 
   const deleteFeed = (feedId) => {
@@ -88,7 +86,7 @@ const FeedCard = (props) => {
             _onClick={() => like(el.feedId)}
           />
           <Text size="1.2rem" bold="500">
-            {likeCnt}
+            {el.goodCnt}
           </Text>
         </Grid>
 
