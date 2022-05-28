@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Grid, Image, Text, Icon } from "../elements/element";
+import { Grid, Image, Text, Icon } from "../../elements/element";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteFeedDB, feedLikeDB } from "../redux/modules/feed";
+import { deleteFeedDB, feedLikeDB } from "../../redux/modules/feed";
 import { useNavigate } from "react-router";
 
 const FeedCard = (props) => {

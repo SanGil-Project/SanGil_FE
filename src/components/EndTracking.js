@@ -46,7 +46,7 @@ const EndTracking = (props) => {
       <div className="modal_container" style={{ height: "500px" }}>
         <Grid height="100%" padding="8% 0">
           <Text size="1.4rem" align="center" bold="600">
-            등(산의)신까지 얼마 안남았어요!
+            {name} 등반을 완료했어요!
           </Text>
           <Grid maxWidth="85.3%" height="157px" margin="10px auto 0 auto">
             <Image
@@ -89,7 +89,7 @@ const EndTracking = (props) => {
                 >
                   {time.h}
                 </span>
-                시간{" "}
+                시간
                 <span
                   style={{
                     fontWeight: "600",

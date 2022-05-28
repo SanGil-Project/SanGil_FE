@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Grid, Image, Text, Icon } from "../elements/element";
+import { Grid, Image, Text, Icon } from "../../elements/element";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteFeedDB, feedLikeDB } from "../redux/modules/feed";
-import { actionCreators as handleActions } from "../redux/modules/handle";
+import { deleteFeedDB, feedLikeDB } from "../../redux/modules/feed";
+import { actionCreators as handleActions } from "../../redux/modules/handle";
 import { useNavigate } from "react-router";
 
-import Card from "./Card";
+import Card from "../card/Card";
 
 const MyFeedList = (props) => {
   const { data } = props;

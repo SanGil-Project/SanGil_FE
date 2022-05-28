@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 
-import { Grid, Icon, Text } from "../elements/element";
-import KakaoMap from "./KakaoMap";
+import { Grid, Icon, Text } from "../../elements/element";
+import KakaoMap from "../map/KakaoMap";
 
 const FullMap = (props) => {
   const { data, getIndex, zoomable, size, padding } = props;

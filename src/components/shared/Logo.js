@@ -5,7 +5,7 @@ const Logo = () => {
       <img
         alt="로고"
         style={{ position: "fixed", left: "20%", top: "25%" }}
-        src={require("../assets/images/193Logo.png")}
+        src={require("../../assets/images/193Logo.png")}
       />
   );
 };

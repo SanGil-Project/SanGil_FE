@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import KakaoMap from "../components/KakaoMap";
+import KakaoMap from "../components/map/KakaoMap";
 import { Grid, Text } from "../elements/element";
 import { Header } from "../components/component";
 import { actionCreators as trackActions } from "../redux/modules/tracker";
