@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Text, Icon } from "../elements/element";
+import { Grid, Text, Icon } from "../../elements/element";
 const CourseCard = (props) => {
   const { data } = props;
   return (

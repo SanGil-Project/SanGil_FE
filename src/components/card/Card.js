@@ -1,5 +1,5 @@
 import React from "react";
-import Grid from "../elements/Grid";
+import Grid from "../../elements/Grid";
 
 const Card = (props) => {
   const {

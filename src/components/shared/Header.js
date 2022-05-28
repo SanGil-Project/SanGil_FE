@@ -1,6 +1,6 @@
 import React from "react";
-import { Grid, Button, Icon, Image, Text } from "../elements/element";
-import { isLogInDB } from "../redux/modules/user";
+import { Grid, Button, Icon, Image, Text } from "../../elements/element";
+import { isLogInDB } from "../../redux/modules/user";
 import { useLocation, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 

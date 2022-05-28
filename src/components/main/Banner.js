@@ -1,7 +1,7 @@
 import React from "react";
 import Slider from "react-slick";
 
-import { Image, Grid } from "../elements/element";
+import { Image, Grid } from "../../elements/element";
 
 const Banner = () => {
   var settings = {
@@ -27,7 +27,7 @@ const Banner = () => {
           width="100%"
           height="100px"
           borderRadius="10px"
-          src={require("../assets/images/Banner_1.png")}
+          src={require("../../assets/images/Banner_1.png")}
         />
       </Grid>
       <Grid
@@ -41,7 +41,7 @@ const Banner = () => {
           width="100%"
           height="100px"
           borderRadius="10px"
-          src={require("../assets/images/Banner_2.png")}
+          src={require("../../assets/images/Banner_2.png")}
         />
       </Grid>
     </Slider>

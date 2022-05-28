@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
 
-import { Grid, Icon, Text } from "../elements/element"
+import { Grid, Icon, Text } from "../../elements/element"
 
 const TextCard = (props) => {
 

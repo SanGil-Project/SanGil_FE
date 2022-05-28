@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router";
 
 import { useSelector, useDispatch } from "react-redux";
-import { Grid, Icon, Text } from "../elements/element";
+import { Grid, Icon, Text } from "../../elements/element";
 
 const Menubar = (props) => {
   const { menuColor } = props;

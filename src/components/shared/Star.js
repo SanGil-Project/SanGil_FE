@@ -1,6 +1,6 @@
 import React from "react";
 import { BsStarFill } from "react-icons/bs";
-import { Grid } from "../elements/element";
+import { Grid } from "../../elements/element";
 
 const Star = (props) => {
   const {

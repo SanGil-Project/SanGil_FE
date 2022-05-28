@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import KakaoMap from "../components/KakaoMap";
+import KakaoMap from "../components/map/KakaoMap";
 import { Grid, Button, Text } from "../elements/element";
 import { Header, SearchTracking, EndTracking } from "../components/component";
 import {
@@ -69,7 +69,7 @@ const Tracker = (props) => {
           });
         },
         (err) => {
-          alert("현재 위치를 표시할 수 없어요");
+          alert("현재 위치를 표시할 수 없어요.");
           navigate("/main", { replace: true });
         },
         { enableHighAccuracy: true }
@@ -93,6 +93,10 @@ const Tracker = (props) => {
               if (_distance?.distanceM) {
                 setDistance((prev) => ({
                   distanceM: prev.distanceM + Number(_distance?.distanceM),
+                  // 테스트용
+                  // distanceK: Number(
+                  //   prev.distanceK + Number(_distance?.distanceK)
+                  // ).toFixed(2),
                   distanceK: prev.distanceK + Number(_distance?.distanceK),
                 }));
               }
