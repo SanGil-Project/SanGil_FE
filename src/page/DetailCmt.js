@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Grid, Input, Button } from "../elements/element";
+import { Grid, Input, Button, ElInput } from "../elements/element";
 import { Header, Star, Comment, Menubar } from "../components/component";
 import { actionCreators as mountAction } from "../redux/modules/mountain";
 import _ from "lodash";
@@ -28,6 +28,9 @@ const DetailCmt = () => {
     if (updateCmt.state) {
       if (comment === "" || !comment) {
         return alert("댓글을 입력해주세요");
+      }
+      if (star.filter(Boolean).length === 0) {
+        return alert("별점을 선택해주세요");
       } else {
         dispatch(
           mountAction.addCommentDB(mountainId, {
@@ -92,18 +95,16 @@ const DetailCmt = () => {
                 radius="12px"
                 isFlex
               >
-                <Input
-                  gridWidth="230px"
-                  border="none"
-                  margin="1px 0"
+                <ElInput
+                  width="70%"
                   height="46px"
+                  size="1.6rem"
+                  border="none"
+                  value={comment || ""}
+                  margin="1px 0 0 5px"
                   placeholder="댓글과 별점을 남겨보세요!"
                   _onChange={(e) => setComment(e.target.value)}
                 />
-                {/* <input
-                  onChange={(e) => setComment(e.target.value)}
-                  value={comment}
-                /> */}
                 <Star
                   width="77px"
                   height="18px"
@@ -132,12 +133,13 @@ const DetailCmt = () => {
                 radius="12px"
                 isFlex
               >
-                <Input
-                  gridWidth="230px"
-                  border="none"
-                  margin="0"
+                <ElInput
+                  width="70%"
                   height="46px"
-                  defaultValue={updateCmt.content}
+                  size="1.6rem"
+                  border="none"
+                  value={comment}
+                  margin="1px 0 0 5px"
                   _onChange={cmt}
                 />
               </Grid>

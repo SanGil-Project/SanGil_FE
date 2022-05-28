@@ -1,13 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { Grid, Input, Text, Image, Icon } from "../elements/element";
+import { Grid, Text, Image, Icon, ElInput } from "../elements/element";
 import { Header, Menubar } from "../components/component";
 import { useNavigate, useParams } from "react-router";
 import {
   getDetailDB,
   detailLikeDB,
   addCmtDB,
-  deleteDB,
   deleteCmtDB,
 } from "../redux/modules/feedDetail";
 
@@ -52,6 +51,7 @@ const FeedCmt = () => {
   const addCmt = () => {
     if (cmt) {
       dispatch(addCmtDB(feedId, cmt));
+      setCmt();
     } else {
       alert("댓글을 입력해주세요");
     }
@@ -161,13 +161,15 @@ const FeedCmt = () => {
             height="48px"
             padding="0 0 0 10px"
           >
-            <Input
-              radius="10px"
+            <ElInput
               width="100%"
-              border="none"
-              margin="0"
+              height="100%"
               placeholder="댓글을 입력해주세요!"
+              radius="10px"
+              size="16px"
+              border="none"
               _onChange={getText}
+              value={cmt || ""}
             />
           </Grid>
           <Text

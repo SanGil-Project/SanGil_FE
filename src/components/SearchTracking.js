@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
-import { Grid, Icon, Input, Text } from "../elements/element";
+import { Grid, Icon, Input, Text, ElInput } from "../elements/element";
 import { searchNameDB } from "../redux/modules/tracker";
 import { useDispatch, useSelector } from "react-redux";
 import _ from "lodash";
@@ -47,6 +47,7 @@ const SearchTracking = (props) => {
   };
 
   React.useEffect(() => {
+    setName("");
     if (name) {
       dispatch(searchNameDB(name, pageNum));
     }
@@ -77,12 +78,18 @@ const SearchTracking = (props) => {
               bg="#ffffff"
               isFlex
             >
-              <Icon type="find" width="30px" height="36px" margin="0 10px" />
-              <Input
+              <Icon
+                type="find"
+                width="30px"
+                height="36px"
+                margin="0 0 0 10px"
+              />
+              <ElInput
+                size="1.6rem"
+                height="50px"
                 border="none"
                 width="78.71%"
-                height="50px"
-                size="1.6rem"
+                margin="0 20px 0 0"
                 placeholder="어떤 산을 찾고 계신가요?"
                 _onChange={getName}
               />
