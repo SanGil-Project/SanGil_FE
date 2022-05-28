@@ -3,18 +3,14 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 
 import { actionCreators as mountActions } from "../redux/modules/mountain";
-import { searchNameDB } from "../redux/modules/tracker";
 import {
-  Section,
   Menubar,
   FullMap,
-  HorizontalScroll,
-  Card,
   Header,
   AlertModal,
   CheckSpecial,
 } from "../components/component";
-import { Grid, Text, Icon, Button, Input, Image } from "../elements/element";
+import { Grid, Text, Icon, Button, Input, ElInput } from "../elements/element";
 import { useNavigate } from "react-router";
 import { indexOf } from "lodash";
 
@@ -24,7 +20,6 @@ const Search = (props) => {
   const navigate = useNavigate();
   const menuColor = [false, false, false, true, false]; // 메뉴바 색
   const mountainList = useSelector((state) => state?.mountain?.mountainList);
-  // const searchData = useSelector((state) => state?.tracker?.searchList);
   const searchData = useSelector((state) => state?.mountain?.searchList);
   const curtPageDB = useSelector((state) => state?.mountain?.searchCurrentPg);
   const totPageDB = useSelector((state) => state?.mountain?.searchTotalPg);
@@ -56,14 +51,15 @@ const Search = (props) => {
   React.useEffect(() => {
     if (searchKeyword !== "") {
       dispatch(mountActions.getSearchDB(searchKeyword, curtPage));
-      // setCurtPage(curtPageDB+1)
       return;
     }
   }, [curtPage, searchKeyword]);
 
   const onChange = (e) => {
     if (CheckSpecial(e.target.value)) {
-      return alert("특수문자는 입력할 수 없습니다");
+      setModalContent("특수문자는 입력할 수 없습니다");
+      setModalOpen(true);
+      return;
     }
     setInput(e.target.value);
   };
@@ -73,7 +69,6 @@ const Search = (props) => {
       setModalOpen(true);
       return;
     }
-    // dispatch(searchNameDB(searchKeyword, 1));
     setCurtPage(1);
     setSearchKeyword(input);
   };
@@ -92,6 +87,7 @@ const Search = (props) => {
 
   const cancel = () => {
     setSearchKeyword("");
+    setInput("")
   };
   const goDetail = (mountainId) => {
     navigate(`/searchdetail/${mountainId}`);
@@ -112,7 +108,6 @@ const Search = (props) => {
         )}
         <SearchWrap>
           <SearchInput>
-            {/* <SearchInput padding="82px 14px 18px" bg="#fff"> */}
             <Grid
               bg="#F2F3F6"
               height="50px"
@@ -127,7 +122,9 @@ const Search = (props) => {
                 height="37px"
                 margin="0 auto"
               />
-              <Input
+              <ElInput
+                type="text"
+                size="16px"
                 bg="#F2F3F6"
                 width="100%"
                 border="none"
@@ -136,9 +133,7 @@ const Search = (props) => {
                 placeholder="어떤 산을 찾고 계신가요?"
                 _onChange={onChange}
                 value={input}
-                // value={searchKeyword}
                 onSubmit={search}
-                is_submit
               />
               <Button border="none" width="50px" _onClick={cancel}>
                 <Text size="16px" bold="500" margin="0" color="#959595">
@@ -153,7 +148,6 @@ const Search = (props) => {
                 ⛰ 100대 명산 중 10개의 산을 랜덤으로 확인해보세요
               </Text>
             )}
-            {/* <FullMap data={data}/> */}
             {searchData ? (
               <>
                 <Grid padding="0 26px">
@@ -250,7 +244,6 @@ const Search = (props) => {
                       radius="10px"
                       margin="0 13px 0 0"
                     ></Grid>
-                    {/* <Image src={d.mountainImgUrl} height="100%" width="50%" /> */}
                     <Grid
                       flexColumn
                       alignItems="left"
@@ -264,11 +257,9 @@ const Search = (props) => {
                           height="18px"
                           margin="0 auto"
                         />
-                        {/* <div key={idx} ref={el => (listRef.current[idx] = el)}> */}
                         <Text margin="0 10px" size="18px" bold="500" nowrap>
                           {d.mountain}
                         </Text>
-                        {/* </div> */}
                       </Grid>
                       <Grid padding="0 0 12px" flexRow justify="left">
                         <Icon

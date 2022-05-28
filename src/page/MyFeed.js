@@ -7,7 +7,7 @@ import { actionCreators as handleActions } from "../redux/modules/handle";
 
 import { Menubar, Header } from "../components/component";
 
-import { Grid, Text, Icon, Button, Input } from "../elements/element";
+import { Grid } from "../elements/element";
 import { useNavigate } from "react-router";
 
 const MyFeed = (props) => {

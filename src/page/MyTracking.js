@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import KakaoMap from "../components/KakaoMap";
-import { Grid, Button, Text, Icon, Input } from "../elements/element";
+import { Grid, Button, Text, Icon } from "../elements/element";
 import { Header } from "../components/component";
 import { Desktop, Mobile } from "../shared/responsive";
 import {
