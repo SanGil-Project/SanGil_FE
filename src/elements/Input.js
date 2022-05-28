@@ -54,14 +54,13 @@ const Input = (props) => {
     return (
       <React.Fragment>
         <Grid>
-          {label && <div>{label}</div>}
           <ElTextarea
             {...styles}
             rows={7}
             value={value}
             placeholder={placeholder}
             onChange={_onChange}
-          ></ElTextarea>
+          />
         </Grid>
       </React.Fragment>
     );
@@ -160,18 +159,18 @@ const InfoInput = styled.input`
 `;
 
 const ElTextarea = styled.textarea`
-  width: ${(props) => props.width};
-  max-width: ${(props) => props.maxWidth};
-  height: ${(props) => props.height};
-  ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
-  padding: ${(props) => props.padding};
-  box-sizing: border-box;
-  border: ${(props) => props.border};
-  ${(props) => (props.radius ? `border-radius: ${props.radius};` : null)}
-  outline: none;
-  font-size: ${(props) => (props.size ? `${props.size}` : `16px`)};
-  ${(props) => (props.bg ? `background-color: ${props.bg};` : null)}
   resize: none;
+  outline: none;
+  box-sizing: border-box;
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  border: ${(props) => props.border};
+  padding: ${(props) => props.padding};
+  max-width: ${(props) => props.maxWidth};
+  ${(props) => (props.size ? `font-size: ${props.size};` : null)}
+  ${(props) => (props.margin ? `margin: ${props.margin};` : null)}
+  ${(props) => (props.bg ? `background-color: ${props.bg};` : null)}
+  ${(props) => (props.radius ? `border-radius: ${props.radius};` : null)}
 `;
 
 export default Input;
