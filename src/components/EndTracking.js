@@ -46,7 +46,7 @@ const EndTracking = (props) => {
       <div className="modal_container" style={{ height: "500px" }}>
         <Grid height="100%" padding="8% 0">
           <Text size="1.4rem" align="center" bold="600">
-            대충 화이팅 한다는 멘트
+            등(산의)신까지 얼마 안남았어요!
           </Text>
           <Grid maxWidth="85.3%" height="157px" margin="10px auto 0 auto">
             <Image

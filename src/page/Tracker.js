@@ -93,8 +93,7 @@ const Tracker = (props) => {
               if (_distance?.distanceM) {
                 setDistance((prev) => ({
                   distanceM: prev.distanceM + Number(_distance?.distanceM),
-                  distanceK:
-                    prev.distanceK + Number(_distance?.distanceK).toFixed(2),
+                  distanceK: prev.distanceK + Number(_distance?.distanceK),
                 }));
               }
             }

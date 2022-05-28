@@ -77,7 +77,7 @@ const FeedCard = (props) => {
         src={el.feedImgUrl}
       />
       <Grid height="20px" margin="10px auto" maxWidth="86%" isFlex>
-        <Grid lineHeight="20px" maxWidth="50px" isFlex>
+        <Grid lineHeight="20px" maxWidth="60px" flex="flex">
           <Icon
             type="like"
             width="18px"
@@ -85,7 +85,7 @@ const FeedCard = (props) => {
             fill={el.goodStatus ? "#43ca3b" : `#c4c4c4`}
             _onClick={() => like(el.feedId)}
           />
-          <Text size="1.2rem" bold="500">
+          <Text size="1.2rem" bold="500" margin="0 0 0 5px">
             {el.goodCnt}
           </Text>
         </Grid>

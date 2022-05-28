@@ -111,7 +111,7 @@ export default handleActions(
       }),
     [DELETE_PATH]: (state, action) =>
       produce(state, (draft) => {
-        draft.polylinePath = [];
+        draft.polylinePath.polylinePath = [];
       }),
     [GETSEARCH]: (state, action) =>
       produce(state, (draft) => {

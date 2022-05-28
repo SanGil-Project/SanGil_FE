@@ -39,6 +39,11 @@ const Main = (props) => {
     navigate(`/feeddetail/${el.feedId}`);
   };
 
+  const firstLike = (e) => {
+    e.stopPropagation();
+    bookmark(mountain[0]?.mountainId, "mountain");
+  };
+
   React.useEffect(() => {
     if (userInfo && token) {
       if (navigator.geolocation) {
@@ -92,6 +97,10 @@ const Main = (props) => {
               margin="34px auto 0 auto"
               bgImg={mountain && mountain[0]?.mountainImgUrl}
               bgSize="cover"
+              hover
+              _onClick={() => {
+                goDetail(mountain[0].mountainId);
+              }}
             >
               <Icon
                 margin="0 0 0 24px"
@@ -114,9 +123,7 @@ const Main = (props) => {
                 width="18px"
                 margin="0 0 -190px 93%"
                 fill={mountain && mountain[0]?.bookmark ? "#43ca3b" : "#c4c4c4"}
-                _onClick={() => {
-                  bookmark(mountain[0]?.mountainId, "mountain");
-                }}
+                _onClick={firstLike}
               />
             </Card>
             <Grid
@@ -125,9 +132,6 @@ const Main = (props) => {
               margin="0 auto"
               hover
               flex="flex"
-              _onClick={() => {
-                goDetail(mountain[0].mountainId);
-              }}
             >
               <Text maxWidth="260px" bold="600" size="1.4rem">
                 {mountain && mountain[0]?.mountainAddress}
@@ -142,11 +146,20 @@ const Main = (props) => {
                 mountain
                   .filter((el, idx) => idx !== 0)
                   .map((el, idx) => (
-                    <div key={idx}>
+                    <Grid
+                      key={idx}
+                      width="210px"
+                      height="170px"
+                      margin="20px 0 0 0"
+                      hover
+                      _onClick={() => {
+                        goDetail(el.mountainId);
+                      }}
+                    >
                       <Card
                         width="194px"
                         height="120px"
-                        margin="34px 7px 8px 7px"
+                        margin="0 7px 8px 7px"
                         bgImg={el.mountainImgUrl}
                         bgSize="cover"
                       >
@@ -173,19 +186,13 @@ const Main = (props) => {
                           height="18px"
                           margin="0 0 -87px 163px"
                           fill={el.bookmark ? "#43ca3b" : "#c4c4c4"}
-                          _onClick={() => {
+                          _onClick={(e) => {
+                            e.stopPropagation();
                             bookmark(el.mountainId, "mountain");
                           }}
                         />
                       </Card>
-                      <Grid
-                        height="40px"
-                        hover
-                        _onClick={() => {
-                          goDetail(el.mountainId);
-                        }}
-                        margin="0 0 0 7px"
-                      >
+                      <Grid height="40px" margin="0 0 0 7px">
                         <Text
                           maxWidth="160px"
                           margin="0"
@@ -199,7 +206,7 @@ const Main = (props) => {
                           {el.mountain}
                         </Text>
                       </Grid>
-                    </div>
+                    </Grid>
                   ))}
             </HorizontalScroll>
           </Grid>
@@ -228,13 +235,17 @@ const Main = (props) => {
             </Grid>
             <HorizontalScroll margin="0 7px">
               {around?.map((el, idx) => (
-                <div key={idx}>
+                <Grid key={idx} width="210px" height="180px">
                   <Card
                     width="194px"
                     height="120px"
                     margin="10px 7px 8px 7px"
                     bgImg={el.mountainImgUrl}
                     bgSize="cover"
+                    hover
+                    _onClick={() => {
+                      goDetail(el.mountainId);
+                    }}
                   >
                     <Icon
                       type="like"
@@ -242,20 +253,13 @@ const Main = (props) => {
                       height="18px"
                       margin="0 0 -103px 163px"
                       fill={el.bookmark ? "#43ca3b" : "#c4c4c4"}
-                      _onClick={() => {
+                      _onClick={(e) => {
+                        e.stopPropagation();
                         bookmark(el.mountainId, "around");
                       }}
                     />
                   </Card>
-                  <Grid
-                    hover
-                    width="195px"
-                    height="40px"
-                    margin="0 0 0 7px"
-                    _onClick={() => {
-                      goDetail(el.mountainId);
-                    }}
-                  >
+                  <Grid width="195px" height="40px" margin="0 0 0 7px">
                     <Text margin="0" bold="600" size="1.4rem">
                       {el.mountainName}
                     </Text>
@@ -270,7 +274,7 @@ const Main = (props) => {
                       </Text>
                     </Grid>
                   </Grid>
-                </div>
+                </Grid>
               ))}
             </HorizontalScroll>
           </Grid>
@@ -488,6 +492,5 @@ const TrackBtn = styled.div`
   ${(props) => (props.smallSize ? `calc(0vw + 14px);` : `calc(50% - 236px);`)}
   bottom: 113px;
 `;
-
 
 export default Main;
