@@ -28,9 +28,6 @@ const ChatRoom = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
 
-  // const sockJs = new SockJS("http://13.125.232.76:8080/ws-stomp"); // 서버주소/ws-stomp
-  // const sockJs = new SockJS("http://52.79.228.126:8080/ws-stomp"); // 서버주소/ws-stomp
-  // const sockJs = new SockJS("http://15.164.232.187:8080/ws-stomp"); // 서버주소/ws-stomp
   // const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 서버주소/ws-stomp
   const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 서버주소/ws-stomp
   const stomp = Stomp.over(sockJs);
@@ -46,11 +43,6 @@ const ChatRoom = (props) => {
   };
 
   function ConnectSub(token) {
-    if (!isMember) {
-      setModalContent(`잘못된 접근입니다! \n 메인페이지로 돌아갑니다!`);
-      setModalOpen(true);
-      return;
-    }
     try {
       stomp.connect({}, () => {
         stomp.subscribe(`/sub/chat/rooms/${chatRoomId}`, (response) => {
@@ -95,17 +87,31 @@ const ChatRoom = (props) => {
   }
 
   React.useEffect(() => {
-    dispatch(handleActions.isPagename(`${chatRoomId}번 채팅방`));
-    dispatch(partyActions.getOnePartyDB(chatRoomId));
-    ConnectSub(token);
+    if (partymember) {
+
+      if (!isMember) {
+        setModalContent(`잘못된 접근입니다! \n 메인페이지로 돌아갑니다!`);
+        setModalOpen(true);
+        return;
+      }
+      ConnectSub(token);
+    }
+    return () => {
+      DisConnectUnsub();
+    };
     // if (_userInfo) {
     //   dispatch(handleActions.isPagename(`${chatRoomId}번 채팅방`));
     //   ConnectSub(token);
     // }
-    return () => {
-      DisConnectUnsub();
-    };
-  }, []);
+    // return () => {
+    //   DisConnectUnsub();
+    // };
+  }, [partymember]);
+
+  React.useEffect(() => {
+    dispatch(partyActions.getOnePartyDB(chatRoomId));
+    dispatch(handleActions.isPagename(`${chatRoomId}번 채팅방`));
+  }, [_userInfo]);
 
   React.useEffect(() => {
     scrollToBottom();
@@ -119,7 +125,7 @@ const ChatRoom = (props) => {
 
   const goMain = (check) => {
     if (check) {
-      navigate("/", { replace: true });
+      navigate("/main", { replace: true });
     }
   };
 
