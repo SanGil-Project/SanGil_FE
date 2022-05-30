@@ -18,6 +18,7 @@ const MypageEdit = (props) => {
   );
   const titleHint = useSelector((state) => state?.user?.titleHint);
   const userInfo = user?.userInfo;
+  const userNickname = userInfo?.nickname;
   const checkData = user?.nameCheck;
 
   React.useEffect(() => {
@@ -33,7 +34,7 @@ const MypageEdit = (props) => {
   const noTitleList = titleList?.filter((p) => p.have === false);
 
   const [nameCount, setNameCount] = useState(userInfo?.nickname?.length);
-  const [nickname, setNickname] = useState(userInfo?.nickname);
+  const [nickname, setNickname] = useState(userNickname);
   const [_userTitle, set_userTitle] = useState(userInfo?.userTitle);
 
   const [preview, setPreview] = useState(null);
@@ -178,7 +179,7 @@ const MypageEdit = (props) => {
                     margin="0"
                     border="none"
                     bg="transparent"
-                    defaultValue={userInfo?.nickname}
+                    value={nickname ? nickname : userInfo?.nickname}
                     _onChange={changeNickname}
                   />
                 </Grid>

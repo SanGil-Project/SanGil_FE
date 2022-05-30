@@ -467,6 +467,10 @@ const MainContainer = styled.div`
   background-color: #fff;
   width: 100%;
   height: 100%;
+<<<<<<< HEAD
+=======
+  // min-width: 414px;
+>>>>>>> 555f5b61824533f75e56d0f0a47737bd902dbf29
   padding: 0 0 100px 0;
   max-width: 500px;
   margin: auto;
