@@ -44,7 +44,7 @@ const SearchDetail = () => {
     <>
       <DetailContainer>
         <Header />
-        <Grid overflowY="scroll" height="100vh" padding="74px 0 0 0">
+        <Grid overflowY="scroll" height="100vh" padding="74px 0 88px 0">
           <Grid width="93.23%" height="48px" margin="0 auto" isFlex>
             <Grid width="35.26%" margin="0" height="48px" flex="flex">
               <Text
@@ -94,12 +94,51 @@ const SearchDetail = () => {
               borderRadius="12px"
             />
           </Grid>
-
+          <div>
+            <Grid
+              border="1px solid #DEDEDE"
+              width="93.23%"
+              radius="10px"
+              margin="0 auto"
+            >
+              <Grid margin="20px 0 0 0" height="20px" flex="flex">
+                <Text
+                  bold="600"
+                  width="36px"
+                  size="1.8rem"
+                  color="#43ca3b"
+                  lineHeight="20px"
+                  margin="0 0 0 25px"
+                >
+                  높이
+                </Text>
+                <Text margin="0 0 0 20px">{mountain?.height}m</Text>
+              </Grid>
+              <Grid
+                height="1px"
+                border="0.5px solid #DEDEDE"
+                margin="20px 0 0 0"
+              />
+              <Grid margin="20px 0" flex="flex">
+                <Text
+                  bold="600"
+                  width="36px"
+                  size="1.8rem"
+                  color="#43ca3b"
+                  lineHeight="20px"
+                  margin="0 0 0 25px"
+                >
+                  설명
+                </Text>
+                <Text margin="0 20px">{mountain?.mountainInfo}</Text>
+              </Grid>
+            </Grid>
+          </div>
           {mountain &&
             mountain.courseLists.map((el, idx) => (
               <div key={idx}>
-                <Grid width="93.23%" margin="0 auto">
-                  <Grid height="8px" border="4px solid #F2F3F6"></Grid>
+                <Grid width="93.23%" margin="20px auto 0 auto">
+                  <Grid height="8px" border="4px solid #F2F3F6" />
                   <Grid
                     bg={
                       selected.idx === idx && selected.state
