@@ -98,7 +98,6 @@ const PartyWrite = (props) => {
 
     const dateString = year + "-" + month + "-" + day;
 
-    console.log(dateValue, dateString);
     setDateValue(dateString);
     setDateOpen(false);
   };

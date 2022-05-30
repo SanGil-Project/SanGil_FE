@@ -189,7 +189,6 @@ const changeNameDB = (nickname) => {
     api
       .changeName(nickname)
       .then((res) => {
-        console.log(res.data);
         const _user = {
           changeUser: {
             userId: userdata.userId,
