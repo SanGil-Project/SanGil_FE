@@ -202,14 +202,8 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
         style={{ display: "none" }}
         position={{ lat: content.lat, lng: content.lng }} // 마커를 표시할 위치
         onClick={markerClick}
-        onMouseOver={() => {
-          setIsVisible(true);
-          setIsOver(true);
-        }}
-        onMouseOut={() => {
-          setIsVisible(false);
-          setIsOver(false);
-        }}
+        onMouseOver={() => setIsOver(true)}
+        onMouseOut={() => setIsOver(false)}
         image={{
           src: markerImg,
           size: {
@@ -224,7 +218,8 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
           },
         }}
       >
-        {isVisible && (
+        {isClicked && isVisible && (
+        // {isVisible && (
           // {isClicked && isVisible &&
           <CustomOverlayMap
             index={index}

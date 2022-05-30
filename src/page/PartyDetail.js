@@ -39,6 +39,7 @@ const PartyDetail = (props) => {
   const myMode = userInfo?.nickname === curtParty?.nickname ? true : false;
   const isMember = partymember?.some((m) => m.nickname === userInfo.nickname)
   const isChief = userInfo?.nickname === curtParty?.nickname ? true : false;
+  const isCompleted = partymember.length === curtParty.maxPeople;
 
   const attendParty = (partyId) => {
     if (curtParty.nickname === userInfo.nickname) {
@@ -215,8 +216,8 @@ const PartyDetail = (props) => {
                       fill="#43CA3B"
                     />
                   </Grid>
-                  <Text margin="0 8px 0 12px" bold="500" size="14px">
-                    {curtParty?.curPeople}/{curtParty?.maxPeople}명
+                  <Text margin="0 8px 0 12px" bold={isCompleted ? "700" : "500"} size="14px" color={isCompleted ? "#43CA3B" : "#000"}>
+                    {curtParty?.curPeople}/{curtParty?.maxPeople}명 {isCompleted && "(모집이 완료됐어요!)"}
                   </Text>
                   {/* <Icon type="detailBtn" width="8px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} /> */}
                 </Grid>
@@ -290,7 +291,7 @@ const PartyDetail = (props) => {
               </Text>
             </Button>
             <Button
-              bgColor="#43CA3B"
+              bgColor={(isCompleted && !isMember) ? "#E6E6E6" : "#43CA3B"}
               border="none"
               height="48px"
               margin="0"
@@ -299,7 +300,7 @@ const PartyDetail = (props) => {
                 attendParty(curtParty.partyId);
               }}
             >
-              <Text margin="0" size="18px" bold="600" color="#fff" align>
+              <Text margin="0" size="18px" bold="600" color={(isCompleted && !isMember) ? "#000" : "#fff"} align>
                 {attendBtn}
               </Text>
             </Button>
