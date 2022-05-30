@@ -11,8 +11,9 @@ import {
   CheckSpecial,
 } from "../components/component";
 
-import { Grid, Text, Icon, Button, Input, ElInput } from "../elements/element";
+import { Grid, Text, Icon, Button, Input, ElInput, Image } from "../elements/element";
 import { useNavigate } from "react-router";
+
 
 const Party = (props) => {
   const smallSize = window.outerWidth < 500 ? true : false;
@@ -162,12 +163,17 @@ const Party = (props) => {
           <Grid padding="160px 14px 100px">
             <div ref={topRef}></div>
             {partyList?.map((p, idx) => {
-              let cardImg = p.completed
-                ? "https://user-images.githubusercontent.com/91959791/170146663-47e7a0ce-6db5-40f3-ad7e-c078779ed87f.png"
-                : "https://user-images.githubusercontent.com/91959791/170146585-0d85e1a8-f60b-4b76-b634-dbc8f6a73d64.png";
-              let btnBg = p.completed ? "#43CA3B" : "#959595";
-              let textColor = p.completed ? "#000" : "#D9D9D9";
-              let btnText = p.completed ? "모집내용확인" : "마감 되었어요😢";
+              // let cardImg = p.completed
+              //   ? "https://user-images.githubusercontent.com/91959791/170146663-47e7a0ce-6db5-40f3-ad7e-c078779ed87f.png"
+              //   : "https://user-images.githubusercontent.com/91959791/170146585-0d85e1a8-f60b-4b76-b634-dbc8f6a73d64.png";
+              // let btnBg = p.completed ? "#43CA3B" : "#959595";
+              // let textColor = p.completed ? "#000" : "#D9D9D9";
+              // let btnText = p.completed ? "모집내용확인" : "마감 되었어요😢";
+              let cardImg = "https://user-images.githubusercontent.com/91959791/170146663-47e7a0ce-6db5-40f3-ad7e-c078779ed87f.png";
+              let btnBg = "#43CA3B";
+              let textColor = "#000";
+              let btnText = "모집내용확인";
+              const memberOk = p.completed ? false : true;
               const timeover = (p.partyDate === "마감되었습니다.")
               if (timeover) {
                 cardImg = "https://user-images.githubusercontent.com/91959791/170146585-0d85e1a8-f60b-4b76-b634-dbc8f6a73d64.png";
@@ -195,7 +201,7 @@ const Party = (props) => {
                   shadow="1px 3px 10px rgba(69, 69, 69, 0.2)"
                   radius="16px"
                   width="auto"
-                  height="230px"
+                  height="275px"
                   padding="17px 16px"
                   margin="0 0 24px"
                   flexColumn
@@ -220,6 +226,32 @@ const Party = (props) => {
                         color={textColor}
                       >
                         {p.beforeTime}
+                      </Text>
+                    </Grid>
+                    <Grid
+                      flexRow
+                      justify="left"
+                      padding="0 0 10px"
+                      height="auto"
+                    >
+                      <Grid width="18px">
+                      
+                      <Image
+                        src={
+                          "https://user-images.githubusercontent.com/91959791/169491140-498a7ef5-5a76-4301-8771-d13449d3b92e.png"
+                        }
+                        width="20px"
+                        height="20px"
+                      />
+                      </Grid>
+                      <Text
+                        margin="0 12px"
+                        bold="500"
+                        size="14px"
+                        height="auto"
+                        color={textColor}
+                      >
+                      {p.nickname}
                       </Text>
                     </Grid>
                     <Grid
@@ -283,11 +315,11 @@ const Party = (props) => {
                       </Grid>
                       <Text
                         margin="0 12px"
-                        bold="500"
+                        bold={memberOk ? "700" : "500"}
                         size="14px"
-                        color={textColor}
+                        color={memberOk ? "#43CA3B" : textColor}
                       >
-                        {curPeople}/{p.maxPeople}명
+                        {curPeople}/{p.maxPeople}명 {memberOk && "(모집이 완료됐어요!)"}
                       </Text>
                     </Grid>
                   </Grid>
