@@ -198,7 +198,7 @@ const FeedCmt = () => {
             </Grid>
           ) : (
             feedCmt?.commentResponseDtos.map((el, idx) => (
-              <Grid width="91.78%" height="100px" margin="10px auto" key={idx}>
+              <Grid width="91.78%" margin="10px auto" key={idx}>
                 <Grid height="40px" margin="0" flex="flex">
                   {el.userImgUrl !== "없음" ? (
                     <Image
@@ -244,14 +244,21 @@ const FeedCmt = () => {
                     </Text>
                   </Grid>
                 </Grid>
-                <Grid height="50px" margin="0 0 0 11%" width="89%" isFlex>
-                  <Text bold="500" size="1.6rem">
-                    {el.feedComment}
-                  </Text>
-                  <Text bold="500" size="1.4rem" color="#C0C0C0">
-                    {el.beforeTime}
-                  </Text>
-                </Grid>
+                <div>
+                  <Grid margin="0 0 0 11%" width="89%" isFlex>
+                    <Text
+                      wordBreak="break-all"
+                      width="82%"
+                      bold="500"
+                      size="1.6rem"
+                    >
+                      {el.feedComment}
+                    </Text>
+                    <Text bold="500" size="1.4rem" color="#C0C0C0">
+                      {el.beforeTime}
+                    </Text>
+                  </Grid>
+                </div>
                 <Line />
               </Grid>
             ))

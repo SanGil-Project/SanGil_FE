@@ -12,6 +12,7 @@ const Banner = () => {
     autoplay: true,
     autoplaySpeed: 3000,
     draggable: true,
+    arrows: false,
   };
 
   return (
