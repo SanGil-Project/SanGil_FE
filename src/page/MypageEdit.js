@@ -21,8 +21,6 @@ const MypageEdit = (props) => {
   const userNickname = userInfo?.nickname;
   const checkData = user?.nameCheck;
 
-  console.log(userInfo)
-
   React.useEffect(() => {
     dispatch(handleActions.isPagename("내 정보 수정"));
     dispatch(userActions.myTitleDB());
@@ -46,7 +44,6 @@ const MypageEdit = (props) => {
   const [titlemodalContent, setTitleModalContent] = useState("");
   const [titlemodalUrl, setTitleModalUrl] = useState("");
 
-  console.log(userInfo, userNickname, nickname, nameCount, _userTitle)
   const selectFile = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
