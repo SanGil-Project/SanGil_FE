@@ -93,10 +93,6 @@ const Tracker = (props) => {
               if (_distance?.distanceM) {
                 setDistance((prev) => ({
                   distanceM: prev.distanceM + Number(_distance?.distanceM),
-                  // 테스트용
-                  // distanceK: Number(
-                  //   prev.distanceK + Number(_distance?.distanceK)
-                  // ).toFixed(2),
                   distanceK: prev.distanceK + Number(_distance?.distanceK),
                 }));
               }
@@ -200,7 +196,7 @@ const Tracker = (props) => {
               </Text>
               <Text margin="7px 0 0 0">
                 <span style={{ fontSize: "2.5rem", color: "#43ca3b" }}>
-                  {distance.distanceK}
+                  {Number(distance.distanceK).toFixed(2)}
                 </span>
                 km
               </Text>

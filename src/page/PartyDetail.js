@@ -39,7 +39,7 @@ const PartyDetail = (props) => {
   const myMode = userInfo?.nickname === curtParty?.nickname ? true : false;
   const isMember = partymember?.some((m) => m.nickname === userInfo.nickname)
   const isChief = userInfo?.nickname === curtParty?.nickname ? true : false;
-  const isCompleted = partymember.length === curtParty.maxPeople;
+  const isCompleted = partymember?.length === curtParty?.maxPeople;
 
   const attendParty = (partyId) => {
     if (curtParty.nickname === userInfo.nickname) {
