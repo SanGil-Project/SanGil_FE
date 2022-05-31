@@ -71,9 +71,11 @@ const EndTracking = (props) => {
                     color: "#43CA3B",
                   }}
                 >
-                  {distance}
+                  {distance >= 1000
+                    ? (distance / 1000).toFixed(2)
+                    : distance.toFixed()}
                 </span>
-                {` km`}
+                {distance >= 1000 ? ` km` : `m`}
               </Text>
             </Grid>
             <Grid width="180px">

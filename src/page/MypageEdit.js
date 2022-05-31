@@ -46,13 +46,36 @@ const MypageEdit = (props) => {
 
   const selectFile = (e) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    // 읽기가 끝나면 발생하는 이벤트 핸들러
-    reader.onloadend = () => {
-      setPreview(reader.result); // 바로 보여주기
-      dispatch(userActions.changeImgDB(file, reader.result));
-    };
+    const extension = [
+      "png",
+      "jpeg",
+      "gif",
+      "jpg",
+      "jfif",
+      "exif",
+      "bmp",
+      "ppm",
+      "pgm",
+      "pbm",
+      "pnm",
+    ];
+    if (file.size > 10000000) {
+      return alert("10MB 이하의 사진만 업로드 가능합니다");
+    } else {
+      const fileExtension = file.name.split(".").pop().toLowerCase();
+      const upload = extension.filter((el) => el === fileExtension);
+      if (upload.length === 0) {
+        return alert("이미지 형식의 파일만 가능합니다");
+      } else {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        // 읽기가 끝나면 발생하는 이벤트 핸들러
+        reader.onloadend = () => {
+          setPreview(reader.result); // 바로 보여주기
+          dispatch(userActions.changeImgDB(file, reader.result));
+        };
+      }
+    }
   };
 
   const changeNickname = (e) => {
@@ -163,6 +186,7 @@ const MypageEdit = (props) => {
               <input
                 id="input_image"
                 type="file"
+                accept="image/*"
                 ref={fileInput}
                 onChange={selectFile}
                 style={{ display: "none" }}

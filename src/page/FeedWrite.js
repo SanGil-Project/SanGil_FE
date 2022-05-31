@@ -19,14 +19,33 @@ const FeedWrite = () => {
 
   const preview = (e) => {
     const file = e.target.files[0];
+    const extension = [
+      "png",
+      "jpeg",
+      "gif",
+      "jpg",
+      "jfif",
+      "exif",
+      "bmp",
+      "ppm",
+      "pgm",
+      "pbm",
+      "pnm",
+    ];
     if (file.size > 10000000) {
       return alert("10MB 이하의 사진만 업로드 가능합니다");
     } else {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        setImg({ uploadImg: file, preImg: reader.result });
-      };
+      const fileExtension = file.name.split(".").pop().toLowerCase();
+      const upload = extension.filter((el) => el === fileExtension);
+      if (upload.length === 0) {
+        return alert("이미지 형식의 파일만 가능합니다");
+      } else {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+          setImg({ uploadImg: file, preImg: reader.result });
+        };
+      }
     }
   };
 
@@ -131,7 +150,12 @@ const FeedWrite = () => {
                   height="100px"
                   margin="40% 40%"
                 />
-                <ImgInput id="img" type="file" onChange={preview}></ImgInput>
+                <ImgInput
+                  id="img"
+                  type="file"
+                  accept="image/*"
+                  onChange={preview}
+                ></ImgInput>
               </Grid>
             </label>
           )}
