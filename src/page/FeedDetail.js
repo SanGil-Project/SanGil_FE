@@ -162,15 +162,27 @@ const FeedCmt = () => {
             height="48px"
             padding="0 0 0 10px"
           >
-            <ElInput
-              width="100%"
-              height="100%"
-              placeholder="댓글을 입력해주세요!"
-              radius="10px"
-              size="16px"
-              border="none"
-              _onChange={getText}
-            />
+            {update ? (
+              <ElInput
+                width="100%"
+                height="100%"
+                placeholder="댓글을 입력해주세요!"
+                radius="10px"
+                size="16px"
+                border="none"
+                _onChange={getText}
+              />
+            ) : (
+              <ElInput
+                width="100%"
+                height="100%"
+                radius="10px"
+                size="16px"
+                border="none"
+                value={cmt || ""}
+                _onChange={getText}
+              />
+            )}
           </Grid>
           <Text
             margin="0 15px 0 0"
@@ -224,7 +236,12 @@ const FeedCmt = () => {
                       </Text>
                       {el.userId === userId ? (
                         <Grid width="60px" isFlex>
-                          <Text bold="300" size="1.2rem">
+                          <Text
+                            bold="300"
+                            size="1.2rem"
+                            hover
+                            _onClick={() => setUPdate(false)}
+                          >
                             수정
                           </Text>
                           <Text

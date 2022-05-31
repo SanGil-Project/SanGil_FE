@@ -137,7 +137,6 @@ const Tracker = (props) => {
           isStart: false,
         });
         dispatch(deletePath());
-        setCompletedId();
         releaseWakeLock();
         navigate("/main", { replace: true });
       }
@@ -155,7 +154,6 @@ const Tracker = (props) => {
           isStart: false,
         });
         dispatch(deletePath());
-        setCompletedId();
         releaseWakeLock();
       }
     }
@@ -194,7 +192,7 @@ const Tracker = (props) => {
               </Text>
               <Text margin="7px 0 0 0">
                 <span style={{ fontSize: "2.5rem", color: "#43ca3b" }}>
-                  {Number(distance.distanceK).toFixed(2)}
+                  {distance.distanceK.toFixed(2)}
                 </span>
                 km
               </Text>
