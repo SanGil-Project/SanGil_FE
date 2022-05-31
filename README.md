@@ -96,17 +96,77 @@
 
 ### 이벤트 버블링
 
-- 문제: 산 카드 안의 북마크 버튼을 눌렀을 때, 이벤트 버블링으로 인해 산 상세 페이지로 넘어가는 문제가 있었습니다.
+- 문제 : 산 카드 안의 북마크 버튼을 눌렀을 때, 이벤트 버블링으로 인해 산 상세 페이지로 넘어가는 문제가 있었습니다.
 
-- 해결 방안: event.stopPropagation()을 사용하여 해당 이벤트가 전파되는 것을 방지했습니다.
+- 해결 방안 : event.stopPropagation()을 사용하여 해당 이벤트가 전파되는 것을 방지했습니다.
 
 ### wakeLock api
 
-- 문제: 스마트폰으로 서비스를 이용할 때, 시간이 지나면 자동으로 화면이 어두워지는데, 이 때 gps와 스톱워치 둘다 작동하지 않는 문제 발생했습니다
+- 문제 : 스마트폰으로 서비스를 이용할 때, 시간이 지나면 자동으로 화면이 어두워지는데, 이 때 gps와 스톱워치 둘다 작동하지 않는 문제 발생했습니다
 
-- 해결 방안: wakeLock API를 사용하여 기능이 계속 실행되어야 할 때 슬립 모드 혹은 화면이 잠가지는 것을 방지하고자 했습니다.
+- 해결 방안 : wakeLock API를 사용하여 기능이 계속 실행되어야 할 때 슬립 모드 혹은 화면이 잠가지는 것을 방지하고자 했습니다.
 
-- 한계점: ios 기기에서는 사용이 불가능하고, 안드로이드 기기에서만 사용이 가능하다는 한계가 존재했습니다.
+- 한계점 : ios 기기에서는 사용이 불가능하고, 안드로이드 기기에서만 사용이 가능하다는 한계가 존재했습니다.
+
+</br>
+
+### Axios Interceptor
+
+**문제상황** 
+</br>
+웹페이지 서비스에서 로그인 직후 인증이 필요한 요청을 보내게 되면, 오류가 발생. 현재 인증 토큰을 Request Headers의 Authorization 속성에 담아 요청하는데, 로그인 직후에는 Authorization 속성의 값이 null로 전달되기때문에 발생하는 오류였다.
+
+```javascript
+// 기존 코드
+const instance = axios.create({
+  baseURL: "https://산길.com",
+  headers: {
+    Authorization: token,
+    "content-type": "application/json;charset=UTF-8",
+    accept: "application/json",
+  },
+});
+```
+
+axios.create를 이용하여 axios 인스턴스를 생성하는데 여기서 headers - Authorization에 sessionStorage에 저장된 token을 넣고 생성하는 구조.
+처음 로드될 때 axios 인스턴스가 생성되는데 이때 token값은 비어있는 채로 생성이 된다.
+이상태에서 token값이 변해도 자바스크립트단의 위 코드는 별도의 반응형이 아니기 때문에 token이 빈 상태 그대로 유지된다.
+그 상태에서 api를 호출하게 되니 Unauthorized 에러가 날 수 밖에 없는것!
+이러한 문제를 해결하기 위해 Interceptor를 사용했다.
+
+</br>
+
+**해결 방안** 
+</br>
+Interceptor는 axios가 호출되기 전(request, response 모두) 선처리 할 수 있도록 도와주는 axios 내장객체이다.
+
+```javascript
+// https://github.com/axios/axios#interceptors 
+// Add a request interceptor
+axios.interceptors.request.use(function (config) {
+    // Do something before request is sent
+    return config;
+  }, function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  });
+```
+
+기본 코드의 구조는 위와 같다.
+여기서 headers - Authorization에 token값을 실어 보내면 된다.
+
+```javascript
+// 추가 코드
+instance.interceptors.request.use(function (config) {
+  const token = sessionStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = sessionStorage.getItem("token");
+  }
+  return config;
+});
+```
+
+</br>
 
 ## 6️⃣ 피드백 개선 (추가 예정)
 
