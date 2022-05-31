@@ -102,6 +102,8 @@
 
 ### wakeLock api
 
+<img src="https://i.esdrop.com/d/f/wiwzTggJsl/kg4saTwuRk.png">
+
 - 문제 : 스마트폰으로 서비스를 이용할 때, 시간이 지나면 자동으로 화면이 어두워지는데, 이 때 gps와 스톱워치 둘다 작동하지 않는 문제 발생했습니다
 
 - 해결 방안 : wakeLock API를 사용하여 기능이 계속 실행되어야 할 때 슬립 모드 혹은 화면이 잠가지는 것을 방지하고자 했습니다.
