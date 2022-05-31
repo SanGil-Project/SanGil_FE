@@ -34,8 +34,8 @@ const Mypage = (props) => {
   const myBookmarkList = useSelector((state) => state.user.mountList);
   const menuColor = [false, false, false, false, true]; // 메뉴바 색
   const img =
-    userInfo?.userImageUrl !== "없음"
-      ? userInfo?.userImageUrl
+    userInfo?.userImgUrl !== "없음"
+      ? userInfo?.userImgUrl
       : "https://user-images.githubusercontent.com/91959791/168119302-948f0dcf-8165-47af-8b6b-2f90f74aca06.png";
 
   const [likeCnt, setLikeCnt] = React.useState(null);
