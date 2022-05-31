@@ -91,7 +91,7 @@ const FeedCard = (props) => {
         </Grid>
 
         <Text height="15px" size="1.2rem" color="#C4C4C4">
-          {el.createdAt.split("T")[0]}
+          {el.beforeTime}
         </Text>
       </Grid>
       <Grid maxWidth="86%" margin="0 auto" flex="flex">

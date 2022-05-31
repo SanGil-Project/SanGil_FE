@@ -19,7 +19,7 @@ const FeedCmt = () => {
   const dispatch = useDispatch();
   const feedDetail = useSelector((state) => state.feedDetail?.feed);
   const feedCmt = useSelector(
-    (state) => state.feedDetail.feed?.feedCommentListDto
+    (state) => state.feedDetail.feed?.commentList
   );
   const userId = useSelector((state) => state.user.userInfo?.userId);
   const [pageNum, setPageNum] = React.useState(1);
@@ -88,12 +88,12 @@ const FeedCmt = () => {
           <Grid maxWidth="91.78%" margin="0 auto">
             <Grid width="93.23%" height="52px" margin="10px auto 0 auto" isFlex>
               <Grid width="190px" flex="flex">
-                {feedDetail?.userImageUrl !== "없음" ? (
+                {feedDetail?.userImgUrl !== "없음" ? (
                   <Image
                     width="40px"
                     height="40px"
                     type="circle"
-                    src={feedDetail?.userImageUrl}
+                    src={feedDetail?.userImgUrl}
                   />
                 ) : (
                   <Icon width="40px" height="40px" />
@@ -129,7 +129,7 @@ const FeedCmt = () => {
             width="100%"
             height="100%"
             objectFit="contain"
-            src={feedDetail?.feedImageUrl}
+            src={feedDetail?.feedImgUrl}
           />
         </Grid>
         <Grid maxWidth="91.78%" height="25px" margin="20px auto" isFlex>

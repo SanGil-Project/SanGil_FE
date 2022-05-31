@@ -181,7 +181,7 @@ const Party = (props) => {
                 textColor = "#D9D9D9";
                 btnText = "마감 되었어요😢";
               }
-              const curPeople = p.curPeople ? p.curPeople : 0;
+              const curPeople = p.currentPeople ? p.currentPeople : 0;
               if (p.partyDate === dateString) {
                 const tempT = p.partyTime.split(":");
                 if (parseInt(tempT[0]) === parseInt(hours)) {
@@ -276,7 +276,7 @@ const Party = (props) => {
                         height="auto"
                         color={textColor}
                       >
-                        {p.mountain} ({p.address})
+                        {p.mountain} ({p.mountainAddress})
                       </Text>
                     </Grid>
                     <Grid

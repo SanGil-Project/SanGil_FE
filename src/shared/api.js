@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://15.164.102.106:8080", // 로컬 
+  // baseURL: "http://15.164.102.106:8080", // 로컬 
+  baseURL: "http://3.34.122.99:8080", // 의현님 
   // baseURL: "https://jinnn.shop", // 배포용 
   // baseURL: "https://산길.com",
 
@@ -151,7 +152,7 @@ export const api = {
     instance.post("/party/write", {
       title: party.title,
       mountain: party.mountain,
-      MountainAddress: party.address,
+      mountainAddress: party.MountainAddress,
       partyDate: party.partyDate,
       partyTime: party.partyTime,
       maxPeople: party.maxPeople,
