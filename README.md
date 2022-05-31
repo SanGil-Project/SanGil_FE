@@ -96,11 +96,13 @@
 
 ### 이벤트 버블링
 
-- 문제 : 산 카드 안의 북마크 버튼을 눌렀을 때, 이벤트 버블링으로 인해 산 상세 페이지로 넘어가는 문제가 있었습니다.
+- 문제 : 산 카드 안의 북마크 버튼을 눌렀을 때, 이벤트 버블링으로 인해 북마크 기능이 실행되지 않고, 상위 컴포넌트의 이벤트인 산 상세 페이지로 넘어가는 기능이 실행되는 문제가 있었습니다.
 
-- 해결 방안 : event.stopPropagation()을 사용하여 해당 이벤트가 전파되는 것을 방지했습니다.
+- 해결 방안 : 현재 이벤트가 버블링 단계에서 더 이상 전파되지 않도록 방지해주는 event.stopPropagation()을 사용하여 해당 이벤트가 전파되는 것을 방지했습니다.
 
 ### wakeLock api
+
+<img src="https://i.esdrop.com/d/f/wiwzTggJsl/kg4saTwuRk.png">
 
 - 문제 : 스마트폰으로 서비스를 이용할 때, 시간이 지나면 자동으로 화면이 어두워지는데, 이 때 gps와 스톱워치 둘다 작동하지 않는 문제 발생했습니다
 
@@ -112,7 +114,7 @@
 
 ### Axios Interceptor
 
-**문제상황** 
+**문제상황**
 </br>
 웹페이지 서비스에서 로그인 직후 인증이 필요한 요청을 보내게 되면, 오류가 발생. 현재 인증 토큰을 Request Headers의 Authorization 속성에 담아 요청하는데, 로그인 직후에는 Authorization 속성의 값이 null로 전달되기때문에 발생하는 오류였다.
 
@@ -136,20 +138,23 @@ axios.create를 이용하여 axios 인스턴스를 생성하는데 여기서 hea
 
 </br>
 
-**해결 방안** 
+**해결 방안**
 </br>
 Interceptor는 axios가 호출되기 전(request, response 모두) 선처리 할 수 있도록 도와주는 axios 내장객체이다.
 
 ```javascript
-// https://github.com/axios/axios#interceptors 
+// https://github.com/axios/axios#interceptors
 // Add a request interceptor
-axios.interceptors.request.use(function (config) {
+axios.interceptors.request.use(
+  function (config) {
     // Do something before request is sent
     return config;
-  }, function (error) {
+  },
+  function (error) {
     // Do something with request error
     return Promise.reject(error);
-  });
+  }
+);
 ```
 
 기본 코드의 구조는 위와 같다.

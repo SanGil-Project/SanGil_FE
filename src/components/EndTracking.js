@@ -18,6 +18,7 @@ const EndTracking = (props) => {
   } = props;
   const commentCheck = useSelector((state) => state.tracker.comment);
   const navigate = useNavigate();
+  console.log(time);
   const nextTime = () => {
     navigate("/main", { replace: true });
   };
