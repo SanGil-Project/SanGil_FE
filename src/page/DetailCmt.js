@@ -138,7 +138,6 @@ const DetailCmt = () => {
                   height="46px"
                   size="1.6rem"
                   border="none"
-                  value={comment}
                   margin="1px 0 0 5px"
                   _onChange={cmt}
                 />

@@ -68,9 +68,9 @@ const Main = (props) => {
       <MainContainer>
         <Header />
         <Grid padding="74px 7px 88px 7px" overflowY="scroll" height="100vh">
-            <Grid width="93.23%" height="120px" margin="20px auto">
-              <Banner />
-            </Grid>
+          <Grid width="93.23%" height="120px" margin="20px auto">
+            <Banner />
+          </Grid>
           <Grid height="453px" margin="10px auto 75px auto">
             <Grid padding="0 7px" height="24px" flex="flex">
               <Image
@@ -467,7 +467,10 @@ const MainContainer = styled.div`
   background-color: #fff;
   width: 100%;
   height: 100%;
+<<<<<<< HEAD
+=======
   // min-width: 414px;
+>>>>>>> 555f5b61824533f75e56d0f0a47737bd902dbf29
   padding: 0 0 100px 0;
   max-width: 500px;
   margin: auto;

@@ -71,7 +71,7 @@ const Comment = (props) => {
                     height="18px"
                     color="#AEAEAE"
                     border="none"
-                    // _onClick={update}
+                    _onClick={update}
                   >
                     수정
                   </Button>
