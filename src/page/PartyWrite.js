@@ -285,7 +285,7 @@ const PartyWrite = (props) => {
                   padding="16px 12px"
                   margin="0 0 34.5px"
                   placeholder="모임의 이름은 무엇인가요?"
-                  value={partyName}
+                  value={partyName || ""}
                   disabled
                   _onChange={inputName}
                 />
@@ -298,7 +298,7 @@ const PartyWrite = (props) => {
                   padding="16px 12px"
                   margin="0 0 34.5px"
                   placeholder="모임의 이름은 무엇인가요?"
-                  value={partyName}
+                  value={partyName || ""}
                   _onChange={inputName}
                 />
               )}
@@ -313,7 +313,7 @@ const PartyWrite = (props) => {
                 padding="16px 12px"
                 margin="0 0 34.5px"
                 textarea
-                value={partyContent}
+                value={partyContent || ""}
                 placeholder="어떤 활동을 함께 하고 싶으신가요?"
                 _onChange={inputContent}
               />
@@ -395,7 +395,7 @@ const PartyWrite = (props) => {
                     radius="8px"
                     padding="0"
                     placeholder="숫자만 입력해주세요"
-                    value={numberValue}
+                    value={numberValue || ""}
                     _onChange={inputNumber}
                   />
                 </Grid>

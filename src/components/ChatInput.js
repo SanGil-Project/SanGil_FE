@@ -16,7 +16,7 @@ const ChatInput = (props) => {
   const _userInfo = useSelector((state) => state?.user?.userInfo);
   const { chatRoomId } = props;
   const writer = _userInfo?.nickname;
-  stomp.debug = null;
+  // stomp.debug = null;
   const [chat, setChat] = React.useState("");
 
   const onChange = (e) => {

@@ -21,7 +21,7 @@ const ChatRoom = (props) => {
   const nickname = sessionStorage.getItem("nickname");
   const _userInfo = useSelector((state) => state?.user?.userInfo);
   const curtParty = useSelector((state) => state?.party?.curtParty);
-  const partymember = curtParty?.partymemberDto;
+  const partymember = curtParty?.partyMember;
   const isMember = partymember?.some((m) => m.nickname === nickname);
 
   const scrollRef = useRef();
@@ -33,7 +33,7 @@ const ChatRoom = (props) => {
   // const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 배포
   const stomp = Stomp.over(sockJs);
 
-  stomp.debug = null;
+  // stomp.debug = null;
 
   // const sender = _userInfo?.nickname;
 
@@ -46,13 +46,16 @@ const ChatRoom = (props) => {
   function ConnectSub(token) {
     try {
       stomp.connect({}, () => {
+        console.log("여긴???")
         stomp.subscribe(`/sub/chat/rooms/${chatRoomId}`, (response) => {
           const content = JSON.parse(response.body);
 
           if (content.length === 1) {
+            console.log("여기가???")
             dispatch(chatActions.sendChat(content));
             scrollToBottom();
           } else {
+            console.log("여기가???")
             dispatch(chatActions.getChatDB(content));
             scrollToBottom();
           }
@@ -89,12 +92,14 @@ const ChatRoom = (props) => {
 
   React.useEffect(() => {
     if (partymember) {
+      console.log("연결시작!!!!")
 
       if (!isMember) {
         setModalContent(`잘못된 접근입니다! \n 메인페이지로 돌아갑니다!`);
         setModalOpen(true);
         return;
       }
+      console.log("이거두번??")
       ConnectSub(token);
     }
     return () => {
@@ -107,7 +112,7 @@ const ChatRoom = (props) => {
     // return () => {
     //   DisConnectUnsub();
     // };
-  }, [partymember]);
+  }, [curtParty?.partyId]);
 
   React.useEffect(() => {
     dispatch(partyActions.getOnePartyDB(chatRoomId));
@@ -151,9 +156,9 @@ const ChatRoom = (props) => {
                 const time = chat.createdAt.split(" ");
                 const boxColor = mine ? "#9EE59C" : "#EBEBEB";
                 const img =
-                  chat.userImageUrl === "없음"
+                  chat.userImgUrl === "없음"
                     ? "https://user-images.githubusercontent.com/91959791/168119302-948f0dcf-8165-47af-8b6b-2f90f74aca06.png"
-                    : chat.userImageUrl;
+                    : chat.userImgUrl;
                 return mine ? (
                   <Grid key={idx}>
                     <Grid padding="0 0 8px 46px" flexRow justify="flex-end">
