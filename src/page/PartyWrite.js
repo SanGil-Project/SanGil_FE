@@ -58,7 +58,7 @@ const PartyWrite = (props) => {
     is_edit ? partyItem?.mountain : "검색"
   );
   const [mountAddValue, setMountAddValue] = React.useState(
-    is_edit ? partyItem?.address : ""
+    is_edit ? partyItem?.mountainAddress : ""
   );
 
   const [startDate, setStartDate] = useState(new Date());
@@ -198,7 +198,7 @@ const PartyWrite = (props) => {
       return;
     }
     if (is_edit) {
-      if (numberValue < origin.curPeople) {
+      if (numberValue < origin.currentPeople) {
         setModalContent("현재 참가 인원수보다 적게 설정할 수 없습니다!");
         setModalOpen(true);
         return;
@@ -207,7 +207,7 @@ const PartyWrite = (props) => {
       const partyData = {
         title: partyName,
         mountain: mountValue,
-        address: mountAddValue,
+        MountainAddress: mountAddValue,
         partyDate: dateValue,
         partyTime: timeValue,
         maxPeople: num,
@@ -223,7 +223,7 @@ const PartyWrite = (props) => {
     const partyData = {
       title: partyName,
       mountain: mountValue,
-      address: mountAddValue,
+      MountainAddress: mountAddValue,
       partyDate: dateValue,
       partyTime: timeValue,
       maxPeople: num,

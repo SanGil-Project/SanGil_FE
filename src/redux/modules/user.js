@@ -97,6 +97,7 @@ const kakaoLoginDB = (code) => {
         dispatch(isLogInDB(ACCESS_TOKEN));
       })
       .catch((err) => {
+        console.log(err);
         window.alert("로그인에 실패하였습니다.");
       });
   };
@@ -171,7 +172,7 @@ const changeImgDB = (file, image) => {
       .then((res) => {
         const _user = {
           userId: userdata.userId,
-          userImageUrl: image,
+          userImgUrl: image,
           nickname: userdata.nickname,
           userTitle: userdata.userTitle,
         };
@@ -192,7 +193,7 @@ const changeNameDB = (nickname) => {
         const _user = {
           changeUser: {
             userId: userdata.userId,
-            userImageUrl: userdata.userImageUrl,
+            userImgUrl: userdata.userImgUrl,
             nickname: nickname,
             userTitle: userdata.userTitle,
           },
@@ -215,13 +216,13 @@ const changeTitleDB = (userTitle) => {
         const _user = {
           changeUser: {
             userId: userdata.userId,
-            userImageUrl: userdata.userImageUrl,
+            userImgUrl: userdata.userImgUrl,
             nickname: userdata.nickname,
             userTitle: userTitle,
           },
           changeTitle: {
-            beforeTitlUrl: res.data.beforeTitlUrl,
-            afterTitleUrl: res.data.userTitleUrl,
+            beforeTitlUrl: res.data.beforeTitleImgUrl,
+            afterTitleUrl: res.data.userTitleImgUrl,
             beforeTitle: userdata.userTitle,
             afterTitle: userTitle,
           },
@@ -389,18 +390,18 @@ export default handleActions(
       produce(state, (draft) => {
         draft.userInfo = action.payload.userInfo.changeUser;
         if (action.payload.userInfo.changeTitle) {
-          const beforeIndex = draft.titleList.userTitleDtoList.findIndex(
+          const beforeIndex = draft.titleList.userTitleList.findIndex(
             (i) =>
               i.userTitle === action.payload.userInfo.changeTitle.beforeTitle
           );
-          const afterIndex = draft.titleList.userTitleDtoList.findIndex(
+          const afterIndex = draft.titleList.userTitleList.findIndex(
             (i) =>
               i.userTitle === action.payload.userInfo.changeTitle.afterTitle
           );
 
-          draft.titleList.userTitleDtoList[beforeIndex].userTitleImgUrl =
+          draft.titleList.userTitleList[beforeIndex].userTitleImgUrl =
             action.payload.userInfo.changeTitle.beforeTitlUrl;
-          draft.titleList.userTitleDtoList[afterIndex].userTitleImgUrl =
+          draft.titleList.userTitleList[afterIndex].userTitleImgUrl =
             action.payload.userInfo.changeTitle.afterTitleUrl;
         }
       }),

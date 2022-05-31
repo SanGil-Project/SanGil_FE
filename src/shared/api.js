@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://15.164.102.106:8080", // 로컬 - 재진님
-  // baseURL: "http://3.34.122.99:8080", // 로컬 - 의현님
-  // baseURL: "https://jinnn.shop", // 배포용 - 재진님
+  // baseURL: "http://15.164.102.106:8080", // 로컬
+  baseURL: "http://3.34.122.99:8080", // 의현님
+  // baseURL: "https://jinnn.shop", // 배포용
   // baseURL: "https://산길.com",
 
   headers: {
@@ -35,51 +35,12 @@ sock.interceptors.request.use(function (config) {
 
 export const api = {
   //main.js
-  around: (lat, lng) =>
-    instance.get(`/api/main/nearby/1?lat=${lat}&lng=${lng}`),
-  mainFeed: () => instance.get(`/api/main/feeds/1`),
-  mountains: () => instance.get(`/api/main/mountains`),
-  mainParty: () => instance.get(`/api/main/parties`),
+  around: (lat, lng) => instance.get(`/main/nearby/1?lat=${lat}&lng=${lng}`),
+  mainFeed: () => instance.get(`/main/feeds`),
+  mountains: () => instance.get(`/main/mountains`),
+  mainParty: () => instance.get(`/main/parties`),
   mainBookmark: (mountainId) =>
-    instance.post(`/api/mountain/bookmark/${mountainId}`, { mountainId }),
-
-  //feedDetail.js
-  getFeedDetail: (feedId, pageNum) =>
-    instance.get(`/feeds/detail/${feedId}/${pageNum}`),
-  deleteDetail: (feedId) =>
-    instance.delete(`/api/feeds/delete/${feedId}`, { feedId }),
-  addFeedCmt: (feedId, feedComment) =>
-    instance.post(`/feeds/comment/${feedId}`, { feedComment }),
-  updateFeedCmt: (feedCommentId, feedComment) =>
-    instance.put(`/feeds/comment/${feedCommentId}`, { feedComment }),
-  deleteFeedCmt: (feedCommentId) =>
-    instance.delete(`/feeds/comment/${feedCommentId}`),
-  detailLike: (feedId) =>
-    instance.post(`/api/feeds/good/${feedId}`, { feedId }),
-
-  //tracker.js
-  start: (mountainId, setCompletedId) =>
-    instance.post(`/api/tracking/${mountainId}`, { send: 1 }),
-  searchName: (keyword, pageNum) =>
-    instance.get(`/api/mountain/search?keyword=${keyword}&pageNum=${pageNum}`),
-  setPath: (completedId, loca) =>
-    instance.post(`/api/tracking/mountain/${completedId}`, {
-      lat: loca.lat,
-      lng: loca.lng,
-    }),
-  endClimb: (completedId, data) =>
-    instance.put(`/api/tracking/${completedId}`, {
-      totalDistance: data.totalDistance,
-      totalTime: data.totalTime,
-    }),
-  deleteDB: (completedId) => instance.delete(`/api/tracking/${completedId}`),
-  getMytrack: (completedid) =>
-    instance.get(`/api/tracking/detail/${completedid}`),
-
-  //feed.js
-  getFeedDB: (pageNum) => instance.get(`/feeds/${pageNum}`),
-  deleteFeed: (feedId) => instance.delete(`/api/feeds/delete/${feedId}`),
-  feedLike: (feedId) => instance.post(`/api/feeds/good/${feedId}`, { feedId }),
+    instance.post(`/mountain/bookmark/${mountainId}`),
 
   // user.js - social login
   kakaoLogin: (code) => instance.get(`/user/kakao/callback?code=${code}`),
@@ -95,84 +56,111 @@ export const api = {
         accept: "application/json",
       },
     }),
-  isLogin: (token) =>
-    instance.get("/api/user/loginCheck", {
-      headers: {
-        "content-type": "applicaton/json;charset=UTF-8",
-        accept: "application/json",
-        Authorization: token,
-      },
+  isLogin: (token) => instance.get("/user/loginCheck"),
+  nameCheck: (nickname) =>
+    instance.post("/mypage/nameCheck", {
+      nickname: nickname,
     }),
-  nameCheck: (username) =>
-    instance.post("/api/mypage/usernameCheck", {
-      nickname: username,
-    }),
-  changeName: (username) =>
-    instance.put("/api/mypage/profilename", {
-      nickname: username,
+  changeName: (nickname) =>
+    instance.put("/mypage/profilename", {
+      nickname: nickname,
     }),
   changeImg: (formData) =>
-    instance.put("/api/mypage/profileUrl", formData, {
+    instance.put("/mypage/profileUrl", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     }),
-  myTracking: () => instance.get("/api/mypage/tracking"),
-  myTitle: () => instance.get("/api/mypage/userTitle"),
+  myTracking: () => instance.get("/mypage/tracking"),
+  myTitle: () => instance.get("/mypage/userTitle"),
   myFeed: () => instance.get("/mypage/myfeeds"),
-  myFeedList: (pageNum) => instance.get(`/api/myfeeds/${pageNum}`),
+  myFeedList: (pageNum) => instance.get(`/myfeeds/${pageNum}`),
 
-  myMount: (mountainId) => instance.get(`/api/mypage/tracking/${mountainId}`),
+  myMount: (mountainId) => instance.get(`/mypage/tracking/${mountainId}`),
   myBookmark: (pageNum, lat, lng) =>
-    instance.get(`/api/mypage/bookmark/${pageNum}?lat=${lat}&lng=${lng}`),
+    instance.get(`/mypage/bookmark/${pageNum}?lat=${lat}&lng=${lng}`),
   changeTitle: (userTitle) =>
-    instance.put("/api/mypage/userTitle", {
+    instance.put("/mypage/userTitle", {
       userTitle: userTitle,
     }),
 
+  //feed.js
+  getFeedDB: (pageNum) => instance.get(`/feeds/${pageNum}`),
+  deleteFeed: (feedId) => instance.delete(`/feeds/delete/${feedId}`),
+  feedLike: (feedId) => instance.post(`/feeds/good/${feedId}`),
+
+  //feedDetail.js
+  getFeedDetail: (feedId, pageNum) =>
+    instance.get(`/feeds/detail/${feedId}/${pageNum}`),
+  deleteDetail: (feedId) =>
+    instance.delete(`/feeds/delete/${feedId}`, { feedId }),
+  addFeedCmt: (feedId, feedComment) =>
+    instance.post(`/feeds/comment/${feedId}`, { feedComment }),
+  updateFeedCmt: (feedCommentId, feedComment) =>
+    instance.put(`/feeds/comment/${feedCommentId}`, { feedComment }),
+  deleteFeedCmt: (feedCommentId) =>
+    instance.delete(`/feeds/comment/${feedCommentId}`),
+  detailLike: (feedId) =>
+    instance.post(`/api/feeds/good/${feedId}`, { feedId }),
+
+  //tracker.js
+  start: (mountainId, setCompletedId) =>
+    instance.post(`/tracking/${mountainId}`, { send: 1 }),
+  searchName: (keyword, pageNum) =>
+    instance.get(`/mountain/search?keyword=${keyword}&pageNum=${pageNum}`),
+  setPath: (completedId, loca) =>
+    instance.post(`/tracking/mountain/${completedId}`, {
+      lat: loca.lat,
+      lng: loca.lng,
+    }),
+  endClimb: (completedId, data) =>
+    instance.put(`/tracking/${completedId}`, {
+      totalDistance: data.totalDistance,
+      totalTime: data.totalTime,
+    }),
+  deleteDB: (completedId) => instance.delete(`/tracking/${completedId}`),
+  getMytrack: (completedId) => instance.get(`/tracking/detail/${completedId}`),
+
   // mountain.js
   searchMount: (keyword, pageNum) =>
-    instance.get(`/api/mountain/search/${keyword}/${pageNum}`),
-  getTopList: () => instance.get("/api/mountain/search/before"),
-  getDetail: (mountainId, pageNum) =>
-    instance.get(`/api/mountain/${mountainId}/${pageNum}`),
+    instance.get(`/mountain/search/${keyword}/${pageNum}`),
+  getTopList: () => instance.get("/mountain/search/before"),
+  getDetail: (mountainId, pageNum) => instance.get(`/mountain/${mountainId}`),
   addComment: (mountainId, commentData) =>
-    instance.post(`/api/mountain/comment/${mountainId}`, commentData),
+    instance.post(`/mountain/comment/${mountainId}`, commentData),
   deleteComment: (mountainCommentId) =>
-    instance.delete(`/api/mountain/comment/${mountainCommentId}`),
+    instance.delete(`/mountain/comment/${mountainCommentId}`),
   updateComment: (commentData) =>
-    instance.put(`/api/mountain/comment/${commentData.mountainCommentId}`, {
+    instance.put(`/mountain/comment/${commentData.mountainCommentId}`, {
       mountainComment: commentData.mountainComment,
     }),
-  like: (mountainId) =>
-    instance.post(`/api/mountain/bookmark/${mountainId}`, { mountainId }),
+  like: (mountainId) => instance.post(`/mountain/bookmark/${mountainId}`),
 
   // party.js
   searchParty: (keyword, pageNum) =>
     instance.get(`/parties/search?keyword=${keyword}&pageNum=${pageNum}`),
-  getMyParty: () => instance.get("/api/plan"),
-  getPartyList: (pageNum) => instance.get(`/api/parties/${pageNum}`),
-  getOneParty: (partyId) => instance.get(`/api/party/${partyId}`),
+  getMyParty: () => instance.get("/plan"),
+  getPartyList: (pageNum) => instance.get(`/parties/${pageNum}`),
+  getOneParty: (partyId) => instance.get(`/party/${partyId}`),
   addParty: (party) =>
-    instance.post("/api/party/write", {
+    instance.post("/party/write", {
       title: party.title,
       mountain: party.mountain,
-      address: party.address,
+      mountainAddress: party.MountainAddress,
       partyDate: party.partyDate,
       partyTime: party.partyTime,
       maxPeople: party.maxPeople,
       partyContent: party.partyContent,
     }),
   editParty: (partyId, party) =>
-    instance.put(`/api/party/${partyId}`, {
-      partyId: partyId,
+    instance.put(`/party/${partyId}`, {
       partyDate: party.partyDate,
       partyTime: party.partyTime,
       maxPeople: party.maxPeople,
       partyContent: party.partyContent,
     }),
-  attendParty: (partyId) => instance.post(`/api/party/attend/${partyId}`),
-  delParty: (partyId) => instance.delete(`/api/party/${partyId}`),
+  attendParty: (partyId) => instance.post(`/party/attend/${partyId}`),
+  delParty: (partyId) => instance.delete(`/party/${partyId}`),
 
   // chat.js
   addChatRoom: (title, partyId) =>

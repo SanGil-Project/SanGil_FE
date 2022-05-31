@@ -14,7 +14,7 @@ const MypageEdit = (props) => {
   const fileInput = React.useRef();
   const user = useSelector((state) => state?.user);
   const titleList = useSelector(
-    (state) => state?.user?.titleList?.userTitleDtoList
+    (state) => state?.user?.titleList?.userTitleList
   );
   const titleHint = useSelector((state) => state?.user?.titleHint);
   const userInfo = user?.userInfo;
@@ -26,9 +26,14 @@ const MypageEdit = (props) => {
     dispatch(userActions.myTitleDB());
   }, []);
 
+  React.useEffect(() => {
+    setNameCount(userInfo?.nickname?.length);
+    setNickname(userInfo?.nickname);
+  }, [userInfo]);
+
   const img =
-    userInfo?.userImageUrl !== "없음"
-      ? userInfo?.userImageUrl
+    userInfo?.userImgUrl !== "없음"
+      ? userInfo?.userImgUrl
       : "https://user-images.githubusercontent.com/91959791/168119302-948f0dcf-8165-47af-8b6b-2f90f74aca06.png";
   const userTitleList = titleList?.filter((p) => p.have === true);
   const noTitleList = titleList?.filter((p) => p.have === false);
@@ -36,6 +41,7 @@ const MypageEdit = (props) => {
   const [nameCount, setNameCount] = useState(userInfo?.nickname?.length);
   const [nickname, setNickname] = useState(userNickname);
   const [_userTitle, set_userTitle] = useState(userInfo?.userTitle);
+
 
   const [preview, setPreview] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -177,8 +183,8 @@ const MypageEdit = (props) => {
                   src={
                     preview
                       ? preview
-                      : userInfo?.userImageUrl !== "없음"
-                      ? userInfo?.userImageUrl
+                      : userInfo?.userImgUrl !== "없음"
+                      ? userInfo?.userImgUrl
                       : defalutsrc
                   }
                 />
@@ -203,7 +209,8 @@ const MypageEdit = (props) => {
                     margin="0"
                     border="none"
                     bg="transparent"
-                    value={nickname ? nickname : userInfo?.nickname}
+                    value={nickname}
+                    // value={nickname ? nickname : userInfo?.nickname}
                     _onChange={changeNickname}
                   />
                 </Grid>
