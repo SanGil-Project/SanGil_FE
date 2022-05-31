@@ -1,6 +1,6 @@
 # 🌲 산길: 🌲
 
-<img width="400" alt="로고" src="https://산길.com/static/media/193Logo.7335472140281cb94a24.png">
+<img width="400" alt="로고" src="https://i.esdrop.com/d/f/wiwzTggJsl/lKlIrV2EUg.png">
 
 [👉산길 바로가기](https://xn--wk0b636a.com/)
 
@@ -109,7 +109,6 @@
 - 한계점: ios 기기에서는 사용이 불가능하고, 안드로이드 기기에서만 사용이 가능하다는 한계가 존재했습니다.
 
 ## 6️⃣ 피드백 개선 (추가 예정)
-
 
 ## 7️⃣ 사용한 라이브러리 (패키지)
 
