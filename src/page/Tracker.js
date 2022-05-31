@@ -105,7 +105,7 @@ const Tracker = (props) => {
           { enableHighAccuracy: true }
         );
       }
-    }, 3000);
+    }, 1000);
     return () => clearTimeout(path.current);
   }, [myLoca]);
 
@@ -133,10 +133,9 @@ const Tracker = (props) => {
       if (window.confirm("10분 미만의 등산은 기록되지 않습니다.") === true) {
         dispatch(deleteDB(completedId));
         setTime({
-          stopwatch: { s: 0, m: 0, h: 0 },
+          ...time,
           isStart: false,
         });
-        setDistance({ distanceM: 0.0, distanceK: 0.0 });
         dispatch(deletePath());
         setCompletedId();
         releaseWakeLock();
@@ -152,10 +151,9 @@ const Tracker = (props) => {
         );
         setEndOpen(true);
         setTime({
-          stopwatch: { s: 0, m: 0, h: 0 },
+          ...time,
           isStart: false,
         });
-        setDistance({ distanceM: 0.0, distanceK: 0.0 });
         dispatch(deletePath());
         setCompletedId();
         releaseWakeLock();
@@ -288,7 +286,7 @@ const Tracker = (props) => {
           time={time.stopwatch}
           setTime={setTime}
           setDistance={setDistance}
-          distance={distance.distanceK}
+          distance={Number(distance.distanceK).toFixed(2)}
           mountainId={mountainId}
           mountainImg={mountainImg}
         />
