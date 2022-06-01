@@ -2,8 +2,8 @@ import axios from "axios";
 
 const instance = axios.create({
   // baseURL: "http://15.164.102.106:8080", // 로컬
-  baseURL: "http://3.34.122.99:8080", // 의현님
-  // baseURL: "https://jinnn.shop", // 배포용
+  // baseURL: "http://3.34.122.99:8080", // 의현님
+  baseURL: "https://jinnn.shop", // 배포용
   // baseURL: "https://산길.com",
 
   headers: {
@@ -94,6 +94,8 @@ export const api = {
     instance.get(`/feeds/detail/${feedId}/${pageNum}`),
   deleteDetail: (feedId) =>
     instance.delete(`/feeds/delete/${feedId}`, { feedId }),
+  updateDetailCmt: (feedCommentId, feedComment) =>
+    instance.put(`/feeds/comment/${feedCommentId}`, { feedComment }),
   addFeedCmt: (feedId, feedComment) =>
     instance.post(`/feeds/comment/${feedId}`, { feedComment }),
   updateFeedCmt: (feedCommentId, feedComment) =>
@@ -125,7 +127,8 @@ export const api = {
   searchMount: (keyword, pageNum) =>
     instance.get(`/mountain/search/${keyword}/${pageNum}`),
   getTopList: () => instance.get("/mountain/search/before"),
-  getDetail: (mountainId, pageNum) => instance.get(`/mountain/${mountainId}`),
+  getDetail: (mountainId, pageNum) =>
+    instance.get(`/mountain/${mountainId}/${pageNum}`),
   addComment: (mountainId, commentData) =>
     instance.post(`/mountain/comment/${mountainId}`, commentData),
   deleteComment: (mountainCommentId) =>

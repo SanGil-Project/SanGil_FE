@@ -5,9 +5,9 @@ import Stomp from "stompjs";
 
 import { Grid, Text, Button, Input, ElInput } from "../elements/element";
 
-const sockJs = new SockJS("http://3.34.122.99:8080/ws-stomp"); // 로컬
+// const sockJs = new SockJS("http://3.34.122.99:8080/ws-stomp"); // 로컬
 // const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 로컬
-// const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 배포
+const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 배포
 const stomp = Stomp.over(sockJs);
 
 const ChatInput = (props) => {
