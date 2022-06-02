@@ -213,6 +213,7 @@ const changeTitleDB = (userTitle) => {
     api
       .changeTitle(userTitle)
       .then((res) => {
+        console.log(res)
         const _user = {
           changeUser: {
             userId: userdata.userId,

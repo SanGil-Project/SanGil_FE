@@ -21,15 +21,16 @@ const ChatRoom = (props) => {
   const nickname = sessionStorage.getItem("nickname");
   const _userInfo = useSelector((state) => state?.user?.userInfo);
   const curtParty = useSelector((state) => state?.party?.curtParty);
-  const partymember = curtParty?.partyMember;
+  // const partymember = curtParty?.partyMember;
+  const partymember = curtParty?.partymemberDto;
   const isMember = partymember?.some((m) => m.nickname === nickname);
 
   const scrollRef = useRef();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
 
-  const sockJs = new SockJS("http://3.34.122.99:8080/ws-stomp"); // 로컬
-  // const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 로컬
+  // const sockJs = new SockJS("http://3.34.122.99:8080/ws-stomp"); // 로컬
+  const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 로컬
   // const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 배포
   const stomp = Stomp.over(sockJs);
 

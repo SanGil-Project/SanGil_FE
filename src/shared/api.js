@@ -58,7 +58,8 @@ export const api = {
       },
     }),
   isLogin: (token) =>
-    instance.get("/user/loginCheck"),
+    instance.get("/user/loginCheck"), // api 수정된것
+    // instance.get("api/user/loginCheck"),
   nameCheck: (nickname) =>
     instance.post("/mypage/nameCheck", {
       nickname: nickname,
@@ -146,8 +147,10 @@ export const api = {
   searchParty: (keyword, pageNum) =>
     instance.get(`/parties/search?keyword=${keyword}&pageNum=${pageNum}`),
   getMyParty: () => instance.get("/plan"),
-  getPartyList: (pageNum) => instance.get(`/parties/${pageNum}`),
-  getOneParty: (partyId) => instance.get(`/party/${partyId}`),
+  // getPartyList: (pageNum) => instance.get(`/parties/${pageNum}`), // api 수정
+  getPartyList: (pageNum) => instance.get(`api/parties/${pageNum}`),
+  // getOneParty: (partyId) => instance.get(`/party/${partyId}`), // ali 수정
+  getOneParty: (partyId) => instance.get(`api/party/${partyId}`), 
   addParty: (party) =>
     instance.post("/party/write", {
       title: party.title,
