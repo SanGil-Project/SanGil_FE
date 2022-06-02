@@ -143,10 +143,8 @@ export const api = {
   searchParty: (keyword, pageNum) =>
     instance.get(`/parties/search?keyword=${keyword}&pageNum=${pageNum}`),
   getMyParty: () => instance.get("/plan"),
-  // getPartyList: (pageNum) => instance.get(`/parties/${pageNum}`), // api 수정
-  getPartyList: (pageNum) => instance.get(`api/parties/${pageNum}`),
-  // getOneParty: (partyId) => instance.get(`/party/${partyId}`), // ali 수정
-  getOneParty: (partyId) => instance.get(`api/party/${partyId}`), 
+  getPartyList: (pageNum) => instance.get(`/parties/${pageNum}`),
+  getOneParty: (partyId) => instance.get(`/party/${partyId}`), 
   addParty: (party) =>
     instance.post("/party/write", {
       title: party.title,
