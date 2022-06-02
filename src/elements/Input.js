@@ -30,6 +30,7 @@ const Input = (props) => {
     textAlign,
     color,
     ref,
+    accept,
   } = props;
 
   const styles = {

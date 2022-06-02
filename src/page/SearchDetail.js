@@ -14,7 +14,7 @@ const SearchDetail = () => {
   const dispatch = useDispatch();
   const menuColor = [false, false, false, true, false]; // 메뉴바 색
   const [selected, setSelected] = React.useState({ idx: 0, state: false });
-  const mountain = useSelector((state) => state.mountain.mountainData);
+  const mountain = useSelector((state) => state.mountain?.mountainData);
 
   const show = (i) => {
     if (selected.state === false) {
@@ -32,13 +32,8 @@ const SearchDetail = () => {
   };
 
   React.useEffect(() => {
-    if (
-      !mountain?.commentDto.totalPage ||
-      mountain?.commentDto.totalPage >= pageNum
-    ) {
-      dispatch(mountAction.getDetailDB(mountainId, pageNum));
-    }
-  }, [pageNum]);
+    dispatch(mountAction.getDetailDB(mountainId, pageNum));
+  }, []);
 
   return (
     <>

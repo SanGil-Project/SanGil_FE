@@ -39,8 +39,6 @@ const Mytrack = (props) => {
                 height="100%"
                 level="3"
                 margin="0"
-                zoomable={false}
-                draggable={false}
                 myLoca={myTrack?.trackingList[0]}
                 polylinePath={myTrack?.trackingList}
               />

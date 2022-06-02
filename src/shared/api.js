@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const instance = axios.create({
-  // baseURL: "http://15.164.102.106:8080", // 로컬 
-  baseURL: "http://3.34.122.99:8080", // 의현님 
-  // baseURL: "https://jinnn.shop", // 배포용 
+  // baseURL: "http://15.164.102.106:8080", // 로컬
+  // baseURL: "http://3.34.122.99:8080", // 의현님
+  baseURL: "https://jinnn.shop", // 배포용
   // baseURL: "https://산길.com",
 
   headers: {
@@ -35,8 +35,7 @@ sock.interceptors.request.use(function (config) {
 
 export const api = {
   //main.js
-  around: (lat, lng) =>
-    instance.get(`/main/nearby/1?lat=${lat}&lng=${lng}`),
+  around: (lat, lng) => instance.get(`/main/nearby/1?lat=${lat}&lng=${lng}`),
   mainFeed: () => instance.get(`/main/feeds`),
   mountains: () => instance.get(`/main/mountains`),
   mainParty: () => instance.get(`/main/parties`),
@@ -57,9 +56,7 @@ export const api = {
         accept: "application/json",
       },
     }),
-  isLogin: (token) =>
-    instance.get("/user/loginCheck"), // api 수정된것
-    // instance.get("api/user/loginCheck"),
+  isLogin: (token) => instance.get("/user/loginCheck"),
   nameCheck: (nickname) =>
     instance.post("/mypage/nameCheck", {
       nickname: nickname,
@@ -87,7 +84,6 @@ export const api = {
       userTitle: userTitle,
     }),
 
-
   //feed.js
   getFeedDB: (pageNum) => instance.get(`/feeds/${pageNum}`),
   deleteFeed: (feedId) => instance.delete(`/feeds/delete/${feedId}`),
@@ -98,6 +94,8 @@ export const api = {
     instance.get(`/feeds/detail/${feedId}/${pageNum}`),
   deleteDetail: (feedId) =>
     instance.delete(`/feeds/delete/${feedId}`, { feedId }),
+  updateDetailCmt: (feedCommentId, feedComment) =>
+    instance.put(`/feeds/comment/${feedCommentId}`, { feedComment }),
   addFeedCmt: (feedId, feedComment) =>
     instance.post(`/feeds/comment/${feedId}`, { feedComment }),
   updateFeedCmt: (feedCommentId, feedComment) =>
@@ -123,15 +121,14 @@ export const api = {
       totalTime: data.totalTime,
     }),
   deleteDB: (completedId) => instance.delete(`/tracking/${completedId}`),
-  getMytrack: (completedId) =>
-    instance.get(`/tracking/detail/${completedId}`),
+  getMytrack: (completedId) => instance.get(`/tracking/detail/${completedId}`),
 
   // mountain.js
   searchMount: (keyword, pageNum) =>
     instance.get(`/mountain/search/${keyword}/${pageNum}`),
   getTopList: () => instance.get("/mountain/search/before"),
   getDetail: (mountainId, pageNum) =>
-    instance.get(`/mountain/${mountainId}`),
+    instance.get(`/mountain/${mountainId}/${pageNum}`),
   addComment: (mountainId, commentData) =>
     instance.post(`/mountain/comment/${mountainId}`, commentData),
   deleteComment: (mountainCommentId) =>
@@ -140,8 +137,7 @@ export const api = {
     instance.put(`/mountain/comment/${commentData.mountainCommentId}`, {
       mountainComment: commentData.mountainComment,
     }),
-  like: (mountainId) =>
-    instance.post(`/mountain/bookmark/${mountainId}`),
+  like: (mountainId) => instance.post(`/mountain/bookmark/${mountainId}`),
 
   // party.js
   searchParty: (keyword, pageNum) =>

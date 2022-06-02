@@ -8,6 +8,7 @@ import {
   detailLikeDB,
   addCmtDB,
   deleteCmtDB,
+  updateCmtDB,
 } from "../redux/modules/feedDetail";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -18,12 +19,11 @@ const FeedCmt = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const feedDetail = useSelector((state) => state.feedDetail?.feed);
-  const feedCmt = useSelector(
-    (state) => state.feedDetail.feed?.commentList
-  );
+  const feedCmt = useSelector((state) => state.feedDetail.feed?.commentList);
   const userId = useSelector((state) => state.user.userInfo?.userId);
   const [pageNum, setPageNum] = React.useState(1);
-  const [update, setUPdate] = React.useState(true);
+  const [update, setUpdate] = React.useState(true);
+  const [updateNum, setUpdateNum] = React.useState();
   const { feedId } = useParams();
   const menuColor = [true, false, false, false, false]; // 메뉴바 색
   const [cmt, setCmt] = React.useState(null);
@@ -48,6 +48,10 @@ const FeedCmt = () => {
   const getText = (e) => {
     setCmt(e.target.value);
   };
+  const setData = (el) => {
+    setUpdate(false);
+    setUpdate(el.commentId);
+  };
 
   const addCmt = () => {
     if (cmt) {
@@ -70,6 +74,10 @@ const FeedCmt = () => {
     if (window.confirm("정말 삭제하시겠습니까?") === true) {
       dispatch(deleteCmtDB(feedCommentId));
     }
+  };
+
+  const updateCmtDB = (commentId) => {
+    dispatch(updateCmtDB({ feedCommentId: commentId, feedComment: cmt }));
   };
 
   React.useEffect(() => {
@@ -240,7 +248,7 @@ const FeedCmt = () => {
                             bold="300"
                             size="1.2rem"
                             hover
-                            _onClick={() => setUPdate(false)}
+                            _onClick={() => setData(el)}
                           >
                             수정
                           </Text>

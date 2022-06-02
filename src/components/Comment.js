@@ -9,6 +9,7 @@ const Comment = (props) => {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.userInfo);
 
+
   const deleteCmt = () => {
     if (window.confirm("해당 댓글을 정말 삭제하시겠습니까?") === true) {
       dispatch(mountAction.deleteCmtDB(data.mountainCommentId));

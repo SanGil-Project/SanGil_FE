@@ -8,7 +8,12 @@ import Stomp from "stompjs";
 import { actionCreators as chatActions } from "../redux/modules/chat";
 import { actionCreators as handleActions } from "../redux/modules/handle";
 import { actionCreators as partyActions } from "../redux/modules/party";
-import { Menubar, Header, ChatInput, AlertModal } from "../components/component";
+import {
+  Menubar,
+  Header,
+  ChatInput,
+  AlertModal,
+} from "../components/component";
 
 import { Grid, Text, Image } from "../elements/element";
 
@@ -21,8 +26,7 @@ const ChatRoom = (props) => {
   const nickname = sessionStorage.getItem("nickname");
   const _userInfo = useSelector((state) => state?.user?.userInfo);
   const curtParty = useSelector((state) => state?.party?.curtParty);
-  // const partymember = curtParty?.partyMember;
-  const partymember = curtParty?.partymemberDto;
+  const partymember = curtParty?.partyMember;
   const isMember = partymember?.some((m) => m.nickname === nickname);
 
   const scrollRef = useRef();
@@ -30,8 +34,8 @@ const ChatRoom = (props) => {
   const [modalContent, setModalContent] = useState("");
 
   // const sockJs = new SockJS("http://3.34.122.99:8080/ws-stomp"); // 로컬
-  const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 로컬
-  // const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 배포
+  // const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 로컬
+  const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 배포
   const stomp = Stomp.over(sockJs);
 
   // stomp.debug = null;
@@ -93,8 +97,6 @@ const ChatRoom = (props) => {
 
   React.useEffect(() => {
     if (partymember) {
-      console.log("연결시작!!!!")
-
       if (!isMember) {
         setModalContent(`잘못된 접근입니다! \n 메인페이지로 돌아갑니다!`);
         setModalOpen(true);
