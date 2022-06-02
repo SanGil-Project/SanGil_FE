@@ -388,7 +388,12 @@ export default handleActions(
       }),
     [CHANGE_INFO]: (state, action) =>
       produce(state, (draft) => {
-        draft.userInfo = action.payload.userInfo.changeUser;
+        // draft.userInfo = action.payload.userInfo.changeUser;
+        if (action.payload.userInfo.changeUser) {
+          draft.userInfo = action.payload.userInfo.changeUser;
+        } else {
+          draft.userInfo = action.payload.userInfo;
+        }
         if (action.payload.userInfo.changeTitle) {
           const beforeIndex = draft.titleList.userTitleList.findIndex(
             (i) =>

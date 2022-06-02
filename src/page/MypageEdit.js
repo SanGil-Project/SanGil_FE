@@ -209,7 +209,7 @@ const MypageEdit = (props) => {
                     margin="0"
                     border="none"
                     bg="transparent"
-                    value={nickname}
+                    value={nickname || ""}
                     // value={nickname ? nickname : userInfo?.nickname}
                     _onChange={changeNickname}
                   />

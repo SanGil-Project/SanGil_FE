@@ -151,7 +151,7 @@ export default handleActions(
       }),
     [DELETE_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload);
+        // console.log(action.payload);
         const afterCmt = draft.mountainData.commentDto.commentLists.filter(
           (el, idx) => el.mountainCommentId !== action.payload.commentId
         );
