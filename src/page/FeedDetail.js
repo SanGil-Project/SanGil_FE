@@ -8,6 +8,7 @@ import {
   detailLikeDB,
   addCmtDB,
   deleteCmtDB,
+  updateCmtDB,
 } from "../redux/modules/feedDetail";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -18,12 +19,11 @@ const FeedCmt = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const feedDetail = useSelector((state) => state.feedDetail?.feed);
-  const feedCmt = useSelector(
-    (state) => state.feedDetail.feed?.feedCommentListDto
-  );
+  const feedCmt = useSelector((state) => state.feedDetail.feed?.commentList);
   const userId = useSelector((state) => state.user.userInfo?.userId);
   const [pageNum, setPageNum] = React.useState(1);
-  const [update, setUPdate] = React.useState(true);
+  const [update, setUpdate] = React.useState(true);
+  const [updateNum, setUpdateNum] = React.useState();
   const { feedId } = useParams();
   const menuColor = [true, false, false, false, false]; // 메뉴바 색
   const [cmt, setCmt] = React.useState(null);
@@ -47,6 +47,10 @@ const FeedCmt = () => {
 
   const getText = (e) => {
     setCmt(e.target.value);
+  };
+  const setData = (el) => {
+    setUpdate(false);
+    setUpdate(el.commentId);
   };
 
   const addCmt = () => {
@@ -72,6 +76,10 @@ const FeedCmt = () => {
     }
   };
 
+  const updateCmtDB = (commentId) => {
+    dispatch(updateCmtDB({ feedCommentId: commentId, feedComment: cmt }));
+  };
+
   React.useEffect(() => {
     dispatch(getDetailDB(feedId, pageNum));
     window.addEventListener("scroll", onScroll);
@@ -88,12 +96,12 @@ const FeedCmt = () => {
           <Grid maxWidth="91.78%" margin="0 auto">
             <Grid width="93.23%" height="52px" margin="10px auto 0 auto" isFlex>
               <Grid width="190px" flex="flex">
-                {feedDetail?.userImageUrl !== "없음" ? (
+                {feedDetail?.userImgUrl !== "없음" ? (
                   <Image
                     width="40px"
                     height="40px"
                     type="circle"
-                    src={feedDetail?.userImageUrl}
+                    src={feedDetail?.userImgUrl}
                   />
                 ) : (
                   <Icon width="40px" height="40px" />
@@ -129,7 +137,7 @@ const FeedCmt = () => {
             width="100%"
             height="100%"
             objectFit="contain"
-            src={feedDetail?.feedImageUrl}
+            src={feedDetail?.feedImgUrl}
           />
         </Grid>
         <Grid maxWidth="91.78%" height="25px" margin="20px auto" isFlex>
@@ -240,7 +248,7 @@ const FeedCmt = () => {
                             bold="300"
                             size="1.2rem"
                             hover
-                            _onClick={() => setUPdate(false)}
+                            _onClick={() => setData(el)}
                           >
                             수정
                           </Text>

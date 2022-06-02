@@ -58,6 +58,7 @@ const getPartyDB = (pageNum) => {
 const getKeywordPartyDB = (pageNum, keyword) => {
   return function (dispatch, getState) {
 
+
     api
       .searchParty(keyword, pageNum)
       .then((res) => {
@@ -85,6 +86,7 @@ const getOnePartyDB = (partyId = null) => {
 
 const addPartyDB = (party = {}) => {
   return function (dispatch, getState) {
+    // console.log(party);
     api
       .addParty(party)
       .then((res) => {
@@ -124,7 +126,7 @@ const attendPartyDB = (partyId = null) => {
     api
       .attendParty(partyId)
       .then((res) => {
-        if (res.data.msg === "true") {
+        if (res.data.result === "true") {
           dispatch(attendParty(user_info));
         } else {
           dispatch(cancelParty(user_info));
@@ -152,7 +154,7 @@ const deletePartyDB = (partyId = null) => {
 export default handleActions(
   {
     [GET_MY_PARTY]: (state, action) => produce(state, (draft) => {
-      draft.myPartyList = action.payload.partyList.plans;
+      draft.myPartyList = action.payload.partyList;
     }),
     [GET_PARTY]: (state, action) => produce(state, (draft) => {
       if (action.payload.partyList.currentPage === 0) {
@@ -176,15 +178,15 @@ export default handleActions(
       
     }),
     [ATTEND_PARTY]: (state, action) => produce(state, (draft) => {
-      draft.curtParty.partymemberDto.push(action.payload.user);
-      draft.curtParty.curPeople++;
+      draft.curtParty.partyMember.push(action.payload.user);
+      draft.curtParty.currentPeople++;
     }),
     [CANCEL_PARTY]: (state, action) => produce(state, (draft) => {
-      draft.curtParty.partymemberDto =
-        draft.curtParty.partymemberDto.filter(
+      draft.curtParty.partyMember =
+        draft.curtParty.partyMember.filter(
           (p) => p.nickname !== action.payload.user.nickname
         );
-      draft.curtParty.curPeople--;
+      draft.curtParty.currentPeople--;
     }),
     [DELETE_PARTY]: (state, action) => produce(state, (draft) => {
         draft.list.partyList = draft.list.partyList.filter(

@@ -58,7 +58,7 @@ const PartyWrite = (props) => {
     is_edit ? partyItem?.mountain : "검색"
   );
   const [mountAddValue, setMountAddValue] = React.useState(
-    is_edit ? partyItem?.address : ""
+    is_edit ? partyItem?.mountainAddress : ""
   );
 
   const [startDate, setStartDate] = useState(new Date());
@@ -198,7 +198,7 @@ const PartyWrite = (props) => {
       return;
     }
     if (is_edit) {
-      if (numberValue < origin.curPeople) {
+      if (numberValue < origin.currentPeople) {
         setModalContent("현재 참가 인원수보다 적게 설정할 수 없습니다!");
         setModalOpen(true);
         return;
@@ -207,7 +207,7 @@ const PartyWrite = (props) => {
       const partyData = {
         title: partyName,
         mountain: mountValue,
-        address: mountAddValue,
+        MountainAddress: mountAddValue,
         partyDate: dateValue,
         partyTime: timeValue,
         maxPeople: num,
@@ -223,7 +223,7 @@ const PartyWrite = (props) => {
     const partyData = {
       title: partyName,
       mountain: mountValue,
-      address: mountAddValue,
+      MountainAddress: mountAddValue,
       partyDate: dateValue,
       partyTime: timeValue,
       maxPeople: num,
@@ -285,7 +285,7 @@ const PartyWrite = (props) => {
                   padding="16px 12px"
                   margin="0 0 34.5px"
                   placeholder="모임의 이름은 무엇인가요?"
-                  value={partyName}
+                  value={partyName || ""}
                   disabled
                   _onChange={inputName}
                 />
@@ -298,7 +298,7 @@ const PartyWrite = (props) => {
                   padding="16px 12px"
                   margin="0 0 34.5px"
                   placeholder="모임의 이름은 무엇인가요?"
-                  value={partyName}
+                  value={partyName || ""}
                   _onChange={inputName}
                 />
               )}
@@ -313,7 +313,7 @@ const PartyWrite = (props) => {
                 padding="16px 12px"
                 margin="0 0 34.5px"
                 textarea
-                value={partyContent}
+                value={partyContent || ""}
                 placeholder="어떤 활동을 함께 하고 싶으신가요?"
                 _onChange={inputContent}
               />
@@ -395,7 +395,7 @@ const PartyWrite = (props) => {
                     radius="8px"
                     padding="0"
                     placeholder="숫자만 입력해주세요"
-                    value={numberValue}
+                    value={numberValue || ""}
                     _onChange={inputNumber}
                   />
                 </Grid>

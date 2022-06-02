@@ -26,15 +26,16 @@ const ChatRoom = (props) => {
   const nickname = sessionStorage.getItem("nickname");
   const _userInfo = useSelector((state) => state?.user?.userInfo);
   const curtParty = useSelector((state) => state?.party?.curtParty);
-  const partymember = curtParty?.partymemberDto;
+  const partymember = curtParty?.partyMember;
   const isMember = partymember?.some((m) => m.nickname === nickname);
 
   const scrollRef = useRef();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
 
-  // const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 서버주소/ws-stomp
-  const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 서버주소/ws-stomp
+  // const sockJs = new SockJS("http://3.34.122.99:8080/ws-stomp"); // 로컬
+  // const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 로컬
+  const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 배포
   const stomp = Stomp.over(sockJs);
 
   stomp.debug = null;
@@ -154,9 +155,9 @@ const ChatRoom = (props) => {
                 const time = chat.createdAt.split(" ");
                 const boxColor = mine ? "#9EE59C" : "#EBEBEB";
                 const img =
-                  chat.userImageUrl === "없음"
+                  chat.userImgUrl === "없음"
                     ? "https://user-images.githubusercontent.com/91959791/168119302-948f0dcf-8165-47af-8b6b-2f90f74aca06.png"
-                    : chat.userImageUrl;
+                    : chat.userImgUrl;
                 return mine ? (
                   <Grid key={idx}>
                     <Grid padding="0 0 8px 46px" flexRow justify="flex-end">

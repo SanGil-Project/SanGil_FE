@@ -14,7 +14,7 @@ const SearchDetail = () => {
   const dispatch = useDispatch();
   const menuColor = [false, false, false, true, false]; // 메뉴바 색
   const [selected, setSelected] = React.useState({ idx: 0, state: false });
-  const mountain = useSelector((state) => state.mountain.mountainData);
+  const mountain = useSelector((state) => state.mountain?.mountainData);
 
   const show = (i) => {
     if (selected.state === false) {
@@ -32,13 +32,8 @@ const SearchDetail = () => {
   };
 
   React.useEffect(() => {
-    if (
-      !mountain?.commentDto.totalPage ||
-      mountain?.commentDto.totalPage >= pageNum
-    ) {
-      dispatch(mountAction.getDetailDB(mountainId, pageNum));
-    }
-  }, [pageNum]);
+    dispatch(mountAction.getDetailDB(mountainId, pageNum));
+  }, []);
 
   return (
     <>
@@ -74,7 +69,7 @@ const SearchDetail = () => {
               <Grid width="44px" isFlex _onClick={goCmt}>
                 <Icon width="20px" height="20px" type="comment" />
                 <Text size="1.4rem" bold="400">
-                  ({mountain?.commentDto.commentLists.length})
+                  ({mountain?.commentCnt})
                 </Text>
               </Grid>
               <Grid width="50px" isFlex>
@@ -135,7 +130,7 @@ const SearchDetail = () => {
             </Grid>
           </div>
           {mountain &&
-            mountain.courseLists.map((el, idx) => (
+            mountain.courseList.map((el, idx) => (
               <div key={idx}>
                 <Grid width="93.23%" margin="20px auto 0 auto">
                   <Grid height="8px" border="4px solid #F2F3F6" />

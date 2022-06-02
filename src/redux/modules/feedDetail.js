@@ -27,11 +27,24 @@ export const getDetailDB = (feedId, pageNum) => {
     api
       .getFeedDetail(feedId, pageNum)
       .then((res) => {
-        if (res.data.feedCommentListDto.currentPage === 0) {
+        if (res.data.commentList.currentPage === 0) {
           dispatch(getFeedDetail(res.data));
         } else {
-          dispatch(moreCmt(res.data.feedCommentListDto));
+          dispatch(moreCmt(res.data.commentList));
         }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+export const updateCmtDB = (feedCommentId, feedComment) => {
+  return function (dispatch, getState) {
+    api
+      .updateFeedCmt(feedCommentId, feedComment)
+      .then((res) => {
+        // console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -100,11 +113,10 @@ export default handleActions(
       }),
     [MORE_CMT]: (state, action) =>
       produce(state, (draft) => {
-        const moreCmt =
-          draft.feed.feedCommentListDto.commentResponseDtos.concat(
-            action.payload.feedList.commentResponseDtos
-          );
-        draft.feed.feedCommentListDto = {
+        const moreCmt = draft.feed.commentList.commentResponseDtos.concat(
+          action.payload.feedList.commentResponseDtos
+        );
+        draft.feed.commentList = {
           ...action.payload.feedList,
           commentResponseDtos: moreCmt,
         };
@@ -117,24 +129,20 @@ export default handleActions(
           goodCnt: action.payload.goodStatus.goodCnt,
         };
       }),
-    [DELETE_FEED]: (state, action) =>
-      produce(state, (draft) => {
-        console.log(state);
-      }),
+    [DELETE_FEED]: (state, action) => produce(state, (draft) => {}),
     [ADD_CMT]: (state, action) =>
       produce(state, (draft) => {
-        draft.feed.feedCommentListDto.commentResponseDtos.unshift({
+        draft.feed.commentList.commentResponseDtos.unshift({
           ...action.payload.comment,
           beforeTime: "방금 전",
         });
       }),
     [DELETE_CMT]: (state, action) =>
       produce(state, (draft) => {
-        const afterCmt =
-          draft.feed.feedCommentListDto.commentResponseDtos.filter(
-            (el, idx) => el.commentId !== action.payload.feedCommentId
-          );
-        draft.feed.feedCommentListDto.commentResponseDtos = afterCmt;
+        const afterCmt = draft.feed.commentList.commentResponseDtos.filter(
+          (el, idx) => el.commentId !== action.payload.feedCommentId
+        );
+        draft.feed.commentList.commentResponseDtos = afterCmt;
       }),
   },
   initialState

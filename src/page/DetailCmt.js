@@ -40,7 +40,7 @@ const DetailCmt = () => {
         );
       }
       setComment("");
-      setPageNum(mountain?.commentDto.totalPage);
+      // setPageNum(mountain?.commentDto.totalPage);
     } else {
       if (comment === "" || !comment) {
         return alert("댓글을 입력해주세요");
@@ -51,7 +51,7 @@ const DetailCmt = () => {
           mountainComment: comment,
         })
       );
-      setUpdateCmt({ content: "", state: true, mountainCommentId: 0 });
+      setUpdateCmt({ ...updateCmt, content: "", state: true });
       setComment("");
     }
   };
@@ -102,6 +102,7 @@ const DetailCmt = () => {
                   border="none"
                   value={comment || ""}
                   margin="1px 0 0 5px"
+                  radius="10px"
                   placeholder="댓글과 별점을 남겨보세요!"
                   _onChange={(e) => setComment(e.target.value)}
                 />
@@ -204,7 +205,7 @@ const DetailCmt = () => {
                   color="#fff"
                   radius="10px"
                   hover
-                  _onClick={next}
+                  // _onClick={next}
                 >
                   다음
                 </Button>

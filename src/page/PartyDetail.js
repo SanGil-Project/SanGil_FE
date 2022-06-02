@@ -28,7 +28,7 @@ const PartyDetail = (props) => {
     dispatch(partyActions.getOnePartyDB(partyId));
   }, []);
 
-  const partymember = curtParty?.partymemberDto;
+  const partymember = curtParty?.partyMember;
   const img =
     curtParty?.userImgUrl !== "없음"
       ? curtParty?.userImgUrl
@@ -189,7 +189,7 @@ const PartyDetail = (props) => {
                     />
                   </Grid>
                   <Text margin="0 12px" bold="500" size="14px">
-                    {curtParty?.mountain} ({curtParty?.address})
+                    {curtParty?.mountain} ({curtParty?.mountainAddress})
                   </Text>
                 </Grid>
                 <Grid flexRow justify="left" padding="0 0 10px">
@@ -217,7 +217,7 @@ const PartyDetail = (props) => {
                     />
                   </Grid>
                   <Text margin="0 8px 0 12px" bold={isCompleted ? "700" : "500"} size="14px" color={isCompleted ? "#43CA3B" : "#000"}>
-                    {curtParty?.curPeople}/{curtParty?.maxPeople}명 {isCompleted && "(모집이 완료됐어요!)"}
+                    {curtParty?.currentPeople}/{curtParty?.maxPeople}명 {isCompleted && "(모집이 완료됐어요!)"}
                   </Text>
                   {/* <Icon type="detailBtn" width="8px" height="13" margin="auto" _onClick={()=>{alert("참여인원정보 확인?")}} /> */}
                 </Grid>
@@ -236,8 +236,8 @@ const PartyDetail = (props) => {
                 const isCheif =
                   p.nickname === curtParty.nickname ? true : false;
                 const image =
-                  p?.userImageUrl !== "없음"
-                    ? p?.userImageUrl
+                  p?.userImgUrl !== "없음"
+                    ? p?.userImgUrl
                     : "https://user-images.githubusercontent.com/91959791/163972509-ca46de43-33cf-4648-a61d-47f32dfe20b3.png";
                 return (
                   <Grid key={idx} margin="20px 0 0" isFlex>
