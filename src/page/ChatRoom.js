@@ -8,7 +8,12 @@ import Stomp from "stompjs";
 import { actionCreators as chatActions } from "../redux/modules/chat";
 import { actionCreators as handleActions } from "../redux/modules/handle";
 import { actionCreators as partyActions } from "../redux/modules/party";
-import { Menubar, Header, ChatInput, AlertModal } from "../components/component";
+import {
+  Menubar,
+  Header,
+  ChatInput,
+  AlertModal,
+} from "../components/component";
 
 import { Grid, Text, Image } from "../elements/element";
 
@@ -88,7 +93,6 @@ const ChatRoom = (props) => {
 
   React.useEffect(() => {
     if (partymember) {
-
       if (!isMember) {
         setModalContent(`잘못된 접근입니다! \n 메인페이지로 돌아갑니다!`);
         setModalOpen(true);
@@ -106,7 +110,7 @@ const ChatRoom = (props) => {
     // return () => {
     //   DisConnectUnsub();
     // };
-  }, [partymember]);
+  }, [curtParty?.partyId]);
 
   React.useEffect(() => {
     dispatch(partyActions.getOnePartyDB(chatRoomId));
