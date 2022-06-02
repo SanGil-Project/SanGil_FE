@@ -29,7 +29,6 @@ const PartyDetail = (props) => {
   }, []);
 
   const partymember = curtParty?.partyMember;
-  // const partymember = curtParty?.partymemberDto;
   const img =
     curtParty?.userImgUrl !== "없음"
       ? curtParty?.userImgUrl

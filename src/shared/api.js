@@ -144,7 +144,7 @@ export const api = {
     instance.get(`/parties/search?keyword=${keyword}&pageNum=${pageNum}`),
   getMyParty: () => instance.get("/plan"),
   getPartyList: (pageNum) => instance.get(`/parties/${pageNum}`),
-  getOneParty: (partyId) => instance.get(`/party/${partyId}`), 
+  getOneParty: (partyId) => instance.get(`/party/${partyId}`),
   addParty: (party) =>
     instance.post("/party/write", {
       title: party.title,
