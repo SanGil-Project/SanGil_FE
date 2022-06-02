@@ -27,9 +27,9 @@ const Main = (props) => {
   const userInfo = useSelector((state) => state.user.userInfo);
   const menuColor = [false, false, true, false, false]; // 메뉴바 색
 
-  const feedList = useSelector((state) => state.main.feedList?.feedList);
+  const feedList = useSelector((state) => state.main?.feedList);
   const around = useSelector((state) => state.main.around?.nearbyMountainDtos);
-  const party = useSelector((state) => state.main.parties?.parties);
+  const party = useSelector((state) => state.main?.parties);
   const mountain = useSelector((state) => state.main?.mountains);
 
   const goDetail = (mountainId) => {

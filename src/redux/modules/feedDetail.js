@@ -39,6 +39,19 @@ export const getDetailDB = (feedId, pageNum) => {
   };
 };
 
+export const updateCmtDB = (feedCommentId, feedComment) => {
+  return function (dispatch, getState) {
+    api
+      .updateFeedCmt(feedCommentId, feedComment)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
 export const deleteDB = (feedId) => {
   return function (dispatch, getState) {
     api
@@ -100,10 +113,9 @@ export default handleActions(
       }),
     [MORE_CMT]: (state, action) =>
       produce(state, (draft) => {
-        const moreCmt =
-          draft.feed.commentList.commentResponseDtos.concat(
-            action.payload.feedList.commentResponseDtos
-          );
+        const moreCmt = draft.feed.commentList.commentResponseDtos.concat(
+          action.payload.feedList.commentResponseDtos
+        );
         draft.feed.commentList = {
           ...action.payload.feedList,
           commentResponseDtos: moreCmt,
@@ -117,9 +129,7 @@ export default handleActions(
           goodCnt: action.payload.goodStatus.goodCnt,
         };
       }),
-    [DELETE_FEED]: (state, action) =>
-      produce(state, (draft) => {
-      }),
+    [DELETE_FEED]: (state, action) => produce(state, (draft) => {}),
     [ADD_CMT]: (state, action) =>
       produce(state, (draft) => {
         draft.feed.commentList.commentResponseDtos.unshift({
@@ -129,10 +139,9 @@ export default handleActions(
       }),
     [DELETE_CMT]: (state, action) =>
       produce(state, (draft) => {
-        const afterCmt =
-          draft.feed.commentList.commentResponseDtos.filter(
-            (el, idx) => el.commentId !== action.payload.feedCommentId
-          );
+        const afterCmt = draft.feed.commentList.commentResponseDtos.filter(
+          (el, idx) => el.commentId !== action.payload.feedCommentId
+        );
         draft.feed.commentList.commentResponseDtos = afterCmt;
       }),
   },

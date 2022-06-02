@@ -192,9 +192,11 @@ const Tracker = (props) => {
               </Text>
               <Text margin="7px 0 0 0">
                 <span style={{ fontSize: "2.5rem", color: "#43ca3b" }}>
-                  {distance.distanceK.toFixed(2)}
+                  {distance.distanceM >= 1000
+                    ? (distance.distanceM / 1000).toFixed(2)
+                    : distance.distanceM.toFixed()}
                 </span>
-                km
+                {distance.distanceM >= 1000 ? `km` : `m`}
               </Text>
             </Grid>
             <Grid width="180px">
@@ -284,7 +286,7 @@ const Tracker = (props) => {
           time={time.stopwatch}
           setTime={setTime}
           setDistance={setDistance}
-          distance={Number(distance.distanceK).toFixed(2)}
+          distance={distance.distanceM}
           mountainId={mountainId}
           mountainImg={mountainImg}
         />

@@ -8,7 +8,12 @@ import Stomp from "stompjs";
 import { actionCreators as chatActions } from "../redux/modules/chat";
 import { actionCreators as handleActions } from "../redux/modules/handle";
 import { actionCreators as partyActions } from "../redux/modules/party";
-import { Menubar, Header, ChatInput, AlertModal } from "../components/component";
+import {
+  Menubar,
+  Header,
+  ChatInput,
+  AlertModal,
+} from "../components/component";
 
 import { Grid, Text, Image } from "../elements/element";
 
@@ -21,16 +26,16 @@ const ChatRoom = (props) => {
   const nickname = sessionStorage.getItem("nickname");
   const _userInfo = useSelector((state) => state?.user?.userInfo);
   const curtParty = useSelector((state) => state?.party?.curtParty);
-  const partymember = curtParty?.partymemberDto;
+  const partymember = curtParty?.partyMember;
   const isMember = partymember?.some((m) => m.nickname === nickname);
 
   const scrollRef = useRef();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
 
-  const sockJs = new SockJS("http://3.34.122.99:8080/ws-stomp"); // 로컬
+  // const sockJs = new SockJS("http://3.34.122.99:8080/ws-stomp"); // 로컬
   // const sockJs = new SockJS("http://15.164.102.106:8080/ws-stomp"); // 로컬
-  // const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 배포
+  const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 배포
   const stomp = Stomp.over(sockJs);
 
   stomp.debug = null;
@@ -89,7 +94,6 @@ const ChatRoom = (props) => {
 
   React.useEffect(() => {
     if (partymember) {
-
       if (!isMember) {
         setModalContent(`잘못된 접근입니다! \n 메인페이지로 돌아갑니다!`);
         setModalOpen(true);
@@ -107,7 +111,7 @@ const ChatRoom = (props) => {
     // return () => {
     //   DisConnectUnsub();
     // };
-  }, [partymember]);
+  }, [curtParty?.partyId]);
 
   React.useEffect(() => {
     dispatch(partyActions.getOnePartyDB(chatRoomId));
@@ -151,9 +155,9 @@ const ChatRoom = (props) => {
                 const time = chat.createdAt.split(" ");
                 const boxColor = mine ? "#9EE59C" : "#EBEBEB";
                 const img =
-                  chat.userImageUrl === "없음"
+                  chat.userImgUrl === "없음"
                     ? "https://user-images.githubusercontent.com/91959791/168119302-948f0dcf-8165-47af-8b6b-2f90f74aca06.png"
-                    : chat.userImageUrl;
+                    : chat.userImgUrl;
                 return mine ? (
                   <Grid key={idx}>
                     <Grid padding="0 0 8px 46px" flexRow justify="flex-end">
