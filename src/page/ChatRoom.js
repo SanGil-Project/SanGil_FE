@@ -38,7 +38,7 @@ const ChatRoom = (props) => {
   const sockJs = new SockJS("https://jinnn.shop/ws-stomp"); // 배포
   const stomp = Stomp.over(sockJs);
 
-  // stomp.debug = null;
+  stomp.debug = null;
 
   // const sender = _userInfo?.nickname;
 
@@ -51,16 +51,13 @@ const ChatRoom = (props) => {
   function ConnectSub(token) {
     try {
       stomp.connect({}, () => {
-        console.log("여긴???")
         stomp.subscribe(`/sub/chat/rooms/${chatRoomId}`, (response) => {
           const content = JSON.parse(response.body);
 
           if (content.length === 1) {
-            console.log("여기가???")
             dispatch(chatActions.sendChat(content));
             scrollToBottom();
           } else {
-            console.log("여기가???")
             dispatch(chatActions.getChatDB(content));
             scrollToBottom();
           }
@@ -102,7 +99,6 @@ const ChatRoom = (props) => {
         setModalOpen(true);
         return;
       }
-      console.log("이거두번??")
       ConnectSub(token);
     }
     return () => {
