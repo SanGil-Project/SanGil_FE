@@ -93,14 +93,16 @@ export const feedLikeDB = (feedId) => {
 
 export default handleActions(
   {
-    [ADD_FEED]: (state, action) =>
-      produce(state, (draft) => {
-        draft.feedList.feedList.unshift(action.payload.data);
-      }),
     [GET_FEED]: (state, action) =>
       produce(state, (draft) => {
         const _feedList = action.payload.feedList;
+        console.log(_feedList);
         draft.feedList = _feedList;
+      }),
+    [ADD_FEED]: (state, action) =>
+      produce(state, (draft) => {
+        console.log(action.payload.data);
+        draft.feedList.feedList.unshift(action.payload.data);
       }),
     [MORE_FEED]: (state, action) =>
       produce(state, (draft) => {
