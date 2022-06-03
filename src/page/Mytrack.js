@@ -25,7 +25,7 @@ const Mytrack = (props) => {
     (state) => state.tracker?.polylinePath?.polylinePath[0]
   );
 
-  const time = myTrack?.totalTime.split(":");
+  // const time = myTrack?.totalTime.split(":");
 
   return (
     <React.Fragment>
@@ -91,7 +91,7 @@ const Mytrack = (props) => {
                       color="#43CA3B"
                       nowrap
                     >
-                      {time && time[0]}
+                      {myTrack?.totalTime && myTrack?.totalTime.split(":")[0]}
                     </Text>
                     <Text margin="0" size="8px" bold="500">
                       시간
@@ -103,7 +103,7 @@ const Mytrack = (props) => {
                       color="#43CA3B"
                       nowrap
                     >
-                      {time && time[1]}
+                      {myTrack?.totalTime && myTrack?.totalTime.split(":")[1]}
                     </Text>
                     <Text margin="0" size="8px" bold="500">
                       분
@@ -115,7 +115,7 @@ const Mytrack = (props) => {
                       color="#43CA3B"
                       nowrap
                     >
-                      {time && time[2]}
+                      {myTrack?.totalTime && myTrack?.totalTime.split(":")[2]}
                     </Text>
                     <Text margin="0" size="8px" bold="500">
                       초
