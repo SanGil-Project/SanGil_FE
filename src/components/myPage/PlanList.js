@@ -44,9 +44,18 @@ const PlanList = (props) => {
       </Grid>
       <div>
         <Grid margin="0 0 30px">
-          {plans?.map((p, idx) => {
+
+        {plans?.length === 0 ? ( 
+          <Grid height="auto" margin="0" radius="10px" border="1px solid #e1e1e1">
+            <Text bold="800" color="#d2d2d2" size="20px" align="center">
+              참가한 모임이 없어요
+            </Text>
+          </Grid>
+          ) : (
+          plans?.map((p, idx) => {
             return <TextCard key={idx} data={p} />;
-          })}
+          })
+        )}
         </Grid>
       </div>
     </React.Fragment>

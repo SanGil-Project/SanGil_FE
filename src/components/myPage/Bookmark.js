@@ -86,6 +86,7 @@ const Bookmark = (props) => {
         </Grid>
         <div>
           <Grid margin="0 0 30px">
+<<<<<<< HEAD
             {myBookmarkList?.map((b, idx) => {
               const star = b.starAvr ? b.starAvr : "0.0";
               const distance = b.distance.toFixed(2);
@@ -135,25 +136,84 @@ const Bookmark = (props) => {
                         {distance}km
                       </Text>
                       <Grid flexRow width="auto" margin="4px 0 0">
+=======
+            {myBookmarkList?.length === 0 ? ( 
+              <Grid height="auto" margin="0" radius="10px" border="1px solid #e1e1e1">
+                <Text bold="800" color="#d2d2d2" size="20px" align="center">
+                  찜한 산길이 없어요
+                </Text>
+              </Grid>
+              ) : (
+                myBookmarkList?.map((b, idx) => {
+                  const star = b.starAvr ? b.starAvr : "0.0";
+                  const distance = b.distance.toFixed(2);
+                  return (
+                    <Grid
+                      hover
+                      key={idx}
+                      margin="0 0 10px"
+                      padding="7px 14px 7px 0"
+                      bg="#fff"
+                      radius="10px"
+                      shadow="0px 1px 4px rgba(0, 0, 0, 0.1)"
+                      flexRow
+                    >
+                      <Grid
+                        width="auto"
+                        _onClick={() => {
+                          bookmark(b);
+                        }}
+                      >
+>>>>>>> 28ddb4d716fcb16f89f94a0d28d82f1d94a65c7c
                         <Icon
-                          width="11.5px"
-                          height="11.5px"
-                          type="searchStar"
+                          type="mypageBook"
+                          width="48px"
+                          height="48px"
+                          margin="0 auto"
+                          fill="#43CA3B"
+                          fillOpacity="1"
                         />
-                        <Text
-                          margin="0 0 0 5px"
-                          size="14px"
-                          bold="500"
-                          color="#000"
-                        >
-                          {star}
-                        </Text>
+                      </Grid>
+                      <Grid
+                        flexColumn
+                        alignItems="left"
+                        _onClick={() => {
+                          goDetail(b.mountainId);
+                        }}
+                      >
+                        <Grid flexRow justify="left">
+                          <Text margin="0" size="14px" bold="600" color="#000">
+                            {b.mountain}
+                          </Text>
+                          <Text margin="0 5px" size="14px" bold="600" color="#000">
+                            ({b.mountainAddress})
+                          </Text>
+                        </Grid>
+                        <Grid isFlex>
+                          <Text margin="0" size="14px" bold="500" color="#000">
+                            {distance}km
+                          </Text>
+                          <Grid flexRow width="auto" margin="4px 0 0">
+                            <Icon
+                              width="11.5px"
+                              height="11.5px"
+                              type="searchStar"
+                            />
+                            <Text
+                              margin="0 0 0 5px"
+                              size="14px"
+                              bold="500"
+                              color="#000"
+                            >
+                              {star}
+                            </Text>
+                          </Grid>
+                        </Grid>
                       </Grid>
                     </Grid>
-                  </Grid>
-                </Grid>
-              );
-            })}
+                  );
+                })
+            )}
             {totalPage > curPage ? <div ref={setBottom}></div> : null}
           </Grid>
         </div>

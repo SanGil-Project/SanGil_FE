@@ -7,7 +7,7 @@ import { actionCreators as handleActions } from "../redux/modules/handle";
 
 import { Menubar, Header } from "../components/component";
 
-import { Grid } from "../elements/element";
+import { Grid, Text, Image } from "../elements/element";
 import { useNavigate } from "react-router";
 
 const MyFeed = (props) => {
@@ -63,21 +63,33 @@ const MyFeed = (props) => {
         <Header />
         <FeedWrap>
           <Grid padding="70px 3px 100px" flexRow wrap="wrap" justify="left">
-            {feedList?.map((d, idx) => {
-              return (
-                <Grid
-                  key={idx}
-                  width="31%"
-                  height="158px"
-                  bgImg={d.feedImgUrl}
-                  bgSize="cover"
-                  margin="0 3px 6px"
-                  border="1px solid #e1e1e1"
-                  hover
-                  _onClick={() => goDetail(d)}
-                ></Grid>
-              );
-            })}
+            {feedList?.length === 0 ? (
+              <Grid padding="100px 0" width="auto" margin="0 auto" flexColumn>
+                <Image
+                  width="250px"
+                  src={require("../assets/images/NoCmt.png")}
+                />
+                <Text bold="800" color="#d2d2d2" size="32px" align="center">
+                  작성한 피드가 없어요
+                </Text>
+              </Grid>
+              ) : (
+                feedList?.map((d, idx) => {
+                  return (
+                    <Grid
+                      key={idx}
+                      width="31%"
+                      height="158px"
+                      bgImg={d.feedImgUrl}
+                      bgSize="cover"
+                      margin="0 3px 6px"
+                      border="1px solid #e1e1e1"
+                      hover
+                      _onClick={() => goDetail(d)}
+                    ></Grid>
+                  );
+              }))
+            }
           </Grid>
           {totalPage > curPage ? <div ref={setBottom}></div> : null}
         </FeedWrap>
