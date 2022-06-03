@@ -308,17 +308,29 @@ const Mypage = (props) => {
                   navigate("/myfeed");
                 }}
               >
-                <Text margin="0 11px" size="12px" bold="300" color="#000">
-                  더보기
-                </Text>
-                <Icon type="arrow" width="5px" height="8px" />
+                {myFeedList?.length === 0 ? null : (
+                  <Grid>
+                    <Text margin="0 11px" size="12px" bold="300" color="#000">
+                      더보기
+                    </Text>
+                    <Icon type="arrow" width="5px" height="8px" />
+                  </Grid>
+                )}
               </Grid>
             </Grid>
-            <HorizontalScroll>
-              {myFeedList?.map((cur, idx) => {
-                return <MyFeedList key={idx} data={cur} />;
-              })}
-            </HorizontalScroll>
+            {myFeedList?.length === 0 ? ( 
+              <Grid height="auto" margin="0" radius="10px" border="1px solid #e1e1e1">
+                <Text bold="800" color="#d2d2d2" size="20px" align="center">
+                  작성한 피드가 없어요
+                </Text>
+              </Grid>
+              ) : (
+                <HorizontalScroll>
+                  {myFeedList?.map((cur, idx) => {
+                    return <MyFeedList key={idx} data={cur} />;
+                  })}
+                </HorizontalScroll>
+            )}
           </Grid>
 
           <Grid
