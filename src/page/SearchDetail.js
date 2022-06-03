@@ -94,7 +94,7 @@ const SearchDetail = () => {
               border="1px solid #DEDEDE"
               width="93.23%"
               radius="10px"
-              margin="0 auto"
+              margin="0 auto 20px auto"
             >
               <Grid margin="20px 0 0 0" height="20px" flex="flex">
                 <Text
@@ -132,7 +132,7 @@ const SearchDetail = () => {
           {mountain &&
             mountain.courseList.map((el, idx) => (
               <div key={idx}>
-                <Grid width="93.23%" margin="20px auto 0 auto">
+                <Grid width="93.23%" margin="0 auto 0 auto">
                   <Grid height="8px" border="4px solid #F2F3F6" />
                   <Grid
                     bg={

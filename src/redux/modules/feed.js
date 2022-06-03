@@ -26,8 +26,8 @@ export const addFeedDB = (feed) => {
   return function (dispatch, getState) {
     axios
       // .post("http://15.164.102.106:8080/api/feeds/write", frm, {
-      .post("http://3.34.122.99:8080/feeds/write", frm, {
-      // .post("https://jinnn.shop/api/feeds/write", frm, {
+      // .post("http://3.34.122.99:8080/feeds/write", frm, {
+      .post("https://jinnn.shop/feeds/write", frm, {
         headers: {
           Authorization: sessionStorage.getItem("token"),
           "Content-Type": "multipart/form-data",

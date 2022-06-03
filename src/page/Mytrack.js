@@ -26,7 +26,7 @@ const Mytrack = (props) => {
   );
 
   const time = myTrack?.totalTime.split(":");
-
+  console.log(myTrack?.totalTime);
   return (
     <React.Fragment>
       <MytrackContainer>
@@ -55,7 +55,7 @@ const Mytrack = (props) => {
                   padding="6px 7px"
                 >
                   <Text margin="0" size="12px" bold="500" color="#43CA3B">
-                    {myTrack?.createAt.split("T")[0]}
+                    {myTrack?.createdAt.split("T")[0]}
                   </Text>
                 </Grid>
               </Grid>
@@ -91,7 +91,9 @@ const Mytrack = (props) => {
                       color="#43CA3B"
                       nowrap
                     >
-                      {time && time[0]}
+                      {myTrack?.totalTime.split(":") &&
+                        myTrack?.totalTime.split(":")[0]}
+                      {/* {time && time[0]} */}
                     </Text>
                     <Text margin="0" size="8px" bold="500">
                       시간
@@ -103,7 +105,9 @@ const Mytrack = (props) => {
                       color="#43CA3B"
                       nowrap
                     >
-                      {time && time[1]}
+                      {myTrack?.totalTime.split(":") &&
+                        myTrack?.totalTime.split(":")[1]}
+                      {/* {time && time[1]} */}
                     </Text>
                     <Text margin="0" size="8px" bold="500">
                       분
@@ -115,7 +119,9 @@ const Mytrack = (props) => {
                       color="#43CA3B"
                       nowrap
                     >
-                      {time && time[2]}
+                      {myTrack?.totalTime.split(":") &&
+                        myTrack?.totalTime.split(":")[2]}
+                      {/* {time && time[2]} */}
                     </Text>
                     <Text margin="0" size="8px" bold="500">
                       초

@@ -124,7 +124,7 @@ const Bookmark = (props) => {
                   >
                     <Grid flexRow justify="left">
                       <Text margin="0" size="14px" bold="600" color="#000">
-                        {b.mountainName}
+                        {b.mountain}
                       </Text>
                       <Text margin="0 5px" size="14px" bold="600" color="#000">
                         ({b.mountainAddress})

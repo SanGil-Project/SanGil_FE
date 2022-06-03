@@ -261,7 +261,7 @@ const Main = (props) => {
                   </Card>
                   <Grid width="195px" height="40px" margin="0 0 0 7px">
                     <Text margin="0" bold="600" size="1.4rem">
-                      {el.mountainName}
+                      {el.mountain}
                     </Text>
 
                     <Grid height="20px" isFlex width="194px" margin="0">

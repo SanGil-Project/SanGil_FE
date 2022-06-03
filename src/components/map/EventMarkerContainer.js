@@ -110,7 +110,7 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
                       padding="1px 4px"
                     >
                       <Text margin="0" size="6px" bold="400" color="#43CA3B">
-                        {content.createAt.split("T")[0]}
+                        {content.createdAt.split("T")[0]}
                       </Text>
                     </Grid>
                   </Grid>
@@ -219,7 +219,7 @@ const EventMarkerContainer = ({ index, content, onClick, isClicked, data }) => {
         }}
       >
         {isClicked && isVisible && (
-        // {isVisible && (
+          // {isVisible && (
           // {isClicked && isVisible &&
           <CustomOverlayMap
             index={index}

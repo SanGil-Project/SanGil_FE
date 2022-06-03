@@ -25,6 +25,7 @@ export const KakaoMap = (props) => {
     polylinePath,
     data,
     getIndex,
+    doubleClick,
   } = props;
 
   const [location, setLocation] = useState({
@@ -55,6 +56,7 @@ export const KakaoMap = (props) => {
         zoomable={zoomable}
         draggable={draggable}
         isPanto={true}
+        disableDoubleClick={doubleClick}
       >
         {zoomable ? (
           <ZoomControl position={kakao?.maps.ControlPosition.TOPLEFT} />

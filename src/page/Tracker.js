@@ -31,7 +31,7 @@ const Tracker = (props) => {
   );
 
   const [myLoca, setMyLoca] = useState({ lat: "", lng: "" });
-  const [distance, setDistance] = useState({ distanceM: 0.0, distanceK: 0.0 });
+  const [distance, setDistance] = useState({ distanceM: 0.0 });
   const [time, setTime] = useState({
     stopwatch: { s: 0, m: 0, h: 0 },
     isStart: false,
@@ -93,7 +93,6 @@ const Tracker = (props) => {
               if (_distance?.distanceM) {
                 setDistance((prev) => ({
                   distanceM: prev.distanceM + Number(_distance?.distanceM),
-                  distanceK: prev.distanceK + Number(_distance?.distanceK),
                 }));
               }
             }
@@ -144,7 +143,7 @@ const Tracker = (props) => {
       if (window.confirm("등산을 종료하시겠습니까?") === true) {
         dispatch(
           endClimbDB(completedId, {
-            totalDistance: distance.distanceK,
+            totalDistance: distance.distanceM,
             totalTime: `${time.stopwatch.h}:${time.stopwatch.m}:${time.stopwatch.s}`,
           })
         );
@@ -171,6 +170,7 @@ const Tracker = (props) => {
           zoomable={false}
           myLoca={myLoca}
           polylinePath={polylinePath}
+          doubleClick="disable"
         />
         <Grid
           width="92.8%"

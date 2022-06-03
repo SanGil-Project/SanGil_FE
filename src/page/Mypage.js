@@ -197,7 +197,7 @@ const Mypage = (props) => {
                         padding="1px 4px"
                       >
                         <Text margin="0" size="6px" bold="400" color="#43CA3B">
-                          {cur.createAt.split("T")[0]}
+                          {cur.createdAt.split("T")[0]}
                         </Text>
                       </Grid>
                     </Grid>
